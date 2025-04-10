@@ -1,33 +1,17 @@
-name: 🔄 Refactor
-description: 리팩토링이 필요하신가요?
-title: '[🔄 Refactor] '
-labels: ['🔄 Refactor']
-body:
-  - type: textarea
-    id: refactor-description
-    attributes:
-      label: 📄 설명
-      description: |
-        리팩토링이 필요한 부분에 대한 설명을 작성해 주세요.
-      placeholder: |
-        - 여기에 설명을 적어주세요
-    validations:
-      required: true
-  - type: textarea
-    id: refactor-checklist
-    attributes:
-      label: 📋 체크리스트
-      description: |
-        아래 체크리스트를 작성해주세요.
-      placeholder: |
-        - [ ] 리팩토링 설명
-        - [ ] 리팩토링 필요 사항 추가
-    validations:
-      required: true
-  - type: textarea
-    id: refactor-more
-    attributes:
-      label: 📝 메모
-      description: 더 하고 싶은 말이 있다면 작성해 주세요.
-    validations:
-      required: false
+---
+name: 🔁 Refactor
+about: 코드 구조 개선이나 리팩터링이 필요한 경우 사용하세요.
+title: "[🔁 Refactor] "
+labels: ["🔁 Refactor"]
+---
+## ✏️ 리팩터링 대상
+
+<!-- 리팩터링하고자 하는 코드 또는 컴포넌트를 명확히 작성해 주세요. -->
+---
+## 📋 개선 방향
+
+<!-- 어떤 부분을 어떻게 리팩터링할 예정인지 간단히 작성해 주세요. -->
+---
+## 📒 Remarks
+
+<!-- 의논하거나 메모하고 싶은 사항이 있다면 작성해 주세요. -->
