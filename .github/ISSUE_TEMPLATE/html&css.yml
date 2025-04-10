@@ -20,13 +20,11 @@ body:
       description: 참고할 디자인 시안이나 구체적인 요구사항을 작성해 주세요.
       placeholder: |
         예: Figma 링크 또는 기획 문서
-    validations:
-      required: false
 
   - type: textarea
     id: remarks
     attributes:
       label: 📒 Remarks
       description: 추가로 전달할 메모가 있다면 자유롭게 작성해 주세요.
-      validations:
-      required: false
+      placeholder: |
+        예: 해당 디자인 시안은 이전 이슈에서도 사용되었음

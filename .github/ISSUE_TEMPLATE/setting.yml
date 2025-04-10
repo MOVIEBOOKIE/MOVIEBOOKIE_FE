@@ -28,5 +28,5 @@ body:
     attributes:
       label: 📒 Remarks
       description: 관련 문서나 참고한 설정 링크 등 메모가 있다면 적어주세요.
-      validations:
-        required: false
+      placeholder: |
+        예: 공식 문서 링크 https://tailwindcss.com/docs/customizing-colors

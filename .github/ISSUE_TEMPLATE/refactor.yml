@@ -28,5 +28,5 @@ body:
     attributes:
       label: 📒 Remarks
       description: 의논하거나 메모하고 싶은 사항이 있다면 작성해 주세요.
-      validations:
-        required: false
+      placeholder: |
+        예: 리팩터링 이후 테스트 코드 추가도 필요할 수 있음
