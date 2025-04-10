@@ -1,0 +1,33 @@
+name: ✨ Feature
+description: 새로운 기능이나 명세가 있나요?
+title: "[✨ Feature] "
+labels: ["✨ Feature"]
+body:
+  - type: textarea
+    id: feat-description
+    attributes:
+      label: 📄 설명 및 해야 할 일
+      description: |
+        아래 양식을 참고해서 새로운 기능의 설명과 해야 할 일을 작성해 주세요.
+      placeholder: |
+        ## ⚙️어떤 기능인가요?
+
+        > 추가하려는 기능에 대해 간결하게 설명해주세요
+
+        ## 🔎작업 상세 내용
+
+        - [ ] TODO
+        - [ ] TODO
+        - [ ] TODO
+
+        ## 💫참고할만한 자료(선택)
+    validations:
+      required: true
+
+  - type: textarea
+    id: feat-more
+    attributes:
+      label: 📝 메모
+      description: 더 하고 싶은 말이 있다면 작성해 주세요.
+    validations:
+      required: false

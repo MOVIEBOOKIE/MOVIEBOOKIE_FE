@@ -1,0 +1,33 @@
+name: ⚙️ Setting
+description: 설정이 필요하신가요?
+title: '[⚙️ Setting] '
+labels: ['⚙️ Setting']
+body:
+  - type: textarea
+    id: setting-description
+    attributes:
+      label: 📄 설명
+      description: |
+        설정이 필요한 부분에 대한 설명을 작성해 주세요.
+      placeholder: |
+        - 여기에 설명을 적어주세요
+    validations:
+      required: true
+  - type: textarea
+    id: setting-checklist
+    attributes:
+      label: 📋 체크리스트
+      description: |
+        아래 체크리스트를 작성해주세요.
+      placeholder: |
+        - [ ] 설정 추가
+        - [ ] 설정 수정
+    validations:
+      required: true
+  - type: textarea
+    id: setting-more
+    attributes:
+      label: 📝 메모
+      description: 더 하고 싶은 말이 있다면 작성해 주세요.
+    validations:
+      required: false
