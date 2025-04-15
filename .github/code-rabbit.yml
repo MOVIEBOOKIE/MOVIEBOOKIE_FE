@@ -1,9 +1,8 @@
 review:
   prompt: >
-    Please review the code focusing on quality, readability, structure, performance, and error handling.
-    Only provide concise feedback in Korean.
-    Do not include walkthroughs, summaries, or sequence diagrams.
-    Do not modify the pull request description.
-    Just suggest clear and actionable improvements.
+    코드 품질, 가독성, 구조, 성능, 오류 처리 등을 중심으로 코드를 리뷰해주세요.
+    간결한 피드백만 한국어로 제공해주세요.
+    워크스루, 요약, 순서도는 포함하지 말고,
+    PR 설명은 수정하지 말고 명확하고 실용적인 개선 사항만 제안해주세요.
   files: "**/*.{ts,tsx,js,jsx}"
   exclude: "**/*.test.{ts,tsx}"
