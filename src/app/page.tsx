@@ -6,6 +6,7 @@ export default function Home() {
       <h1 className="title-1-bold">타이틀 Title</h1>
       <p className="body-2-medium">본문 Body</p>
       <small className="caption-2-regular">캡션 caption</small>
+      <div className="container-padding">margin 20</div>
     </>
   );
 }

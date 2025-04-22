@@ -1,24 +1,30 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: var(--font-pretendard), sans-serif;
+  }
+}
 
 @theme {
-  --color-red-100: #FFDDE5;
-  --color-red-200: #FFC4D2;
-  --color-red-300: #FF92AD;
-  --color-red-400: #FF5D7E;
-  --color-red-main: #FF1F44;
-  --color-red-600: #E6103E;
-  --color-red-700: #BE1E31;
+  --color-red-100: #ffdde5;
+  --color-red-200: #ffc4d2;
+  --color-red-300: #ff92ad;
+  --color-red-400: #ff5d7e;
+  --color-red-main: #ff1f44;
+  --color-red-600: #e6103e;
+  --color-red-700: #be1e31;
 
-  --color-white: #FAFAFA;
+  --color-white: #fafafa;
   --color-black: #171717;
 
-  --color-gray-100: #ECECEE;
-  --color-gray-200: #D0D0E0;
-  --color-gray-300: #A6A7AB;
-  --color-gray-400: #95969B;
-  --color-gray-500: #95969B;
-  --color-gray-600: #6F7176;
-  --color-gray-700: #57585C;
+  --color-gray-100: #ececee;
+  --color-gray-200: #d0d0e0;
+  --color-gray-300: #a6a7ab;
+  --color-gray-400: #95969b;
+  --color-gray-500: #95969b;
+  --color-gray-600: #6f7176;
+  --color-gray-700: #57585c;
   --color-gray-800: #434448;
   --color-gray-900: #333537;
 }
@@ -36,11 +42,16 @@
 
 @layer base {
   html {
-    font-family: 'Pretendard', sans-serif;
+    font-family: "Pretendard", sans-serif;
   }
 }
 
 @layer components {
+  .container-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .title-1-bold {
     font-size: var(--fs-title-1);
     font-weight: 700;
