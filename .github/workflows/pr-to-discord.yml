@@ -1,0 +1,36 @@
+name: Notify Discord on PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send PR info to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{
+            "content": "📣 **새 Pull Request가 생성되었습니다!**",
+            "embeds": [{
+              "title": "${{ github.event.pull_request.title }}",
+              "description": "${{ github.event.pull_request.body || 'No description' }}",
+              "url": "${{ github.event.pull_request.html_url }}",
+              "color": 5814783,
+              "fields": [
+                {
+                  "name": "🔀 브랜치",
+                  "value": "`${{ github.event.pull_request.head.ref }}` → `${{ github.event.pull_request.base.ref }}`",
+                  "inline": true
+                },
+                {
+                  "name": "👤 작성자",
+                  "value": "${{ github.event.pull_request.user.login }}",
+                  "inline": true
+                }
+              ]
+            }]
+          }' \
+          ${{ secrets.DISCORD_WEBHOOK }}
