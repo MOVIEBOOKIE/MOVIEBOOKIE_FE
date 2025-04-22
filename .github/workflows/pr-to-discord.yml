@@ -9,28 +9,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send PR info to Discord
+        env:
+          DISCORD_WEBHOOK: https://discord.com/api/webhooks/1364186605505740870/ytdB1i-KQskzr_ji1MUwTGCDEMXiYe978druTmdqNu0DnuUtGPOFWYnnHAD50agZRLFi
         run: |
-          curl -H "Content-Type: application/json" \
-          -X POST \
-          -d '{
+          curl -X POST "$DISCORD_WEBHOOK" \
+          -H "Content-Type: application/json" \
+          -d @- <<EOF
+          {
             "content": "📣 **새 Pull Request가 생성되었습니다!**",
-            "embeds": [{
-              "title": "${{ github.event.pull_request.title }}",
-              "description": "${{ github.event.pull_request.body || 'No description' }}",
-              "url": "${{ github.event.pull_request.html_url }}",
-              "color": 5814783,
-              "fields": [
-                {
-                  "name": "🔀 브랜치",
-                  "value": "`${{ github.event.pull_request.head.ref }}` → `${{ github.event.pull_request.base.ref }}`",
-                  "inline": true
-                },
-                {
-                  "name": "👤 작성자",
-                  "value": "${{ github.event.pull_request.user.login }}",
-                  "inline": true
-                }
-              ]
-            }]
-          }' \
-          ${{ secrets.DISCORD_WEBHOOK }}
+            "embeds": [
+              {
+                "title": "${{ github.event.pull_request.title }}",
+                "url": "${{ github.event.pull_request.html_url }}",
+                "description": "${{ github.event.pull_request.body || 'No description provided.' }}",
+                "color": 5814783,
+                "fields": [
+                  {
+                    "name": "🔀 브랜치",
+                    "value": "\`${{ github.event.pull_request.head.ref }}\` → \`${{ github.event.pull_request.base.ref }}\`",
+                    "inline": true
+                  },
+                  {
+                    "name": "👤 작성자",
+                    "value": "${{ github.event.pull_request.user.login }}",
+                    "inline": true
+                  }
+                ]
+              }
+            ]
+          }
+EOF
