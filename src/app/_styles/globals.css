@@ -22,7 +22,7 @@
   --color-gray-200: #d0d0e0;
   --color-gray-300: #a6a7ab;
   --color-gray-400: #95969b;
-  --color-gray-500: #95969b;
+  --color-gray-500: #7A7D82;
   --color-gray-600: #6f7176;
   --color-gray-700: #57585c;
   --color-gray-800: #434448;
@@ -30,20 +30,14 @@
 }
 
 @theme {
-  --fs-title-1: 24px;
-  --fs-title-2: 22px;
-  --fs-title-3: 20px;
-  --fs-body-1: 18px;
-  --fs-body-2: 16px;
-  --fs-body-3: 14px;
-  --fs-caption-1: 12px;
-  --fs-caption-2: 10px;
-}
-
-@layer base {
-  html {
-    font-family: "Pretendard", sans-serif;
-  }
+  --fs-title-1: 1.5rem;   
+  --fs-title-2: 1.375rem;  
+  --fs-title-3: 1.25rem;    
+  --fs-body-1: 1.125rem;    
+  --fs-body-2: 1rem;        
+  --fs-body-3: 0.875rem;    
+  --fs-caption-1: 0.75rem;  
+  --fs-caption-2: 0.625rem; 
 }
 
 @layer components {
