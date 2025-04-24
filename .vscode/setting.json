@@ -1,0 +1,10 @@
+{
+  "editor.tabCompletion": "on",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["class=\"([^\"]*)", "\"([^\"]*)\""],
+    ["className=\"([^\"]*)", "\"([^\"]*)\""]
+  ]
+}
