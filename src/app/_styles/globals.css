@@ -138,5 +138,6 @@ body {
   max-width: 500px;
   margin: auto;
   background-color: var(--color-gray-black);
+  color: var(--color-gray-white);
   min-height: 100vh;
 }
