@@ -1,7 +1,7 @@
-name: 🎨 HTML & CSS
+name: 🎨 Design
 description: 마크업 및 스타일 관련 작업이 필요할 때 사용하세요.
-title: "[🎨 HTML & CSS] "
-labels: ["🎨 HTML & CSS"]
+title: "[🎨 Design] "
+labels: ["🎨 Design"]
 body:
   - type: textarea
     id: goal
