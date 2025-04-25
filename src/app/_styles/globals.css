@@ -131,3 +131,12 @@
     line-height: 130%;
   }
 }
+
+body {
+  min-width: 375px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: var(--color-gray-black);
+  min-height: 100vh;
+}
