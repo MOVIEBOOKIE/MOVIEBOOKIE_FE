@@ -1,0 +1,10 @@
+{
+  "Tailwind Custom Classes": {
+    "scope": "html,javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "fs",
+    "body": [
+      "${1|title-1-bold,title-1-semibold,title-2-bold,title-2-semibold,title-3-bold,title-3-semibold,body-1-semibold,body-1-medium,body-2-semibold,body-2-medium,body-3-semibold,body-3-medium,caption-1-medium,caption-1-regular,caption-2-medium,caption-2-regular|}",
+    ],
+    "description": "Custom Tailwind classes",
+  },
+}
