@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Card() {
   return (
-    <div className="relative flex h-[120px] w-[335px] gap-[12px]">
+    <div className="relative flex h-[120px] w-full gap-[12px] px-[20px]">
       <div className="relative h-[120px] w-[120px] overflow-hidden rounded-[8px]">
         <Image
           src="/test.png"
@@ -30,7 +30,7 @@ export default function Card() {
           </p>
         </div>
 
-        <div className="caption-2-medium mt-2 flex items-center justify-between gap-[7px] text-gray-700">
+        <div className="caption-2-medium mt-2 flex items-center justify-start gap-[7px] text-gray-700">
           <p>
             모집 달성율 <span className="text-gray-300">60%</span>
           </p>
