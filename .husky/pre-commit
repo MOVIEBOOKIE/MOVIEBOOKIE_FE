@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "let's check the code! =^ . ｡.^="
+echo "let's check the code! ₍ᐢ. .ᐢ₎˚୨୧"
 pnpm lint-staged
