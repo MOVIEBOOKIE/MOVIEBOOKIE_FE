@@ -1,0 +1,16 @@
+language: "ko-KR" # 리뷰 언어 설정 (한국어)
+early_access: false # 얼리 액세스 기능 비활성화
+reviews:
+  profile: "chill" 
+  request_changes_workflow: false # "수정 요청" 워크플로우 비활성화
+  high_level_summary: true # PR에 대해 높은 수준 요약 포함
+  poem: false # 시(poem) 안 씀
+  review_status: true # 리뷰 상태 표시
+  collapse_walkthrough: false # 워크스루 접지 않음
+  auto_review:
+    enabled: true # PR 올리면 자동 리뷰 켜기
+    drafts: false # Draft PR은 리뷰 안 함
+    base_branches:
+      - "/*" # 모든 브랜치 대상으로 자동 리뷰
+chat:
+  auto_reply: true # 대화(Chat)에서 자동 응답 활성화
