@@ -16,9 +16,9 @@ const tabs: TabItem[] = [
   {
     id: "home",
     label: "홈",
-    path: "/home",
+    path: "/",
     activeIcon: "/icons/navigation/Home-active.svg",
-    inactiveIcon: "/icons/navigation/Home.svg",
+    inactiveIcon: "/icons/navigation/home.svg",
   },
   {
     id: "event",
@@ -40,7 +40,12 @@ export default function BottomNavigation() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname.startsWith(path);
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(path);
+  };
   const handleClick = (path: string) => router.push(path);
 
   return (
@@ -69,7 +74,7 @@ export default function BottomNavigation() {
 
             <p
               className={`caption-3-medium ${
-                active ? "text-red-500" : "text-gray-800"
+                active ? "text-red-main" : "text-gray-800"
               }`}
             >
               {tab.label}
