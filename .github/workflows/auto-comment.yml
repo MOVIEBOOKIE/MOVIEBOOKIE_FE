@@ -17,11 +17,10 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `@coderabbitai full review
+            body: `@coderabbitai full review
 
-- 리뷰 언어를 **한국어(ko-KR)** 로 해주세요.
-- 코드 스타일, 리팩토링 가능성, 성능 최적화 포인트를 함께 지적해 주세요.
-- 단순 코드 설명을 넘어서, 개선 가능한 부분이 있으면 제안까지 해주세요.
+                - 리뷰 언어를 **한국어(ko-KR)** 로 해주세요.
+                - 코드 스타일, 리팩토링 가능성, 성능 최적화 포인트를 함께 지적해 주세요.
+                - 단순 코드 설명을 넘어서, 개선 가능한 부분이 있으면 제안까지 해주세요.
 
-감사합니다! 🙏`
-            })
+                `
