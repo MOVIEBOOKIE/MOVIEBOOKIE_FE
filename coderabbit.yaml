@@ -1,4 +1,4 @@
-language: "ko-KR" # 리뷰 언어 설정 (한국어)
+language: "ko-KR"
 early_access: false # 얼리 액세스 기능 비활성화
 reviews:
   profile: "chill" 

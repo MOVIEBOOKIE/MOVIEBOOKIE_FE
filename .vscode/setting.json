@@ -1,5 +1,6 @@
 {
   "editor.tabCompletion": "on",
+  "files.trimTrailingWhitespace": true,
   "editor.quickSuggestions": {
     "strings": true
   },
