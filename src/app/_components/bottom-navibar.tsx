@@ -2,28 +2,26 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import LightEffect from "./light-effect";
-
-import HomeIcon from "@/icons/home.svg";
-import EventIcon from "@/icons/event.svg";
-import MyIcon from "@/icons/my.svg";
+import { PATHS } from "@/app/constants/paths";
+import { HomeIcon, EventIcon, MyIcon } from "@/icons";
 
 const tabs = [
   {
     id: "home",
     label: "홈",
-    path: "/",
+    path: PATHS.HOME,
     Icon: HomeIcon,
   },
   {
     id: "event",
     label: "이벤트",
-    path: "/event",
+    path: PATHS.EVENT,
     Icon: EventIcon,
   },
   {
     id: "mypage",
     label: "마이",
-    path: "/my-page",
+    path: PATHS.MYPAGE,
     Icon: MyIcon,
   },
 ] as const;
@@ -44,7 +42,7 @@ export default function BottomNavigation() {
   }
 
   return (
-    <nav className="bg-gray-black fixed bottom-0 left-1/2 z-50 mt-[14px] mb-[18px] flex h-[70px] w-full max-w-[500px] -translate-x-1/2 transform items-center justify-around pt-[9px] pb-[16px]">
+    <nav className="bg-gray-black mt-0.875 mb-0.875 fixed bottom-0 left-1/2 z-50 flex h-[70px] w-full max-w-[500px] -translate-x-1/2 transform items-center justify-around pt-[9px] pb-[16px]">
       {tabs.map((tab) => {
         const active = isActive(tab.path);
         const IconComponent = tab.Icon;
@@ -61,14 +59,16 @@ export default function BottomNavigation() {
             <div className="relative flex h-6 w-6 items-center justify-center">
               <IconComponent
                 className="h-full w-full"
-                stroke={active ? "#BE1531" : "#434448"}
+                stroke={
+                  active ? "var(--color-red-main)" : "var(--color-gray-800)"
+                }
                 fill="none"
               />
             </div>
 
             <p
               className={`caption-3-medium ${
-                active ? "text-red-700" : "text-gray-800"
+                active ? "text-red-main" : "text-gray-800"
               }`}
             >
               {tab.label}

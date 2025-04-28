@@ -27,8 +27,8 @@ export default function Card({
   estimatedPrice,
 }: CardProps) {
   return (
-    <div className="relative flex h-[120px] w-full gap-[12px] px-[20px]">
-      <div className="relative h-[120px] w-[120px] overflow-hidden rounded-[8px]">
+    <div className="relative flex h-[7.5rem] w-full gap-[12px] px-1.25">
+      <div className="relative h-[7.5rem] w-[7.5rem] overflow-hidden rounded-[8px]">
         <Image
           src={imageUrl}
           alt="포스터 이미지"
