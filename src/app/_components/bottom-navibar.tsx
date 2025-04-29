@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import LightEffect from "./light-effect";
-import { navigationTabs } from "../constants/navigationTabs";
+import { navigationTabs } from "../constants/navigation-tabs";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export default function BottomNavigation() {
 
   return (
     <nav
-      className="bg-gray-black mt-0.875 mb-0.875 fixed bottom-0 left-1/2 z-50 flex h-17.5 w-full max-w-125 -translate-x-1/2 transform items-center justify-around pt-2.25 pb-4"
+      className="bg-gray-black mt-0.875 mb-0.875 fixed bottom-0 left-1/2 z-50 flex h-25.5 w-full max-w-125 -translate-x-1/2 transform items-center justify-around pt-2.25 pb-4"
       role="navigation"
       aria-label="Main navigation"
     >
