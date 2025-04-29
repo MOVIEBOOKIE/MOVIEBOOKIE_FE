@@ -141,3 +141,8 @@ body {
   color: var(--color-gray-white);
   min-height: 100vh;
 }
+
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+}
