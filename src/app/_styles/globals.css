@@ -17,14 +17,16 @@
 
   --color-gray-white: #fafafa;
   --color-gray-100: #ececee;
-  --color-gray-200: #d0d0e0;
-  --color-gray-300: #a6a7ab;
-  --color-gray-400: #95969b;
-  --color-gray-500: #7a7d82;
-  --color-gray-600: #6f7176;
+  --color-gray-200: #DDDEE0;
+  --color-gray-300: #A6A7AB;
+  --color-gray-400: #95969B;
+  --color-gray-500: #7A7D82;
+  --color-gray-600: #6F7176;
   --color-gray-700: #57585c;
   --color-gray-800: #434448;
-  --color-gray-850: #29292c;
+  --color-gray-850: #333537;
+  --color-gray-900: #29292c;
+  --color-gray-950: #1B1B1B;
   --color-gray-black: #0e0e0e;
 
   --fs-title-1: 1.5rem;
@@ -34,7 +36,8 @@
   --fs-body-2: 1rem;
   --fs-body-3: 0.875rem;
   --fs-caption-1: 0.75rem;
-  --fs-caption-2: 0.625rem;
+  --fs-caption-2: 0.6875rem;
+  --fs-caption-3: 0.625rem;
 }
 
 @layer components {
@@ -127,6 +130,16 @@
   }
   .caption-2-regular {
     font-size: var(--fs-caption-2);
+    font-weight: 400;
+    line-height: 130%;
+  }
+  .caption-3-medium {
+    font-size: var(--fs-caption-3);
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .caption-3-regular {
+    font-size: var(--fs-caption-3);
     font-weight: 400;
     line-height: 130%;
   }
