@@ -1,9 +1,0 @@
-review:
-  prompt: >
-    Please review the code focusing on quality, readability, structure, performance, and error handling.
-    Only provide concise feedback in Korean.
-    Do not include walkthroughs, summaries, or sequence diagrams.
-    Do not modify the pull request description.
-    Just suggest clear and actionable improvements.
-  files: "**/*.{ts,tsx,js,jsx}"
-  exclude: "**/*.test.{ts,tsx}"
