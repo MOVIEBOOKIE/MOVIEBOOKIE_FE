@@ -21,15 +21,15 @@ export default function MovieSwiper() {
 
   const applySlideEffect = () => {
     const swiper = swiperRef.current;
-    if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
+    if (!swiper?.slides?.length) return;
 
-    swiper.slides.forEach((slideEl) => {
-      const progress = (slideEl as any).progress ?? 0;
-      slideEl.style.width = "282px";
+    swiper.slides.forEach((slideEl, index) => {
+      const progress = (swiper.slides[index] as any).progress ?? 0;
+      const scale = Math.abs(progress) < 0.5 ? 1 : 0.8;
+      const opacity = Math.abs(progress) < 0.5 ? 1 : 0.7;
 
-      const isActive = Math.abs(progress) < 0.5;
-      slideEl.style.height = isActive ? "404px" : "320px";
-      slideEl.style.opacity = isActive ? "1" : "0.6";
+      slideEl.style.transform = `scale(${scale})`;
+      slideEl.style.opacity = `${opacity}`;
     });
   };
 
@@ -42,15 +42,13 @@ export default function MovieSwiper() {
 
   return (
     <div
-      className={`relative transition-opacity duration-300 ${
+      className={`relative h-full transition-opacity duration-300 ${
         isReady ? "opacity-100" : "opacity-0"
       }`}
     >
       <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        spaceBetween={14}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        spaceBetween={-10}
         slidesPerView="auto"
         centeredSlides
         loop
@@ -59,6 +57,7 @@ export default function MovieSwiper() {
       >
         {MOVIE_SLIDES.map((movie) => (
           <SwiperSlide
+            style={{ width: "282px", height: "404px" }}
             key={movie.id}
             className="flex items-center transition-transform duration-300 ease-in-out"
           >
