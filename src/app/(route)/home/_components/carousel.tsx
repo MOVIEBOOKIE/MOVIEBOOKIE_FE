@@ -5,13 +5,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import Image from "next/image";
 
 const MOVIE_SLIDES = [
-  { id: 1, title: "태풍이 지나가고", bgColor: "bg-emerald-800" },
-  { id: 2, title: "블루 자켓", bgColor: "bg-blue-800" },
-  { id: 3, title: "마지막 여행", bgColor: "bg-purple-800" },
-  { id: 4, title: "달빛 아래", bgColor: "bg-indigo-800" },
-  { id: 5, title: "어둠의 경계", bgColor: "bg-gray-800" },
+  { id: 1, title: "태풍이 지나가고", image: "/image.png" },
+  { id: 2, title: "블루 자켓", image: "/image.png" },
+  { id: 3, title: "마지막 여행", image: "/image.png" },
+  { id: 4, title: "달빛 아래", image: "/image.png" },
+  { id: 5, title: "어둠의 경계", image: "/image.png" },
 ];
 
 export default function MovieSwiper() {
@@ -62,9 +63,21 @@ export default function MovieSwiper() {
             className="flex items-center transition-transform duration-300 ease-in-out"
           >
             <div className="relative flex h-full w-full items-center justify-center">
-              <div
-                className={`h-full w-full rounded-xl ${movie.bgColor} flex items-center justify-center`}
-              >
+              <div className="relative flex h-full w-full items-center justify-center rounded-xl">
+                <Image
+                  width={282}
+                  height={404}
+                  src={movie.image}
+                  alt="poster"
+                  className="absolute h-full w-full rounded-xl object-cover"
+                />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/16 from-0% to-black/64 to-[81.97%]" />
+                <div className="absolute bottom-0 h-42 w-full">
+                  <div className="absolute inset-0 bg-gradient-to-b from-[rgba(22,22,22,0)] from-[29.9%] via-[rgba(25,25,25,0.10)] to-[rgba(29,29,29,0.50)] opacity-54" />
+
+                  <div className="absolute bottom-0 h-30 w-full bg-gradient-to-b opacity-54 backdrop-blur-[4px]" />
+                </div>
+
                 {movie.title}
               </div>
             </div>
