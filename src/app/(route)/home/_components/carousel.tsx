@@ -42,7 +42,7 @@ export default function MovieSwiper() {
 
   return (
     <div
-      className={`relative h-full transition-opacity duration-300 ${
+      className={`relative transition-opacity duration-300 ${
         isReady ? "opacity-100" : "opacity-0"
       }`}
     >
