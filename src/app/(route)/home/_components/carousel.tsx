@@ -20,7 +20,7 @@ export default function MovieSwiper() {
 
   const applySlideEffect = () => {
     const swiper = swiperRef.current;
-    if (!swiper) return;
+    if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
 
     swiper.slides.forEach((slideEl) => {
       const progress = (slideEl as any).progress ?? 0;
