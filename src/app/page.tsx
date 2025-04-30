@@ -14,7 +14,9 @@ export default function Home() {
       </div>
       <Carousel />
       <div className="mt-10 flex flex-col items-center gap-1">
-        <p>더 많은 이벤트를 찾으려면 아래로 스와이프 </p>
+        <p className="caption-1-medium">
+          더 많은 이벤트를 찾으려면 아래로 스와이프
+        </p>
         <ArrowIcon className="h-6 w-6" />
       </div>
     </div>
