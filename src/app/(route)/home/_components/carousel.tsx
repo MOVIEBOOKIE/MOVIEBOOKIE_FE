@@ -79,10 +79,10 @@ export default function MovieSwiper() {
                   <div className="absolute bottom-0 h-30 w-full bg-gradient-to-b opacity-54 backdrop-blur-[4px]" />
                 </div>
 
-                <div className="absolute bottom-8 left-5">
+                <div className="absolute bottom-8 left-5 flex flex-col gap-0.75">
                   <h2 className="body-3-medium text-gray-300">영화</h2>
                   <h1 className="title-3-bold text-gray-white">
-                    더 폴: 오디어스와 환상의 문
+                    {movie.title}
                   </h1>
                   <p className="caption-1-medium text-gray-200">
                     신촌 아트레온 · 2025. 05. 26
