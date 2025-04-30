@@ -16,7 +16,7 @@ const MOVIE_SLIDES = [
   { id: 5, title: "어둠의 경계", image: "/image.png" },
 ];
 
-export default function MovieSwiper() {
+export default function Carousel() {
   const swiperRef = useRef<SwiperCore | null>(null);
   const [isReady, setIsReady] = useState(false);
 
