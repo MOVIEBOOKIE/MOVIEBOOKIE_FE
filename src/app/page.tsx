@@ -1,7 +1,7 @@
 "use client";
 
+import { SwipeDownIcon } from "@/icons";
 import Carousel from "./(route)/home/_components/carousel";
-import ArrowIcon from "@/icons/arrow.svg";
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
         <p className="caption-1-medium">
           더 많은 이벤트를 찾으려면 아래로 스와이프
         </p>
-        <ArrowIcon className="h-6 w-6" />
+        <SwipeDownIcon className="h-6 w-6" />
       </div>
     </div>
   );
