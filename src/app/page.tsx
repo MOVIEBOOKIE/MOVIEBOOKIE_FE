@@ -13,7 +13,7 @@ export default function Home() {
         </h2>
       </div>
       <Carousel />
-      <div className="mt-10 flex flex-col items-center gap-1">
+      <div className="from-gray-black/0 to-gray-black fixed bottom-0 z-10 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3">
         <p className="caption-1-medium">
           더 많은 이벤트를 찾으려면 아래로 스와이프
         </p>
