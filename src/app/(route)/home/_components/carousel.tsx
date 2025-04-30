@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import "swiper/css";
@@ -27,15 +27,16 @@ export default function Carousel() {
     });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
+  const slideRef = useCallback((node: HTMLDivElement | null) => {
+    if (node !== null) {
       applySlideEffect();
       setIsReady(true);
-    }, 0);
+    }
   }, []);
 
   return (
     <div
+      ref={slideRef}
       className={`relative transition-opacity duration-300 ${
         isReady ? "opacity-100" : "opacity-0"
       }`}
