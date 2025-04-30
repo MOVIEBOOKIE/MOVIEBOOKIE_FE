@@ -6,7 +6,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body>
-        <main>
+        <main className="h-[calc(100vh-102px)] overflow-y-auto">
           {children}
           <BottomNavigation />
         </main>

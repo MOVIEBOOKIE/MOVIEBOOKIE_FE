@@ -33,11 +33,7 @@ export default function BottomNavigation() {
             {active && <LightEffect />}
             <div className="relative flex h-6 w-6 items-center justify-center">
               <IconComponent
-                className="h-full w-full"
-                stroke={
-                  active ? "var(--color-red-main)" : "var(--color-gray-800)"
-                }
-                fill="none"
+                className={`h-full w-full ${active ? "text-red-main" : "text-gray-800"}`}
               />
             </div>
             <p
