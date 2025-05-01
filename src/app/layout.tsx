@@ -1,4 +1,4 @@
-import "@/app/_styles/globals.css";
+import "@/styles/globals.css";
 import { ReactNode } from "react";
 import { BottomNavigation } from "./_components";
 
