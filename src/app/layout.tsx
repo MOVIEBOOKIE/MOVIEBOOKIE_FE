@@ -1,6 +1,6 @@
 import "@/app/_styles/globals.css";
 import { ReactNode } from "react";
-import BottomNavigation from "./_components/bottom-navibar";
+import { BottomNavigation } from "./_components";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

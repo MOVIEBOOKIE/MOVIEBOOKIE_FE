@@ -1,16 +1,12 @@
 "use client";
 
-import { SwipeDownIcon } from "@/icons";
-import Carousel from "./(route)/home/_components/carousel";
+import { SwipeDownIcon } from "icons";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Input from "./_components/input";
-import { PATHS } from "./constants/paths";
 import { useRouter } from "next/navigation";
-import Card from "./_components/main-card";
 import { MOVIE_LISTS } from "./_mocks/movie-list";
-import Button from "./_components/button";
-import { CATEGORIES } from "./constants/categories";
+import { Button, Card, Input, Carousel } from "@/components";
+import { CATEGORIES, PATHS } from "@/constants";
 
 export default function Home() {
   const router = useRouter();

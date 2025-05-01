@@ -6,8 +6,8 @@ import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
-import Badge from "@/app/_components/badge";
-import { MOVIE_SLIDES } from "@/app/_mocks/movie-slides";
+import { MOVIE_SLIDES } from "@/mocks/movie-slides";
+import { Badge } from "@/components";
 
 export default function Carousel() {
   const swiperRef = useRef<SwiperCore | null>(null);

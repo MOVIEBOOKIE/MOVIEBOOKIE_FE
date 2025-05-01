@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
-import { navigationTabs } from "../constants/navigation-tabs";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
@@ -18,7 +18,7 @@ export default function BottomNavigation() {
       role="navigation"
       aria-label="Main navigation"
     >
-      {navigationTabs.map((tab) => {
+      {NAVIGATION_TABS.map((tab) => {
         const active = isActive(tab.path);
         const IconComponent = tab.Icon;
 
