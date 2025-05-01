@@ -1,6 +1,6 @@
 import { SearchIcon } from "@/icons";
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: "BUTTON" | "INPUT";
 }
 
