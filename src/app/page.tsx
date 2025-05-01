@@ -4,8 +4,13 @@ import { SwipeDownIcon } from "@/icons";
 import Carousel from "./(route)/home/_components/carousel";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Input from "./_components/input";
+import { PATHS } from "./constants/paths";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
 
@@ -21,6 +26,10 @@ export default function Home() {
     if (el) el.addEventListener("scroll", handleScroll);
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleClick = () => {
+    router.push(PATHS.SEARCH);
+  };
 
   return (
     <div
@@ -57,10 +66,11 @@ export default function Home() {
       >
         <div className="mt-6.25 mb-4 flex flex-col items-center gap-1.25">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-1-medium text-white opacity-47">
+          <p className="caption-1-medium text-gray-white opacity-47">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
+        <Input type="BUTTON" onClick={handleClick} />
       </motion.section>
     </div>
   );
