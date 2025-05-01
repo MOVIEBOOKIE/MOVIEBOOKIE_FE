@@ -1,6 +1,6 @@
 "use client";
 
-import LightIcon from "@/icons/light.svg";
+import { LightIcon } from "icons";
 
 export default function LightEffect() {
   return (
