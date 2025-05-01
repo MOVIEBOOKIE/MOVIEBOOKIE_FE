@@ -32,8 +32,11 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClick = () => {
+  const handleSearch = () => {
     router.push(PATHS.SEARCH);
+  };
+  const handleClick = () => {
+    router.push(PATHS.CATEGORY);
   };
 
   return (
@@ -53,7 +56,10 @@ export default function Home() {
         <motion.div
           className="from-gray-black/0 to-gray-black fixed bottom-0 z-10 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
           initial={{ opacity: 1 }}
-          animate={{ opacity: isFirstScreen ? 1 : 0 }}
+          animate={{
+            opacity: isFirstScreen ? 1 : 0,
+            display: isFirstScreen ? "flex" : "none",
+          }}
           transition={{ duration: 0 }}
         >
           <p className="caption-2-medium text-gray-white opacity-47">
@@ -75,7 +81,7 @@ export default function Home() {
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
-        <Input type="BUTTON" onClick={handleClick} />
+        <Input type="BUTTON" onClick={handleSearch} />
         <div className="scrollbar-hide mt-3 -mr-4 mb-4 flex overflow-x-auto whitespace-nowrap">
           {CATEGORIES.map((label) => (
             <div key={label} className="flex items-center">
@@ -101,7 +107,9 @@ export default function Home() {
             )}
           </div>
         ))}
-        <Button className="mt-6 mb-8.5">더보기</Button>
+        <Button className="mt-6 mb-8.5" onClick={handleClick}>
+          더보기
+        </Button>
       </motion.section>
     </div>
   );

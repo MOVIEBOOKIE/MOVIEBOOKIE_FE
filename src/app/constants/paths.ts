@@ -3,4 +3,5 @@ export const PATHS = {
   EVENT: "/event",
   MYPAGE: "/my-page",
   SEARCH: "search",
+  CATEGORY: "category",
 } as const;
