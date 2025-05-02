@@ -28,15 +28,12 @@ export default function CategoryButton({
   ));
 
   return (
-    <button className="relative" onClick={handleNavigate}>
-      <Image
-        width={161}
-        height={35}
-        src={src}
-        alt={label}
-        layout="intrinsic"
-        priority
-      />
+    <button
+      className="relative"
+      onClick={handleNavigate}
+      aria-label={`${label} 카테고리로 이동`}
+    >
+      <Image width={161} height={35} src={src} alt={label} priority />
       <p className="body-2-medium absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>
