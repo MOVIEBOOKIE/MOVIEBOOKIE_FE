@@ -3,9 +3,10 @@ export const PATHS = {
   EVENT: "/event",
   MYPAGE: "/my-page",
   SEARCH: "/search",
-  CATEGORY: "/category",
-  POPULAR: "/popular",
-  RECENT: "/recent",
-  MOVIE: "/movie",
-  DRAMA: "/drama",
+  CATEGORY: {
+    POPULAR: "/category/popular",
+    RECENT: "/category/recent",
+    MOVIE: "/category/movie",
+    DRAMA: "/category/drama",
+  },
 } as const;
