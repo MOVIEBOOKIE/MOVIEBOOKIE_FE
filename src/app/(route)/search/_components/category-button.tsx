@@ -37,7 +37,7 @@ export default function CategoryButton({
         layout="intrinsic"
         priority
       />
-      <p className="absolute top-4 left-4 text-start text-gray-100">
+      <p className="body-2-medium absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>
     </button>
