@@ -29,7 +29,14 @@ export default function CategoryButton({
 
   return (
     <button className="relative" onClick={handleNavigate}>
-      <Image width={161} height={35} src={src} alt={label} />
+      <Image
+        width={161}
+        height={35}
+        src={src}
+        alt={label}
+        layout="intrinsic"
+        priority
+      />
       <p className="absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>
