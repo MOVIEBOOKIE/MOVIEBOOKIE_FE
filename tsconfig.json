@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,7 +27,8 @@
       "@/constants": ["app/_constants/index"],
       "@/constants/*": ["app/_constants/*"],
       "@/utils/*": ["app/_utils/*"],
-      "@/mocks/*": ["app/_mocks/*"]
+      "@/mocks/*": ["app/_mocks/*"],
+      "@/icons/*": ["icons/*"]
     }
   },
   "include": [
