@@ -18,8 +18,15 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src/",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/styles/*": ["app/_styles/*"],
+      "@/components": ["app/_components/index"],
+      "@/components/*": ["app/_components/*"],
+      "@/constants": ["app/_constants/index"],
+      "@/constants/*": ["app/_constants/*"],
+      "@/utils/*": ["app/_utils/*"],
+      "@/mocks/*": ["app/_mocks/*"]
     }
   },
   "include": [
