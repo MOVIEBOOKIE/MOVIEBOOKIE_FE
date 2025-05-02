@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { ReactNode } from "react";
-import { BottomNavigation } from "./_components";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -8,7 +7,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <main className="mx-auto mb-25.5 h-[calc(100vh-102px)] overflow-y-auto">
           {children}
-          <BottomNavigation />
         </main>
       </body>
     </html>

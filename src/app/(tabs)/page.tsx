@@ -4,7 +4,7 @@ import { SwipeDownIcon } from "icons";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { MOVIE_LISTS } from "./_mocks/movie-list";
+import { MOVIE_LISTS } from "../_mocks/movie-list";
 import { Button, Card, Input, Carousel } from "@/components";
 import { CATEGORIES, PATHS } from "@/constants";
 
