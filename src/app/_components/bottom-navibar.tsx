@@ -4,13 +4,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
-import { HomeIcon, EventIcon, MyIcon } from "@/icons/index";
-
-const iconMap = {
-  home: HomeIcon,
-  event: EventIcon,
-  mypage: MyIcon,
-};
 
 export default function BottomNavigation() {
   const pathname = usePathname();
@@ -27,7 +20,7 @@ export default function BottomNavigation() {
     >
       {NAVIGATION_TABS.map((tab) => {
         const active = isActive(tab.path);
-        const Icon = iconMap[tab.id];
+        const IconComponent = tab.Icon;
 
         return (
           <Link
@@ -39,7 +32,7 @@ export default function BottomNavigation() {
           >
             {active && <LightEffect />}
             <div className="relative flex h-6 w-6 items-center justify-center">
-              <Icon
+              <IconComponent
                 className={`h-full w-full ${active ? "text-red-main" : "text-gray-800"}`}
               />
             </div>
