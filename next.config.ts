@@ -1,26 +1,9 @@
-import type { NextConfig } from "next";
-
 const withPWA = require("next-pwa")({
   dest: "public",
 });
 
-const nextConfig: NextConfig = {
-  webpack(config) {
-    config.module?.rules?.push({
-      test: /\.svg$/,
-      issuer: /\.[jt]sx?$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: {
-            icon: true,
-          },
-        },
-      ],
-    });
+const withSvgr = require("next-svgr");
 
-    return config;
-  },
-};
+const nextConfig = {};
 
-module.exports = withPWA(nextConfig);
+module.exports = withSvgr(withPWA(nextConfig));
