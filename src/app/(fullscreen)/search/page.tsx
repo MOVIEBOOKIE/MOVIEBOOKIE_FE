@@ -1,13 +1,21 @@
+"use client";
+
 import { Input } from "@/components";
 import { BackIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
 import { EVENT_CATEGORIES } from "@/constants";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.back();
+  };
   return (
     <div className="w-full">
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
-        <BackIcon />
+        <BackIcon onClick={handleClick} />
         <Input type="INPUT" />
       </div>
       <p className="body-2-medium mt-6 ml-5.5 text-gray-300">
