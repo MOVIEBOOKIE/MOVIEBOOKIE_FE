@@ -4,60 +4,64 @@ import { useState } from "react";
 import BackIcon from "@/icons/back.svg";
 import { Button } from "@/components";
 import { cn } from "@/utils/cn";
+import PhoneStep from "./_components/phone-step";
+import EmailStep from "./_components/email-step";
+import CodeStep from "./_components/code-step";
 
-export default function Verify() {
+type Step = "phoneInput" | "phoneVerify" | "emailInput" | "emailVerify";
+
+export default function SignupFlow() {
+  const [step, setStep] = useState<Step>("phoneInput");
   const [phone, setPhone] = useState("");
-
-  const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
-
+  const [email, setEmail] = useState("");
   return (
     <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
       <header className="relative flex h-12 items-center justify-center">
         <button className="absolute top-2.5 left-0">
           <BackIcon className="h-full w-full" />
         </button>
+
         <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">
           회원가입
         </h1>
       </header>
 
-      <p className="body-1-semibold mt-9.25 text-gray-400">1/3</p>
-
-      <h2 className="title-3-semibold mt-1.5">
-        무비부키 시작을 위해 <br />
-        전화번호를 입력해 주세요
-      </h2>
-
-      <p className="caption-1-medium mt-1.5 text-gray-500">
-        전화번호는 주최자와 원활한 연락을 위해 사용되며, <br />
-        여러분의 소중한 정보는 안전하게 보호돼요
-      </p>
-
-      <div className="mt-13">
-        <label className="body-2-medium text-gray-400">전화번호</label>
-        <input
-          type="tel"
-          inputMode="tel"
-          placeholder="ex) 010-1234-5678"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className="w-full border-b border-gray-700 bg-transparent pt-4.25 pb-1.5 text-white placeholder-gray-600 focus:outline-none"
+      {step === "phoneInput" && (
+        <PhoneStep
+          onNext={(phoneValue) => {
+            setPhone(phoneValue);
+            setStep("phoneVerify");
+          }}
         />
-      </div>
+      )}
 
-      <div className="mt-auto mb-19">
-        <Button
-          disabled={!isValidPhone}
-          className={cn(
-            "",
-            isValidPhone
-              ? "bg-red-main text-white"
-              : "bg-gray-900 text-gray-700",
-          )}
-        >
-          인증번호 보내기
-        </Button>
-      </div>
+      {step === "phoneVerify" && (
+        <CodeStep
+          type="phone"
+          target={phone}
+          onComplete={() => setStep("emailInput")}
+        />
+      )}
+
+      {step === "emailInput" && (
+        <EmailStep
+          onNext={(emailValue) => {
+            setEmail(emailValue);
+            setStep("emailVerify");
+          }}
+        />
+      )}
+
+      {step === "emailVerify" && (
+        <CodeStep
+          type="email"
+          target={email}
+          onComplete={() => {
+            // 회원가입 완료 or 다음 단계로 이동
+            console.log("가입 완료!");
+          }}
+        />
+      )}
     </div>
   );
 }
