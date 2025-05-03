@@ -14,7 +14,7 @@ export default function Header({
   title,
   showBackButton = true,
   onBack,
-  showCloseButton = true,
+  showCloseButton = false,
   onClose,
 }: HeaderProps) {
   return (

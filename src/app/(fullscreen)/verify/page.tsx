@@ -5,11 +5,13 @@ import PhoneStep from "./_components/phone-step";
 import EmailStep from "./_components/email-step";
 import CodeStep from "./_components/code-step";
 import Header from "@/components/header";
+import { useRouter } from "next/navigation";
 
 type Step = "phoneInput" | "phoneVerify" | "emailInput" | "emailVerify";
 
 export default function SignupFlow() {
-  const [step, setStep] = useState<Step>("emailInput");
+  const router = useRouter();
+  const [step, setStep] = useState<Step>("phoneVerify");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   return (
@@ -57,7 +59,7 @@ export default function SignupFlow() {
           type="이메일"
           target={email}
           onComplete={() => {
-            console.log("가입 완료!");
+            router.push("/set-profile");
           }}
         />
       )}
