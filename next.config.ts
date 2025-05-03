@@ -4,6 +4,6 @@ const withPWA = require("next-pwa")({
 
 const withSvgr = require("next-svgr");
 
-const nextConfig = {};
+const nextConfig = { trailingSlash: true };
 
 module.exports = withSvgr(withPWA(nextConfig));
