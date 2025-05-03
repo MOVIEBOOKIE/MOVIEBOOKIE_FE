@@ -1,14 +1,11 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
+import { pretendard } from "../app/fonts/pretendard";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko">
-      <body>
-        <main className="mx-auto mb-25.5 h-[calc(100vh-102px)] overflow-y-auto">
-          {children}
-        </main>
-      </body>
+    <html lang="ko" className={pretendard.variable}>
+      <body>{children}</body>
     </html>
   );
 }
