@@ -5,7 +5,11 @@
     font-family: var(--font-pretendard), sans-serif;
   }
 }
-
+@layer utilities {
+  .font-pretendard {
+    font-family: var(--font-pretendard), sans-serif;
+  }
+}
 @theme {
   --color-red-100: #ffdde5;
   --color-red-200: #ffc4d2;
