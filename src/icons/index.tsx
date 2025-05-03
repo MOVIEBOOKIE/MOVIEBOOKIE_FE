@@ -5,3 +5,8 @@ export { default as SwipeDownIcon } from "./swipe-down.svg";
 export { default as SearchIcon } from "./search.svg";
 export { default as LightIcon } from "./light.svg";
 export { default as BackIcon } from "./back.svg";
+export { default as BallIcon } from "./ball.svg";
+export { default as CamcorderIcon } from "./camcorder.svg";
+export { default as PopcornIcon } from "./popcorn.svg";
+export { default as SmileIcon } from "./smile.svg";
+export { default as TelevisionIcon } from "./television.svg";
