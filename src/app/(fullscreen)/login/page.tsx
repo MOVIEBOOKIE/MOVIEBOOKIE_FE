@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import BackIcon from "@/icons/back.svg";
+import BackIcon from "@/icons/common/back.svg";
 
 export default function Verify() {
   const [phone, setPhone] = useState("");

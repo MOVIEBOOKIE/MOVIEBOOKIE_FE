@@ -1,28 +1,35 @@
 import { Button } from "@/components";
+import StepHeader from "@/components/step-text";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
 export default function PhoneStep({
   onNext,
+  stepText,
 }: {
   onNext: (phone: string) => void;
+  stepText: string;
 }) {
   const [phone, setPhone] = useState("");
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
 
   return (
     <>
-      <p className="body-1-semibold mt-9.25 text-gray-400">1/3</p>
-
-      <h2 className="title-3-semibold mt-1.5">
-        무비부키 시작을 위해 <br />
-        전화번호를 입력해 주세요
-      </h2>
-
-      <p className="caption-1-medium mt-1.5 text-gray-500">
-        전화번호는 주최자와 원활한 연락을 위해 사용되며, <br />
-        여러분의 소중한 정보는 안전하게 보호돼요
-      </p>
+      <StepHeader
+        stepText={stepText}
+        title={
+          <>
+            무비부키 시작을 위해 <br />
+            전화번호를 입력해 주세요
+          </>
+        }
+        description={
+          <>
+            전화번호는 주최자와 원활한 연락을 위해 사용되며, <br />
+            여러분의 소중한 정보는 안전하게 보호돼요
+          </>
+        }
+      />
 
       <div className="mt-13">
         <label className="body-2-medium text-gray-400">전화번호</label>

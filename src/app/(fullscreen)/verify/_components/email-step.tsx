@@ -1,11 +1,14 @@
 import { Button } from "@/components";
+import StepHeader from "@/components/step-text";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
 export default function EmailStep({
   onNext,
+  stepText,
 }: {
   onNext: (email: string) => void;
+  stepText: string;
 }) {
   const [emailId, setEmailId] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
@@ -13,15 +16,21 @@ export default function EmailStep({
 
   return (
     <>
-      <p className="body-1-semibold mt-9.25 text-gray-400">2/3</p>
-      <h2 className="title-3-semibold mt-1.5">
-        자주 사용하는 이메일을 <br />
-        입력해 주세요
-      </h2>
-      <p className="caption-1-medium mt-1.5 text-gray-500">
-        이메일은 대관 관련 중요한 소식 안내에 사용되며, <br />
-        여러분의 소중한 정보는 안전하게 보호돼요
-      </p>
+      <StepHeader
+        stepText={stepText}
+        title={
+          <>
+            자주 사용하는 이메일을 <br />
+            입력해 주세요
+          </>
+        }
+        description={
+          <>
+            이메일은 대관 관련 중요한 소식 안내에 사용되며, <br />
+            여러분의 소중한 정보는 안전하게 보호돼요
+          </>
+        }
+      />
 
       <div className="mt-13">
         <label className="body-2-medium text-gray-400">이메일</label>
@@ -48,7 +57,7 @@ export default function EmailStep({
       <div className="mt-auto mb-19">
         <Button
           disabled={!isValidEmail}
-          //   onClick={() => onNext(email)}
+          onClick={() => onNext(emailId)}
           className={cn(
             isValidEmail
               ? "bg-red-main text-white"

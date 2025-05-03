@@ -1,5 +1,5 @@
 import { PATHS } from "./paths";
-import { HomeIcon, EventIcon, MyIcon } from "icons";
+import { HomeIcon, EventIcon, MyIcon } from "@/icons/index";
 
 export const NAVIGATION_TABS = [
   { id: "home", label: "홈", path: PATHS.HOME, Icon: HomeIcon },

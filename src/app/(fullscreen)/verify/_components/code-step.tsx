@@ -1,13 +1,20 @@
 import { Button } from "@/components";
+import StepHeader from "@/components/step-text";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
 type CodeStepProps = {
-  type: "phone" | "email";
+  type: "문자" | "이메일";
   target: string;
   onComplete: (code: string) => void;
+  stepText?: string;
 };
-export default function CodeStep({ type, target, onComplete }: CodeStepProps) {
+export default function CodeStep({
+  type,
+  target,
+  onComplete,
+  stepText,
+}: CodeStepProps) {
   const [code, setCode] = useState(["", "", "", ""]);
 
   const handleChange = (i: number, value: string) => {
@@ -24,22 +31,19 @@ export default function CodeStep({ type, target, onComplete }: CodeStepProps) {
   const isComplete = code.every((c) => c.length === 1);
   const fullCode = code.join("");
 
-  const handleSubmit = () => {
-    if (!isComplete) return;
-    onComplete(fullCode);
-  };
   return (
     <>
-      <p className="body-1-semibold mt-9.25 text-gray-400">3/3</p>
-      <h2 className="title-3-semibold mt-1.5">
-        인증번호 4자리를 <br />
-        입력해 주세요
-      </h2>
-      <p className="caption-1-medium mt-1.5 text-start text-gray-500">
-        인증번호가 {target}으로 발송되었어요
-      </p>
-
-      <div className="mt-13 flex gap-2.75 px-9.25">
+      <StepHeader
+        stepText={stepText}
+        title={
+          <>
+            {type}로 전송된 <br />
+            인증번호 4자리를 입력해 주세요
+          </>
+        }
+        description={<>인증번호가 {target}으로 발송되었어요</>}
+      />
+      <div className="mt-13 flex justify-center gap-2.75">
         {code.map((digit, i) => (
           <input
             key={i}
@@ -57,6 +61,7 @@ export default function CodeStep({ type, target, onComplete }: CodeStepProps) {
       <div className="mt-auto mb-19">
         <Button
           disabled={!isComplete}
+          onClick={() => onComplete(fullCode)}
           className={cn(
             isComplete ? "bg-red-main text-white" : "bg-gray-900 text-gray-700",
           )}
