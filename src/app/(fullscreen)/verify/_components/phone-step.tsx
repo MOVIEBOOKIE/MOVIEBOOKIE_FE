@@ -1,24 +1,17 @@
-"use client";
-
+import { Button } from "@/components";
+import { cn } from "@/utils/cn";
 import { useState } from "react";
-import BackIcon from "@/icons/back.svg";
 
-export default function Verify() {
+export default function PhoneStep({
+  onNext,
+}: {
+  onNext: (phone: string) => void;
+}) {
   const [phone, setPhone] = useState("");
-
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
 
   return (
-    <div className="px-5 pt-11 text-white">
-      <header className="relative flex h-12 items-center justify-center">
-        <button className="absolute top-2.5 left-0">
-          <BackIcon className="h-full w-full" />
-        </button>
-        <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">
-          회원가입
-        </h1>
-      </header>
-
+    <>
       <p className="body-1-semibold mt-9.25 text-gray-400">1/3</p>
 
       <h2 className="title-3-semibold mt-1.5">
@@ -42,15 +35,19 @@ export default function Verify() {
           className="w-full border-b border-gray-700 bg-transparent pt-4.25 pb-1.5 text-white placeholder-gray-600 focus:outline-none"
         />
       </div>
-
-      <button
-        disabled={!isValidPhone}
-        className={`mt-10 w-full rounded-xl py-3 text-sm font-medium ${
-          isValidPhone ? "bg-white text-black" : "bg-gray-800 text-gray-500"
-        }`}
-      >
-        인증번호 보내기
-      </button>
-    </div>
+      <div className="mt-auto mb-19">
+        <Button
+          disabled={!isValidPhone}
+          onClick={() => onNext(phone)}
+          className={cn(
+            isValidPhone
+              ? "bg-red-main text-white"
+              : "bg-gray-900 text-gray-700",
+          )}
+        >
+          인증번호 보내기
+        </Button>
+      </div>
+    </>
   );
 }
