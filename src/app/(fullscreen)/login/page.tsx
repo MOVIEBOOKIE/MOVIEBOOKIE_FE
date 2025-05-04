@@ -1,56 +1,75 @@
 "use client";
 
 import { useState } from "react";
-import BackIcon from "@/icons/common/back.svg";
+import { motion, AnimatePresence } from "framer-motion";
+import KakaoIcon from "@/icons/ui/kakao.svg";
 
-export default function Verify() {
-  const [phone, setPhone] = useState("");
+const slides = [
+  {
+    title: "무비부키가\n당신의 취향을 저격해요",
+    description:
+      "좋아하는 콘텐츠와 ~를 기반으로\n내게 딱 맞는 이벤트를 추천받아요",
+  },
+  {
+    title: "복잡했던 대관 절차,\n이제는 단 5분만에!",
+    description:
+      "6개의 단계를 걸치면 누구나 쉽고 빠르게\n인원 모집부터 대관까지 가능해요",
+  },
+  {
+    title: "나만의 티켓을 발급하고\n영화관에 방문해요!",
+    description:
+      "상영이 확정되면, 나만의 티켓이 발급돼요\n상영 이후에도 추억을 소중히 간직할 수 있어요",
+  },
+];
 
-  const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
+export default function Login() {
+  const [index, setIndex] = useState(0);
+  const total = slides.length;
+  const slide = slides[index];
 
   return (
-    <div className="px-5 pt-11 text-white">
-      <header className="relative flex h-12 items-center justify-center">
-        <button className="absolute top-2.5 left-0">
-          <BackIcon className="h-full w-full" />
-        </button>
-        <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">
-          회원가입
-        </h1>
-      </header>
+    <div className="bg-gray-black flex min-h-screen flex-col items-center justify-between px-5 pt-121.25 pb-19">
+      <div className="flex flex-col items-center text-center">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h1 className="title-1-bold whitespace-pre-line text-gray-100">
+              {slide.title}
+            </h1>
+            <p className="body-3-medium mt-4 whitespace-pre-line text-gray-400">
+              {slide.description}
+            </p>
+          </motion.div>
+        </AnimatePresence>
 
-      <p className="body-1-semibold mt-9.25 text-gray-400">1/3</p>
-
-      <h2 className="title-3-semibold mt-1.5">
-        무비부키 시작을 위해 <br />
-        전화번호를 입력해 주세요
-      </h2>
-
-      <p className="caption-1-medium mt-1.5 text-gray-500">
-        전화번호는 주최자와 원활한 연락을 위해 사용되며, <br />
-        여러분의 소중한 정보는 안전하게 보호돼요
-      </p>
-
-      <div className="mt-13">
-        <label className="body-2-medium text-gray-400">전화번호</label>
-        <input
-          type="tel"
-          inputMode="tel"
-          placeholder="ex) 010-1234-5678"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className="w-full border-b border-gray-700 bg-transparent pt-4.25 pb-1.5 text-white placeholder-gray-600 focus:outline-none"
-        />
+        <div className="mt-8 flex gap-2">
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1.25 w-1.25 rounded-full ${
+                i === index ? "bg-gray-100" : "bg-gray-700"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      <button
-        disabled={!isValidPhone}
-        className={`mt-10 w-full rounded-xl py-3 text-sm font-medium ${
-          isValidPhone ? "bg-white text-black" : "bg-gray-800 text-gray-500"
-        }`}
-      >
-        인증번호 보내기
-      </button>
+      <div className="relative w-full">
+        <button
+          onClick={() =>
+            index < total - 1 ? setIndex((i) => i + 1) : alert("로그인 시작!")
+          }
+          className="body-3-semibold text-gray-850 relative w-full rounded-[16px] bg-[#FEDC00] py-4.5 text-center"
+        >
+          <span className="block text-center">카카오로 로그인</span>
+          <KakaoIcon className="absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2" />
+        </button>
+      </div>
     </div>
   );
 }
