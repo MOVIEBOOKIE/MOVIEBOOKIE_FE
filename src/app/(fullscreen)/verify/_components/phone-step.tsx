@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, StepText } from "@/components";
+import { Button, StepHeader } from "@/components";
 import { cn } from "@/utils/cn";
 import { formatPhoneNumber } from "@/utils/format-phone";
 
@@ -15,8 +15,8 @@ export default function PhoneStep({
 
   return (
     <>
-      <StepText
-        stepText={stepText}
+      <StepHeader
+        StepHeader={stepText}
         title={
           <>
             무비부키 시작을 위해 <br />

@@ -17,7 +17,6 @@ import { BackIcon, CloseIcon } from "@/icons/index";
 
 type HeaderProps = {
   title?: string;
-  showBackButton?: boolean;
   onBack?: () => void;
   showCloseButton?: boolean;
   onClose?: () => void;
@@ -25,7 +24,6 @@ type HeaderProps = {
 
 export default function Header({
   title,
-  showBackButton = true,
   onBack,
   showCloseButton = false,
   onClose,
@@ -44,15 +42,13 @@ export default function Header({
 
   return (
     <header className="relative flex h-12 items-center justify-center">
-      {showBackButton && (
-        <button
-          className="absolute top-2.5 left-0"
-          onClick={handleBack}
-          aria-label="뒤로가기"
-        >
-          <BackIcon className="h-full w-full" />
-        </button>
-      )}
+      <button
+        className="absolute top-2.5 left-0"
+        onClick={handleBack}
+        aria-label="뒤로가기"
+      >
+        <BackIcon className="h-full w-full" />
+      </button>
 
       {title && (
         <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, StepText } from "@/components";
+import { Button, StepHeader } from "@/components";
 
 type VerifyNumberProps = {
   type: "문자" | "이메일";
@@ -42,8 +42,8 @@ export default function VerifyNumber({
 
   return (
     <>
-      <StepText
-        stepText={stepText}
+      <StepHeader
+        StepHeader={stepText}
         title={
           <>
             {type}로 전송된 <br />

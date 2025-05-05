@@ -1,18 +1,18 @@
-type StepTextProps = {
-  stepText?: string;
+type StepHeaderProps = {
+  StepHeader?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
 };
 
-export default function StepText({
-  stepText,
+export default function StepHeader({
+  StepHeader,
   title,
   description,
-}: StepTextProps) {
+}: StepHeaderProps) {
   return (
     <div className="mb-8">
-      {stepText && (
-        <p className="body-1-semibold mt-9.25 text-gray-400">{stepText}</p>
+      {StepHeader && (
+        <p className="body-1-semibold mt-9.25 text-gray-400">{StepHeader}</p>
       )}
       <h2 className="title-3-semibold mt-1.5">{title}</h2>
       {description && (

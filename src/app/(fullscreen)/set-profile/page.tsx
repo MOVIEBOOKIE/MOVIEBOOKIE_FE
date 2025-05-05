@@ -1,16 +1,19 @@
 "use client";
 
-import { Button, Header, StepText } from "@/components";
-import DefaultProfileIcon from "@/icons/ui/default-profile.svg";
+import { Button, Header, StepHeader } from "@/components";
+import { DefaultProfileIcon } from "@/icons/index";
 
 export default function VerifyFlow() {
+  const handleProfileConfirmation = () => {
+    // router.push('/유형테스트');
+  };
   return (
     <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
-      <Header title="프로필 설정" showBackButton />
+      <Header title="프로필 설정" />
 
       <>
-        <StepText
-          stepText="3/3"
+        <StepHeader
+          StepHeader="3/3"
           title={
             <>
               무비부키에서 사용할 <br />
@@ -42,7 +45,12 @@ export default function VerifyFlow() {
         </div>
 
         <div className="mt-auto mb-19">
-          <Button className="bg-red-main text-white">확인했어요</Button>
+          <Button
+            className="bg-red-main text-white"
+            onClick={handleProfileConfirmation}
+          >
+            확인했어요
+          </Button>
         </div>
       </>
     </div>

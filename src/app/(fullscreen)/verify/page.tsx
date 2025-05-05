@@ -21,7 +21,7 @@ export default function VerifyFlow() {
   const [email, setEmail] = useState("");
   return (
     <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
-      <Header title="회원가입" showBackButton />
+      <Header title="회원가입" />
 
       {step === Step.PhoneInput && (
         <PhoneStep

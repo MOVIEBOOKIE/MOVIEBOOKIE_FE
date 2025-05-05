@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, StepText } from "@/components";
+import { Button, StepHeader } from "@/components";
 import { cn } from "@/utils/cn";
 import ArrowDownIcon from "@/icons/ui/arrow-down.svg";
 
@@ -22,8 +22,8 @@ export default function EmailStep({
 
   return (
     <>
-      <StepText
-        stepText={stepText}
+      <StepHeader
+        StepHeader={stepText}
         title={
           <>
             자주 사용하는 이메일을 <br />
