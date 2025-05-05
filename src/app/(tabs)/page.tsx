@@ -38,6 +38,7 @@ export default function Home() {
   };
 
   const handleCategoryClick = (category: keyof typeof CATEGORIES) => {
+    if (category === "인기" || category === "최신") return;
     const type = CATEGORIES[category];
     router.push(`/category/${type}`);
   };
