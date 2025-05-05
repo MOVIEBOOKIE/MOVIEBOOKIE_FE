@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Button, StepText } from "@/components";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
+import { formatPhoneNumber } from "@/utils/format-phone";
 
 export default function PhoneStep({
   onNext,
@@ -37,10 +38,14 @@ export default function PhoneStep({
           inputMode="tel"
           placeholder="ex) 010-1234-5678"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => {
+            const formatted = formatPhoneNumber(e.target.value);
+            setPhone(formatted);
+          }}
           className="w-full border-b border-gray-700 bg-transparent pt-4.25 pb-1.5 text-white placeholder-gray-600 focus:outline-none"
         />
       </div>
+
       <div className="mt-auto mb-19">
         <Button
           disabled={!isValidPhone}
