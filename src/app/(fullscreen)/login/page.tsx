@@ -23,8 +23,7 @@ const slides = [
 ];
 
 export default function Login() {
-  const [index, setIndex] = useState(0);
-  const total = slides.length;
+  const [index, _] = useState(0);
   const slide = slides[index];
 
   return (
@@ -60,12 +59,7 @@ export default function Login() {
       </div>
 
       <div className="relative w-full">
-        <button
-          onClick={() =>
-            index < total - 1 ? setIndex((i) => i + 1) : alert("로그인 시작!")
-          }
-          className="body-3-semibold text-gray-850 relative w-full rounded-[16px] bg-[#FEDC00] py-4.5 text-center"
-        >
+        <button className="body-3-semibold text-gray-850 relative w-full rounded-[16px] bg-[#FEDC00] py-4.5 text-center">
           <span className="block text-center">카카오로 로그인</span>
           <KakaoIcon className="absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2" />
         </button>
