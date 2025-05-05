@@ -1,10 +1,30 @@
-export const CATEGORIES = [
-  "인기",
-  "최신",
-  "영화",
-  "드라마",
-  "예능",
-  "스포츠",
-  "콘서트",
-  "그 외",
-] as const;
+export const CATEGORIES = {
+  인기: "popular",
+  최신: "latest",
+  영화: "movie",
+  드라마: "drama",
+  예능: "entertainment",
+  스포츠: "sports",
+  콘서트: "concert",
+  "그 외": "others",
+} as const;
+
+export type CategoryLabel = keyof typeof CATEGORIES; // "인기" | "최신" | ...
+export type CategoryType = (typeof CATEGORIES)[CategoryLabel]; // "popular" | "latest" | ...
+
+// 한글 라벨 배열
+export const CATEGORY_LABELS: CategoryLabel[] = Object.keys(
+  CATEGORIES,
+) as CategoryLabel[];
+
+// 역 매핑 (type ➝ label)
+export const CATEGORY_TYPE_TO_LABEL: Record<CategoryType, CategoryLabel> = {
+  popular: "인기",
+  latest: "최신",
+  movie: "영화",
+  drama: "드라마",
+  entertainment: "예능",
+  sports: "스포츠",
+  concert: "콘서트",
+  others: "그 외",
+};
