@@ -1,10 +1,10 @@
 "use client";
 
+import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
 import ReactPaginate from "react-paginate";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
-  pageCount: number; // 전체 페이지 수
+  pageCount: number;
   currentPage: number; // 현재 페이지 (0부터)
   onPageChange: (selected: number) => void;
 };
@@ -14,6 +14,9 @@ export default function Pagination({
   currentPage,
   onPageChange,
 }: Props) {
+  const isPrevDisabled = currentPage === 0;
+  const isNextDisabled = currentPage === pageCount - 1;
+
   return (
     <ReactPaginate
       forcePage={currentPage}
@@ -21,8 +24,16 @@ export default function Pagination({
       pageCount={pageCount}
       pageRangeDisplayed={5}
       marginPagesDisplayed={1}
-      previousLabel={<ChevronLeft size={16} />}
-      nextLabel={<ChevronRight size={16} />}
+      previousLabel={
+        <ArrowLeftIcon
+          className={isPrevDisabled ? "text-gray-500" : "text-white"}
+        />
+      }
+      nextLabel={
+        <ArrowRightIcon
+          className={isNextDisabled ? "text-gray-500" : "text-white"}
+        />
+      }
       containerClassName="flex justify-center gap-5 mt-7 mb-17 items-center"
       // 전체요소
       pageClassName=""

@@ -12,3 +12,6 @@ export { default as KakaoIcon } from "./ui/kakao.svg";
 export { default as BackIcon } from "./common/back.svg";
 export { default as CloseIcon } from "./common/close.svg";
 export { default as LogoWhiteIcon } from "./common/logo-white.svg";
+export { default as ArrowDownIcon } from "./common/arrow-down.svg";
+export { default as ArrowLeftIcon } from "./common/arrow-left.svg";
+export { default as ArrowRightIcon } from "./common/arrow-right.svg";
