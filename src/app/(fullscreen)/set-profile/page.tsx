@@ -1,8 +1,6 @@
 "use client";
 
-import { Button } from "@/components";
-import Header from "@/components/header";
-import StepHeader from "@/components/step-text";
+import { Button, Header, StepText } from "@/components";
 import DefaultProfileIcon from "@/icons/ui/default-profile.svg";
 
 export default function VerifyFlow() {
@@ -11,7 +9,7 @@ export default function VerifyFlow() {
       <Header title="프로필 설정" showBackButton />
 
       <>
-        <StepHeader
+        <StepText
           stepText="3/3"
           title={
             <>
@@ -35,7 +33,7 @@ export default function VerifyFlow() {
 
             <div className="title-3-semibold mt-4 text-gray-200">카톡이름</div>
             <div className="caption-1-medium mt-1 text-gray-500">
-              @@gmail.com
+              moviebookie@gmail.com
             </div>
             <div className="caption-1-medium mt-1 text-gray-500">
               010-1535-354
@@ -44,12 +42,7 @@ export default function VerifyFlow() {
         </div>
 
         <div className="mt-auto mb-19">
-          <Button
-            //   onClick={() => onNext(emailId)}
-            className="bg-red-main text-white"
-          >
-            확인했어요
-          </Button>
+          <Button className="bg-red-main text-white">확인했어요</Button>
         </div>
       </>
     </div>

@@ -3,58 +3,57 @@
 import { useState } from "react";
 import PhoneStep from "./_components/phone-step";
 import EmailStep from "./_components/email-step";
-import CodeStep from "./_components/code-step";
+import VerifyNumber from "./_components/verify-number";
 import Header from "@/components/header";
 import { useRouter } from "next/navigation";
 
-type Step = "phoneInput" | "phoneVerify" | "emailInput" | "emailVerify";
+enum Step {
+  PhoneInput,
+  PhoneVerify,
+  EmailInput,
+  EmailVerify,
+}
 
-export default function SignupFlow() {
+export default function VerifyFlow() {
   const router = useRouter();
-  const [step, setStep] = useState<Step>("phoneVerify");
+  const [step, setStep] = useState<Step>(Step.PhoneInput);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   return (
     <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
-      <Header
-        title="회원가입"
-        showBackButton
-        // onBack={() => setStepIndex((i) => i - 1)}
-        // showCloseButton
-        // onClose={() => router.push("/")}
-      />
+      <Header title="회원가입" showBackButton />
 
-      {step === "phoneInput" && (
+      {step === Step.PhoneInput && (
         <PhoneStep
           stepText="1/3"
           onNext={(phoneValue) => {
             setPhone(phoneValue);
-            setStep("phoneVerify");
+            setStep(Step.PhoneVerify);
           }}
         />
       )}
 
-      {step === "phoneVerify" && (
-        <CodeStep
+      {step === Step.PhoneVerify && (
+        <VerifyNumber
           stepText="1/3"
           type="문자"
           target={phone}
-          onComplete={() => setStep("emailInput")}
+          onComplete={() => setStep(Step.EmailInput)}
         />
       )}
 
-      {step === "emailInput" && (
+      {step === Step.EmailInput && (
         <EmailStep
           stepText="2/3"
           onNext={(emailValue) => {
             setEmail(emailValue);
-            setStep("emailVerify");
+            setStep(Step.EmailVerify);
           }}
         />
       )}
 
-      {step === "emailVerify" && (
-        <CodeStep
+      {step === Step.EmailVerify && (
+        <VerifyNumber
           stepText="2/3"
           type="이메일"
           target={email}

@@ -1,39 +1,48 @@
-import { Button } from "@/components";
-import StepHeader from "@/components/step-text";
-import { cn } from "@/utils/cn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Button, StepText } from "@/components";
 
-type CodeStepProps = {
+type VerifyNumberProps = {
   type: "문자" | "이메일";
   target: string;
   onComplete: (code: string) => void;
   stepText?: string;
 };
-export default function CodeStep({
+
+export default function VerifyNumber({
   type,
   target,
   onComplete,
   stepText,
-}: CodeStepProps) {
-  const [code, setCode] = useState(["", "", "", ""]);
+}: VerifyNumberProps) {
+  const [code, setCode] = useState(Array(4).fill(""));
 
-  const handleChange = (i: number, value: string) => {
+  //자동 포커스
+  useEffect(() => {
+    const firstInput = document.getElementById(
+      "code-0",
+    ) as HTMLInputElement | null;
+    firstInput?.focus();
+  }, []);
+
+  const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
-    const next = [...code];
-    next[i] = value;
-    setCode(next);
-    if (value && i < 3) {
-      const nextInput = document.getElementById(`code-${i + 1}`);
+
+    const updated = [...code];
+    updated[index] = value;
+    setCode(updated);
+
+    if (value && index < code.length - 1) {
+      const nextInput = document.getElementById(`code-${index + 1}`);
       nextInput?.focus();
     }
   };
 
-  const isComplete = code.every((c) => c.length === 1);
+  const isComplete = code.every((char) => char !== "");
   const fullCode = code.join("");
 
   return (
     <>
-      <StepHeader
+      <StepText
         stepText={stepText}
         title={
           <>
@@ -43,15 +52,17 @@ export default function CodeStep({
         }
         description={<>인증번호가 {target}으로 발송되었어요</>}
       />
+
       <div className="mt-13 flex justify-center gap-2.75">
-        {code.map((digit, i) => (
+        {code.map((char, i) => (
           <input
             key={i}
             id={`code-${i}`}
             type="text"
             inputMode="numeric"
+            autoComplete="off"
             maxLength={1}
-            value={digit}
+            value={char}
             onChange={(e) => handleChange(i, e.target.value)}
             className="title-1-semibold h-19.5 w-16.75 rounded-md bg-gray-900 text-center text-gray-100 focus:outline-none"
           />
@@ -62,9 +73,9 @@ export default function CodeStep({
         <Button
           disabled={!isComplete}
           onClick={() => onComplete(fullCode)}
-          className={cn(
-            isComplete ? "bg-red-main text-white" : "bg-gray-900 text-gray-700",
-          )}
+          className={`${
+            isComplete ? "bg-red-main text-white" : "bg-gray-900 text-gray-700"
+          }`}
         >
           완료
         </Button>

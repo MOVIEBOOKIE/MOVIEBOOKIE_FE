@@ -1,14 +1,14 @@
-type StepHeaderProps = {
+type StepTextProps = {
   stepText?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
 };
 
-export default function StepHeader({
+export default function StepText({
   stepText,
   title,
   description,
-}: StepHeaderProps) {
+}: StepTextProps) {
   return (
     <div className="mb-8">
       {stepText && (

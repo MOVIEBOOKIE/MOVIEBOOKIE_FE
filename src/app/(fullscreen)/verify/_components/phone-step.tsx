@@ -1,5 +1,4 @@
-import { Button } from "@/components";
-import StepHeader from "@/components/step-text";
+import { Button, StepText } from "@/components";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
@@ -15,7 +14,7 @@ export default function PhoneStep({
 
   return (
     <>
-      <StepHeader
+      <StepText
         stepText={stepText}
         title={
           <>
