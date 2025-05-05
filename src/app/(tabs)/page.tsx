@@ -1,6 +1,6 @@
 "use client";
 
-import { SwipeDownIcon } from "icons";
+import { SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,7 @@ export default function Home() {
     router.push(PATHS.SEARCH);
   };
   const handleClick = () => {
-    router.push(PATHS.CATEGORY);
+    router.push(PATHS.CATEGORY.POPULAR);
   };
 
   return (

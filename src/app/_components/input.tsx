@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { SearchIcon } from "icons";
+import { SearchIcon } from "@/icons/index";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: "BUTTON" | "INPUT";

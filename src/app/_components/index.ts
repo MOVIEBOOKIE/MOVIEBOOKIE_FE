@@ -5,3 +5,5 @@ export { default as Input } from "./input";
 export { default as LightEffect } from "./light-effect";
 export { default as Card } from "./main-card";
 export { default as Carousel } from "./carousel";
+export { default as StepHeader } from "./step-header";
+export { default as Header } from "./header";

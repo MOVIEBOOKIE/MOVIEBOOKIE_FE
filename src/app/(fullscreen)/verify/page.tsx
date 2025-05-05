@@ -1,64 +1,64 @@
 "use client";
 
 import { useState } from "react";
-import BackIcon from "@/icons/back.svg";
-import { Button } from "@/components";
-import { cn } from "@/utils/cn";
 import PhoneStep from "./_components/phone-step";
 import EmailStep from "./_components/email-step";
-import CodeStep from "./_components/code-step";
+import VerifyNumber from "./_components/verify-number";
+import Header from "@/components/header";
+import { useRouter } from "next/navigation";
 
-type Step = "phoneInput" | "phoneVerify" | "emailInput" | "emailVerify";
+enum Step {
+  PhoneInput,
+  PhoneVerify,
+  EmailInput,
+  EmailVerify,
+}
 
-export default function SignupFlow() {
-  const [step, setStep] = useState<Step>("phoneInput");
+export default function VerifyFlow() {
+  const router = useRouter();
+  const [step, setStep] = useState<Step>(Step.PhoneInput);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   return (
     <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
-      <header className="relative flex h-12 items-center justify-center">
-        <button className="absolute top-2.5 left-0">
-          <BackIcon className="h-full w-full" />
-        </button>
+      <Header title="회원가입" />
 
-        <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">
-          회원가입
-        </h1>
-      </header>
-
-      {step === "phoneInput" && (
+      {step === Step.PhoneInput && (
         <PhoneStep
+          stepText="1/3"
           onNext={(phoneValue) => {
             setPhone(phoneValue);
-            setStep("phoneVerify");
+            setStep(Step.PhoneVerify);
           }}
         />
       )}
 
-      {step === "phoneVerify" && (
-        <CodeStep
-          type="phone"
+      {step === Step.PhoneVerify && (
+        <VerifyNumber
+          stepText="1/3"
+          type="문자"
           target={phone}
-          onComplete={() => setStep("emailInput")}
+          onComplete={() => setStep(Step.EmailInput)}
         />
       )}
 
-      {step === "emailInput" && (
+      {step === Step.EmailInput && (
         <EmailStep
+          stepText="2/3"
           onNext={(emailValue) => {
             setEmail(emailValue);
-            setStep("emailVerify");
+            setStep(Step.EmailVerify);
           }}
         />
       )}
 
-      {step === "emailVerify" && (
-        <CodeStep
-          type="email"
+      {step === Step.EmailVerify && (
+        <VerifyNumber
+          stepText="2/3"
+          type="이메일"
           target={email}
           onComplete={() => {
-            // 회원가입 완료 or 다음 단계로 이동
-            console.log("가입 완료!");
+            router.push("/set-profile");
           }}
         />
       )}
