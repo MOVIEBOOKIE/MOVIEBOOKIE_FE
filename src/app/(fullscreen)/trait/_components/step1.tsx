@@ -1,6 +1,6 @@
 import { StepHeader } from "@/components";
 import TypeList from "./type-list";
-import { MOOD_MAP } from "@/constants/trait";
+import { MOOD } from "@/constants/trait";
 
 interface Step1Props {
   nickname: string;
@@ -20,7 +20,7 @@ export default function Step1({ nickname }: Step1Props) {
         }
       />
       <div className="flex flex-col gap-2">
-        {Object.entries(MOOD_MAP).map(([key, { icon, text }]) => (
+        {Object.entries(MOOD).map(([key, { icon, text }]) => (
           <TypeList key={key} className="px-3.75 py-4.5">
             {icon}
             <span>{text}</span>
