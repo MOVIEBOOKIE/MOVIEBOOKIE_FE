@@ -31,7 +31,7 @@ export default function Step3({ nickname }: Step3Props) {
             {Object.entries(CONTENT).map(([key, { icon, text }]) => (
               <TypeList
                 key={key}
-                className={`w-full flex-col justify-center py-7.5${
+                className={`w-full flex-col justify-center py-7.5 ${
                   value === key ? "bg-gray-900" : ""
                 }`}
                 onClick={() => onChange(key)}
