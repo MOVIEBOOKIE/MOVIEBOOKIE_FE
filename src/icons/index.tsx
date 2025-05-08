@@ -20,7 +20,7 @@ export { default as SmileIcon } from "./smile.svg";
 export { default as TelevisionIcon } from "./television.svg";
 
 //trait
-export { default as DissinessIcon } from "./trait/dizziness.svg";
+export { default as DizzinessIcon } from "./trait/dizziness.svg";
 export { default as GrinIcon } from "./trait/grin.svg";
 export { default as PartyIcon } from "./trait/party.svg";
 export { default as SadIcon } from "./trait/sad.svg";
