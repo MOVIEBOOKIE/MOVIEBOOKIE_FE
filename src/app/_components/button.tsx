@@ -11,12 +11,20 @@ export default function Button({
   children,
   className,
   variant = "primary",
+  disabled,
   ...props
 }: ButtonProps) {
-  const buttonStyles =
+  const isDisabled = disabled;
+
+  const buttonStyles = cn(
+    "body-3-medium w-full rounded-xl py-4",
     variant === "primary"
       ? "bg-red-main text-gray-white"
-      : "bg-gray-950 text-gray-300";
+      : "bg-gray-950 text-gray-300",
+    isDisabled && "bg-gray-900 text-gray-700 cursor-not-allowed",
+    className,
+  );
+
   return (
     <button
       type="button"
@@ -26,6 +34,7 @@ export default function Button({
         className,
       )}
       {...props}
+      disabled={disabled}
     >
       {children}
     </button>
