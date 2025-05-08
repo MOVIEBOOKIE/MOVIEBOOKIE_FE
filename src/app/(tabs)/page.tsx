@@ -1,6 +1,6 @@
 "use client";
 
-import { SwipeDownIcon } from "icons";
+import { SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";

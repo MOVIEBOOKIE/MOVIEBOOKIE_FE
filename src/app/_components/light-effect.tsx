@@ -1,6 +1,6 @@
 "use client";
 
-import { LightIcon } from "icons";
+import { LightIcon } from "@/icons/index";
 
 export default function LightEffect() {
   return (
