@@ -6,5 +6,5 @@ export default function FullscreenLayout({
 }: {
   children: ReactNode;
 }) {
-  return <>{children}</>;
+  return <main className="h-screen w-full">{children}</main>;
 }
