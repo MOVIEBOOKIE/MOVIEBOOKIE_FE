@@ -42,6 +42,7 @@ export default function ParticipationTab() {
             </div>
           ))
         ) : (
+          //TODO: 임시
           <p className="mt-8 text-center text-gray-500">
             해당하는 이벤트가 없습니다.
           </p>

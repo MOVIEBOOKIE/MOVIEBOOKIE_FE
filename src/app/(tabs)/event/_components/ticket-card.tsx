@@ -1,17 +1,7 @@
 "use client";
 
+import { CardData } from "app/_types/card";
 import Image from "next/image";
-
-interface CardProps {
-  imageUrl: string;
-  category: string;
-  title: string;
-  placeAndDate: string;
-  description?: string;
-  statusBadge?: string;
-  progressRate?: string;
-  estimatedPrice?: string;
-}
 
 export function Card({
   imageUrl,
@@ -21,7 +11,7 @@ export function Card({
   statusBadge,
   progressRate,
   estimatedPrice,
-}: CardProps) {
+}: CardData) {
   return (
     <div className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950">
       <div className="relative h-41.75 w-full overflow-hidden">
