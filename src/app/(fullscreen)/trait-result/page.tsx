@@ -1,9 +1,17 @@
 import { Button } from "@/components";
 import { LogoWhiteIcon } from "@/icons/index";
+import Image from "next/image";
 
 export default function TraitResult() {
   return (
-    <div className="relative flex h-screen w-full justify-center bg-[url('/images/custom-bg.png')] bg-cover bg-center">
+    <div className="relative flex h-screen w-full justify-center">
+      <Image
+        src="/images/custom-bg.png"
+        alt="배경"
+        layout="fill"
+        objectFit="cover"
+        priority
+      />
       <div
         className="absolute top-[22.4%] flex h-74 w-72.25 flex-col items-center rounded-[20px] bg-white/30 pb-4"
         style={{
