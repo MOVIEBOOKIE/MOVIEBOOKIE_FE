@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { MOVIE_LISTS } from "../_mocks/movie-list";
 import { Button, Card, Input, Carousel } from "@/components";
 import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
+import { categoryMap } from "@/constants/category-map";
 
 export default function Home() {
   const router = useRouter();
@@ -34,7 +35,14 @@ export default function Home() {
   };
 
   const handleClick = () => {
-    router.push(PATHS.CATEGORY.POPULAR);
+    if (!selected) return;
+
+    const mapped = categoryMap[selected];
+    if (!mapped) return;
+
+    const upperKey = mapped.toUpperCase() as keyof typeof PATHS.CATEGORY;
+
+    router.push(PATHS.CATEGORY[upperKey]);
   };
 
   const handleCategoryClick = (category: keyof typeof CATEGORIES) => {
@@ -114,7 +122,11 @@ export default function Home() {
             )}
           </div>
         ))}
-        <Button className="mt-6 mb-8.5" onClick={handleClick}>
+        <Button
+          className="mt-6 mb-8.5"
+          variant="secondary"
+          onClick={handleClick}
+        >
           더보기
         </Button>
       </motion.section>

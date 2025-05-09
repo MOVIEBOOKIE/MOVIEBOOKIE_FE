@@ -9,5 +9,9 @@ export const PATHS = {
     RECENT: "/category/recent",
     MOVIE: "/category/movie",
     DRAMA: "/category/drama",
+    ENTERTAINMENT: "/category/entertainment",
+    CONCERT: "/category/concert",
+    SPORTS: "/category/sports",
+    ETC: "/category/etc",
   },
 } as const;
