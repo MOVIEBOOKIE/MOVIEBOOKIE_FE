@@ -26,7 +26,7 @@ export default function Pagination({
       marginPagesDisplayed={1}
       previousLabel={<ArrowLeftIcon className="h-5 w-5 py-0.5" />}
       nextLabel={<ArrowRightIcon className="h-5 w-5 py-0.5" />}
-      containerClassName="flex justify-center gap-5 mt-7 mb-17 items-center"
+      containerClassName="flex justify-center gap-5 mt-6 items-center"
       pageLinkClassName="flex items-center justify-center body-3-medium leading-none text-gray-500 px-2 cursor-pointer"
       activeLinkClassName="text-white body-3-medium"
       previousLinkClassName="flex items-center justify-center leading-none text-white body-3-medium cursor-pointer"

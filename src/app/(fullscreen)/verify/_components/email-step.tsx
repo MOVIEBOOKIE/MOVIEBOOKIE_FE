@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, StepHeader } from "@/components";
 import { cn } from "@/utils/cn";
-import ArrowDownIcon from "@/icons/common/arrow-down.svg";
+import { ArrowDownIcon } from "@/icons/index";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
 

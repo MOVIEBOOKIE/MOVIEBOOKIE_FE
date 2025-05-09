@@ -2,19 +2,8 @@
 
 import { Card, Header } from "@/components";
 import Pagination from "@/components/pagination";
+import { CardData } from "app/_types/card";
 import { useState } from "react";
-
-type CardData = {
-  imageUrl: string;
-  category: string;
-  title: string;
-  placeAndDate: string;
-  description?: string;
-  ddayBadge?: string;
-  statusBadge?: string;
-  progressRate?: string;
-  estimatedPrice?: string;
-};
 
 export default function CategoryPageClient({
   label,
@@ -30,13 +19,13 @@ export default function CategoryPageClient({
   const paginated = cards.slice(start, start + itemsPerPage);
 
   return (
-    <div className="flex min-h-screen flex-col px-5 pt-11 text-white">
+    <div className="flex min-h-screen flex-col px-5 pt-11 pb-18 text-white">
       <Header title={label} />
 
-      <div className="mt-6 flex flex-col">
+      <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
         {paginated.length > 0 ? (
           paginated.map((card, idx) => (
-            <div key={idx}>
+            <div key={idx} className="relative">
               <Card {...card} />
               {idx < paginated.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
@@ -50,11 +39,13 @@ export default function CategoryPageClient({
         )}
       </div>
 
-      <Pagination
-        pageCount={Math.ceil(cards.length / itemsPerPage)}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div className="w-full">
+        <Pagination
+          pageCount={Math.ceil(cards.length / itemsPerPage)}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </div>
   );
 }
