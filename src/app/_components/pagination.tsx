@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 
 type Props = {
   pageCount: number;
-  currentPage: number; // 현재 페이지 (0부터)
+  currentPage: number; // 현재 페이지 (0부터 시작)
   onPageChange: (selected: number) => void;
 };
 
@@ -14,36 +14,25 @@ export default function Pagination({
   currentPage,
   onPageChange,
 }: Props) {
-  const isPrevDisabled = currentPage === 0;
-  const isNextDisabled = currentPage === pageCount - 1;
-
   return (
     <ReactPaginate
       forcePage={currentPage}
-      onPageChange={(selected) => onPageChange(selected.selected)}
+      onPageChange={(selected) => {
+        onPageChange(selected.selected);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
       pageCount={pageCount}
       pageRangeDisplayed={5}
       marginPagesDisplayed={1}
-      previousLabel={
-        <ArrowLeftIcon
-          className={isPrevDisabled ? "text-gray-500" : "text-white"}
-        />
-      }
-      nextLabel={
-        <ArrowRightIcon
-          className={isNextDisabled ? "text-gray-500" : "text-white"}
-        />
-      }
+      previousLabel={<ArrowLeftIcon className="h-5 w-5 py-0.5" />}
+      nextLabel={<ArrowRightIcon className="h-5 w-5 py-0.5" />}
       containerClassName="flex justify-center gap-5 mt-7 mb-17 items-center"
-      // 전체요소
-      pageClassName=""
-      // <a> 요소 (숫자 포함 버튼)
-      pageLinkClassName="flex items-center justify-center body-3-medium leading-none text-gray-500 px-2"
-      //  활성화된 <a>
+      pageLinkClassName="flex items-center justify-center body-3-medium leading-none text-gray-500 px-2 cursor-pointer"
       activeLinkClassName="text-white body-3-medium"
-      // 이전/다음 버튼 (<a> 요소)
-      previousLinkClassName="flex items-center justify-center leading-none text-gray-500 body-3-medium px-2"
-      nextLinkClassName="flex items-center justify-center leading-none text-gray-500 body-3-medium px-2"
+      previousLinkClassName="flex items-center justify-center leading-none text-white body-3-medium cursor-pointer"
+      nextLinkClassName="flex items-center justify-center leading-none text-white body-3-medium cursor-pointer"
+      disabledClassName="pointer-events-none"
+      disabledLinkClassName="text-gray-700 opacity-50 cursor-default"
     />
   );
 }

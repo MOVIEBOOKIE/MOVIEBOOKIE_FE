@@ -45,7 +45,7 @@ export default function CategoryPageClient({
           ))
         ) : (
           <p className="mt-8 text-center text-gray-500">
-            등록된 영화가 없습니다.
+            등록된 이벤트가 없습니다.
           </p>
         )}
       </div>
