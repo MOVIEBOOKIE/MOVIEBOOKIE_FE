@@ -24,7 +24,7 @@ export default function EventPage() {
 
       <section className="relative mt-5 overflow-hidden rounded-xl">
         <img
-          src="/event-banner.png"
+          src="/images/event-banner.png"
           alt="이벤트 배너"
           className="absolute inset-0 h-full w-full object-cover"
         />
