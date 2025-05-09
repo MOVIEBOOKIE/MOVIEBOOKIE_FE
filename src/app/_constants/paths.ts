@@ -10,6 +10,7 @@ export const PATHS = {
     MOVIE: "/category/movie",
     DRAMA: "/category/drama",
     ENTERTAINMENT: "/category/entertainment",
+    CONCERT: "/category/concert",
     SPORTS: "/category/sports",
     ETC: "/category/etc",
   },
