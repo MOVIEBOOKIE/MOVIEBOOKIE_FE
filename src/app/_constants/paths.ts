@@ -14,4 +14,5 @@ export const PATHS = {
     SPORTS: "/category/sports",
     ETC: "/category/etc",
   },
+  TRAIT_RESULT: "/trait-result",
 } as const;

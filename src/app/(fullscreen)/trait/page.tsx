@@ -7,8 +7,11 @@ import Step1 from "./_components/step1";
 import Step2 from "./_components/step2";
 import Step3 from "./_components/step3";
 import { useForm, FormProvider } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { PATHS } from "@/constants";
 
 export default function Trait() {
+  const router = useRouter();
   const [step, setStep] = useState(0);
   const methods = useForm({
     defaultValues: { mood: "", criterion: "", content: "" },
@@ -21,6 +24,7 @@ export default function Trait() {
 
   const onSubmit = methods.handleSubmit((data) => {
     console.log("제출된 데이터:", data);
+    router.push(PATHS.TRAIT_RESULT);
   });
 
   const mood = methods.watch("mood");
