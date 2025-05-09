@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { BackIcon, CloseIcon } from "@/icons/index";
+import { cn } from "@/utils/cn";
 
 /**
  * 공통 Header 컴포넌트
@@ -20,6 +21,7 @@ type HeaderProps = {
   onBack?: () => void;
   showCloseButton?: boolean;
   onClose?: () => void;
+  className?: string;
 };
 
 export default function Header({
@@ -27,6 +29,7 @@ export default function Header({
   onBack,
   showCloseButton = false,
   onClose,
+  className,
 }: HeaderProps) {
   const router = useRouter();
 
@@ -41,11 +44,17 @@ export default function Header({
   };
 
   return (
-    <header className="relative flex h-12 items-center justify-center">
+    <header
+      className={cn(
+        "relative flex h-12 w-full items-center justify-center",
+        className,
+      )}
+    >
       <button
-        className="absolute top-2.5 left-0"
+        className="absolute top-2.5 left-2.5"
         onClick={handleBack}
         aria-label="뒤로가기"
+        type="button"
       >
         <BackIcon className="h-full w-full" />
       </button>
