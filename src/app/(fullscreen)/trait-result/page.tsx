@@ -1,8 +1,13 @@
 import { Button } from "@/components";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function TraitResult() {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/");
+  };
   return (
     <div className="relative flex h-screen w-full justify-center">
       <Image
@@ -35,7 +40,7 @@ export default function TraitResult() {
         <LogoWhiteIcon width={30} height={30} />
       </div>
       <div className="absolute bottom-0 w-full max-w-125 px-5 pb-19">
-        <Button>무비부키 시작하기</Button>
+        <Button onClick={handleClick}>무비부키 시작하기</Button>
       </div>
     </div>
   );
