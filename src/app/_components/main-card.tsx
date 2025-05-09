@@ -38,14 +38,14 @@ export default function Card({
 
         {(ddayBadge || statusBadge) && (
           <div className="absolute top-1.5 left-1.5 flex h-6 items-center gap-1">
-            {ddayBadge && (
-              <div className="caption-1-medium bg-red-main rounded-md px-1.5 py-1 text-white">
-                {ddayBadge}
-              </div>
-            )}
             {statusBadge && (
               <div className="caption-1-medium rounded-md bg-gray-950 px-1.5 py-1 text-white">
                 {statusBadge}
+              </div>
+            )}
+            {ddayBadge && (
+              <div className="caption-1-medium bg-red-main rounded-md px-1.5 py-1 text-white">
+                {ddayBadge}
               </div>
             )}
           </div>
