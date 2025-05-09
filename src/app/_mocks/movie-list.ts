@@ -4,7 +4,8 @@ export const MOVIE_LISTS = [
     category: "액션",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
-    description: "디스토피아 속 인간과 복제인의 경계",
+    description:
+      "디스토피아 속 인간과 복제인의 경계디스토피아 속 인간과 복제인의 경계디스토피아 속 인간과 복제인의 경계",
     ddayBadge: "D-3",
     statusBadge: "모집중",
     progressRate: "75%",
@@ -15,7 +16,8 @@ export const MOVIE_LISTS = [
     category: "SF",
     title: "인터스텔라",
     placeAndDate: "메가박스 코엑스 | 2025.05.10",
-    description: "시간과 공간을 넘는 감동적인 여정",
+    description:
+      "시간과 공간을 넘는 감동적인 여정시간과 공간을 넘는 감동적인 여정시간과 공간을 넘는 감동적인 여정",
     ddayBadge: "D-1",
     statusBadge: "모집완료",
     progressRate: "90%",
