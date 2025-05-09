@@ -6,7 +6,11 @@ import {
   TelevisionIcon,
 } from "@/icons/index";
 
-export default function Step0() {
+interface Step0Props {
+  nickname: string;
+}
+
+export default function Step0({ nickname }: Step0Props) {
   return (
     <div className="relative w-93.75">
       <TelevisionIcon className="absolute top-27.5 left-27.5 rotate-13" />
@@ -15,7 +19,7 @@ export default function Step0() {
       <BallIcon className="absolute top-42.5 left-41" />
       <CamcorderIcon className="absolute top-49.5 left-56.5" />
       <p className="title-1-bold text-gray-white absolute top-88 w-full text-center">
-        규빈님을 위해 <br />
+        {nickname}님을 위해 <br />
         간단한 테스트를 준비했어요
       </p>
       <p className="caption-1-medium absolute top-110.5 w-full text-center text-gray-500">

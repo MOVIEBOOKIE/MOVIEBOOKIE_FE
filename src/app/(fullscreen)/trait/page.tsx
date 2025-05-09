@@ -40,7 +40,7 @@ export default function Trait() {
         onSubmit={onSubmit}
         className="relative mx-5 flex h-full flex-col items-center"
       >
-        {step === 0 && <Step0 />}
+        {step === 0 && <Step0 nickname={nickname} />}
         {step === 1 && <Step1 nickname={nickname} />}
         {step === 2 && <Step2 />}
         {step === 3 && <Step3 nickname={nickname} />}
