@@ -1,7 +1,9 @@
+"use client";
+
 import { Button } from "@/components";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function TraitResult() {
   const router = useRouter();
