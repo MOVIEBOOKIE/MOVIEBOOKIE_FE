@@ -28,11 +28,7 @@ export default function Button({
   return (
     <button
       type="button"
-      className={cn(
-        "body-3-medium w-full rounded-xl py-4",
-        buttonStyles,
-        className,
-      )}
+      className={buttonStyles}
       {...props}
       disabled={disabled}
     >
