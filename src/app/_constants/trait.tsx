@@ -54,19 +54,19 @@ export const CRITERION: Record<
   },
   REVIEW: {
     icon: <SpeechBubbleIcon />,
-    text: "누군가랑 웃고 수다 떨고 싶어요",
+    text: "후기도 꼼꼼히 보고, 평점이 높은 위주로 봐요",
   },
   DISCUSS: {
     icon: <SpeakingIcon />,
-    text: "매일이 새롭고 행복해요",
+    text: "함께 보고 각자 감상을 나누는걸 좋아해요",
   },
   FIRED_TAG: {
     icon: <FireIcon />,
-    text: "한가하고, 마음도 꽤 여유로워요",
+    text: "요즘 핫한 작품은 놓칠 수 없어요",
   },
   HOT_TREND: {
     icon: <TargetIcon />,
-    text: "한가하고, 마음도 꽤 여유로워요",
+    text: "친구들이 추천한 작품들은 무조건 챙겨봐요",
   },
 };
 
