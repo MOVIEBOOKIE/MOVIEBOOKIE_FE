@@ -1,18 +1,24 @@
 "use client";
 
-import { Card } from "@/components";
-import React, { useState } from "react";
+import { useState } from "react";
+import RecruitmentTab from "./_components/recruitment-tab";
+import ParticipationTab from "./_components/participation-tab";
 
 export default function EventPage() {
-  const [selected, setSelected] = useState<"신청" | "확정">("신청");
+  const [topTab, setTopTab] = useState<"모집" | "참여" | "티켓">("모집");
 
   return (
     <div className="min-h-screen px-5 pb-24 text-white">
-      {/* 탭 메뉴 */}
       <nav className="title-1-semibold flex gap-5 pt-16.75 pb-3 text-start">
-        <span className="text-white">모집</span>
-        <span className="text-gray-600">참여</span>
-        <span className="text-gray-600">티켓</span>
+        {(["모집", "참여", "티켓"] as const).map((tab) => (
+          <span
+            key={tab}
+            onClick={() => setTopTab(tab)}
+            className={`${topTab === tab ? "text-gray-100" : "text-gray-800"}`}
+          >
+            {tab}
+          </span>
+        ))}
       </nav>
 
       <section className="relative mt-5 overflow-hidden rounded-xl">
@@ -32,64 +38,9 @@ export default function EventPage() {
         </div>
       </section>
 
-      <div className="mt-5">
-        <div className="flex h-12 rounded-xl bg-gray-950 p-1">
-          <button
-            onClick={() => setSelected("신청")}
-            className={`body-3-semibold flex-1 rounded-xl px-4 py-2 ${
-              selected === "신청" ? "bg-gray-900 text-white" : "text-gray-800"
-            }`}
-          >
-            신청 이벤트
-          </button>
-          <button
-            onClick={() => setSelected("확정")}
-            className={`body-3-semibold flex-1 rounded-xl px-4 py-2 ${
-              selected === "확정" ? "bg-gray-900 text-white" : "text-gray-800"
-            }`}
-          >
-            확정 이벤트
-          </button>
-        </div>
-      </div>
-
-      {/* 카드 리스트 */}
-      <div className="mt-6 space-y-6">
-        {" "}
-        <Card
-          imageUrl="/image.png"
-          category="SF"
-          title="인터스텔라"
-          placeAndDate="메가박스 코엑스 | 2025.05.10"
-          description="시간과 공간을 넘는 감동적인 여정"
-          ddayBadge="D-1"
-          statusBadge="예매 마감"
-          progressRate="90%"
-          estimatedPrice="14,000원"
-        />
-        <Card
-          imageUrl="/image.png"
-          category="SF"
-          title="인터스텔라"
-          placeAndDate="메가박스 코엑스 | 2025.05.10"
-          description="시간과 공간을 넘는 감동적인 여정"
-          ddayBadge="D-1"
-          statusBadge="예매 마감"
-          progressRate="90%"
-          estimatedPrice="14,000원"
-        />
-        <Card
-          imageUrl="/image.png"
-          category="SF"
-          title="인터스텔라"
-          placeAndDate="메가박스 코엑스 | 2025.05.10"
-          description="시간과 공간을 넘는 감동적인 여정"
-          ddayBadge="D-1"
-          statusBadge="예매 마감"
-          progressRate="90%"
-          estimatedPrice="14,000원"
-        />
-      </div>
+      {topTab === "모집" && <RecruitmentTab />}
+      {topTab === "참여" && <ParticipationTab />}
+      {/* {topTab === "티켓" && <TicketTab/>} */}
     </div>
   );
 }

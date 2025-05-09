@@ -9,7 +9,7 @@ interface CardProps {
   title: string;
   placeAndDate: string;
   description?: string;
-  ddayBadge?: string;
+  ddayBadge?: string | null;
   statusBadge?: string;
   progressRate?: string;
   estimatedPrice?: string;
@@ -27,7 +27,7 @@ export default function Card({
   estimatedPrice,
 }: CardProps) {
   return (
-    <div className="relative flex h-30 w-full gap-3 px-1.25">
+    <div className="relative flex h-30 w-full gap-3">
       <div className="relative h-30 w-30 overflow-hidden rounded-md">
         <Image
           src={imageUrl}
