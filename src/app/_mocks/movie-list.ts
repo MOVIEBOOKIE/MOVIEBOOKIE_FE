@@ -26,7 +26,8 @@ export const MOVIE_LISTS = [
     category: "코미디",
     title: "극한직업",
     placeAndDate: "롯데시네마 홍대 | 2025.05.15",
-    description: "치킨집 위장수사 코미디",
+    description:
+      "치킨집 위장수사 코미디치킨집 위장수사 코미디치킨집 위장수사 코미디치킨집 위장수사 코미디치킨집 위장수사 코미디치킨집 위장수사 코미디치킨집 위장수사 코미디",
     ddayBadge: "D-6",
     statusBadge: "대관확정",
     progressRate: "60%",

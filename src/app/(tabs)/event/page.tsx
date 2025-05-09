@@ -3,6 +3,7 @@
 import { useState } from "react";
 import RecruitmentTab from "./_components/recruitment-tab";
 import ParticipationTab from "./_components/participation-tab";
+import TicketTab from "./_components/ticket-tab";
 
 export default function EventPage() {
   const [topTab, setTopTab] = useState<"모집" | "참여" | "티켓">("모집");
@@ -40,7 +41,7 @@ export default function EventPage() {
 
       {topTab === "모집" && <RecruitmentTab />}
       {topTab === "참여" && <ParticipationTab />}
-      {/* {topTab === "티켓" && <TicketTab/>} */}
+      {topTab === "티켓" && <TicketTab />}
     </div>
   );
 }

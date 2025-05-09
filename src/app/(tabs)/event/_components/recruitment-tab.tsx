@@ -23,7 +23,7 @@ export default function RecruitmentTab() {
         onSelect={(selected) => setSelected(selected as "모집" | "확정")}
       />
 
-      <div className="mt-6 flex flex-col space-y-4">
+      <div className="mt-6 flex flex-col">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event, index) => (
             <div key={index}>
