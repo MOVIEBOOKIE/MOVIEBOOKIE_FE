@@ -1,7 +1,8 @@
 "use client";
 
-//TODO: setTimeout 3초
 import { LogoWhiteIcon } from "@/icons/index";
+
+//TODO: setTimeout 3초
 export default function Intro() {
   return (
     <main className="relative h-screen w-full bg-[url('/images/custom-bg.png')] bg-cover bg-center">
