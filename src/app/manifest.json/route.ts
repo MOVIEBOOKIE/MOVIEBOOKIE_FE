@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { NextResponse } from "next/server";
 
-export default function manifest(): MetadataRoute.Manifest {
-  return {
+export async function GET() {
+  return NextResponse.json({
     name: "무비부키",
     short_name: "무비부키",
     description: "당신의 일상을 영화처럼",
@@ -16,5 +17,5 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
     ],
-  };
+  });
 }

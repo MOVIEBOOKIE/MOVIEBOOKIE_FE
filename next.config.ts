@@ -12,6 +12,9 @@ const nextConfig = {
   outputFileTracingRoot: path.resolve(__dirname),
   output: "standalone",
   outputFileTracing: true,
+  images: {
+    domains: ["localhost"],
+  },
 };
 
 module.exports = withSvgr(withPWA(nextConfig));
