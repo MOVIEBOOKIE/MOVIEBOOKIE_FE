@@ -1,9 +1,17 @@
+const path = require("path");
 const withPWA = require("next-pwa")({
   dest: "public",
+  disable: process.env.NODE_ENV === "development",
 });
 
 const withSvgr = require("next-svgr");
 
-const nextConfig = { trailingSlash: true };
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  trailingSlash: true,
+  outputFileTracingRoot: path.resolve(__dirname),
+  output: "standalone",
+  outputFileTracing: true,
+};
 
 module.exports = withSvgr(withPWA(nextConfig));
