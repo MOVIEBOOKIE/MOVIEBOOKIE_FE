@@ -2,9 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/app/(tabs)/page.tsx",
+      "src": "next.config.js",
       "use": "@vercel/next"
     }
-  ],
-  "routes": [{ "src": "/(tabs)/(.*)", "dest": "/(tabs)/$1" }]
+  ]
 }
