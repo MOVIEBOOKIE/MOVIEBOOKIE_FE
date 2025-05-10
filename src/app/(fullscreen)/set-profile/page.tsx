@@ -3,14 +3,17 @@
 import { Button, Header, StepHeader } from "@/components";
 import FixedLayout from "@/components/fixedlayout";
 import { DefaultProfileIcon } from "@/icons/index";
+import { useRouter } from "next/navigation";
 
 export default function VerifyFlow() {
+  const router = useRouter();
+
   return (
     <FixedLayout
       title="프로필 설정"
-      // onButtonClick={() => {
-      //   // router.push('/유형테스트');
-      // }}
+      onButtonClick={() => {
+        router.push(`/trait`);
+      }}
       buttonText="확인했어요"
     >
       <StepHeader
