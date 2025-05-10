@@ -10,7 +10,7 @@ export default function StepHeader({
   description,
 }: StepHeaderProps) {
   return (
-    <div className="mb-8">
+    <div>
       {StepHeader && (
         <p className="body-1-semibold mt-9.25 text-gray-400">{StepHeader}</p>
       )}

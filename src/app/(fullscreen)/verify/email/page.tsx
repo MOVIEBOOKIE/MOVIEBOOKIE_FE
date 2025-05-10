@@ -1,29 +1,34 @@
+"use client";
+
 import { useState } from "react";
-import { Button, StepHeader } from "@/components";
-import { cn } from "@/utils/cn";
 import { ArrowDownIcon } from "@/icons/index";
+import { useRouter } from "next/navigation";
+import FixedLayout from "@/components/fixedlayout";
+import { StepHeader } from "@/components";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
 
-export default function EmailStep({
-  onNext,
-  stepText,
-}: {
-  onNext: (email: string) => void;
-  stepText: string;
-}) {
-  const [emailId, setEmailId] = useState("");
+export default function EmailStep() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const isValidEmail = /^[a-zA-Z0-9._%+-]+$/.test(emailId);
-  const fullEmail = `${emailId}@${emailDomain}`;
+  const isValidEmail = /^[a-zA-Z0-9._%+-]+$/.test(email);
+  const fullEmail = `${email}@${emailDomain}`;
   const otherDomain = EMAIL_DOMAINS.find((d) => d !== emailDomain)!;
 
   return (
-    <>
+    <FixedLayout
+      title="회원가입"
+      isButtonDisabled={!isValidEmail}
+      onButtonClick={() => {
+        router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
+      }}
+    >
       <StepHeader
-        StepHeader={stepText}
+        StepHeader="2/3"
         title={
           <>
             자주 사용하는 이메일을 <br />
@@ -44,8 +49,8 @@ export default function EmailStep({
           <input
             type="text"
             placeholder="ex) moviebookie"
-            value={emailId}
-            onChange={(e) => setEmailId(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
             className="w-43.25 border-b border-gray-700 bg-transparent pb-1.5 text-gray-100 placeholder-gray-600 focus:outline-none"
           />
@@ -79,20 +84,6 @@ export default function EmailStep({
           </div>
         </div>
       </div>
-
-      <div className="mt-auto mb-19">
-        <Button
-          disabled={!isValidEmail}
-          onClick={() => onNext(fullEmail)}
-          className={cn(
-            isValidEmail
-              ? "bg-red-main text-white"
-              : "bg-gray-900 text-gray-700",
-          )}
-        >
-          인증번호 보내기
-        </Button>
-      </div>
-    </>
+    </FixedLayout>
   );
 }
