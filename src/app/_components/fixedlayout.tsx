@@ -6,11 +6,13 @@ import { Button } from "@/components";
 import { cn } from "@/utils/cn";
 
 type FixedLayoutProps = {
-  title: string;
+  title?: string;
   children: ReactNode;
   isButtonDisabled?: boolean;
   buttonText?: string;
   onButtonClick?: () => void;
+  showCloseButton?: boolean;
+  onClose?: () => void;
 };
 
 export default function FixedLayout({
@@ -19,14 +21,20 @@ export default function FixedLayout({
   isButtonDisabled = false,
   buttonText = "다음",
   onButtonClick,
+  showCloseButton = false,
+  onClose,
 }: FixedLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col px-5 pt-30 text-white">
-      <Header title={title} />
+      <Header
+        title={title}
+        showCloseButton={showCloseButton}
+        onClose={onClose}
+      />
 
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 pb-30">{children}</div>
 
-      <div className="mt-auto mb-19">
+      <div className="pt-auto bg-gray-black fixed bottom-0 left-0 z-50 w-full px-5 pt-2 pb-19">
         <Button
           disabled={isButtonDisabled}
           onClick={onButtonClick}

@@ -32,7 +32,7 @@ export default function VerifyFlow() {
         }
       />
 
-      <div className="mt-17">
+      <div className="mt-14">
         <div className="flex flex-col items-center">
           <div className="border-red-main flex h-31.75 w-31.75 items-center justify-center rounded-full border-2">
             <DefaultProfileIcon className="h-28 w-28 rounded-full" />
