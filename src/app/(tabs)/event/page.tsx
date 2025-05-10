@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import RecruitmentTab from "./_components/recruitment-tab";
-import ParticipationTab from "./_components/participation-tab";
+import { IMAGE_PATHS, STATUS_MAP } from "@/constants/event-tab";
+import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 
 export default function EventPage() {
@@ -24,7 +24,7 @@ export default function EventPage() {
 
       <section className="relative mt-5 overflow-hidden rounded-xl">
         <img
-          src="/images/event-banner.png"
+          src={IMAGE_PATHS.EVENT_BANNER}
           alt="이벤트 배너"
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -39,8 +39,13 @@ export default function EventPage() {
         </div>
       </section>
 
-      {topTab === "모집" && <RecruitmentTab />}
-      {topTab === "참여" && <ParticipationTab />}
+      {topTab === "모집" && (
+        <EventTab type="모집" statusMap={STATUS_MAP.RECRUITMENT} />
+      )}
+      {topTab === "참여" && (
+        <EventTab type="참여" statusMap={STATUS_MAP.PARTICIPATION} />
+      )}
+
       {topTab === "티켓" && <TicketTab />}
     </div>
   );
