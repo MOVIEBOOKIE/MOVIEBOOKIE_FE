@@ -2,8 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "next.config.js",
+      "src": "src/app/(tabs)/page.tsx",
       "use": "@vercel/next"
+    },
+    {
+      "src": "src/app/page.tsx",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "next.config.js",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(tabs)/(.*)",
+      "destination": "/(tabs)/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
