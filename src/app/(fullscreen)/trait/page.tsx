@@ -9,6 +9,7 @@ import Step3 from "./_components/step3";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
+import FixedLayout from "@/components/fixedlayout";
 
 export default function Trait() {
   const router = useRouter();
@@ -36,37 +37,32 @@ export default function Trait() {
     (step === 2 && !criterion) ||
     (step === 3 && !content);
 
+  const isLastStep = step === 3;
+  const buttonText = isLastStep ? "제출하기" : "다음";
   const nickname = "규빈";
-
-  const handleBack = () => {
-    if (step >= 1) {
-      setStep(step - 1);
-    }
-    console.log("dk");
-  };
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={onSubmit}
-        className="relative mx-5 flex flex-col items-center"
-      >
-        <Header onBack={handleBack} className="bg-gray-black fixed w-full" />
-        <div className="mt-12.5 mb-38 w-full flex-grow overflow-y-auto">
-          {step === 0 && <Step0 nickname={nickname} />}
-          {step === 1 && <Step1 nickname={nickname} />}
-          {step === 2 && <Step2 />}
-          {step === 3 && <Step3 nickname={nickname} />}
-        </div>
-        <div className="bg-gray-black fixed bottom-0 w-full max-w-125 px-5 pt-5 pb-19">
-          <Button
-            type={step === 3 ? "submit" : "button"}
-            onClick={step < 3 ? handleClick : undefined}
-            disabled={isButtonDisabled}
-          >
-            {step === 0 ? " 시작하기" : "다음"}
-          </Button>
-        </div>
+      <form onSubmit={onSubmit} className="relative flex flex-col">
+        <FixedLayout
+          title="회원가입"
+          buttonText={buttonText}
+          onButtonClick={() => {
+            if (isLastStep) {
+              onSubmit();
+            } else {
+              handleClick();
+            }
+          }}
+          isButtonDisabled={isButtonDisabled}
+        >
+          <div className="mb-28 w-full flex-grow overflow-y-auto">
+            {step === 0 && <Step0 nickname={nickname} />}
+            {step === 1 && <Step1 nickname={nickname} />}
+            {step === 2 && <Step2 />}
+            {step === 3 && <Step3 nickname={nickname} />}
+          </div>
+        </FixedLayout>
       </form>
     </FormProvider>
   );
