@@ -4,10 +4,10 @@ import { SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { MOVIE_LISTS } from "../_mocks/movie-list";
 import { Button, Card, Input, Carousel } from "@/components";
 import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
+import { MOVIE_LISTS } from "@/mocks/movie-list";
 
 export default function Home() {
   const router = useRouter();
