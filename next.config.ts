@@ -10,7 +10,10 @@ const withSvgr = require("next-svgr");
 const nextConfig = {
   trailingSlash: true,
   outputFileTracingRoot: path.resolve(__dirname),
-  output: "standalone",
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
 };
 
 module.exports = withSvgr(withPWA(nextConfig));

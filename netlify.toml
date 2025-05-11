@@ -1,0 +1,8 @@
+[build]
+  publish = "out"
+  command = "next build && next export"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
