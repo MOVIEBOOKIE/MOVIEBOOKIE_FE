@@ -4,6 +4,7 @@ const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
   register: true,
   skipWaiting: true,
+  buildExcludes: [/middleware-manifest.json$/],
 });
 
 const withSvgr = require("next-svgr");
@@ -16,6 +17,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: process.env.NODE_ENV === "production" ? "" : "",
+  assetPrefix: process.env.NODE_ENV === "production" ? "" : "",
 };
 
 module.exports = withSvgr(withPWA(nextConfig));
