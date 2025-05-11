@@ -4,6 +4,16 @@ import { notFound } from "next/navigation";
 import { MOVIE_LISTS } from "@/mocks/movie-list";
 import CategoryPageClient from "./client";
 
+export const dynamic = "force-static"; // 정적 페이지 강제 생성
+
+export async function generateStaticParams() {
+  const categories = ["movies", "dramas", "shows", "concerts"]; // 가능한 카테고리 목록
+
+  return categories.map((category) => ({
+    category,
+  }));
+}
+
 export default function CategoryPage(props: {
   params: Promise<{ category: string }>;
 }) {
