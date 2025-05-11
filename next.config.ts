@@ -10,7 +10,7 @@ const withSvgr = require("next-svgr");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: false,
+  trailingSlash: true,
   outputFileTracingRoot: path.resolve(__dirname),
   output: "export",
   images: {
