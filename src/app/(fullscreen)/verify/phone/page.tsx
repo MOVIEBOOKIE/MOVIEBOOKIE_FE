@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/header";
 import { useRouter } from "next/navigation";
-import { Button, StepHeader } from "@/components";
+import { StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
-import { cn } from "@/utils/cn";
 import FixedLayout from "@/components/fixedlayout";
 
 export default function PhoneStep() {
