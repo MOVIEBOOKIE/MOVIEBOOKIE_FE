@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Button } from "@/components";
 import { KakaoIcon } from "@/icons/index";
-import { slides } from "app/data/login-slides";
+import { slides } from "@/constants/login-slides";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -58,7 +58,7 @@ export default function Login() {
             router.push("/login/kakao");
           }}
         >
-          <KakaoIcon className="absolute left-4 h-6 w-6" />
+          <KakaoIcon className="absolute left-4 h-6 w-6 pt-1" />
           카카오로 로그인
         </Button>
       </div>
