@@ -8,7 +8,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({ type, className, ...props }: InputProps) {
   const inputClass = cn(
-    "body-2-medium w-full h-full placeholder:text-gray-800 pl-4 text-gray-100 text-start focus:outline-none",
+    "body-2-medium w-full h-full placeholder:text-gray-800 pl-4 text-gray-800 text-start focus:outline-none",
+    type === "INPUT" ? "focus:text-gray-100" : "",
     className,
   );
 

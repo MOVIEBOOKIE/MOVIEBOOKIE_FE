@@ -11,7 +11,3 @@ export const STATUS_MAP = {
     티켓: ["대관확정", "상영완료"],
   },
 };
-
-export const IMAGE_PATHS = {
-  EVENT_BANNER: "/images/event-banner.png",
-};

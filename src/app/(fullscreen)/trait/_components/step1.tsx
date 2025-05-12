@@ -13,7 +13,8 @@ export default function Step1({ nickname }: Step1Props) {
   const { control } = useFormContext();
 
   return (
-    <div className="mt-8 w-full">
+    <>
+      {" "}
       <StepHeader
         StepHeader="1/3"
         title={
@@ -44,6 +45,6 @@ export default function Step1({ nickname }: Step1Props) {
           </div>
         )}
       />
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IMAGE_PATHS, STATUS_MAP } from "@/constants/event-tab";
+import { STATUS_MAP, PATH_IMAGES } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 
@@ -24,7 +24,7 @@ export default function EventPage() {
 
       <section className="relative mt-5 overflow-hidden rounded-xl">
         <img
-          src={IMAGE_PATHS.EVENT_BANNER}
+          src={PATH_IMAGES.EVENT_BANNER}
           alt="이벤트 배너"
           className="absolute inset-0 h-full w-full object-cover"
         />
