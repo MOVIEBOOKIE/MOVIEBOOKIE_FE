@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
+import { PATH_IMAGES } from "./_constants";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

@@ -1,22 +1,25 @@
-import { useState } from "react";
-import { Button, StepHeader } from "@/components";
-import { cn } from "@/utils/cn";
-import { formatPhoneNumber } from "@/utils/format-phone";
+"use client";
 
-export default function PhoneStep({
-  onNext,
-  stepText,
-}: {
-  onNext: (phone: string) => void;
-  stepText: string;
-}) {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { StepHeader } from "@/components";
+import { formatPhoneNumber } from "@/utils/format-phone";
+import FixedLayout from "@/components/fixedlayout";
+
+export default function PhoneStep() {
   const [phone, setPhone] = useState("");
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
-
+  const router = useRouter();
   return (
-    <>
+    <FixedLayout
+      title="회원가입"
+      isButtonDisabled={!isValidPhone}
+      onButtonClick={() => {
+        router.push(`/verify/verify-number?type=phone&target=${phone}`);
+      }}
+    >
       <StepHeader
-        StepHeader={stepText}
+        StepHeader="1/3"
         title={
           <>
             무비부키 시작을 위해 <br />
@@ -45,20 +48,6 @@ export default function PhoneStep({
           className="w-full border-b border-gray-700 bg-transparent pt-4.25 pb-1.5 text-white placeholder-gray-600 focus:outline-none"
         />
       </div>
-
-      <div className="mt-auto mb-19">
-        <Button
-          disabled={!isValidPhone}
-          onClick={() => onNext(phone)}
-          className={cn(
-            isValidPhone
-              ? "bg-red-main text-white"
-              : "bg-gray-900 text-gray-700",
-          )}
-        >
-          인증번호 보내기
-        </Button>
-      </div>
-    </>
+    </FixedLayout>
   );
 }

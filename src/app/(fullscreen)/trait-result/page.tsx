@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components";
+import { PATH_IMAGES } from "@/constants/index";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ export default function TraitResult() {
   return (
     <div className="relative flex h-screen w-full justify-center">
       <Image
-        src="/images/custom-bg.png"
+        src={PATH_IMAGES.CUSTOM_BG}
         alt="배경"
         layout="fill"
         objectFit="cover"
