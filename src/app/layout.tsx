@@ -5,6 +5,9 @@ import { pretendard } from "../app/fonts/pretendard";
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body>{children}</body>
     </html>
   );
