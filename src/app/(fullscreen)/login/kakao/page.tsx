@@ -63,7 +63,7 @@ export default function Kakao() {
   }, [code, router]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
+    <div className="bg-gray-black flex h-screen items-center justify-center">
       <h1 className="text-xl text-white">로그인 중...</h1>
     </div>
   );
