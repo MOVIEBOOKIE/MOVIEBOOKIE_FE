@@ -3,6 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { sendAuthCodeToServer } from "app/api/auth/auth";
+import { PATHS } from "@/constants";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
@@ -45,8 +46,6 @@ function KakaoLogin() {
       return;
     }
 
-    console.log("인가 코드 수신됨:", code);
-
     const handleLogin = async () => {
       try {
         const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
@@ -56,7 +55,7 @@ function KakaoLogin() {
           const { email, nickname, profileImage } = data;
           console.log("로그인 성공:", { email, nickname, profileImage });
           localStorage.setItem("userProfile", JSON.stringify(data));
-          router.push("/");
+          router.push(PATHS.HOME);
         } else {
           console.warn("로그인 실패:", response.message);
           router.push(`/login?error=${encodeURIComponent(response.message)}`);

@@ -7,6 +7,7 @@ import { KakaoIcon } from "@/icons/index";
 import { slides } from "@/constants/login-slides";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PATHS } from "@/constants";
 
 export default function Login() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function Login() {
           className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00]"
           onClick={() => {
             console.log("카카오 로그인 버튼");
-            router.push("/login/kakao");
+            router.push(PATHS.KAKAO_LOGIN);
           }}
         >
           <KakaoIcon className="absolute left-4 h-6 w-6 pt-1" />
