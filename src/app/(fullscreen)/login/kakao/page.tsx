@@ -1,36 +1,44 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { sendAuthCodeToServer } from "app/api/auth/auth";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
-const getRedirectUri = () => {
+const getRedirectUrl = () => {
   const isProduction = process.env.NODE_ENV === "production";
-  const redirectUri = isProduction
+  const redirectUrl = isProduction
     ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PROD
     : process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL;
 
   return {
-    redirectUri: redirectUri as string,
+    redirectUrl: redirectUrl as string,
     isLocal: !isProduction,
   };
 };
 
 export default function Kakao() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <KakaoLogin />
+    </Suspense>
+  );
+}
+
+function KakaoLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
 
-  const { redirectUri, isLocal } = getRedirectUri();
+  const { redirectUrl, isLocal } = getRedirectUrl();
 
   useEffect(() => {
     if (!code) {
       console.warn("인가 코드가 없습니다. 카카오 로그인 페이지로 이동합니다.");
 
       const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-        redirectUri,
+        redirectUrl,
       )}`;
 
       window.location.href = kakaoAuthUrl;
@@ -41,7 +49,7 @@ export default function Kakao() {
 
     const handleLogin = async () => {
       try {
-        const response = await sendAuthCodeToServer(code, redirectUri, isLocal);
+        const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
         const { success, data } = response;
 
         if (success) {
@@ -60,7 +68,7 @@ export default function Kakao() {
     };
 
     handleLogin();
-  }, [code, router]);
+  }, [code, router, isLocal, redirectUrl]);
 
   return (
     <div className="bg-gray-black flex h-screen items-center justify-center">

@@ -4,12 +4,12 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_DEV_URL;
 
 export const sendAuthCodeToServer = async (
   code: string,
-  redirectUri: string,
+  redirectUrl: string,
   isLocal: boolean,
 ) => {
   const requestUrl = `${API_BASE_URL}/api/auth/login/kakao?code=${encodeURIComponent(
     code,
-  )}&redirectUri=${encodeURIComponent(redirectUri)}&isLocal=${isLocal}`;
+  )}&redirectUrl=${encodeURIComponent(redirectUrl)}&isLocal=${isLocal}`;
 
   return apiRequest(requestUrl);
 };
