@@ -1,22 +1,18 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Button, StepHeader } from "@/components";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Header, Button, StepHeader } from "@/components";
+import FixedLayout from "@/components/fixedlayout";
 
-type VerifyNumberProps = {
-  type: "문자" | "이메일";
-  target: string;
-  onComplete: (code: string) => void;
-  stepText?: string;
-};
-
-export default function VerifyNumber({
-  type,
-  target,
-  onComplete,
-  stepText,
-}: VerifyNumberProps) {
+export default function VerifyNumberPage() {
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type") as "phone" | "email";
+  const target = searchParams.get("target") || "";
+  const router = useRouter();
   const [code, setCode] = useState(Array(4).fill(""));
 
-  //자동 포커스
+  // 자동 포커스
   useEffect(() => {
     const firstInput = document.getElementById(
       "code-0",
@@ -40,17 +36,29 @@ export default function VerifyNumber({
   const isComplete = code.every((char) => char !== "");
   const fullCode = code.join("");
 
+  const handleComplete = () => {
+    if (type === "phone") {
+      router.push("/verify/email");
+    } else {
+      router.push("/set-profile");
+    }
+  };
+
   return (
-    <>
+    <FixedLayout
+      title="회원가입"
+      isButtonDisabled={!isComplete}
+      onButtonClick={handleComplete}
+    >
       <StepHeader
-        StepHeader={stepText}
+        StepHeader={type === "phone" ? "1/3" : "2/3"}
         title={
           <>
-            {type}로 전송된 <br />
+            {type === "phone" ? "문자" : "이메일"}로 전송된 <br />
             인증번호 4자리를 입력해 주세요
           </>
         }
-        description={<>인증번호가 {target}으로 발송되었어요</>}
+        description={`인증번호가 ${target}으로 발송되었어요`}
       />
 
       <div className="mt-13 flex justify-center gap-2.75">
@@ -68,18 +76,6 @@ export default function VerifyNumber({
           />
         ))}
       </div>
-
-      <div className="mt-auto mb-19">
-        <Button
-          disabled={!isComplete}
-          onClick={() => onComplete(fullCode)}
-          className={`${
-            isComplete ? "bg-red-main text-white" : "bg-gray-900 text-gray-700"
-          }`}
-        >
-          완료
-        </Button>
-      </div>
-    </>
+    </FixedLayout>
   );
 }

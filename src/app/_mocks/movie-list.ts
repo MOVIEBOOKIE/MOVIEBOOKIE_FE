@@ -1,6 +1,8 @@
+import { PATH_IMAGES } from "@/constants";
+
 export const MOVIE_LISTS = [
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -12,7 +14,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "인터스텔라",
     placeAndDate: "메가박스 코엑스 | 2025.05.10",
@@ -24,7 +26,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "14,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "코미디",
     title: "극한직업",
     placeAndDate: "롯데시네마 홍대 | 2025.05.15",
@@ -36,7 +38,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "12,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "기생충",
     placeAndDate: "CGV 용산 | 2025.05.14",
@@ -47,7 +49,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,500원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "애니메이션",
     title: "센과 치히로의 행방불명",
     placeAndDate: "메가박스 센텀시티 | 2025.05.20",
@@ -58,7 +60,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "10,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "로맨스",
     title: "어바웃 타임",
     placeAndDate: "롯데시네마 건대 | 2025.05.11",
@@ -69,7 +71,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "11,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "스릴러",
     title: "유전",
     placeAndDate: "CGV 수원 | 2025.05.18",
@@ -80,7 +82,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "판타지",
     title: "반지의 제왕",
     placeAndDate: "메가박스 왕십리 | 2025.05.22",
@@ -91,7 +93,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "15,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "공포",
     title: "겟 아웃",
     placeAndDate: "CGV 신촌 | 2025.05.09",
@@ -102,7 +104,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "범죄",
     title: "조커",
     placeAndDate: "롯데시네마 부산본점 | 2025.05.13",
@@ -113,7 +115,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "14,500원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -125,7 +127,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -137,7 +139,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -149,7 +151,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -161,7 +163,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -173,7 +175,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -185,7 +187,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -197,7 +199,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
@@ -209,7 +211,7 @@ export const MOVIE_LISTS = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: "/images/image.png",
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "블레이드 러너",
     placeAndDate: "CGV 강남 | 2025.05.12",
