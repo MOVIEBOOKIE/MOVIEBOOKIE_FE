@@ -7,7 +7,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
-        <link rel="icon" href={PATH_IMAGES.FAVICON} sizes="512x512" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body>{children}</body>
     </html>
