@@ -9,6 +9,14 @@ const withSvgr = require("next-svgr");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://api-movie-bookie.shop/api/:path*",
+      },
+    ];
+  },
 };
 
 module.exports = withSvgr(withPWA(nextConfig));
