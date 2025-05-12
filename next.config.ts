@@ -13,7 +13,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://api-movie-bookie.shop/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_PROD_URL}/api/:path*`,
       },
     ];
   },
