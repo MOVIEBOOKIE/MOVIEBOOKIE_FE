@@ -5,16 +5,25 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { sendAuthCodeToServer } from "app/api/auth/auth";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
-const REDIRECT_URI_LOCAL = "http://localhost:3000/login/kakao";
-const REDIRECT_URI_PROD = "https://api-movie-bookie.shop/login/kakao";
-const isProduction = process.env.NODE_ENV === "production";
-const redirectUri = isProduction ? REDIRECT_URI_PROD : REDIRECT_URI_LOCAL;
-const isLocal = !isProduction;
+
+const getRedirectUri = () => {
+  const isProduction = process.env.NODE_ENV === "production";
+  const redirectUri = isProduction
+    ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PROD
+    : process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL;
+
+  return {
+    redirectUri: redirectUri as string,
+    isLocal: !isProduction,
+  };
+};
 
 export default function Kakao() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+
+  const { redirectUri, isLocal } = getRedirectUri();
 
   useEffect(() => {
     if (!code) {
