@@ -1,11 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Header, Button, StepHeader } from "@/components";
+import { StepHeader } from "@/components";
 import FixedLayout from "@/components/fixedlayout";
 
 export default function VerifyNumberPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyNumberContent />
+    </Suspense>
+  );
+}
+
+function VerifyNumberContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "phone" | "email";
   const target = searchParams.get("target") || "";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components";
-import { PATH_IMAGES } from "@/constants/index";
+import { PATH_IMAGES, PATHS } from "@/constants/index";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function TraitResult() {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/");
+    router.push(PATHS.HOME);
   };
   return (
     <div className="relative flex h-screen w-full justify-center">
