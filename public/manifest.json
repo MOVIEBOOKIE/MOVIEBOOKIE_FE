@@ -3,7 +3,7 @@
   "short_name": "무비부키",
   "description": "당신의 일상을 영화처럼",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#0E0E0E",
   "theme_color": "#0E0E0E",
   "icons": [
