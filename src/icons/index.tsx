@@ -18,6 +18,7 @@ export { default as LogoWhiteIcon } from "./common/logo-white.svg";
 export { default as ArrowDownIcon } from "./common/arrow-down.svg";
 export { default as ArrowLeftIcon } from "./common/arrow-left.svg";
 export { default as ArrowRightIcon } from "./common/arrow-right.svg";
+export { default as UploadIcon } from "./common/upload.svg";
 
 export { default as BallIcon } from "./ball.svg";
 export { default as CamcorderIcon } from "./camcorder.svg";
