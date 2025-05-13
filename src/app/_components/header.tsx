@@ -37,13 +37,13 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed top-0 left-0 z-50 flex h-[94px] w-full items-center justify-center",
+        "bg-gray-black fixed top-0 left-0 z-50 flex h-12.5 w-full items-center justify-center",
         className,
       )}
     >
       {showBackButton && (
         <button
-          className="absolute top-2.5 left-2.5 pt-10"
+          className="absolute top-2.5 left-2.5"
           onClick={handleBack}
           aria-label="뒤로가기"
           type="button"
@@ -51,7 +51,7 @@ export default function Header({
           <BackIcon className="h-full w-full" />
         </button>
       )}
-      {title && <h1 className="body-2-semibold pt-12 text-white">{title}</h1>}
+      {title && <h1 className="body-2-semibold pt-3 text-white">{title}</h1>}
 
       {showCloseButton && (
         <button
