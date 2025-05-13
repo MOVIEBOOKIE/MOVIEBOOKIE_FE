@@ -5,17 +5,11 @@ import { useRouter } from "next/navigation";
 import { BackIcon, CloseIcon } from "@/icons/index";
 import { cn } from "@/utils/cn";
 
-/**
- * 공통 Header 컴포넌트 - Fixed 버전
- * @example
- * <Header title="인증번호 입력" />
- * <Header title="회원가입" showCloseButton />
- */
-
 type HeaderProps = {
   title?: string;
   onBack?: () => void;
   showCloseButton?: boolean;
+  showBackButton?: boolean;
   onClose?: () => void;
   className?: string;
 };
@@ -24,6 +18,7 @@ export default function Header({
   title,
   onBack,
   showCloseButton = false,
+  showBackButton = true,
   onClose,
   className,
 }: HeaderProps) {
@@ -46,15 +41,16 @@ export default function Header({
         className,
       )}
     >
-      <button
-        className="absolute top-2.5 left-2.5 pt-10"
-        onClick={handleBack}
-        aria-label="뒤로가기"
-        type="button"
-      >
-        <BackIcon className="h-full w-full" />
-      </button>
-
+      {showBackButton && (
+        <button
+          className="absolute top-2.5 left-2.5 pt-10"
+          onClick={handleBack}
+          aria-label="뒤로가기"
+          type="button"
+        >
+          <BackIcon className="h-full w-full" />
+        </button>
+      )}
       {title && <h1 className="body-2-semibold pt-12 text-white">{title}</h1>}
 
       {showCloseButton && (

@@ -12,6 +12,7 @@ type FixedLayoutProps = {
   buttonText?: string;
   onButtonClick?: () => void;
   showCloseButton?: boolean;
+  showBackButton?: boolean;
   onClose?: () => void;
 };
 
@@ -22,6 +23,7 @@ export default function FixedLayout({
   buttonText = "다음",
   onButtonClick,
   showCloseButton = false,
+  showBackButton = true,
   onClose,
 }: FixedLayoutProps) {
   return (
@@ -29,6 +31,7 @@ export default function FixedLayout({
       <Header
         title={title}
         showCloseButton={showCloseButton}
+        showBackButton={showBackButton}
         onClose={onClose}
       />
 
