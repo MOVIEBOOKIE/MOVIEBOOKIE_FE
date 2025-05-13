@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { cn } from "../_utils/cn";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: string;
+  children: React.ReactNode;
   className?: string;
   variant?: "primary" | "secondary";
 }

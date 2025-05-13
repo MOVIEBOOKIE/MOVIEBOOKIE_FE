@@ -4,6 +4,8 @@ export const PATHS = {
   NOTIFICATIONS: "/notifications",
   MYPAGE: "/my-page",
   SEARCH: "/search",
+  LOGIN: "/login",
+  KAKAO_LOGIN: "/login/kakao",
   CATEGORY: {
     POPULAR: "/category/popular",
     RECENT: "/category/recent",
@@ -14,4 +16,5 @@ export const PATHS = {
     SPORTS: "/category/sports",
     ETC: "/category/etc",
   },
+  TRAIT_RESULT: "/trait-result",
 } as const;

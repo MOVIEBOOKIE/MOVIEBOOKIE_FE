@@ -4,14 +4,15 @@ import { SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { MOVIE_LISTS } from "../_mocks/movie-list";
 import { Button, Card, Input, Carousel } from "@/components";
-import { CATEGORIES, PATHS } from "@/constants";
+import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
+import { MOVIE_LISTS } from "@/mocks/movie-list";
 
 export default function Home() {
   const router = useRouter();
-  const [selected, setSelected] = useState<string | null>("인기");
+  const [selected, setSelected] =
+    useState<(typeof CATEGORY_LABELS)[number]>("인기");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
@@ -32,6 +33,7 @@ export default function Home() {
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
   };
+
   const handleClick = () => {
     if (!selected) return;
 
@@ -41,6 +43,12 @@ export default function Home() {
     const upperKey = mapped.toUpperCase() as keyof typeof PATHS.CATEGORY;
 
     router.push(PATHS.CATEGORY[upperKey]);
+  };
+
+  const handleCategoryClick = (category: keyof typeof CATEGORIES) => {
+    if (category === "인기" || category === "최신") return;
+    const type = CATEGORIES[category];
+    router.push(`/category/${type}`);
   };
 
   return (
@@ -87,13 +95,16 @@ export default function Home() {
         </div>
         <Input type="BUTTON" onClick={handleSearch} />
         <div className="scrollbar-hide mt-3 -mr-4 mb-4 flex overflow-x-auto whitespace-nowrap">
-          {CATEGORIES.map((label) => (
+          {CATEGORY_LABELS.map((label) => (
             <div key={label} className="flex items-center">
               <button
                 className={`body-2-semibold rounded-full px-3.5 py-2.25 ${
                   selected === label ? "text-red-main" : "text-gray-500"
                 }`}
-                onClick={() => setSelected(label)}
+                onClick={() => {
+                  setSelected(label);
+                  handleCategoryClick(label);
+                }}
               >
                 {label}
               </button>

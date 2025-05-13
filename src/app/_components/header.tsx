@@ -6,14 +6,10 @@ import { BackIcon, CloseIcon } from "@/icons/index";
 import { cn } from "@/utils/cn";
 
 /**
- * 공통 Header 컴포넌트
+ * 공통 Header 컴포넌트 - Fixed 버전
  * @example
- * // 기본 뒤로가기 버튼 + 제목만
  * <Header title="인증번호 입력" />
- *
- * // 닫기 버튼도 표시 (닫기 누르면 '/'로 이동)
  * <Header title="회원가입" showCloseButton />
- *
  */
 
 type HeaderProps = {
@@ -46,12 +42,12 @@ export default function Header({
   return (
     <header
       className={cn(
-        "relative flex h-12 w-full items-center justify-center",
+        "bg-gray-black fixed top-0 left-0 z-50 flex h-[94px] w-full items-center justify-center",
         className,
       )}
     >
       <button
-        className="absolute top-2.5 left-2.5"
+        className="absolute top-2.5 left-2.5 pt-10"
         onClick={handleBack}
         aria-label="뒤로가기"
         type="button"
@@ -59,15 +55,11 @@ export default function Header({
         <BackIcon className="h-full w-full" />
       </button>
 
-      {title && (
-        <h1 className="pt-4.25 pb-2.75 text-base font-semibold text-white">
-          {title}
-        </h1>
-      )}
+      {title && <h1 className="body-2-semibold pt-12 text-white">{title}</h1>}
 
       {showCloseButton && (
         <button
-          className="absolute top-2.5 right-0"
+          className="absolute top-2.5 right-2.5 pt-10"
           onClick={handleClose}
           aria-label="닫기"
         >
