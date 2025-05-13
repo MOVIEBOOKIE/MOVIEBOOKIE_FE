@@ -2,9 +2,9 @@ export async function apiRequest(url: string, options: any = {}) {
   try {
     const isRelative = url.startsWith("/");
     const baseUrl = isRelative
-      ? (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000")
+      ? process.env.NEXT_PUBLIC_API_DEV_URL
       : undefined;
-    const finalUrl = new URL(url, baseUrl); // 상대경로 처리 추가
+    const finalUrl = new URL(url, baseUrl);
 
     if (options.params) {
       Object.entries(options.params).forEach(([key, value]) => {
