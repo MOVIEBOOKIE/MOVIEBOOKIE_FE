@@ -1,47 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
+
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
-interface CalendarProps {
-  selectedDate: string | null;
-  onSelectDate: (date: string) => void;
+
+interface DeadlineCalendarProps {
+  eventDate: string; // YYYY-MM-DD
+  selectedDeadline: string | null;
+  onSelectDeadline: (date: string) => void;
 }
 
-const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
+const DeadlineCalendar = ({
+  eventDate,
+  selectedDeadline,
+  onSelectDeadline,
+}: DeadlineCalendarProps) => {
   const today = dayjs().startOf("day");
-  const fourWeeksLater = today.add(4, "week");
+  const event = dayjs(eventDate);
+  const latestDeadline = event.subtract(2, "week");
 
   const [currentMonth, setCurrentMonth] = useState(dayjs());
+  const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const startDay = currentMonth.startOf("month").day();
+  const startDay = currentMonth.startOf("month").day(); // Sunday = 0
   const daysInMonth = currentMonth.daysInMonth();
   const dates = Array.from({ length: daysInMonth }, (_, i) =>
     currentMonth.date(i + 1),
   );
+  const fullGrid: (dayjs.Dayjs | null)[] = [
+    ...Array(startDay).fill(null),
+    ...dates,
+  ];
 
   const handleSelect = (date: dayjs.Dayjs) => {
-    if (date.isAfter(fourWeeksLater.subtract(1, "day"))) {
-      onSelectDate(date.format("YYYY-MM-DD"));
+    if (
+      date.isSame(today) ||
+      (date.isAfter(today) && date.isBefore(latestDeadline.add(1, "day")))
+    ) {
+      onSelectDeadline(date.format("YYYY-MM-DD"));
     }
   };
 
-  const handlePrevMonth = () => {
-    setCurrentMonth((prev) => prev.subtract(1, "month"));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentMonth((prev) => prev.add(1, "month"));
-  };
   const isPrevDisabled = currentMonth.isSame(today, "month");
 
+  const barBlocks: { row: number; startIdx: number; endIdx: number }[] = [];
+  if (selectedDeadline) {
+    const startIndex = fullGrid.findIndex((d) => d && d.isSame(today, "day"));
+    const endIndex = fullGrid.findIndex(
+      (d) => d && d.format("YYYY-MM-DD") === selectedDeadline,
+    );
+
+    if (startIndex !== -1 && endIndex !== -1 && startIndex <= endIndex) {
+      const startRow = Math.floor(startIndex / 7);
+      const endRow = Math.floor(endIndex / 7);
+
+      for (let row = startRow; row <= endRow; row++) {
+        const start = row === startRow ? startIndex : row * 7;
+        const end = row === endRow ? endIndex : row * 7 + 6;
+        barBlocks.push({ row, startIdx: start, endIdx: end });
+      }
+    }
+  }
+
   return (
-    <div className="w-full max-w-125 rounded-lg bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+    <div className="mx-auto w-[320px] rounded-xl bg-gray-950 px-6 pt-5 pb-8 text-white">
+      {/* Header */}
       <div className="mb-8 flex items-center justify-center gap-5">
         <button
-          onClick={handlePrevMonth}
+          onClick={() => setCurrentMonth((prev) => prev.subtract(1, "month"))}
           disabled={isPrevDisabled}
           className={clsx(
             "text-lg",
@@ -50,51 +79,84 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
         >
           <ArrowLeftIcon />
         </button>
-
         <div className="body-1-semibold text-white">
           {currentMonth.format("YYYY. M")}
         </div>
-
-        <button onClick={handleNextMonth} className="text-lg text-white">
+        <button
+          onClick={() => setCurrentMonth((prev) => prev.add(1, "month"))}
+          className="text-lg text-white"
+        >
           <ArrowRightIcon />
         </button>
       </div>
 
-      {/* Week Days */}
+      {/* 요일 */}
       <div className="body-3-regular mb-5 grid grid-cols-7 text-center text-gray-200">
         {DAYS.map((d) => (
           <div key={d}>{d}</div>
         ))}
       </div>
 
-      {/* Dates */}
-      <div className="grid grid-cols-7 gap-3 pr-3 text-center">
-        {Array.from({ length: startDay }).map((_, i) => (
-          <div key={`empty-${i}`} />
-        ))}
+      {/* 날짜 셀 */}
+      <div className="relative grid grid-cols-7 gap-x-0 gap-y-3 text-center">
+        {/* 회색 막대 */}
+        {barBlocks.map(({ row, startIdx, endIdx }) => {
+          const startEl = cellRefs.current[startIdx];
+          const endEl = cellRefs.current[endIdx];
+          if (!startEl || !endEl) return null;
 
-        {dates.map((date) => {
-          const isToday = date.isSame(today, "day");
-          const isSelectable = date.isAfter(fourWeeksLater.subtract(1, "day"));
-          const isSelected = selectedDate === date.format("YYYY-MM-DD");
+          const top = startEl.offsetTop;
+          const left = startEl.offsetLeft;
+          const width = endEl.offsetLeft + endEl.offsetWidth - left;
 
           return (
-            <button
-              key={date.format("YYYY-MM-DD")}
-              onClick={() => handleSelect(date)}
-              disabled={!isSelectable}
-              className={clsx(
-                "flex h-10 w-10 items-center justify-center rounded-full",
-                {
-                  "text-red-main": isToday && !isSelected,
-                  "bg-red-main text-white": isSelected,
-                  "text-gray-850": !isSelectable,
-                  "text-gray-400": isSelectable && !isSelected,
-                },
-              )}
+            <div
+              key={`bar-${row}`}
+              className="absolute z-0 h-[40px] rounded-full bg-gray-800"
+              style={{ top, left, width }}
+            />
+          );
+        })}
+
+        {fullGrid.map((day, index) => {
+          if (!day)
+            return <div key={`empty-${index}`} className="h-[40px] w-[40px]" />;
+
+          const current = day;
+          const isSelectable =
+            current.isSame(today) ||
+            (current.isAfter(today) &&
+              current.isBefore(latestDeadline.add(1, "day")));
+          const isSelected = selectedDeadline === current.format("YYYY-MM-DD");
+          const isStart = current.isSame(today, "day");
+          const isEnd = isSelected;
+          const showRedDot = isStart || isEnd;
+
+          return (
+            <div
+              key={current.format("YYYY-MM-DD")}
+              ref={(el) => {
+                cellRefs.current[index] = el;
+              }}
+              className="relative flex h-[40px] w-[40px] items-center justify-center"
             >
-              {date.date()}
-            </button>
+              {showRedDot && (
+                <div className="bg-red-main absolute inset-0 z-10 rounded-full" />
+              )}
+              <button
+                onClick={() => handleSelect(current)}
+                disabled={!isSelectable}
+                className={clsx(
+                  "absolute z-30 flex h-[40px] w-[40px] items-center justify-center text-sm font-medium",
+                  {
+                    "text-white": isSelectable,
+                    "text-gray-850": !isSelectable,
+                  },
+                )}
+              >
+                {current.date()}
+              </button>
+            </div>
           );
         })}
       </div>
@@ -102,4 +164,4 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   );
 };
 
-export default Calendar;
+export default DeadlineCalendar;

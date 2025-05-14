@@ -3,6 +3,7 @@
 import { StepHeader } from "@/components";
 import { useFormContext } from "react-hook-form";
 import Calendar from "./calendar";
+import DeadlineCalendar from "./period-calendar";
 
 export default function Step4() {
   const { watch, setValue } = useFormContext();
@@ -22,9 +23,10 @@ export default function Step4() {
           <>이벤트 진행 날짜 기준, 최대 2주 전까지만 설정할 수 있어요</>
         }
       />
-      <Calendar
-        selectedDate={selectedDate}
-        onSelectDate={(date) => setValue("eventDate", date)}
+      <DeadlineCalendar
+        eventDate={selectedDate}
+        selectedDeadline={watch("event-deadline")}
+        onSelectDeadline={(date) => setValue("event-deadline", date)}
       />
     </>
   );
