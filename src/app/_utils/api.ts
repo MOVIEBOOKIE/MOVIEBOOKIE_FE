@@ -1,25 +1,38 @@
-export const apiRequest = async (
-  url: string,
-  method: "GET" | "POST" = "GET",
-  body?: Record<string, any>,
-) => {
+export async function apiRequest(url: string, options: any = {}) {
   try {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      ...(body && { body: JSON.stringify(body) }),
-    });
+    const isRelative = url.startsWith("/");
+    const baseUrl = isRelative
+      ? process.env.NEXT_PUBLIC_API_DEV_URL
+      : undefined;
+    const finalUrl = new URL(url, baseUrl);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "서버 요청이 실패했습니다.");
+    if (options.params) {
+      Object.entries(options.params).forEach(([key, value]) => {
+        finalUrl.searchParams.append(key, String(value));
+      });
     }
 
-    return await response.json();
+    const res = await fetch(finalUrl.toString(), {
+      method: options.method || "GET",
+      headers: options.headers || {},
+      body: options.body,
+    });
+
+    const contentType = res.headers.get("content-type") || "";
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`API 응답 오류: ${text}`);
+    }
+
+    if (!contentType.includes("application/json")) {
+      const text = await res.text();
+      throw new Error(`응답이 JSON이 아닙니다: ${text}`);
+    }
+
+    return res.json();
   } catch (error: any) {
-    console.error("API 요청 에러:", error.message);
-    throw new Error(error.message || "서버 에러가 발생했습니다.");
+    console.error(" API 요청 에러:", error.message);
+    throw error;
   }
-};
+}

@@ -8,6 +8,7 @@ import { slides } from "@/constants/login-slides";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
+import PwaPromptModal from "@/components/pwa-prompt-modal";
 
 export default function Login() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Login() {
 
   return (
     <div className="bg-gray-black relative min-h-screen text-white">
+      <PwaPromptModal />
       <div className="relative">
         <Swiper onSlideChange={handleSlideChange} className="h-full">
           {slides.map((slide, index) => (

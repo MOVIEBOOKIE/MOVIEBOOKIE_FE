@@ -10,7 +10,7 @@ export default function EventPage() {
 
   return (
     <div className="min-h-screen px-5 pb-24 text-white">
-      <nav className="title-1-semibold flex gap-5 pt-16.75 pb-3 text-start">
+      <nav className="title-1-semibold flex gap-5 pt-5.75 pb-3 text-start">
         {(["모집", "참여", "티켓"] as const).map((tab) => (
           <span
             key={tab}

@@ -36,6 +36,7 @@ function KakaoLogin() {
 
   useEffect(() => {
     if (!code) {
+      //TODO: 토스트 변경
       console.warn("인가 코드가 없습니다. 카카오 로그인 페이지로 이동합니다.");
 
       const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(
@@ -46,28 +47,27 @@ function KakaoLogin() {
       return;
     }
 
+    if (process.env.NODE_ENV === "development") {
+      console.log("인가코드 수신됨:", code);
+    }
     const handleLogin = async () => {
       try {
         const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
         const { success, data } = response;
 
         if (success) {
-          const { email, nickname, profileImage } = data;
-          console.log("로그인 성공:", { email, nickname, profileImage });
           localStorage.setItem("userProfile", JSON.stringify(data));
           router.push(PATHS.HOME);
         } else {
-          console.warn("로그인 실패:", response.message);
           router.push(`/login?error=${encodeURIComponent(response.message)}`);
         }
       } catch (error: any) {
-        console.error("로그인 요청 에러:", error.message);
         router.push(`/login?error=${encodeURIComponent(error.message)}`);
       }
     };
 
     handleLogin();
-  }, [code, router, isLocal, redirectUrl]);
+  }, [code, redirectUrl, isLocal]);
 
   return (
     <div className="bg-gray-black flex h-screen items-center justify-center">
