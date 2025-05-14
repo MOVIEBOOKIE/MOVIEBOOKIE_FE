@@ -45,3 +45,4 @@ export { default as NotiCancelIcon } from "./noti-cancel.svg";
 export { default as NotiCheckIcon } from "./noti-check.svg";
 export { default as NotiConfirmIcon } from "./noti-confirm.svg";
 export { default as EtcIcon } from "./etc.svg";
+export { default as MyKakaoIcon } from "./mypage-kakao.svg";
