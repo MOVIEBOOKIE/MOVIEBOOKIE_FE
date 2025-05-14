@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { StepHeader } from "@/components";
 import { CONTENT } from "@/constants/trait";
 import TypeList from "app/(fullscreen)/trait/_components/type-list";
 import { EtcIcon } from "@/icons/index";
+import { useFormContext } from "react-hook-form";
 
 export const CONTENT_WITH_ETC = {
   ...CONTENT,
@@ -16,8 +16,8 @@ export const CONTENT_WITH_ETC = {
 };
 
 export default function Step1() {
-  const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
+  const { setValue } = useFormContext();
 
   return (
     <>
@@ -34,7 +34,11 @@ export default function Step1() {
         {Object.entries(CONTENT_WITH_ETC).map(([key, { icon, text }]) => (
           <TypeList
             key={key}
-            onClick={() => setSelected(key)}
+            onClick={() => {
+              console.log("선택된 항목:", key);
+              setSelected(key);
+              setValue("category", key);
+            }}
             isEtc={key === "ETC"}
             className={selected === key ? "bg-gray-900" : ""}
           >

@@ -1,15 +1,16 @@
-// app/event-create/page.tsx
 "use client";
 
 import { useState } from "react";
 import FixedLayout from "@/components/fixedlayout";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
 import Step2 from "./components/step2-date";
+import Step3 from "./components/step3-time";
 
 const steps = [
-  { title: "카테고리 선택", component: Step1 },
-  { title: "날짜 선택", component: Step2 },
+  { title: "카테고리", component: Step1 },
+  { title: "날짜 ", component: Step2 },
+  { title: "시간", component: Step3 },
 ];
 
 export default function EventCreatePage() {
@@ -17,10 +18,20 @@ export default function EventCreatePage() {
   const methods = useForm({
     defaultValues: {
       category: "",
+      eventDate: "",
+      eventTime: "",
     },
   });
 
   const CurrentStep = steps[step].component;
+  const category = useWatch({ control: methods.control, name: "category" });
+  const eventDate = useWatch({ control: methods.control, name: "eventDate" });
+  const eventTime = useWatch({ control: methods.control, name: "eventTime" });
+
+  const isButtonDisabled =
+    (step === 0 && !category) ||
+    (step === 1 && !eventDate) ||
+    (step === 2 && !eventTime);
 
   const onNext = async () => {
     const isValid = await methods.trigger();
@@ -30,7 +41,7 @@ export default function EventCreatePage() {
       setStep((s) => s + 1);
     } else {
       methods.handleSubmit((data) => {
-        console.log("✅ 최종 제출:", data);
+        console.log("최종 제출:", data);
         // await fetch("/api/event", { method: "POST", body: JSON.stringify(data) });
       })();
     }
@@ -41,7 +52,7 @@ export default function EventCreatePage() {
       <FixedLayout
         title="이벤트 생성"
         onButtonClick={onNext}
-        isButtonDisabled={false}
+        isButtonDisabled={isButtonDisabled}
       >
         <CurrentStep />
       </FixedLayout>
