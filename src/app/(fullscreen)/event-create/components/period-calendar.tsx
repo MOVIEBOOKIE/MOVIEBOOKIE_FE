@@ -80,15 +80,16 @@ const DeadlineCalendar = ({
   }
 
   return (
-    <div className="mx-auto w-[320px] rounded-xl bg-gray-950 px-6 pt-5 pb-8 text-white">
-      {/* Header */}
-      <div className="mb-8 flex items-center justify-center gap-5">
+    <div className="mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+      <div className="body-3-regular mb-8 flex items-center justify-center gap-5">
         <button
           onClick={() => setCurrentMonth((prev) => prev.subtract(1, "month"))}
           disabled={isPrevDisabled}
           className={clsx(
             "text-lg",
-            isPrevDisabled ? "cursor-not-allowed text-gray-700" : "text-white",
+            isPrevDisabled
+              ? "cursor-not-allowed text-gray-700"
+              : "text-gray-200",
           )}
         >
           <ArrowLeftIcon />
@@ -98,7 +99,7 @@ const DeadlineCalendar = ({
         </div>
         <button
           onClick={() => setCurrentMonth((prev) => prev.add(1, "month"))}
-          className="text-lg text-white"
+          className="text-lg text-gray-200"
         >
           <ArrowRightIcon />
         </button>
@@ -112,7 +113,7 @@ const DeadlineCalendar = ({
       </div>
 
       {/* 날짜 셀 */}
-      <div className="relative grid grid-cols-7 gap-x-0 gap-y-3 text-center">
+      <div className="relative grid grid-cols-7 gap-x-0 gap-y-3 text-center text-gray-300">
         {/* 회색 막대 */}
         {barBlocks.map(({ row, startIdx, endIdx }) => {
           const startEl = cellRefs.current[startIdx];
@@ -126,15 +127,14 @@ const DeadlineCalendar = ({
           return (
             <div
               key={`bar-${row}`}
-              className="absolute z-0 h-[40px] rounded-full bg-gray-800"
+              className="absolute z-0 h-10 rounded-full bg-gray-900"
               style={{ top, left, width }}
             />
           );
         })}
 
         {fullGrid.map((day, index) => {
-          if (!day)
-            return <div key={`empty-${index}`} className="h-[40px] w-[40px]" />;
+          if (!day) return <div key={`empty-${index}`} className="h-10 w-10" />;
 
           const current = day;
           const isSelectable =
@@ -154,19 +154,19 @@ const DeadlineCalendar = ({
               ref={(el) => {
                 cellRefs.current[index] = el;
               }}
-              className="relative flex h-[40px] w-[40px] items-center justify-center"
+              className="relative flex h-10 w-10 items-center justify-center"
             >
               {showRedDot && (
-                <div className="bg-red-main absolute inset-0 z-10 rounded-full" />
+                <div className="bg-red-main absolute inset-0 z-10 rounded-full text-white" />
               )}
               <button
                 onClick={() => handleSelect(current)}
                 disabled={isDisabled}
                 className={clsx(
-                  "absolute z-30 flex h-[40px] w-[40px] items-center justify-center text-sm font-medium",
+                  "body-3-regular absolute z-30 flex h-10 w-10 items-center justify-center",
                   {
-                    "text-white": !isDisabled,
-                    "text-gray-850": isDisabled, // 비활성화 회색
+                    "text-gray-200": !isDisabled,
+                    "text-gray-850": isDisabled,
                   },
                 )}
               >

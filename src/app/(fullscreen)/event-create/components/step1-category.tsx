@@ -45,7 +45,7 @@ export default function Step1() {
             {icon}
             <span>{text}</span>
             {key === "ETC" && (
-              <p className="caption-3-medium mt-1 text-gray-600">
+              <p className="caption-3-medium text-gray-600">
                 (프로포즈, 파티, 소규모 상영회)
               </p>
             )}

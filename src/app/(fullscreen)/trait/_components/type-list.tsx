@@ -20,7 +20,7 @@ export default function TypeList({
       className={cn(
         "body-3-regular w-full rounded-xl border border-gray-900 px-4 py-7.5 text-gray-100",
         isEtc
-          ? "mt-3 flex flex-col items-center gap-1 text-center"
+          ? "flex flex-col items-center justify-around gap-1 text-center"
           : "flex flex-col items-center gap-3",
         className,
       )}

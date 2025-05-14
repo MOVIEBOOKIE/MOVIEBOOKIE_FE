@@ -38,7 +38,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   const isPrevDisabled = currentMonth.isSame(today, "month");
 
   return (
-    <div className="w-full max-w-125 rounded-lg bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+    <div className="mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
       <div className="mb-8 flex items-center justify-center gap-5">
         <button
           onClick={handlePrevMonth}
