@@ -4,8 +4,11 @@ import { useState } from "react";
 import { STATUS_MAP, PATH_IMAGES } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
+import { useRouter } from "next/navigation";
 
 export default function EventPage() {
+  const router = useRouter();
+
   const [topTab, setTopTab] = useState<"모집" | "참여" | "티켓">("모집");
 
   return (
@@ -33,7 +36,10 @@ export default function EventPage() {
           <p className="caption-1-medium mt-1.5 text-gray-300">
             지금 바로 이벤트를 만들어 보세요
           </p>
-          <button className="px-4.2 bg-red-main body-3-semibold mt-3.5 mb-6.25 w-full rounded-xl py-3.5">
+          <button
+            className="px-4.2 bg-red-main body-3-semibold mt-3.5 mb-6.25 w-full rounded-xl py-3.5"
+            onClick={() => router.push("/event-create")}
+          >
             나만의 이벤트 만들러 가기
           </button>
         </div>

@@ -52,6 +52,7 @@ export default function EventCreatePage() {
       <FixedLayout
         title="이벤트 생성"
         onButtonClick={onNext}
+        showCloseButton={true}
         isButtonDisabled={isButtonDisabled}
       >
         <CurrentStep />

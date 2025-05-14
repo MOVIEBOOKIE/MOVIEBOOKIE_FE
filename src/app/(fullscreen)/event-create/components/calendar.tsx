@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
-
+import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 interface CalendarProps {
   selectedDate: string | null;
@@ -35,20 +35,28 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   const handleNextMonth = () => {
     setCurrentMonth((prev) => prev.add(1, "month"));
   };
+  const isPrevDisabled = currentMonth.isSame(today, "month");
 
   return (
     <div className="w-full max-w-125 rounded-lg bg-gray-950 px-7.5 pt-5 pb-8 text-white">
-      {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        {/* 아이콘변경필요 */}
-        <button onClick={handlePrevMonth} className="px-2 text-lg">
-          &lt;
+      <div className="mb-8 flex items-center justify-center gap-5">
+        <button
+          onClick={handlePrevMonth}
+          disabled={isPrevDisabled}
+          className={clsx(
+            "text-lg",
+            isPrevDisabled ? "cursor-not-allowed text-gray-700" : "text-white",
+          )}
+        >
+          <ArrowLeftIcon />
         </button>
-        <div className="text-lg font-semibold">
+
+        <div className="body-1-semibold text-white">
           {currentMonth.format("YYYY. M")}
         </div>
-        <button onClick={handleNextMonth} className="px-2 text-lg">
-          &gt;
+
+        <button onClick={handleNextMonth} className="text-lg text-white">
+          <ArrowRightIcon />
         </button>
       </div>
 
