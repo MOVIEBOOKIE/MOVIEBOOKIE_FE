@@ -85,7 +85,7 @@ export default function Detail() {
           <span>모집 인원</span>
           <span>20 - 56명</span>
         </div>
-        <div className="mt-4 mb-6 h-0.25 w-full bg-gray-950" />
+        <div className="mt-4 mb-6 h-0.25 w-full rounded-sm bg-gray-950" />
         <InformationTab />
       </div>
     </>
