@@ -20,7 +20,7 @@ const DeadlineCalendar = ({
 }: DeadlineCalendarProps) => {
   const today = dayjs().startOf("day");
   const event = dayjs(eventDate);
-  const latestDeadline = event.subtract(2, "week");
+  const latestDeadline = event.subtract(2, "week"); // 최대 마감일: 이벤트 날짜 기준 -2주
 
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -48,18 +48,32 @@ const DeadlineCalendar = ({
 
   const barBlocks: { row: number; startIdx: number; endIdx: number }[] = [];
   if (selectedDeadline) {
-    const startIndex = fullGrid.findIndex((d) => d && d.isSame(today, "day"));
+    const deadline = dayjs(selectedDeadline);
+
+    const startIndex = fullGrid.findIndex(
+      (d) => d && d.isSame(today, "day") && d.isSame(currentMonth, "month"),
+    );
     const endIndex = fullGrid.findIndex(
-      (d) => d && d.format("YYYY-MM-DD") === selectedDeadline,
+      (d) => d && d.isSame(deadline, "day") && d.isSame(currentMonth, "month"),
     );
 
-    if (startIndex !== -1 && endIndex !== -1 && startIndex <= endIndex) {
-      const startRow = Math.floor(startIndex / 7);
-      const endRow = Math.floor(endIndex / 7);
+    const firstIdxInMonth = fullGrid.findIndex(
+      (d) => d && d.isSame(currentMonth.startOf("month"), "month"),
+    );
+    const lastIdxInMonth = fullGrid.reduce((acc, d, i) => {
+      if (d && d.isSame(currentMonth, "month")) return i;
+      return acc;
+    }, -1);
+
+    if (firstIdxInMonth !== -1 && lastIdxInMonth !== -1) {
+      const startIdx = Math.max(startIndex, firstIdxInMonth);
+      const endIdx = Math.min(endIndex, lastIdxInMonth);
+      const startRow = Math.floor(startIdx / 7);
+      const endRow = Math.floor(endIdx / 7);
 
       for (let row = startRow; row <= endRow; row++) {
-        const start = row === startRow ? startIndex : row * 7;
-        const end = row === endRow ? endIndex : row * 7 + 6;
+        const start = row === startRow ? startIdx : row * 7;
+        const end = row === endRow ? endIdx : row * 7 + 6;
         barBlocks.push({ row, startIdx: start, endIdx: end });
       }
     }
@@ -127,6 +141,8 @@ const DeadlineCalendar = ({
             current.isSame(today) ||
             (current.isAfter(today) &&
               current.isBefore(latestDeadline.add(1, "day")));
+
+          const isDisabled = !isSelectable;
           const isSelected = selectedDeadline === current.format("YYYY-MM-DD");
           const isStart = current.isSame(today, "day");
           const isEnd = isSelected;
@@ -145,12 +161,12 @@ const DeadlineCalendar = ({
               )}
               <button
                 onClick={() => handleSelect(current)}
-                disabled={!isSelectable}
+                disabled={isDisabled}
                 className={clsx(
                   "absolute z-30 flex h-[40px] w-[40px] items-center justify-center text-sm font-medium",
                   {
-                    "text-white": isSelectable,
-                    "text-gray-850": !isSelectable,
+                    "text-white": !isDisabled,
+                    "text-gray-850": isDisabled, // 비활성화 회색
                   },
                 )}
               >

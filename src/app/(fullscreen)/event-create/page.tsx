@@ -23,6 +23,8 @@ export default function EventCreatePage() {
       eventDate: "",
       eventStartTime: "",
       eventProgressTime: "",
+      recruitmentStart: "",
+      recruitmentEnd: "",
     },
   });
 
