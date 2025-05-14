@@ -12,4 +12,5 @@ export const PATH_IMAGES = {
   //임시 이미지
   IMAGE: "/images/image.png",
   TMP_MAP: "/images/tmp-map.png",
+  TMP_MOVIE: "/images/tmp-movie.png",
 };
