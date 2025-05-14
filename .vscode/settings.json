@@ -1,0 +1,11 @@
+{
+  "editor.tabCompletion": "on",
+  "files.trimTrailingWhitespace": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["class=\"([^\"]*)", "\"([^\"]*)\""],
+    ["className=\"([^\"]*)", "\"([^\"]*)\""]
+  ]
+}

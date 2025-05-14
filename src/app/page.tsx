@@ -1,7 +1,10 @@
-export default function Home() {
+import Home from "./(tabs)/home/page";
+import TabsLayout from "./(tabs)/layout";
+
+export default function WrappedTabsHome() {
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold">tailwind test</h1>
-    </main>
+    <TabsLayout>
+      <Home />
+    </TabsLayout>
   );
 }

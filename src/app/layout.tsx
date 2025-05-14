@@ -1,13 +1,14 @@
-import "./globals.css";
 import { ReactNode } from "react";
-import { Providers } from "@/components/Providers";
+import "@/styles/globals.css";
+import { pretendard } from "../app/fonts/pretendard";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="ko" className={pretendard.variable}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
