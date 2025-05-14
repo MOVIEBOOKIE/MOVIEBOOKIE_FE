@@ -19,7 +19,10 @@ export default function Step2() {
           </>
         }
         description={
-          <>이벤트 진행 날짜는 오늘을 기준으로 4주 뒤부터 설정 가능해요</>
+          <>
+            이벤트 진행 날짜는 오늘을 기준으로
+            <span className="text-gray-300"> 4주 뒤부터</span> 설정 가능해요
+          </>
         }
       />
       <Calendar

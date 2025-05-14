@@ -6,11 +6,13 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
 import Step2 from "./components/step2-date";
 import Step3 from "./components/step3-time";
+import Step4 from "./components/step4-period";
 
 const steps = [
   { title: "카테고리", component: Step1 },
   { title: "날짜 ", component: Step2 },
   { title: "시간", component: Step3 },
+  { title: "기간", component: Step4 },
 ];
 
 export default function EventCreatePage() {
@@ -19,19 +21,27 @@ export default function EventCreatePage() {
     defaultValues: {
       category: "",
       eventDate: "",
-      eventTime: "",
+      eventStartTime: "",
+      eventProgressTime: "",
     },
   });
 
   const CurrentStep = steps[step].component;
   const category = useWatch({ control: methods.control, name: "category" });
   const eventDate = useWatch({ control: methods.control, name: "eventDate" });
-  const eventTime = useWatch({ control: methods.control, name: "eventTime" });
+  const eventStartTime = useWatch({
+    control: methods.control,
+    name: "eventStartTime",
+  });
+  const eventProgressTime = useWatch({
+    control: methods.control,
+    name: "eventProgressTime",
+  });
 
   const isButtonDisabled =
     (step === 0 && !category) ||
     (step === 1 && !eventDate) ||
-    (step === 2 && !eventTime);
+    (step === 2 && (!eventStartTime || !eventProgressTime));
 
   const onNext = async () => {
     const isValid = await methods.trigger();

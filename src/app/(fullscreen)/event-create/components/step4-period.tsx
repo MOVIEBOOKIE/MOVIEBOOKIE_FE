@@ -1,23 +1,30 @@
 "use client";
 
 import { StepHeader } from "@/components";
-import { CONTENT } from "@/constants/trait";
-import { EtcIcon } from "@/icons/index";
 import { useFormContext } from "react-hook-form";
-import { useState } from "react";
 import Calendar from "./calendar";
 
 export default function Step4() {
   const { watch, setValue } = useFormContext();
+  const selectedDate = watch("eventDate");
 
   return (
     <>
       <StepHeader
-        StepHeader="2/7"
-        title={<>기간</>}
-        description={
-          <>이벤트 진행 날짜는 오늘을 기준으로 4주 뒤부터 설정 가능해요</>
+        StepHeader="4/7"
+        title={
+          <>
+            이벤트 참여자를 <br />
+            모집할 기간을 설정해 주세요
+          </>
         }
+        description={
+          <>이벤트 진행 날짜 기준, 최대 2주 전까지만 설정할 수 있어요</>
+        }
+      />
+      <Calendar
+        selectedDate={selectedDate}
+        onSelectDate={(date) => setValue("eventDate", date)}
       />
     </>
   );
