@@ -14,7 +14,9 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   const today = dayjs().startOf("day");
   const fourWeeksLater = today.add(4, "week");
 
-  const [currentMonth, setCurrentMonth] = useState(dayjs());
+  const [currentMonth, setCurrentMonth] = useState(
+    dayjs().add(4, "week").startOf("month"),
+  );
 
   const startDay = currentMonth.startOf("month").day();
   const daysInMonth = currentMonth.daysInMonth();
