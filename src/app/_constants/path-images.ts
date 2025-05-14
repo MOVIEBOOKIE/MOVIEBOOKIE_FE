@@ -8,5 +8,8 @@ export const PATH_IMAGES = {
   EVENT_BANNER: "/images/event-banner.png",
 
   FAVICON: "/images/favicon.png",
+
+  //임시 이미지
   IMAGE: "/images/image.png",
+  TMP_MAP: "/images/tmp-map.png",
 };
