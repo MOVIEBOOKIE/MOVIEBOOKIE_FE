@@ -3,21 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { StepHeader } from "@/components";
 import clsx from "clsx";
-
-const PROGRESS_TIME = ["2시간", "3시간", "4시간", "5시간"];
-const START_TIME = [
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-];
+import { EVENT_CREATE_TIME } from "@/constants";
 
 export default function Step3() {
   const { watch, setValue } = useFormContext();
@@ -41,7 +27,7 @@ export default function Step3() {
         이벤트 진행 시간
       </div>
       <div className="grid grid-cols-4 gap-2">
-        {PROGRESS_TIME.map((label) => (
+        {EVENT_CREATE_TIME.PROGRESS_TIME.map((label) => (
           <button
             key={label}
             onClick={() => setValue("eventProgressTime", label)}
@@ -61,7 +47,7 @@ export default function Step3() {
         이벤트 시작 시간
       </div>
       <div className="grid grid-cols-4 gap-2">
-        {START_TIME.map((time) => (
+        {EVENT_CREATE_TIME.START_TIME.map((time) => (
           <button
             key={time}
             onClick={() => setValue("eventStartTime", time)}

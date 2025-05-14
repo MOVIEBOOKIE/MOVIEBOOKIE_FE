@@ -1,6 +1,5 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
 import { StepHeader } from "@/components";
 
 export default function Step5() {
@@ -18,7 +17,7 @@ export default function Step5() {
           <>최소 1명부터 입력 가능하며 주최자는 인원 수에 포함되지 않아요</>
         }
       />
-      sds
+      {/* TODO: 해야함!! */}
     </>
   );
 }

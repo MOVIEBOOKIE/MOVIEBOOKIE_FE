@@ -35,7 +35,6 @@ export default function Step1() {
           <TypeList
             key={key}
             onClick={() => {
-              console.log("선택된 항목:", key);
               setSelected(key);
               setValue("category", key);
             }}
