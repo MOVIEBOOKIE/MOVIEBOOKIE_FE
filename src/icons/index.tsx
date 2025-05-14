@@ -41,3 +41,6 @@ export { default as TelevisionIcon } from "./television.svg";
 export { default as PhoneIcon } from "./phone.svg";
 export { default as BellIcon } from "./bell.svg";
 export { default as MailIcon } from "./mail.svg";
+export { default as NotiCancelIcon } from "./noti-cancel.svg";
+export { default as NotiCheckIcon } from "./noti-check.svg";
+export { default as NotiConfirmIcon } from "./noti-confirm.svg";
