@@ -39,7 +39,7 @@ export default function Step1() {
               setSelected(key);
               setValue("category", key);
             }}
-            isEtc={key === "ETC"}
+            direction="col"
             className={selected === key ? "bg-gray-900" : ""}
           >
             {icon}
