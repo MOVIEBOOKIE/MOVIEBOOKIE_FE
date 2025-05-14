@@ -2,12 +2,19 @@
 
 import { StepHeader } from "@/components";
 import { useFormContext } from "react-hook-form";
-import Calendar from "./calendar";
 import DeadlineCalendar from "./period-calendar";
+import dayjs from "dayjs";
 
 export default function Step4() {
   const { watch, setValue } = useFormContext();
-  const selectedDate = watch("eventDate");
+  const selectedDate = watch("eventDate"); // 대관 날짜
+  const selectedDeadline = watch("recruitmentEnd"); // 마감일
+
+  const handleSelectDeadline = (date: string) => {
+    const today = dayjs().format("YYYY-MM-DD");
+    setValue("recruitmentStart", today);
+    setValue("recruitmentEnd", date);
+  };
 
   return (
     <>
@@ -25,8 +32,8 @@ export default function Step4() {
       />
       <DeadlineCalendar
         eventDate={selectedDate}
-        selectedDeadline={watch("event-deadline")}
-        onSelectDeadline={(date) => setValue("event-deadline", date)}
+        selectedDeadline={selectedDeadline}
+        onSelectDeadline={handleSelectDeadline}
       />
     </>
   );
