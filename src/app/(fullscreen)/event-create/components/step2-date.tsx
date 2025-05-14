@@ -1,0 +1,28 @@
+"use client";
+
+import { StepHeader } from "@/components";
+import { CONTENT } from "@/constants/trait";
+import { EtcIcon } from "@/icons/index";
+import { useFormContext } from "react-hook-form";
+
+export default function Step2() {
+  const { watch, setValue } = useFormContext();
+  const selected = watch("date");
+
+  return (
+    <>
+      <StepHeader
+        StepHeader="2/7"
+        title={
+          <>
+            이벤트를 진행할 <br />
+            날짜를 선택해 주세요
+          </>
+        }
+        description={
+          <>이벤트 진행 날짜는 오늘을 기준으로 4주 뒤부터 설정 가능해요</>
+        }
+      />
+    </>
+  );
+}

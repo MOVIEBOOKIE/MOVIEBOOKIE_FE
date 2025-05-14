@@ -2,24 +2,25 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import FixedLayout from "@/components/fixedlayout";
 import { StepHeader } from "@/components";
 import { CONTENT } from "@/constants/trait";
 import TypeList from "app/(fullscreen)/trait/_components/type-list";
+import { EtcIcon } from "@/icons/index";
 
-export default function EventType() {
+export const CONTENT_WITH_ETC = {
+  ...CONTENT,
+  ETC: {
+    icon: <EtcIcon />,
+    text: "기타",
+  },
+};
+
+export default function Step1() {
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <FixedLayout
-      title="이벤트 생성"
-      showCloseButton={true}
-      isButtonDisabled={!selected}
-      onButtonClick={() => {
-        router.push(`/make-event/date`);
-      }}
-    >
+    <>
       <StepHeader
         StepHeader="1/7"
         title={
@@ -29,21 +30,24 @@ export default function EventType() {
           </>
         }
       />
-
       <div className="mt-10 grid grid-cols-2 gap-2">
-        {Object.entries(CONTENT).map(([key, { icon, text }]) => (
+        {Object.entries(CONTENT_WITH_ETC).map(([key, { icon, text }]) => (
           <TypeList
             key={key}
-            className={`w-full cursor-pointer flex-col justify-center py-7.5 ${
-              selected === key ? "bg-gray-900" : ""
-            }`}
             onClick={() => setSelected(key)}
+            isEtc={key === "ETC"}
+            className={selected === key ? "bg-gray-900" : ""}
           >
             {icon}
             <span>{text}</span>
+            {key === "ETC" && (
+              <p className="caption-3-medium mt-1 text-gray-600">
+                (프로포즈, 파티, 소규모 상영회)
+              </p>
+            )}
           </TypeList>
         ))}
       </div>
-    </FixedLayout>
+    </>
   );
 }
