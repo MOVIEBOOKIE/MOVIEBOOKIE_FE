@@ -1,7 +1,6 @@
 import { Badge } from "@/components";
 import { BackIcon, UploadIcon } from "@/icons/index";
 import Image from "next/image";
-import { useState } from "react";
 import InformationTab from "../_components/information-tab";
 
 export default function Detail() {
