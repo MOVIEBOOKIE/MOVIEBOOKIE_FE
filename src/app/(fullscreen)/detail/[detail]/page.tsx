@@ -1,4 +1,4 @@
-import { Badge } from "@/components";
+import { Badge, Button } from "@/components";
 import { BackIcon, UploadIcon } from "@/icons/index";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function Detail() {
           className="object-cover"
         />
         <div className="from-gray-black/20 to-gray-black absolute inset-0 z-1 bg-gradient-to-b" />
-        <div className="absolute inset-0 z-10 mx-auto w-full max-w-[500px]">
+        <div className="fixed inset-0 z-10 mx-auto w-full max-w-[500px]">
           <button
             type="button"
             className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950"
@@ -97,6 +97,13 @@ export default function Detail() {
         </div>
         <div className="mt-4 mb-6 h-0.25 w-full rounded-sm bg-gray-950" />
         <InformationTab />
+      </div>
+      <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
+        <div>
+          <p className="caption-1-medium text-gray-500">예상 가격</p>
+          <p className="body-3-semibold text-gray-300">24,000원</p>
+        </div>
+        <Button variant="primary">신청하기</Button>
       </div>
     </>
   );
