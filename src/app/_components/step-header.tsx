@@ -1,16 +1,20 @@
+import { cn } from "@/utils/cn";
+
 type StepHeaderProps = {
   StepHeader?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
+  className?: string;
 };
 
 export default function StepHeader({
   StepHeader,
   title,
   description,
+  className,
 }: StepHeaderProps) {
   return (
-    <div className="mb-8">
+    <div className={cn("mb-8", className)}>
       {StepHeader && (
         <p className="body-1-semibold mt-4.25 text-gray-400">{StepHeader}</p>
       )}

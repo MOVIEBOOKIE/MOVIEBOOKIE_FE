@@ -31,6 +31,7 @@ export default function EventCreatePage() {
       recruitmentEnd: "",
       minParticipants: "",
       maxParticipants: "",
+      locationId: null,
     },
   });
 
@@ -57,13 +58,15 @@ export default function EventCreatePage() {
     control: methods.control,
     name: "maxParticipants",
   });
+  const locationId = useWatch({ control: methods.control, name: "locationId" });
 
   const isButtonDisabled =
     (step === 0 && !category) ||
     (step === 1 && !eventDate) ||
     (step === 2 && (!eventStartTime || !eventProgressTime)) ||
     (step === 3 && !recruitmentEnd) ||
-    (step === 4 && (!minParticipants || !maxParticipants));
+    (step === 4 && (!minParticipants || !maxParticipants)) ||
+    (step === 5 && !locationId);
 
   const onNext = async () => {
     const isValid = await methods.trigger();
@@ -77,6 +80,7 @@ export default function EventCreatePage() {
       })();
     }
   };
+  const shouldDisablePadding = step === 6;
 
   return (
     <FormProvider {...methods}>
@@ -85,6 +89,7 @@ export default function EventCreatePage() {
         onButtonClick={onNext}
         showCloseButton={true}
         isButtonDisabled={isButtonDisabled}
+        disablePadding={shouldDisablePadding}
       >
         <CurrentStep />
       </FixedLayout>
