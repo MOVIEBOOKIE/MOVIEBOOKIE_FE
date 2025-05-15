@@ -17,6 +17,7 @@ export default function Client() {
       onButtonClick={() => {
         setStep(step + 1);
       }}
+      detail={step === 2 ? true : false}
     >
       {step === 1 && <Step1 />}
       {step === 2 && <Step2 />}
