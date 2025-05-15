@@ -1,7 +1,6 @@
 import { MOVIE_LISTS } from "@/mocks/movie-list";
 import { useState } from "react";
-import ToggleTab from "./event-toggle";
-import { Card } from "@/components";
+import { Card, ToggleTab } from "@/components";
 
 interface EventTabProps {
   type: "모집" | "참여" | "티켓";
@@ -21,6 +20,7 @@ export default function EventTab({ type, statusMap }: EventTabProps) {
         options={Object.keys(statusMap)}
         selected={selected}
         onSelect={setSelected}
+        withSuffix="이벤트"
       />
 
       <div className="mt-6 flex flex-col">

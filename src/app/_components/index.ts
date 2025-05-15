@@ -8,3 +8,4 @@ export { default as Carousel } from "./carousel";
 export { default as StepHeader } from "./step-header";
 export { default as Header } from "./header";
 export { default as Fixedlayout } from "./fixedlayout";
+export { default as ToggleTab } from "./toggle-tab";
