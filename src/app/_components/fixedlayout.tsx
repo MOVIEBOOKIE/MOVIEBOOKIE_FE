@@ -14,6 +14,8 @@ type FixedLayoutProps = {
   showCloseButton?: boolean;
   showBackButton?: boolean;
   onClose?: () => void;
+  isHeader?: boolean;
+  state?: "default" | "detail" | "full";
 };
 
 export default function FixedLayout({
@@ -25,16 +27,27 @@ export default function FixedLayout({
   showCloseButton = false,
   showBackButton = true,
   onClose,
+  isHeader = true,
+  state = "default",
 }: FixedLayoutProps) {
+  const paddingStyle =
+    state === "default"
+      ? " pt-21.75"
+      : state === "detail"
+        ? "pt-15.5"
+        : "py-auto";
   return (
-    <div className="flex min-h-screen flex-col px-5 pt-21.75 text-white">
-      <Header
-        title={title}
-        showCloseButton={showCloseButton}
-        showBackButton={showBackButton}
-        onClose={onClose}
-      />
-
+    <div
+      className={`${paddingStyle} flex min-h-screen flex-col px-5 text-white`}
+    >
+      {isHeader && (
+        <Header
+          title={title}
+          showCloseButton={showCloseButton}
+          showBackButton={showBackButton}
+          onClose={onClose}
+        />
+      )}
       <div className="flex-1 pb-30">{children}</div>
 
       <div className="pt-auto bg-gray-black fixed bottom-0 left-0 z-50 w-full px-5 pt-2 pb-19">
