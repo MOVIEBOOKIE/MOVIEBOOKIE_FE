@@ -6,6 +6,7 @@ import InformationTab from "../_components/information-tab";
 
 export default function Detail() {
   const percentage = 60;
+  const price = 24000;
   return (
     <>
       <div className="relative h-75 w-full">
@@ -99,9 +100,11 @@ export default function Detail() {
         <InformationTab />
       </div>
       <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
-        <div>
+        <div className="flex flex-col justify-center">
           <p className="caption-1-medium text-gray-500">예상 가격</p>
-          <p className="body-3-semibold text-gray-300">24,000원</p>
+          <p className="body-3-semibold whitespace-nowrap text-gray-300">
+            {price.toLocaleString()}원
+          </p>
         </div>
         <Button variant="primary">신청하기</Button>
       </div>
