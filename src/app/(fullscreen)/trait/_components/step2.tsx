@@ -1,8 +1,7 @@
 "use client";
 
-import { StepHeader } from "@/components";
+import { StepHeader, TypeList } from "@/components";
 import { CRITERION } from "@/constants/trait";
-import TypeList from "../../../_components/type-list";
 import { useFormContext, Controller } from "react-hook-form";
 
 export default function Step2() {
