@@ -17,10 +17,18 @@ export default function Detail() {
         />
         <div className="from-gray-black/20 to-gray-black absolute inset-0 z-1 bg-gradient-to-b" />
         <div className="absolute inset-0 z-10 mx-auto w-full max-w-[500px]">
-          <button className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950">
+          <button
+            type="button"
+            className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950"
+            aria-label="Back"
+          >
             <BackIcon />
           </button>
-          <button className="absolute top-2.5 right-5 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-950">
+          <button
+            type="button"
+            className="absolute top-2.5 right-5 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-950"
+            aria-label="Upload"
+          >
             <UploadIcon />
           </button>
         </div>
@@ -79,7 +87,9 @@ export default function Detail() {
 
           <span className="-my-0.25 flex items-center gap-1">
             2025. 04. 15 - 2025. 04. 20
-            <Badge className="bg-red-main px-1 py-0.25 text-white">D-3</Badge>
+            <Badge variant="primary" className="px-1 py-0.25">
+              D-3
+            </Badge>
           </span>
 
           <span>모집 인원</span>

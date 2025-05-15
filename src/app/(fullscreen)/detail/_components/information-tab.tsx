@@ -61,7 +61,7 @@ export default function InformationTab() {
             </div>
           </div>
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
-          <p className="body-2-medium mb-2 text-gray-400">모집 일정</p>
+          <p className="body-2-medium mb-2 text-gray-400">모집 인원</p>
           <p className="caption-1-medium mt-0.5 text-gray-600">
             *모집 인원 미달성시, 이벤트 진행 취소
           </p>
