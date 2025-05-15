@@ -12,7 +12,7 @@ export default function TopBar() {
     //TODO: 공유 기능 추가
   };
   return (
-    <div className="fixed inset-0 z-10 mx-auto w-full max-w-[500px]">
+    <div className="fixed inset-0 z-10 mx-auto w-full max-w-125">
       <button
         type="button"
         className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950"

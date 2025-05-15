@@ -41,7 +41,7 @@ export default function FixedLayout({
       >
         <div className="flex-1 pb-30">{children}</div>
       </div>
-      <div className="pt-auto bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-2 pb-19">
+      <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-2 pb-19">
         <Button
           disabled={isButtonDisabled}
           onClick={onButtonClick}
