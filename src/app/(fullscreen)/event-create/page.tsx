@@ -23,7 +23,7 @@ export default function EventCreatePage() {
   const [step, setStep] = useState(0);
   const methods = useForm({
     defaultValues: {
-      category: "",
+      mediaType: "",
       eventDate: "",
       eventStartTime: "",
       eventProgressTime: "",
@@ -36,7 +36,7 @@ export default function EventCreatePage() {
   });
 
   const CurrentStep = steps[step].component;
-  const category = useWatch({ control: methods.control, name: "category" });
+  const mediaType = useWatch({ control: methods.control, name: "mediaType" });
   const eventDate = useWatch({ control: methods.control, name: "eventDate" });
   const eventStartTime = useWatch({
     control: methods.control,
@@ -61,7 +61,7 @@ export default function EventCreatePage() {
   const locationId = useWatch({ control: methods.control, name: "locationId" });
 
   const isButtonDisabled =
-    (step === 0 && !category) ||
+    (step === 0 && !mediaType) ||
     (step === 1 && !eventDate) ||
     (step === 2 && (!eventStartTime || !eventProgressTime)) ||
     (step === 3 && !recruitmentEnd) ||
@@ -70,6 +70,8 @@ export default function EventCreatePage() {
 
   const onNext = async () => {
     const isValid = await methods.trigger();
+    console.log("📦 현재 저장된 모든 폼 데이터:", methods.getValues());
+
     if (!isValid) return;
 
     if (step < steps.length - 1) {

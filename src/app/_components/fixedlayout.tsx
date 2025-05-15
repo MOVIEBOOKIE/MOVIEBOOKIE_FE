@@ -32,7 +32,7 @@ export default function FixedLayout({
     <div
       className={cn(
         "flex min-h-screen flex-col pt-21.75 text-white",
-        disablePadding && "px-5",
+        !disablePadding && "px-5",
       )}
     >
       <Header

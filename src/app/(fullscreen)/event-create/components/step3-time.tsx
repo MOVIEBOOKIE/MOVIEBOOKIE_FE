@@ -27,13 +27,13 @@ export default function Step3() {
         이벤트 진행 시간
       </div>
       <div className="grid grid-cols-4 gap-2">
-        {EVENT_CREATE_TIME.PROGRESS_TIME.map((label) => (
+        {EVENT_CREATE_TIME.PROGRESS_TIME.map(({ label, value }) => (
           <button
-            key={label}
-            onClick={() => setValue("eventProgressTime", label)}
+            key={value}
+            onClick={() => setValue("eventProgressTime", value)}
             className={clsx(
               "px-5.8 rounded-xl border py-3.5 text-center text-gray-200",
-              selectedProgress === label
+              selectedProgress === value
                 ? "border-red-main bg-red-main text-white"
                 : "border-gray-900",
             )}

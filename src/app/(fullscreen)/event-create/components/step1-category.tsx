@@ -7,9 +7,14 @@ import TypeList from "@/components/type-list";
 import { EtcIcon } from "@/icons/index";
 import { useFormContext } from "react-hook-form";
 
-export const CONTENT_WITH_ETC = {
+type ContentItem = {
+  icon: React.ReactNode;
+  text: string;
+};
+
+export const CONTENT_WITH_ETC: { [key: string]: ContentItem } = {
   ...CONTENT,
-  ETC: {
+  기타: {
     icon: <EtcIcon className="h-7 w-7" />,
     text: "기타",
   },
@@ -36,14 +41,14 @@ export default function Step1() {
             key={key}
             onClick={() => {
               setSelected(key);
-              setValue("category", key);
+              setValue("mediaType", CONTENT_WITH_ETC[key].text);
             }}
             direction="col"
             className={selected === key ? "bg-gray-900" : ""}
           >
             {icon}
             <span>{text}</span>
-            {key === "ETC" && (
+            {key === "기타" && (
               <p className="caption-3-medium text-gray-600">
                 (프로포즈, 파티, 소규모 상영회)
               </p>
