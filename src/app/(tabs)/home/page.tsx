@@ -55,7 +55,6 @@ export default function Home() {
     <div
       ref={containerRef}
       className="h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
-      onClick={() => router.push(`/detail/1`)}
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">

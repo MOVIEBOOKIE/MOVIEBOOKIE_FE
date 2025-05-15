@@ -9,6 +9,13 @@ import mock_image_8 from "../../../public/mock_imges/mock-image-8.png";
 import mock_image_9 from "../../../public/mock_imges/mock-image-9.png";
 import mock_image_10 from "../../../public/mock_imges/mock-image-10.png";
 import mock_image_11 from "../../../public/mock_imges/mock-image-11.png";
+import mock_image_12 from "../../../public/mock_imges/mock-image-12.png";
+import mock_image_13 from "../../../public/mock_imges/mock-image-13.png";
+import mock_image_14 from "../../../public/mock_imges/mock-image-14.png";
+import mock_image_15 from "../../../public/mock_imges/mock-image-15.png";
+import mock_image_16 from "../../../public/mock_imges/mock-image-16.png";
+import mock_image_17 from "../../../public/mock_imges/mock-image-17.png";
+import mock_image_18 from "../../../public/mock_imges/mock-image-18.png";
 
 export const MOCK_DATA = [
   {
@@ -152,5 +159,89 @@ export const MOCK_DATA = [
     statusBadge: "모집중",
     progressRate: "35%",
     estimatedPrice: "11,000원",
+  },
+  {
+    imageUrl: mock_image_12,
+    category: "예능",
+    title: "무한도전 - 무인도 특집",
+    placeAndDate: "CGV 강남 | 2025.05.18",
+    description:
+      "레전드 중의 레전드💥유재석, 정형돈, 박명수… 다 같이 무인도에 갇힌 그날을 다시 보자!",
+    ddayBadge: "D-9",
+    statusBadge: "모집중",
+    progressRate: "45%",
+    estimatedPrice: "10,000원",
+  },
+  {
+    imageUrl: mock_image_13,
+    category: "예능",
+    title: "1박 2일 - 전설의 복불복 특집",
+    placeAndDate: "메가박스 이수 | 2025.05.22",
+    description:
+      "냉면 or 곰국… 운명은 복불복!강호동과 이승기가 웃음과 눈물로 만든 추억, 함께 떠나요~",
+    ddayBadge: "D-13",
+    statusBadge: "모집중",
+    progressRate: "30%",
+    estimatedPrice: "9,000원",
+  },
+  {
+    imageUrl: mock_image_14,
+    category: "예능",
+    title: "패밀리가 떴다 - 이천 쌀 특집",
+    placeAndDate: "롯데시네마 수원 | 2025.05.29",
+    description:
+      "송중기, 유재석, 이효리의 찐 케미🌾밥 먹다 터지는 웃음폭탄 다시 보자!",
+    ddayBadge: "D-20",
+    statusBadge: "모집중",
+    progressRate: "20%",
+    estimatedPrice: "9,500원",
+  },
+  {
+    imageUrl: mock_image_15,
+    category: "예능",
+    title: "런닝맨 - 이름표 뜯기 레전드 매치",
+    placeAndDate: "필름포럼 신촌 | 2025.06.01",
+    description:
+      "하하 vs 김종국 vs 유재석 숨 막히는 추격전, 그 전율을 극장에서 다시!",
+    ddayBadge: "D-23",
+    statusBadge: "모집중",
+    progressRate: "40%",
+    estimatedPrice: "11,000원",
+  },
+  {
+    imageUrl: mock_image_16,
+    category: "드라마",
+    title: "응답하라 1994 - 1화 극장 상영",
+    placeAndDate: "메가박스 상암 | 2025.05.21",
+    description:
+      "쓰레기 오빠… 그 시절 우리가 사랑했던 청춘💌 추억 소환하고 싶다면 지금이 기회!",
+    ddayBadge: "D-12",
+    statusBadge: "모집중",
+    progressRate: "50%",
+    estimatedPrice: "13,000원",
+  },
+  {
+    imageUrl: mock_image_17,
+    category: "드라마",
+    title: "기황후 - 초반 몰입회",
+    placeAndDate: "CGV 인천터미널 | 2025.06.02",
+    description:
+      "장쯔이도 놀랐을 카리스마 하지원의 피 튀기는 궁중 복수극, 극장에서 봐야 진짜 몰입!",
+    ddayBadge: "D-24",
+    statusBadge: "모집중",
+    progressRate: "35%",
+    estimatedPrice: "10,000원",
+  },
+  {
+    imageUrl: mock_image_18,
+    category: "드라마",
+    title: "백년의 유산 - 눈물 엔딩 상영회",
+    placeAndDate: "롯데시네마 건대입구 | 2025.05.30",
+    description:
+      "가족이란 무엇일까… 🍜 국수와 눈물, 감동의 명장면들만 쏙쏙 모아봤어요.",
+    ddayBadge: "D-21",
+    statusBadge: "모집중",
+    progressRate: "25%",
+    estimatedPrice: "9,000원",
   },
 ];
