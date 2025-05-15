@@ -13,7 +13,7 @@ export default function PhoneStep() {
       buttonText="동의하고 계속하기"
       showBackButton={false}
       onButtonClick={() => {
-        router.push(`/verify/verify-n`);
+        router.push(`/verify/verify-phone`);
       }}
     >
       <StepHeader
