@@ -60,11 +60,11 @@ export const CRITERION: Record<
     icon: <SpeakingIcon />,
     text: "함께 보고 각자 감상을 나누는걸 좋아해요",
   },
-  FIRED_TAG: {
-    icon: <FireIcon />,
-    text: "요즘 핫한 작품은 놓칠 수 없어요",
-  },
   HOT_TREND: {
+    icon: <FireIcon />,
+    text: "요즘 핫한 작품은 놓칠 수 없어요친구들이 추천한 작품들은 무조건 챙겨봐요",
+  },
+  FIRED_TAG: {
     icon: <TargetIcon />,
     text: "친구들이 추천한 작품들은 무조건 챙겨봐요",
   },
