@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { ArrowDownIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
-import FixedLayout from "@/components/fixedlayout";
-import { StepHeader } from "@/components";
+import { FixedLayout, StepHeader } from "@/components";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
 

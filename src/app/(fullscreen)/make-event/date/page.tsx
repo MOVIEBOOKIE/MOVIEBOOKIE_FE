@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import FixedLayout from "@/components/fixedlayout";
-import { StepHeader } from "@/components";
+import { FixedLayout, StepHeader } from "@/components";
 
 export default function EventDate() {
   const router = useRouter();

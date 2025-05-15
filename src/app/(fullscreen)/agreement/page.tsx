@@ -1,14 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Fixedlayout, StepHeader } from "@/components";
+import { FixedLayout, StepHeader } from "@/components";
 import { BellIcon, MailIcon, PhoneIcon } from "@/icons/index";
 import Item from "./components/item";
 
 export default function PhoneStep() {
   const router = useRouter();
   return (
-    <Fixedlayout
+    <FixedLayout
       title="동의"
       buttonText="동의하고 계속하기"
       showBackButton={false}
@@ -45,6 +45,6 @@ export default function PhoneStep() {
           />
         </div>
       </div>
-    </Fixedlayout>
+    </FixedLayout>
   );
 }

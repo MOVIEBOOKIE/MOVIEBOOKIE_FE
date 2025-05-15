@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import FixedLayout from "@/components/fixedlayout";
-import { StepHeader } from "@/components";
+import { FixedLayout, StepHeader } from "@/components";
 import { CONTENT } from "@/constants/trait";
 import TypeList from "app/(fullscreen)/trait/_components/type-list";
 

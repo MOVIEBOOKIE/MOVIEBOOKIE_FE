@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { StepHeader } from "@/components";
+import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
-import FixedLayout from "@/components/fixedlayout";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");
