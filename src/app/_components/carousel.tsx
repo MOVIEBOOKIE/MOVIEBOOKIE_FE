@@ -65,7 +65,12 @@ export default function Carousel() {
                   alt="poster"
                   className="absolute h-full w-full rounded-xl object-cover"
                 />
-                <Badge className="absolute top-4 left-4 z-10">모집 중</Badge>
+                <Badge
+                  variant="secondary"
+                  className="absolute top-4 left-4 z-10"
+                >
+                  모집 중
+                </Badge>
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/16 from-0% to-black/64 to-[81.97%]" />
                 <div className="absolute bottom-0 h-42 w-full">
                   <div className="absolute inset-0 bg-gradient-to-b from-[rgba(22,22,22,0)] from-[29.9%] via-[rgba(25,25,25,0.10)] to-[rgba(29,29,29,0.50)] opacity-54" />

@@ -19,6 +19,7 @@ export { default as LogoWhiteIcon } from "./common/logo-white.svg";
 export { default as ArrowDownIcon } from "./common/arrow-down.svg";
 export { default as ArrowLeftIcon } from "./common/arrow-left.svg";
 export { default as ArrowRightIcon } from "./common/arrow-right.svg";
+export { default as UploadIcon } from "./common/upload.svg";
 
 //trait
 export { default as DizzinessIcon } from "./trait/dizziness.svg";
