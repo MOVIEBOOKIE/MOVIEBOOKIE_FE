@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, Input, Carousel } from "@/components";
 import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
-import { MOVIE_LISTS } from "@/mocks/movie-list";
+import { MOCK_DATA } from "@/mocks/mock-data";
 
 export default function Home() {
   const router = useRouter();
@@ -55,6 +55,7 @@ export default function Home() {
     <div
       ref={containerRef}
       className="h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
+      onClick={() => router.push(`/detail/1`)}
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
@@ -114,10 +115,17 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {MOVIE_LISTS.map((card, index) => (
+        {MOCK_DATA.map((card, index) => (
           <div key={index}>
-            <Card {...card} />
-            {index !== MOVIE_LISTS.length - 1 && (
+            <Card
+              {...card}
+              imageUrl={
+                typeof card.imageUrl === "string"
+                  ? card.imageUrl
+                  : (card.imageUrl as any).src
+              }
+            />
+            {index !== MOCK_DATA.length - 1 && (
               <div className="my-4 h-0.25 w-full bg-gray-950" />
             )}
           </div>
