@@ -44,7 +44,7 @@ export default function MyPage() {
           { label: "개인정보처리방침" },
           {
             label: "무비부키 평가 및 피드백",
-            onClick: () => router.push("/feedback"),
+            // onClick: () => router.push("/feedback"),
           },
           { label: "로그아웃" },
           { label: "회원탈퇴" },
@@ -52,7 +52,7 @@ export default function MyPage() {
           <li
             key={item.label}
             className="flex cursor-pointer items-center justify-between py-4"
-            onClick={item.onClick}
+            // onClick={item.onClick}
             role="button"
           >
             <span>{item.label}</span>

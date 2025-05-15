@@ -12,6 +12,8 @@ export { default as DefaultProfileIcon } from "./ui/default-profile.svg";
 export { default as KakaoIcon } from "./ui/kakao.svg";
 export { default as ShareIcon } from "./ui/share.svg";
 export { default as PhoneIcon } from "./ui/phone.svg";
+export { default as EtcIcon } from "./ui/etc.svg";
+
 //common
 export { default as BackIcon } from "./common/back.svg";
 export { default as CloseIcon } from "./common/close.svg";
@@ -38,14 +40,6 @@ export { default as CamcorderIcon } from "./trait/camcorder.svg";
 export { default as PopcornIcon } from "./trait/popcorn.svg";
 export { default as SmileIcon } from "./trait/smile.svg";
 export { default as TelevisionIcon } from "./trait/television.svg";
-
-//create
-export { default as C_BallIcon } from "./create/c-ball.svg";
-export { default as C_CamcorderIcon } from "./create/c-camcorder.svg";
-export { default as C_PopcornIcon } from "./create/c-popcorn.svg";
-export { default as C_SmileIcon } from "./create/c-smile.svg";
-export { default as C_TelevisionIcon } from "./create/c-tv.svg";
-export { default as EtcIcon } from "./create/etc.svg";
 
 export { default as BellIcon } from "./ui/bell.svg";
 export { default as MailIcon } from "./ui/mail.svg";

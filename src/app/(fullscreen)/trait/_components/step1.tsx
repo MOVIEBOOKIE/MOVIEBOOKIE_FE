@@ -2,7 +2,7 @@
 
 import { useFormContext, Controller } from "react-hook-form";
 import { StepHeader } from "@/components";
-import TypeList from "./type-list";
+import TypeList from "../../../_components/type-list";
 import { MOOD } from "@/constants/trait";
 
 interface Step1Props {

@@ -24,7 +24,7 @@ export function NotificationItem({
   }[status];
 
   return (
-    <div className="flex gap-2 border-gray-800 px-5 py-3.25">
+    <div className="flex gap-2 px-5 py-3.25">
       <div>{statusIcon}</div>
       <div className="flex-1 text-gray-200">
         <p className="caption-1-medium mb-1 text-gray-500">{type}</p>

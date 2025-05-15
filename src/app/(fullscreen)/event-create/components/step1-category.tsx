@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { StepHeader } from "@/components";
 import { CONTENT } from "@/constants/trait";
-import TypeList from "app/(fullscreen)/trait/_components/type-list";
+import TypeList from "@/components/type-list";
 import { EtcIcon } from "@/icons/index";
 import { useFormContext } from "react-hook-form";
 
 export const CONTENT_WITH_ETC = {
   ...CONTENT,
   ETC: {
-    icon: <EtcIcon />,
+    icon: <EtcIcon className="h-7 w-7" />,
     text: "기타",
   },
 };

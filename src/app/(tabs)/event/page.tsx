@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { STATUS_MAP, PATH_IMAGES } from "@/constants/index";
+import { STATUS_MAP, PATH_IMAGES, PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ export default function EventPage() {
           </p>
           <button
             className="px-4.2 bg-red-main body-3-semibold mt-3.5 mb-6.25 w-full rounded-xl py-3.5"
-            onClick={() => router.push("/event-create")}
+            onClick={() => router.push(PATHS.EVENT_CREATE)}
           >
             나만의 이벤트 만들러 가기
           </button>
