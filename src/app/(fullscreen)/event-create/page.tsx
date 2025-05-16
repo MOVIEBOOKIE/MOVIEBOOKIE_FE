@@ -11,13 +11,14 @@ import Step5 from "./components/step5-people";
 import Step6 from "./components/step6-place";
 import Step7 from "./components/step7-writing";
 import { FixedLayout } from "@/components";
+import { PATHS } from "@/constants";
 
 const steps = [
-  // { title: "카테고리", component: Step1 },
-  // { title: "날짜 ", component: Step2 },
-  // { title: "시간", component: Step3 },
-  // { title: "기간", component: Step4 },
-  // { title: "인원", component: Step5 },
+  { title: "카테고리", component: Step1 },
+  { title: "날짜 ", component: Step2 },
+  { title: "시간", component: Step3 },
+  { title: "기간", component: Step4 },
+  { title: "인원", component: Step5 },
   { title: "영화관", component: Step6 },
   { title: "모집글", component: Step7 },
 ];
@@ -94,6 +95,7 @@ export default function EventCreatePage() {
     } else {
       methods.handleSubmit((data) => {
         console.log("최종 제출:", data);
+        router.push(PATHS.EVENT_SUCCESS);
       })();
     }
   };

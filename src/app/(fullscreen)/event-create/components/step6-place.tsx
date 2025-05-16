@@ -14,7 +14,7 @@ export default function Step6() {
   };
 
   return (
-    <div className="bg-gray-black fixed inset-0 mt-9 flex flex-col items-center overflow-hidden">
+    <div className="bg-gray-black fixed inset-0 mt-17 flex flex-col items-center overflow-hidden">
       <div className="flex h-full w-full max-w-125 flex-col">
         <div className="sticky top-0 z-10 px-5 py-5">
           <StepHeader

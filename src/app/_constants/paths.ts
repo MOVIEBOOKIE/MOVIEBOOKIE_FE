@@ -7,6 +7,7 @@ export const PATHS = {
   LOGIN: "/login",
   EVENT_CREATE: "/event-create",
   KAKAO_LOGIN: "/login/kakao",
+  EVENT_SUCCESS: "/event/success",
   CATEGORY: {
     POPULAR: "/category/popular",
     RECENT: "/category/recent",
