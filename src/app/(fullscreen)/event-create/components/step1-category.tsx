@@ -12,7 +12,7 @@ type ContentItem = {
   text: string;
 };
 
-export const CONTENT_WITH_ETC: { [key: string]: ContentItem } = {
+const CONTENT_WITH_ETC: { [key: string]: ContentItem } = {
   ...CONTENT,
   기타: {
     icon: <EtcIcon className="h-7 w-7" />,

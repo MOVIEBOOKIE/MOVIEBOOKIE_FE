@@ -67,7 +67,7 @@ function KakaoLogin() {
     };
 
     handleLogin();
-  }, [code, redirectUrl, isLocal]);
+  }, [code, redirectUrl, isLocal, router]);
 
   return (
     <div className="bg-gray-black flex h-screen items-center justify-center">

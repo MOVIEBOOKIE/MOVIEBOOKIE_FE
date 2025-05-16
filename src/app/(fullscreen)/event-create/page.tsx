@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import FixedLayout from "@/components/fixedlayout";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
 import Step2 from "./components/step2-date";
@@ -9,6 +9,7 @@ import Step3 from "./components/step3-time";
 import Step4 from "./components/step4-period";
 import Step5 from "./components/step5-people";
 import Step6 from "./components/step6-place";
+import { FixedLayout } from "@/components";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -21,6 +22,8 @@ const steps = [
 
 export default function EventCreatePage() {
   const [step, setStep] = useState(0);
+  const router = useRouter();
+
   const methods = useForm({
     defaultValues: {
       mediaType: "",
@@ -82,16 +85,23 @@ export default function EventCreatePage() {
       })();
     }
   };
-  const shouldDisablePadding = step === 6;
+
+  const onBack = () => {
+    if (step > 0) {
+      setStep((s) => s - 1);
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <FormProvider {...methods}>
       <FixedLayout
         title="이벤트 생성"
         onButtonClick={onNext}
-        showCloseButton={true}
         isButtonDisabled={isButtonDisabled}
-        disablePadding={shouldDisablePadding}
+        showCloseButton={true}
+        onBackClick={onBack}
       >
         <CurrentStep />
       </FixedLayout>
