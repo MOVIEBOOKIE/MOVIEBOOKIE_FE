@@ -2,7 +2,8 @@ export async function apiRequest(url: string, options: any = {}) {
   try {
     const isRelative = url.startsWith("/");
     const baseUrl = isRelative
-      ? process.env.NEXT_PUBLIC_API_PROD_URL
+      ? process.env.NEXT_PUBLIC_API_DEV_URL ||
+        process.env.NEXT_PUBLIC_API_PROD_URL
       : undefined;
     const finalUrl = new URL(url, baseUrl);
 
