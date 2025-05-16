@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import Step0 from "./_components/step0";
-import { Button, Header } from "@/components";
+import { FixedLayout } from "@/components";
 import Step1 from "./_components/step1";
 import Step2 from "./_components/step2";
 import Step3 from "./_components/step3";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
-import FixedLayout from "@/components/fixedlayout";
 
 export default function Trait() {
   const router = useRouter();

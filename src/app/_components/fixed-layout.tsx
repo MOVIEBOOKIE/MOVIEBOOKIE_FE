@@ -15,6 +15,7 @@ type FixedLayoutProps = {
   showBackButton?: boolean;
   onClose?: () => void;
   disablePadding?: boolean;
+  detail?: boolean;
 };
 
 export default function FixedLayout({
@@ -27,6 +28,7 @@ export default function FixedLayout({
   showBackButton = true,
   onClose,
   disablePadding = false,
+  detail = false,
 }: FixedLayoutProps) {
   return (
     <div
@@ -41,10 +43,12 @@ export default function FixedLayout({
         showBackButton={showBackButton}
         onClose={onClose}
       />
-
-      <div className="flex-1 pb-30">{children}</div>
-
-      <div className="pt-auto bg-gray-black fixed bottom-0 left-0 z-50 w-full px-5 pt-2 pb-19">
+      <div
+        className={`flex min-h-screen max-w-125 flex-col px-5 ${detail ? "pt-15.5" : "pt-21.75"} text-white`}
+      >
+        <div className="flex-1 pb-30">{children}</div>
+      </div>
+      <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-2 pb-19">
         <Button
           disabled={isButtonDisabled}
           onClick={onButtonClick}

@@ -2,8 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { StepHeader } from "@/components";
-import FixedLayout from "@/components/fixedlayout";
+import { FixedLayout, StepHeader } from "@/components";
 
 export default function VerifyNumberPage() {
   return (
