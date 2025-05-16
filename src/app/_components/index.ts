@@ -9,3 +9,4 @@ export { default as StepHeader } from "./step-header";
 export { default as Header } from "./header";
 export { default as FixedLayout } from "./fixed-layout";
 export { default as ToggleTab } from "./toggle-tab";
+export { default as TypeList } from "./type-list";

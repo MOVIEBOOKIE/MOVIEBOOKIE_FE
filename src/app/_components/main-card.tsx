@@ -2,8 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface CardProps {
+  id: string;
   imageUrl: string;
   category: string;
   title: string;
@@ -16,6 +18,7 @@ interface CardProps {
 }
 
 export default function Card({
+  id,
   imageUrl,
   category,
   title,
@@ -26,8 +29,12 @@ export default function Card({
   progressRate,
   estimatedPrice,
 }: CardProps) {
+  const router = useRouter();
   return (
-    <div className="relative flex h-30 w-full gap-3">
+    <div
+      className="relative flex h-30 w-full gap-3"
+      onClick={() => router.push(`/detail/${id || 1}`)}
+    >
       <div className="relative h-30 w-30 overflow-hidden rounded-md">
         <Image
           src={imageUrl}
