@@ -73,23 +73,23 @@ export const CRITERION: Record<
 export const CONTENT: Record<string, { icon: React.ReactNode; text: string }> =
   {
     MOVIE: {
-      icon: <PopcornIcon />,
+      icon: <PopcornIcon className="h-7 w-7" />,
       text: "영화",
     },
     DRAMA: {
-      icon: <TelevisionIcon />,
+      icon: <TelevisionIcon className="h-7 w-7" />,
       text: "드라마",
     },
     SPORTS: {
-      icon: <BallIcon />,
+      icon: <BallIcon className="h-7 w-7" />,
       text: "스포츠",
     },
     VARIETY: {
-      icon: <SmileIcon />,
+      icon: <SmileIcon className="h-7 w-7" />,
       text: "예능",
     },
     CONCERT: {
-      icon: <CamcorderIcon />,
+      icon: <CamcorderIcon className="h-7 w-7" />,
       text: "콘서트/VCR",
     },
   };

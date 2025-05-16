@@ -1,9 +1,39 @@
-import { PATH_IMAGES } from "@/constants";
+import mock_image_2 from "../../../public/mock_imges/mock-image-2.png";
+import mock_image_3 from "../../../public/mock_imges/mock-image-3.png";
+import mock_image_4 from "../../../public/mock_imges/mock-image-4.png";
+import mock_image_5 from "../../../public/mock_imges/mock-image-5.png";
+import mock_image_10 from "../../../public/mock_imges/mock-image-10.png";
+import mock_image_11 from "../../../public/mock_imges/mock-image-11.png";
 
 export const MOVIE_SLIDES = [
-  { id: 1, title: "태풍이 지나가고", image: PATH_IMAGES.IMAGE },
-  { id: 2, title: "블루 자켓", image: PATH_IMAGES.IMAGE },
-  { id: 3, title: "마지막 여행", image: PATH_IMAGES.IMAGE },
-  { id: 4, title: "달빛 아래", image: PATH_IMAGES.IMAGE },
-  { id: 5, title: "어둠의 경계", image: PATH_IMAGES.IMAGE },
+  {
+    id: 1,
+    title: "솔로지옥4 마지막회",
+    image: mock_image_11,
+  },
+  {
+    id: 2,
+    title: "오징어게임3",
+    image: mock_image_4,
+  },
+  {
+    id: 3,
+    title: "극한직업",
+    image: mock_image_2,
+  },
+  {
+    id: 4,
+    title: "더 글로리",
+    image: mock_image_10,
+  },
+  {
+    id: 5,
+    title: "아이유 콘서트 : 더 위닝",
+    image: mock_image_5,
+  },
+  {
+    id: 6,
+    title: "환승연애2",
+    image: mock_image_3,
+  },
 ];

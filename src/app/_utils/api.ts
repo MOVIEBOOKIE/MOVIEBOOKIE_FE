@@ -16,6 +16,7 @@ export async function apiRequest(url: string, options: any = {}) {
       method: options.method || "GET",
       headers: options.headers || {},
       body: options.body,
+      credentials: "include",
     });
 
     const contentType = res.headers.get("content-type") || "";

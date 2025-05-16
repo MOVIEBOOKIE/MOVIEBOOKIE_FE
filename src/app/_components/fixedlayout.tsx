@@ -14,6 +14,7 @@ type FixedLayoutProps = {
   showCloseButton?: boolean;
   showBackButton?: boolean;
   onClose?: () => void;
+  disablePadding?: boolean;
 };
 
 export default function FixedLayout({
@@ -25,9 +26,15 @@ export default function FixedLayout({
   showCloseButton = false,
   showBackButton = true,
   onClose,
+  disablePadding = false,
 }: FixedLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col px-5 pt-21.75 text-white">
+    <div
+      className={cn(
+        "flex min-h-screen flex-col pt-21.75 text-white",
+        !disablePadding && "px-5",
+      )}
+    >
       <Header
         title={title}
         showCloseButton={showCloseButton}

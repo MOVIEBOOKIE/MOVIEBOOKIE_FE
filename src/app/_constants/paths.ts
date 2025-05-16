@@ -5,6 +5,7 @@ export const PATHS = {
   MYPAGE: "/my-page",
   SEARCH: "/search",
   LOGIN: "/login",
+  EVENT_CREATE: "/event-create",
   KAKAO_LOGIN: "/login/kakao",
   CATEGORY: {
     POPULAR: "/category/popular",

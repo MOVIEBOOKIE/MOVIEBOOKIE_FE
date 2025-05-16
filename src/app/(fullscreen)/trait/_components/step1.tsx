@@ -1,8 +1,7 @@
 "use client";
 
 import { useFormContext, Controller } from "react-hook-form";
-import { StepHeader } from "@/components";
-import TypeList from "./type-list";
+import { StepHeader, TypeList } from "@/components";
 import { MOOD } from "@/constants/trait";
 
 interface Step1Props {
