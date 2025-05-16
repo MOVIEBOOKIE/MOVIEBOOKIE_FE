@@ -37,7 +37,7 @@ export default function FixedLayout({
         ? "pt-15.5 px-5"
         : "p-0";
   return (
-    <div className={`${paddingStyle} flex min-h-screen flex-col text-white`}>
+    <>
       {isHeader && (
         <Header
           title={title}
@@ -46,9 +46,10 @@ export default function FixedLayout({
           onClose={onClose}
         />
       )}
-      <div className="flex-1 pb-30">{children}</div>
-
-      <div className="pt-auto bg-gray-black fixed bottom-0 left-0 z-50 w-full px-5 pt-2 pb-19">
+      <div className={`${paddingStyle} flex min-h-screen flex-col text-white`}>
+        <div className="flex-1 pb-30">{children}</div>
+      </div>
+      <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-2 pb-19">
         <Button
           disabled={isButtonDisabled}
           onClick={onButtonClick}
@@ -61,6 +62,6 @@ export default function FixedLayout({
           {buttonText}
         </Button>
       </div>
-    </div>
+    </>
   );
 }
