@@ -35,6 +35,21 @@ function KakaoLogin() {
   const { redirectUrl, isLocal } = getRedirectUrl();
 
   useEffect(() => {
+    console.log("ENV 확인 👇");
+    console.log("NODE_ENV:", process.env.NODE_ENV);
+    console.log(
+      "NEXT_PUBLIC_KAKAO_CLIENT_ID:",
+      process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
+    );
+    console.log(
+      "NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL:",
+      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL,
+    );
+    console.log(
+      "NEXT_PUBLIC_KAKAO_REDIRECT_URI_PROD:",
+      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PROD,
+    );
+
     if (!code) {
       //TODO: 토스트 변경
       console.warn("인가 코드가 없습니다. 카카오 로그인 페이지로 이동합니다.");
