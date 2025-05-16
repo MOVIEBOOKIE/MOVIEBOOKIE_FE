@@ -38,14 +38,21 @@ export default function InformationTab() {
           </div>
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">위치</p>
-          <Image src={PATH_IMAGES.TMP_MAP} width={335} height={192} alt="map" />
+          <Image
+            src={PATH_IMAGES.TMP_MAP}
+            width={335}
+            height={192}
+            alt="map"
+            className="w-full object-cover"
+          />
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">영화관 내부</p>
           <Image
             src={PATH_IMAGES.TMP_MOVIE}
             width={335}
             height={192}
-            alt="map"
+            alt="movie"
+            className="w-full object-cover"
           />
         </div>
       ) : (

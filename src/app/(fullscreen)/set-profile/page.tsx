@@ -1,7 +1,6 @@
 "use client";
 
-import { Button, Header, StepHeader } from "@/components";
-import FixedLayout from "@/components/fixedlayout";
+import { FixedLayout, StepHeader } from "@/components";
 import { DefaultProfileIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 
