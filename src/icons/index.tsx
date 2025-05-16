@@ -47,3 +47,5 @@ export { default as NotiCancelIcon } from "./ui/noti-cancel.svg";
 export { default as NotiCheckIcon } from "./ui/noti-check.svg";
 export { default as NotiConfirmIcon } from "./ui/noti-confirm.svg";
 export { default as MyKakaoIcon } from "./ui/mypage-kakao.svg";
+export { default as ImageIcon } from "./ui/image.svg";
+export { default as ImageDeleteIcon } from "./ui/image-delete.svg";

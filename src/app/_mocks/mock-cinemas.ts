@@ -1,3 +1,5 @@
+import { MOCK_IMAGES } from "@/constants/path-images";
+
 export const mockCinemas = [
   {
     id: 1,
@@ -7,7 +9,7 @@ export const mockCinemas = [
     address: "서울 마포구 상암동 1602 DMC 단지",
     seats: "321석(장애인석 구비)",
     price: "시간당 2만원",
-    image: "/mock_imges/place-2.png",
+    image: MOCK_IMAGES.IMAGE_CINEMA_2,
   },
   {
     id: 2,
@@ -17,7 +19,7 @@ export const mockCinemas = [
     address: "서울 마포구 상암동 1602 DMC 단지",
     seats: "321석(장애인석 구비)",
     price: "시간당 4만원",
-    image: "/mock_imges/place-1.png",
+    image: MOCK_IMAGES.IMAGE_CINEMA_1,
   },
   {
     id: 3,
@@ -27,7 +29,7 @@ export const mockCinemas = [
     address: "서울 마포구 상암동 1602 DMC 단지",
     seats: "321석(장애인석 구비)",
     price: "시간당 2만원",
-    image: "/mock_imges/place-3.png",
+    image: MOCK_IMAGES.IMAGE_CINEMA_3,
   },
   {
     id: 4,
@@ -37,6 +39,6 @@ export const mockCinemas = [
     address: "서울 마포구 상암동 1602 DMC 단지",
     seats: "321석(장애인석 구비)",
     price: "시간당 2만원",
-    image: "/mock_imges/place-2.png",
+    image: MOCK_IMAGES.IMAGE_CINEMA_2,
   },
 ];
