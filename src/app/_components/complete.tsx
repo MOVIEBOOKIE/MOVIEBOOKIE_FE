@@ -1,5 +1,5 @@
 import { CompleteIcon } from "@/icons/index";
-import { Fixedlayout } from ".";
+import FixedLayout from "./fixed-layout";
 
 interface CompleteProps {
   state: string;
@@ -8,7 +8,7 @@ interface CompleteProps {
 
 export default function Complete({ state, buttonText }: CompleteProps) {
   return (
-    <Fixedlayout isHeader={false} buttonText={buttonText} state="full">
+    <FixedLayout isHeader={false} buttonText={buttonText} state="full">
       <div className="flex h-[calc(100vh-126px)] flex-col items-center justify-center gap-3">
         <CompleteIcon className="mb-2" />
         <p className="title-1-bold text-gray-white">{state}이 완료됐어요!</p>
@@ -18,6 +18,6 @@ export default function Complete({ state, buttonText }: CompleteProps) {
           이벤트 진행이 취소될 수 있어요
         </p>
       </div>
-    </Fixedlayout>
+    </FixedLayout>
   );
 }

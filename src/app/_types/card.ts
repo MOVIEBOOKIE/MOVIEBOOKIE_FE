@@ -1,5 +1,5 @@
 export type CardData = {
-  imageUrl: string | { src: string } | { default: string };
+  imageUrl: any;
   category: string;
   title: string;
   placeAndDate: string;

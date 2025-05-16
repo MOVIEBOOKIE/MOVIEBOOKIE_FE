@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
 import Step2 from "./components/step2-date";
@@ -23,6 +24,8 @@ const steps = [
 
 export default function EventCreatePage() {
   const [step, setStep] = useState(0);
+  const router = useRouter();
+
   const methods = useForm({
     defaultValues: {
       mediaType: "",
@@ -95,13 +98,22 @@ export default function EventCreatePage() {
     }
   };
 
+  const onBack = () => {
+    if (step > 0) {
+      setStep((s) => s - 1);
+    } else {
+      router.back();
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <FixedLayout
         title="이벤트 생성"
         onButtonClick={onNext}
-        showCloseButton={true}
         isButtonDisabled={isButtonDisabled}
+        showCloseButton={true}
+        onBackClick={onBack}
       >
         <CurrentStep />
       </FixedLayout>

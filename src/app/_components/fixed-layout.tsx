@@ -14,6 +14,7 @@ type FixedLayoutProps = {
   showCloseButton?: boolean;
   showBackButton?: boolean;
   onClose?: () => void;
+  onBackClick?: () => void;
   isHeader?: boolean;
   state?: "default" | "detail" | "full";
 };
@@ -27,6 +28,7 @@ export default function FixedLayout({
   showCloseButton = false,
   showBackButton = true,
   onClose,
+  onBackClick,
   isHeader = true,
   state = "default",
 }: FixedLayoutProps) {
@@ -36,6 +38,7 @@ export default function FixedLayout({
       : state === "detail"
         ? "pt-15.5 px-5"
         : "p-0";
+
   return (
     <>
       {isHeader && (
@@ -44,6 +47,7 @@ export default function FixedLayout({
           showCloseButton={showCloseButton}
           showBackButton={showBackButton}
           onClose={onClose}
+          onBack={onBackClick}
         />
       )}
       <div className={`${paddingStyle} flex min-h-screen flex-col text-white`}>

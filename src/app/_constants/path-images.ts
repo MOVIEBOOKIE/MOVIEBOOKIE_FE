@@ -34,4 +34,11 @@ export const MOCK_IMAGES = {
   IMAGE_16: "/mock_images/mock-image-16.png",
   IMAGE_17: "/mock_images/mock-image-17.png",
   IMAGE_18: "/mock_images/mock-image-18.png",
+  IMAGE_19: "/mock_images/mock-image-19.png",
+  IMAGE_20: "/mock_images/mock-image-20.png",
+  IMAGE_21: "/mock_images/mock-image-21.png",
+  IMAGE_22: "/mock_images/mock-image-22.png",
+  IMAGE_23: "/mock_images/mock-image-23.png",
+  IMAGE_24: "/mock_images/mock-image-24.png",
+  IMAGE_25: "/mock_images/mock-image-25.png",
 };

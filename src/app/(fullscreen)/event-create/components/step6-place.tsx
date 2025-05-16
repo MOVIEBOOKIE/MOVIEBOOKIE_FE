@@ -35,7 +35,7 @@ export default function Step6() {
               className={`${isSelected ? "mb-0 bg-gray-950" : "mb-0"}`}
             >
               <div
-                className="relative flex gap-4 border-b border-gray-950 px-5 py-5"
+                className="relative flex gap-4 border-b border-gray-950 py-5"
                 onClick={() => handleSelectCinema(cinema.id)}
               >
                 {!isSelected && selectedLocationId !== null && (
