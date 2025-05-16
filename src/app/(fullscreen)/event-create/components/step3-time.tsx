@@ -23,9 +23,7 @@ export default function Step3() {
         description={<>이벤트를 진행할 시간과 시작 시간을 선택해 주세요</>}
       />
 
-      <div className="body-3-medium mt-8 mb-5 text-gray-300">
-        이벤트 진행 시간
-      </div>
+      <p className="body-3-medium mt-8 mb-5 text-gray-300">이벤트 진행 시간</p>
       <div className="grid grid-cols-4 gap-2">
         {EVENT_CREATE_TIME.PROGRESS_TIME.map(({ label, value }) => (
           <button

@@ -41,8 +41,8 @@ export const MOCK_IMAGES = {
   IMAGE_23: "/mock_images/mock-image-23.png",
   IMAGE_24: "/mock_images/mock-image-24.png",
   IMAGE_25: "/mock_images/mock-image-25.png",
-  IMAGE_CINEMA_1: "/mock_imges/place-1.png",
-  IMAGE_CINEMA_2: "/mock_imges/place-2.png",
-  IMAGE_CINEMA_3: "/mock_imges/place-3.png",
-  IMAGE_CINEMA_4: "/mock_imges/place-4.png",
+  IMAGE_CINEMA_1: "/mock_images/place-1.png",
+  IMAGE_CINEMA_2: "/mock_images/place-2.png",
+  IMAGE_CINEMA_3: "/mock_images/place-3.png",
+  IMAGE_CINEMA_4: "/mock_images/place-4.png",
 };
