@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import { useState } from "react";
 import Step0 from "./_components/step0";
 import Step1 from "./_components/step1";
@@ -31,9 +31,26 @@ export default function Trait() {
     }
   };
 
-  const onSubmit = methods.handleSubmit((data) => {
-    console.log("제출된 데이터:", data);
-    router.push(PATHS.TRAIT_RESULT);
+  const onSubmit = methods.handleSubmit(async (data) => {
+    const { mood, criterion, content } = data;
+
+    try {
+      const query = {
+        step1Question: mood,
+        step2Question: criterion,
+        favoriteCategory: content,
+      };
+
+      const res = await axios.post("/api/user-type", null, { params: query });
+
+      const { userTypeLabel, description } = res.data.result;
+
+      router.push(
+        `${PATHS.TRAIT_RESULT}?label=${encodeURIComponent(userTypeLabel)}&desc=${encodeURIComponent(description)}`,
+      );
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   const mood = methods.watch("mood");

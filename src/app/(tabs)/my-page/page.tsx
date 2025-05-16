@@ -40,7 +40,8 @@ export default function MyPage() {
 
       <ul className="body-2-medium px-2 text-gray-300">
         {[
-          { label: "서비스이용약관" },
+          { label: "서비스이용약관", onClick: () => router.push("/trait") },
+
           { label: "개인정보처리방침" },
           {
             label: "무비부키 평가 및 피드백",
@@ -52,7 +53,7 @@ export default function MyPage() {
           <li
             key={item.label}
             className="flex cursor-pointer items-center justify-between py-4"
-            // onClick={item.onClick}
+            onClick={item.onClick}
             role="button"
           >
             <span>{item.label}</span>
