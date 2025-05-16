@@ -8,8 +8,8 @@ export default function Step1() {
         className="relative flex w-full justify-center"
         style={{ aspectRatio: "375 / 302" }}
       >
-        <div className="from-gray-black/0 absolute inset-0 z-10 bg-gradient-to-b to-black/100" />
-        <div className="to-70.53% absolute inset-0 z-10 bg-gradient-to-b from-black from-0% to-black/0" />
+        <div className="from-gray-black/0 to-gray-black absolute inset-0 z-10 bg-gradient-to-b" />
+        <div className="to-70.53% from-gray-black absolute inset-0 z-10 bg-gradient-to-b from-0% to-black/0" />
         <Image
           src={PATH_IMAGES.IMAGE}
           alt="movie-poster"

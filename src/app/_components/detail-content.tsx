@@ -1,4 +1,3 @@
-import { BackIcon, UploadIcon } from "@/icons/index";
 import Image from "next/image";
 import React from "react";
 import Badge from "./badge";
@@ -17,11 +16,11 @@ export default function DetailContent() {
           className="object-cover"
         />
         <div className="from-gray-black/20 to-gray-black absolute inset-0 z-1 bg-gradient-to-b" />
-        <p className="caption-1-medium absolute bottom-0 left-5 z-10 text-gray-500">
+        <p className="caption-1-medium absolute bottom-0 z-10 text-gray-500">
           영화 · 신촌 아트레온
         </p>
       </div>
-      <div className="mx-5">
+      <div>
         <p className="text-gray-white title-2-semibold mt-1">
           더 폴: 오디어스와 환상의 문
         </p>
