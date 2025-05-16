@@ -4,3 +4,4 @@ export { PATHS } from "./paths";
 export { EVENT_CATEGORIES } from "./event-categories";
 export { PATH_IMAGES } from "./path-images";
 export { STATUS_MAP } from "./event-tab";
+export { EVENT_CREATE_TIME } from "./event-create";

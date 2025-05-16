@@ -14,11 +14,11 @@ export default function Step0({ nickname }: Step0Props) {
   return (
     <div className="relative overflow-hidden">
       <div className="absolute left-1/2 h-full w-93.75 -translate-x-1/2">
-        <TelevisionIcon className="absolute top-27.5 left-27.5 rotate-13" />
-        <SmileIcon className="absolute top-29.25 left-53" />
-        <PopcornIcon className="absolute top-48.5 left-23 -rotate-15" />
-        <BallIcon className="absolute top-42.5 left-41" />
-        <CamcorderIcon className="absolute top-49.5 left-56.5" />
+        <TelevisionIcon className="absolute top-27.5 left-27.5 h-12 w-12 rotate-13" />
+        <SmileIcon className="absolute top-29.25 left-53 h-12 w-12" />
+        <PopcornIcon className="absolute top-48.5 left-23 h-12 w-12 -rotate-15" />
+        <BallIcon className="absolute top-42.5 left-41 h-12 w-12" />
+        <CamcorderIcon className="absolute top-49.5 left-56.5 h-12 w-12" />
       </div>
       <div className="mt-80 w-full text-center">
         <p className="title-1-bold text-gray-white">

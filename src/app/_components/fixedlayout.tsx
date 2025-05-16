@@ -16,6 +16,7 @@ type FixedLayoutProps = {
   onClose?: () => void;
   isHeader?: boolean;
   state?: "default" | "detail" | "full";
+  disablePadding?: boolean;
 };
 
 export default function FixedLayout({
@@ -29,6 +30,7 @@ export default function FixedLayout({
   onClose,
   isHeader = true,
   state = "default",
+  disablePadding = false,
 }: FixedLayoutProps) {
   const paddingStyle =
     state === "default"
@@ -38,7 +40,7 @@ export default function FixedLayout({
         : "py-auto";
   return (
     <div
-      className={`${paddingStyle} flex min-h-screen flex-col px-5 text-white`}
+      className={cn(`${paddingStyle} flex min-h-screen flex-col px-5 text-white`, !disablePadding && "px-5")}
     >
       {isHeader && (
         <Header
