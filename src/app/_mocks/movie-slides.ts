@@ -3,32 +3,37 @@ import { MOCK_IMAGES } from "@/constants/path-images";
 export const MOVIE_SLIDES = [
   {
     id: 1,
-    title: "솔로지옥4 마지막회",
-    image: MOCK_IMAGES.IMAGE_11,
+    title: "명탐정 코난: 순흑의 악몽",
+    image: MOCK_IMAGES.IMAGE_19,
   },
   {
     id: 2,
-    title: "오징어게임3",
-    image: MOCK_IMAGES.IMAGE_4,
+    title: "말할 수 없는 비밀",
+    image: MOCK_IMAGES.IMAGE_20,
   },
   {
     id: 3,
-    title: "극한직업",
-    image: MOCK_IMAGES.IMAGE_2,
+    title: "나의 청춘은 너의 것",
+    image: MOCK_IMAGES.IMAGE_21,
   },
   {
     id: 4,
-    title: "더 글로리",
-    image: MOCK_IMAGES.IMAGE_10,
+    title: "대도시의 사랑법",
+    image: MOCK_IMAGES.IMAGE_22,
   },
   {
     id: 5,
-    title: "아이유 콘서트 : 더 위닝",
-    image: MOCK_IMAGES.IMAGE_5,
+    title: "비긴 어게인",
+    image: MOCK_IMAGES.IMAGE_23,
   },
   {
     id: 6,
-    title: "환승연애2",
-    image: MOCK_IMAGES.IMAGE_3,
+    title: "인사이드 아웃2",
+    image: MOCK_IMAGES.IMAGE_24,
+  },
+  {
+    id: 7,
+    title: "진격의 거인 극장판 - 홍련의 화살",
+    image: MOCK_IMAGES.IMAGE_25,
   },
 ];
