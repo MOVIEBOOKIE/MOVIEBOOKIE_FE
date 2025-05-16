@@ -4,13 +4,20 @@ import { Button } from "@/components";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function TraitResult() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const label = searchParams.get("label");
+  const desc = searchParams.get("desc");
+  const nickname = "서현";
+
   const handleClick = () => {
     router.push(PATHS.HOME);
   };
+
   return (
     <div className="relative flex h-screen w-full justify-center">
       <Image
@@ -28,17 +35,17 @@ export default function TraitResult() {
         }}
       >
         <p className="body-3-semibold mb-0.5 pt-15.25 text-gray-100">
-          서현님은
+          {nickname}님은
         </p>
-        <p className="title-3-bold text-gray-white mb-3">
-          디테일 수집형 영화 몰입러
-        </p>
+        <p className="title-3-bold text-gray-white mb-3">{label}</p>
         <div className="bg-gray-white h-0.25 w-65.25 opacity-14" />
-        <p className="body-3-regular mt-5 mb-7 break-words whitespace-normal">
-          영화의 한 장면, 대사까지 곱씹으며 <br /> 아주 깊게 보는 스타일이네요!
-          <br />
-          스토리에 푹 빠져 정주행할 수 있는
-          <br /> 이벤트들을 모아 추천해 드릴게요!
+        <p className="body-3-regular mt-5 mb-7 text-center break-words whitespace-normal">
+          {desc?.split("\n").map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
         </p>
         <LogoWhiteIcon width={30} height={30} />
       </div>
