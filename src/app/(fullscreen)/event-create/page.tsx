@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import FixedLayout from "@/components/fixedlayout";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
 import Step2 from "./components/step2-date";
@@ -9,6 +8,8 @@ import Step3 from "./components/step3-time";
 import Step4 from "./components/step4-period";
 import Step5 from "./components/step5-people";
 import Step6 from "./components/step6-place";
+import Step7 from "./components/step7-writing";
+import { FixedLayout } from "@/components";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -17,6 +18,7 @@ const steps = [
   { title: "기간", component: Step4 },
   { title: "인원", component: Step5 },
   { title: "영화관", component: Step6 },
+  { title: "모집글", component: Step7 },
 ];
 
 export default function EventCreatePage() {
@@ -32,6 +34,9 @@ export default function EventCreatePage() {
       minParticipants: "",
       maxParticipants: "",
       locationId: null,
+      mediaTitle: "",
+      eventTitle: "",
+      description: "",
     },
   });
 
@@ -59,6 +64,12 @@ export default function EventCreatePage() {
     name: "maxParticipants",
   });
   const locationId = useWatch({ control: methods.control, name: "locationId" });
+  const eventTitle = useWatch({ control: methods.control, name: "eventTitle" });
+  const mediaTitle = useWatch({ control: methods.control, name: "mediaTitle" });
+  const description = useWatch({
+    control: methods.control,
+    name: "description",
+  });
 
   const isButtonDisabled =
     (step === 0 && !mediaType) ||
@@ -66,11 +77,12 @@ export default function EventCreatePage() {
     (step === 2 && (!eventStartTime || !eventProgressTime)) ||
     (step === 3 && !recruitmentEnd) ||
     (step === 4 && (!minParticipants || !maxParticipants)) ||
-    (step === 5 && !locationId);
+    (step === 5 && !locationId) ||
+    (step === 6 && (!eventTitle || !mediaTitle || !description));
 
   const onNext = async () => {
     const isValid = await methods.trigger();
-    console.log("📦 현재 저장된 모든 폼 데이터:", methods.getValues());
+    console.log("현재 저장된 모든 폼 데이터:", methods.getValues());
 
     if (!isValid) return;
 
@@ -82,7 +94,6 @@ export default function EventCreatePage() {
       })();
     }
   };
-  const shouldDisablePadding = step === 6;
 
   return (
     <FormProvider {...methods}>
@@ -91,7 +102,6 @@ export default function EventCreatePage() {
         onButtonClick={onNext}
         showCloseButton={true}
         isButtonDisabled={isButtonDisabled}
-        disablePadding={shouldDisablePadding}
       >
         <CurrentStep />
       </FixedLayout>

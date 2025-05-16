@@ -24,7 +24,6 @@ export default function Step6() {
           </>
         }
         description={<>진행할 이벤트 특성에 어울리는 공간을 찾아보세요</>}
-        className="px-5"
       />
 
       <div className="mb-8 flex-1 space-y-6 overflow-y-auto">
