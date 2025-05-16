@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Step0 from "./_components/step0";
-import { FixedLayout } from "@/components";
 import Step1 from "./_components/step1";
 import Step2 from "./_components/step2";
 import Step3 from "./_components/step3";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 
 export default function Trait() {
@@ -20,6 +20,15 @@ export default function Trait() {
   const handleClick = () => {
     setStep((prev) => prev + 1);
     window.scrollTo(0, 0);
+  };
+
+  const handleClickBack = () => {
+    if (step > 0) {
+      setStep((prev) => prev - 1);
+      window.scrollTo(0, 0);
+    } else {
+      router.back();
+    }
   };
 
   const onSubmit = methods.handleSubmit((data) => {
@@ -38,7 +47,7 @@ export default function Trait() {
 
   const isLastStep = step === 3;
   const buttonText = isLastStep ? "제출하기" : "다음";
-  const nickname = "규빈";
+  const nickname = "서현";
 
   return (
     <FormProvider {...methods}>
@@ -46,6 +55,7 @@ export default function Trait() {
         <FixedLayout
           title="회원가입"
           buttonText={buttonText}
+          isButtonDisabled={isButtonDisabled}
           onButtonClick={() => {
             if (isLastStep) {
               onSubmit();
@@ -53,7 +63,8 @@ export default function Trait() {
               handleClick();
             }
           }}
-          isButtonDisabled={isButtonDisabled}
+          showBackButton
+          onBackClick={handleClickBack}
         >
           <div className="mb-28 w-full flex-grow overflow-y-auto">
             {step === 0 && <Step0 nickname={nickname} />}
