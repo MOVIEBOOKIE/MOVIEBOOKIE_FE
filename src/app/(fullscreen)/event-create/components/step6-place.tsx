@@ -24,7 +24,6 @@ export default function Step6() {
           </>
         }
         description={<>진행할 이벤트 특성에 어울리는 공간을 찾아보세요</>}
-        className="px-5"
       />
 
       <div className="mb-8 flex-1 space-y-6 overflow-y-auto">
@@ -36,7 +35,7 @@ export default function Step6() {
               className={`${isSelected ? "mb-0 bg-gray-950" : "mb-0"}`}
             >
               <div
-                className="relative flex gap-4 border-b border-gray-950 px-5 py-5"
+                className="relative flex gap-4 border-b border-gray-950 py-5"
                 onClick={() => handleSelectCinema(cinema.id)}
               >
                 {!isSelected && selectedLocationId !== null && (

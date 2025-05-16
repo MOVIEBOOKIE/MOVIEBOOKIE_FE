@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface CardProps {
-  id: string;
+  id?: string;
   imageUrl: string;
   category: string;
   title: string;
