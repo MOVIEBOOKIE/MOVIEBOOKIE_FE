@@ -1,0 +1,43 @@
+name: 🐛 Bug
+description: 버그를 제보하고 수정이 필요할 때 사용하세요.
+title: "[🐛 Bug] "
+labels: ["🐛 Bug"]
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: ❗️ Issue
+      description: 어떤 문제가 발생했는지 구체적으로 작성해 주세요.
+      placeholder: |
+        예: 모바일 화면에서 버튼이 눌리지 않음
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: ✅ How to Reproduce
+      description: 어떤 상황에서 문제가 발생했는지 재현 과정을 단계별로 작성해 주세요.
+      placeholder: |
+        예: 
+        1. 로그인 후 프로필 페이지 이동
+        2. 버튼 클릭
+        3. 동작 없음
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 📷 Screenshots (선택)
+      description: 문제 상황을 보여주는 스크린샷이 있다면 첨부해 주세요.
+      placeholder: |
+        예: 오류가 발생한 화면을 캡처해서 첨부해 주세요.
+
+  - type: textarea
+    id: remarks
+    attributes:
+      label: 📒 Remarks
+      description: 추가적으로 전달하거나 메모해 둘 내용이 있다면 작성해 주세요.
+      placeholder: |
+        예: 최근 PR에서 도입된 로직 이후 발생함

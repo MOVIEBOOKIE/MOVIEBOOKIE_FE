@@ -1,0 +1,22 @@
+export const PATHS = {
+  HOME: "/",
+  EVENT: "/event",
+  NOTIFICATIONS: "/notifications",
+  MYPAGE: "/my-page",
+  SEARCH: "/search",
+  LOGIN: "/login",
+  EVENT_CREATE: "/event-create",
+  KAKAO_LOGIN: "/login/kakao",
+  EVENT_SUCCESS: "/event/success",
+  CATEGORY: {
+    POPULAR: "/category/popular",
+    RECENT: "/category/recent",
+    MOVIE: "/category/movie",
+    DRAMA: "/category/drama",
+    ENTERTAINMENT: "/category/entertainment",
+    CONCERT: "/category/concert",
+    SPORTS: "/category/sports",
+    ETC: "/category/etc",
+  },
+  TRAIT_RESULT: "/trait-result",
+} as const;
