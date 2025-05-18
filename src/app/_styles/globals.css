@@ -178,3 +178,16 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.card-shadow-blur {
+  box-shadow: 0px 0px 80px 1px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(22.5px);
+}
