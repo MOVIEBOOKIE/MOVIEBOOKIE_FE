@@ -25,14 +25,10 @@ export default function CardFront() {
 
       <div className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-1.5 pl-0.5">
         {infoData.map(({ label, value }) => (
-          <Fragment key={label}>
+          <div key={label} className="flex flex-col items-start">
             <h2 className="caption-3-medium opacity-48">{label}</h2>
-          </Fragment>
-        ))}
-        {infoData.map(({ label, value }) => (
-          <p key={label} className="caption-1-medium opacity-48">
-            {value}
-          </p>
+            <p className="caption-1-medium opacity-48">{value}</p>
+          </div>
         ))}
       </div>
 
