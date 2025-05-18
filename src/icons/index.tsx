@@ -14,6 +14,8 @@ export { default as ShareIcon } from "./ui/share.svg";
 export { default as CompleteIcon } from "./ui/complete.svg";
 export { default as PhoneIcon } from "./ui/phone.svg";
 export { default as EtcIcon } from "./ui/etc.svg";
+export { default as RotateIcon } from "./ui/rotate.svg";
+
 //common
 export { default as BackIcon } from "./common/back.svg";
 export { default as CloseIcon } from "./common/close.svg";
