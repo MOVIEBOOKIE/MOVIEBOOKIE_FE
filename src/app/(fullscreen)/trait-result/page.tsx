@@ -19,13 +19,7 @@ export default function TraitResult() {
         objectFit="cover"
         priority
       />
-      <div
-        className="absolute top-[22.4%] flex h-74 w-72.25 flex-col items-center rounded-[20px] bg-white/30 pb-4"
-        style={{
-          boxShadow: "0px 0px 80px 1px rgba(0, 0, 0, 0.20)",
-          backdropFilter: "blur(22.5px)",
-        }}
-      >
+      <div className="card-shadow-blur absolute top-[22.4%] flex h-74 w-72.25 flex-col items-center rounded-[20px] bg-white/30 pb-4">
         <p className="body-3-semibold mb-0.5 pt-15.25 text-gray-100">
           서현님은
         </p>
