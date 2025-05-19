@@ -1,6 +1,7 @@
 const path = require("path");
 const withPWA = require("next-pwa")({
   dest: "public",
+  disable: process.env.NODE_ENV === "development",
 });
 
 const withSvgr = require("next-svgr");
@@ -9,10 +10,11 @@ const withSvgr = require("next-svgr");
 const nextConfig = {
   trailingSlash: true,
   async rewrites() {
+    const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_PROD_URL}/api/:path*`,
+        destination: `${baseurl}/api/:path*`,
       },
     ];
   },
