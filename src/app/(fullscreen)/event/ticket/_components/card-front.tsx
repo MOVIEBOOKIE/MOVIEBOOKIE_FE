@@ -20,9 +20,7 @@ export default function CardFront() {
           className="rounded-lg object-cover"
         />
       </div>
-
       <p className="title-3-bold mt-5 pl-0.5">빌리 엘리어트</p>
-
       <div className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-1.5 pl-0.5">
         {infoData.map(({ label, value }) => (
           <div key={label} className="flex flex-col items-start">
