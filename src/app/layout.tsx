@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
 import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
+import UserInitializer from "./_components/user-initializer";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -17,7 +18,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </head>
         <body>
           <InAppRedirect />
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            {" "}
+            <UserInitializer />
+            {children}
+          </ReactQueryProvider>
         </body>
       </html>
     </>

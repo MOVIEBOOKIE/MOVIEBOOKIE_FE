@@ -11,7 +11,8 @@ import { MOCK_DATA } from "@/mocks/mock-data";
 import { useUserStore } from "app/_stores/useUserStore";
 
 export default function Home() {
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
+
   console.log("user", user);
   const router = useRouter();
   const [selected, setSelected] =
@@ -63,7 +64,7 @@ export default function Home() {
         <div className="mb-7 flex flex-col items-center">
           <p className="body-1-medium text-gray-300">못말리는 영화러버</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
-            {user?.nickname ?? "사용자"}님을 위한 추천
+            {user?.nickname}님을 위한 추천
           </h2>
         </div>
         <Carousel />

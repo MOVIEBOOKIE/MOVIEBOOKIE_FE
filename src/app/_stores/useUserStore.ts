@@ -16,10 +16,14 @@ export const useUserStore = create<UserState>((set) => ({
   user: null,
   setUser: (user) => {
     set({ user });
-    localStorage.setItem("userProfile", JSON.stringify(user));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("userProfile", JSON.stringify(user));
+    }
   },
   clearUser: () => {
     set({ user: null });
-    localStorage.removeItem("userProfile");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("userProfile");
+    }
   },
 }));
