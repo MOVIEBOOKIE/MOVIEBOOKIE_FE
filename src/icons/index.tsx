@@ -56,3 +56,6 @@ export { default as ImageDeleteIcon } from "./ui/image-delete.svg";
 
 export { default as ThinkingFaceIcon } from "./ui/thinkingface.svg";
 export { default as KissingFaceIcon } from "./ui/kissingface.svg";
+
+export { default as CheckIcon } from "./ui/check.svg";
+export { default as AlertIcon } from "./ui/alert.svg";
