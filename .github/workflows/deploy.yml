@@ -7,7 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     container: pandoc/latex
+
     steps:
       - uses: actions/checkout@v2
 
@@ -19,7 +21,7 @@ jobs:
 
       - name: Pushes to another repository
         id: push_directory
-        uses: cpina/github-action-push-to-another-repository@develop
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
