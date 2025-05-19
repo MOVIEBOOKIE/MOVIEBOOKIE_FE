@@ -40,7 +40,7 @@ export { default as SearchIcon } from "./ui/search.svg";
 export { default as DefaultProfileIcon } from "./ui/default-profile.svg";
 export { default as KakaoIcon } from "./ui/kakao.svg";
 export { default as ShareIcon } from "./ui/share.svg";
-export { default as CompleteIcon } from "./ui/complete.svg";
+export { default as CheckboxIcon } from "./ui/checkbox.svg";
 export { default as PhoneIcon } from "./ui/phone.svg";
 export { default as EtcIcon } from "./ui/etc.svg";
 export { default as RotateIcon } from "./ui/rotate.svg";
