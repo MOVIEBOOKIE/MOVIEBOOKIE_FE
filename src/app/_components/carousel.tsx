@@ -53,7 +53,7 @@ export default function Carousel() {
       >
         {Array.isArray(MOVIE_SLIDES) && MOVIE_SLIDES.length > 0 ? (
           MOVIE_SLIDES.map(
-            (movie: { id: string; title: string; image: string }) => (
+            (movie: { id: number; title: string; image: string }) => (
               <SwiperSlide
                 style={{ width: "282px", height: "404px" }}
                 key={movie.id}

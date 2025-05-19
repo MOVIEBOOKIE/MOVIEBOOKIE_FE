@@ -50,26 +50,22 @@ const DeadlineCalendar = ({
   const isPrevDisabled = currentMonth.isSame(today, "month");
 
   useEffect(() => {
-    if (!selectedDeadline) {
-      setBarBlocks([]);
-      return;
-    }
+    const deadline = dayjs(selectedDeadline);
+    const grid = [...fullGrid]; // 캐싱
 
     const timeout = setTimeout(() => {
-      const deadline = dayjs(selectedDeadline);
-
-      const startIndex = fullGrid.findIndex(
+      const startIndex = grid.findIndex(
         (d) => d && d.isSame(today, "day") && d.isSame(currentMonth, "month"),
       );
-      const endIndex = fullGrid.findIndex(
+      const endIndex = grid.findIndex(
         (d) =>
           d && d.isSame(deadline, "day") && d.isSame(currentMonth, "month"),
       );
 
-      const firstIdxInMonth = fullGrid.findIndex(
+      const firstIdxInMonth = grid.findIndex(
         (d) => d && d.isSame(currentMonth.startOf("month"), "month"),
       );
-      const lastIdxInMonth = fullGrid.reduce((acc, d, i) => {
+      const lastIdxInMonth = grid.reduce((acc, d, i) => {
         if (d && d.isSame(currentMonth, "month")) return i;
         return acc;
       }, -1);
