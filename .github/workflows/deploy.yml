@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop"]
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
           source-directory: "output"
-          destination-github-username: anhyeryeon2
+          destination-github-username: Sohyunnnn
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
