@@ -192,6 +192,10 @@ body {
   backdrop-filter: blur(22.5px);
 }
 
+.drap-shadow {
+  box-shadow: 0px 0px 16.3px 0px rgba(0, 0, 0, 0.6);
+}
+
 .drop-shadow-2 {
   box-shadow: 0px -2px 12px 0px rgba(0, 0, 0, 0.14);
 }
