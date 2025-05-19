@@ -34,7 +34,7 @@ export default function Modal({
   onCancel,
 }: ModalProps) {
   return (
-    <div className="drap-shadow flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
+    <div className="flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5 drop-shadow">
       {iconType === "confirm" ? <CheckIcon /> : <AlertIcon />}
       <h3 className="title-3-semibold mt-4.75">{title}</h3>
       <p className="body-3-regular mt-0.5 mb-4.5 text-gray-500">
