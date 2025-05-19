@@ -18,5 +18,9 @@ export const PATHS = {
     SPORTS: "/category/sports",
     ETC: "/category/etc",
   },
+  FEEDBACK: "/feedback",
+  FEEDBACK_RESULT: "/feedback/result",
+  FEEDBACK_RESULT_WITH_TYPE: (type: "good" | "bad") =>
+    `/feedback/result?type=${type}`,
   TRAIT_RESULT: "/trait-result",
 } as const;

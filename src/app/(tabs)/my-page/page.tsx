@@ -1,5 +1,6 @@
 "use client";
 
+import { PATHS } from "@/constants";
 import { ArrowRightIcon, MyKakaoIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 interface MyPageStatProps {
@@ -40,12 +41,12 @@ export default function MyPage() {
 
       <ul className="body-2-medium px-2 text-gray-300">
         {[
-          { label: "서비스이용약관", onClick: () => router.push("/trait") },
+          { label: "서비스이용약관" },
 
           { label: "개인정보처리방침" },
           {
             label: "무비부키 평가 및 피드백",
-            // onClick: () => router.push("/feedback"),
+            onClick: () => router.push(PATHS.FEEDBACK),
           },
           { label: "로그아웃" },
           { label: "회원탈퇴" },

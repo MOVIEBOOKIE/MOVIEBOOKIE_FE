@@ -17,6 +17,7 @@ type FixedLayoutProps = {
   onBackClick?: () => void;
   isHeader?: boolean;
   state?: "default" | "detail" | "full";
+  showBottomButton?: boolean;
 };
 
 export default function FixedLayout({
@@ -31,6 +32,7 @@ export default function FixedLayout({
   onBackClick,
   isHeader = true,
   state = "default",
+  showBottomButton = true,
 }: FixedLayoutProps) {
   const paddingStyle =
     state === "default"
@@ -53,19 +55,21 @@ export default function FixedLayout({
       <div className={`${paddingStyle} flex min-h-screen flex-col text-white`}>
         <div className="flex-1 pb-30">{children}</div>
       </div>
-      <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
-        <Button
-          disabled={isButtonDisabled}
-          onClick={onButtonClick}
-          className={cn(
-            isButtonDisabled
-              ? "bg-gray-900 text-gray-700"
-              : "bg-red-main text-white",
-          )}
-        >
-          {buttonText}
-        </Button>
-      </div>
+      {showBottomButton && (
+        <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
+          <Button
+            disabled={isButtonDisabled}
+            onClick={onButtonClick}
+            className={cn(
+              isButtonDisabled
+                ? "bg-gray-900 text-gray-700"
+                : "bg-red-main text-white",
+            )}
+          >
+            {buttonText}
+          </Button>
+        </div>
+      )}
     </>
   );
 }

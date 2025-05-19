@@ -1,6 +1,6 @@
 "use client";
 
-import { SwipeDownIcon } from "@/icons/index";
+import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -114,28 +114,40 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {MOCK_DATA.map((card, index) => (
-          <div key={index}>
-            <Card
-              {...card}
-              imageUrl={
-                typeof card.imageUrl === "string"
-                  ? card.imageUrl
-                  : (card.imageUrl as any).src
-              }
-            />
-            {index !== MOCK_DATA.length - 1 && (
-              <div className="my-4 h-0.25 w-full bg-gray-950" />
-            )}
+        {MOCK_DATA.length === 0 ? (
+          <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
+            <EmptyIcon />
+            <p className="body-3-medium mt-3.5 text-gray-800">
+              아직 모집 이벤트가 없어요 <br />
+              지금 바로 나만의 이벤트를 만들어보세요
+            </p>
           </div>
-        ))}
-        <Button
-          className="mt-6 mb-8.5"
-          variant="secondary"
-          onClick={handleClick}
-        >
-          더보기
-        </Button>
+        ) : (
+          MOCK_DATA.map((card, index) => (
+            <div key={index}>
+              <Card
+                {...card}
+                imageUrl={
+                  typeof card.imageUrl === "string"
+                    ? card.imageUrl
+                    : (card.imageUrl as any).src
+                }
+              />
+              {index !== MOCK_DATA.length - 1 && (
+                <div className="my-4 h-0.25 w-full bg-gray-950" />
+              )}
+            </div>
+          ))
+        )}
+        {MOCK_DATA.length > 0 && (
+          <Button
+            className="mt-6 mb-8.5"
+            variant="secondary"
+            onClick={handleClick}
+          >
+            더보기
+          </Button>
+        )}
       </motion.section>
     </div>
   );

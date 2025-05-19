@@ -27,7 +27,7 @@ export default function Step5() {
           <label className="body-3-regular mb-3 block text-gray-100">
             최소인원
           </label>
-          <div className="group focus-within:border-red-main relative flex items-center rounded-xl border border-gray-900 px-4 py-4">
+          <div className="group relative flex items-center rounded-xl border border-gray-900 px-4 py-4">
             <input
               type="number"
               min={1}
@@ -51,7 +51,7 @@ export default function Step5() {
           <label className="body-3-regular mb-3 block text-gray-100">
             최대인원
           </label>
-          <div className="group focus-within:border-red-main relative flex items-center rounded-xl border border-gray-900 px-4 py-4">
+          <div className="group relative flex items-center rounded-xl border border-gray-900 px-4 py-4">
             <input
               type="number"
               min={1}

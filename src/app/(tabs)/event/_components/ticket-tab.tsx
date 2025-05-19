@@ -1,10 +1,11 @@
 "use client";
 
-import { MOVIE_LISTS } from "@/mocks/movie-list";
 import { Card } from "./ticket-card";
+import { EmptyTicketIcon } from "@/icons/index";
+import { MOCK_DATA } from "@/mocks/mock-data";
 
 export default function TicketTab() {
-  const filteredEvents = MOVIE_LISTS.filter((event) =>
+  const filteredEvents = MOCK_DATA.filter((event) =>
     ["대관확정", "상영완료"].includes(event.statusBadge),
   );
 
@@ -27,9 +28,13 @@ export default function TicketTab() {
             </div>
           ))
         ) : (
-          <p className="mt-8 text-center text-gray-500">
-            등록된 티켓이 없습니다.
-          </p>
+          <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-500">
+            <EmptyTicketIcon />
+            <p className="body-3-medium mt-3.5 text-gray-800">
+              아직 이벤트 티켓이 없어요 <br />
+              지금 바로 다양한 이벤트에 참여해보세요
+            </p>
+          </div>
         )}
       </div>
     </div>

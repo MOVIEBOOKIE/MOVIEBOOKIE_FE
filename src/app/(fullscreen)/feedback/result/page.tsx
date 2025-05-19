@@ -1,0 +1,137 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button, FixedLayout } from "@/components";
+import { PATHS } from "@/constants";
+
+const goodReasons = [
+  "내게 꼭 맞는 이벤트를 추천해줘요",
+  "이벤트 신청/모집 과정이 간단해요",
+  "이벤트 정보를 자세히 확인할 수 있어요",
+  "알림으로 진행 과정을 확인할 수 있어 좋아요",
+  "대관한 영화관이 마음에 들어요",
+  "덕분에 잊지 못할 추억을 만들 수 있었어요",
+];
+
+const badReasons = [
+  "원하는 이벤트를 찾기 불편해요",
+  "이벤트 신청/모집 과정이 어려워요",
+  "이벤트 상영까지 진행 과정이 너무 길어요",
+  "알림으로 진행 상황을 확인하는게 불편해요",
+  "대관 가능한 영화관이 너무 한정적이에요",
+  "이벤트가 취소되어 실망스러워요",
+];
+
+export default function FeedbackPage() {
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+
+  const router = useRouter();
+  const [feedbackType, setFeedbackType] = useState<"good" | "bad" | null>(null);
+  const [step, setStep] = useState<1 | 2>(1);
+  const [selectedReason, setSelectedReason] = useState<string | null>(null);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (type === "good" || type === "bad") {
+      setFeedbackType(type);
+    }
+  }, [type]);
+
+  const handleSubmit = () => {
+    console.log({
+      type: feedbackType,
+      reason: selectedReason,
+      text,
+    });
+    router.push(PATHS.NOTIFICATIONS);
+  };
+
+  const reasons = feedbackType === "good" ? goodReasons : badReasons;
+
+  return (
+    <>
+      <FixedLayout
+        title="평가 및 피드백"
+        showBackButton
+        isHeader
+        showBottomButton={false}
+        state="default"
+      >
+        <div className="pt-10 text-white">
+          {feedbackType && step === 1 && (
+            <div className="flex flex-col">
+              <div className="mb-3">
+                <span className="caption-1-medium inline-block rounded-lg bg-gray-950 px-3 py-1 text-gray-200">
+                  ‘{feedbackType === "good" ? "만족해요" : "아쉬워요"}’를
+                  선택했어요
+                </span>
+              </div>
+              <p className="title-2-semibold mb-8">
+                무비부키의 어떤 점이 <br />
+                가장{" "}
+                {feedbackType === "good" ? "만족스러웠나요?" : "아쉬웠나요?"}
+              </p>
+              {reasons.map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setSelectedReason(r)}
+                  className={`body-3-regular mb-2 rounded-xl border px-5 py-4.5 text-left text-gray-100 transition ${
+                    selectedReason === r
+                      ? "border-gray-900 bg-gray-900"
+                      : "border-gray-900"
+                  }`}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+          )}
+          {step === 2 && feedbackType !== null && (
+            <div>
+              <div className="mb-3">
+                <span className="caption-1-medium inline-block rounded-lg bg-gray-950 px-3 py-1 text-gray-200">
+                  자유 피드백
+                </span>
+              </div>
+              <p className="title-3-semibold mb-4">
+                더 나은 무비부키를 위해, <br /> 여러분의 의견을 들려주세요!
+              </p>
+              <div className="relative">
+                <textarea
+                  className="body-3-regular h-44.5 w-full rounded-xl border border-gray-900 bg-transparent p-4 pb-8 text-gray-100 outline-none placeholder:text-gray-800"
+                  placeholder="좋았던 순간이나 아쉬웠던 점에 대해 작성해주세요"
+                  rows={5}
+                  maxLength={150}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+                <div className="body-3-regular absolute right-5 bottom-5 text-gray-500">
+                  {text.length}/150
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </FixedLayout>
+
+      {feedbackType && (
+        <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
+          <Button
+            onClick={() => {
+              if (step === 1) {
+                setStep(2);
+              } else {
+                handleSubmit();
+              }
+            }}
+            disabled={step === 1 && !selectedReason}
+          >
+            {step === 1 ? "다음" : "제출하기"}
+          </Button>
+        </div>
+      )}
+    </>
+  );
+}

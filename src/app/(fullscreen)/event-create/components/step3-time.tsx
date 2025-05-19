@@ -22,25 +22,6 @@ export default function Step3() {
         }
         description={<>이벤트를 진행할 시간과 시작 시간을 선택해 주세요</>}
       />
-
-      <p className="body-3-medium mt-8 mb-5 text-gray-300">이벤트 진행 시간</p>
-      <div className="grid grid-cols-4 gap-2">
-        {EVENT_CREATE_TIME.PROGRESS_TIME.map(({ label, value }) => (
-          <button
-            key={value}
-            onClick={() => setValue("eventProgressTime", value)}
-            className={clsx(
-              "px-5.8 rounded-xl border py-3.5 text-center text-gray-200",
-              selectedProgress === value
-                ? "border-red-main bg-red-main text-white"
-                : "border-gray-900",
-            )}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
       <div className="text-body-3-medium mt-9 mb-5 text-gray-300">
         이벤트 시작 시간
       </div>
@@ -57,6 +38,24 @@ export default function Step3() {
             )}
           >
             {time}
+          </button>
+        ))}
+      </div>
+
+      <p className="body-3-medium mt-8 mb-5 text-gray-300">이벤트 진행 시간</p>
+      <div className="grid grid-cols-4 gap-2">
+        {EVENT_CREATE_TIME.PROGRESS_TIME.map(({ label, value }) => (
+          <button
+            key={value}
+            onClick={() => setValue("eventProgressTime", value)}
+            className={clsx(
+              "px-5.8 rounded-xl border py-3.5 text-center text-gray-200",
+              selectedProgress === value
+                ? "border-red-main bg-red-main text-white"
+                : "border-gray-900",
+            )}
+          >
+            {label}
           </button>
         ))}
       </div>
