@@ -5,12 +5,17 @@ import loadingAnimation from "@/lotties/loading.json";
 
 export default function Loading() {
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center">
-      <Lottie animationData={loadingAnimation} loop autoplay />
-      <p className="body-1-medium absolute bottom-3 text-center text-gray-200">
-        무비부키가 열심히
-        <br /> 정보를 가져오고 있어요
-      </p>
+    <div className="relative flex h-screen w-full justify-center">
+      <div
+        className="relative inline-flex flex-col"
+        style={{ paddingTop: "30vh" }}
+      >
+        <Lottie animationData={loadingAnimation} loop autoplay />
+        <p className="body-1-medium z-1 -mt-15.5 text-center text-gray-200">
+          무비부키가 열심히
+          <br /> 정보를 가져오고 있어요
+        </p>
+      </div>
     </div>
   );
 }
