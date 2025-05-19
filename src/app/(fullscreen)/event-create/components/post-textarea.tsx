@@ -15,7 +15,7 @@ export default function PostTextArea() {
           {...register("mediaTitle")}
           type="text"
           placeholder="제목을 입력해 주세요"
-          className="body-2-medium w-full bg-transparent text-gray-300 placeholder-gray-700 outline-none"
+          className="body-2-medium w-full border-b border-gray-950 bg-transparent pb-3 text-gray-300 placeholder-gray-700 outline-none"
         />
 
         <textarea
