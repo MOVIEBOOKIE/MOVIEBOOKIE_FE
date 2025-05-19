@@ -13,6 +13,8 @@ export { default as ArrowDownIcon } from "./common/arrow-down.svg";
 export { default as ArrowLeftIcon } from "./common/arrow-left.svg";
 export { default as ArrowRightIcon } from "./common/arrow-right.svg";
 export { default as UploadIcon } from "./common/upload.svg";
+export { default as EmptyIcon } from "./common/empty.svg";
+export { default as EmptyTicketIcon } from "./common/empty-ticket.svg";
 
 //trait
 export { default as DizzinessIcon } from "./trait/dizziness.svg";
