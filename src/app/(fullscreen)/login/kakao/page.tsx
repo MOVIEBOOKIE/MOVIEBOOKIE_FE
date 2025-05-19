@@ -2,8 +2,8 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { sendAuthCodeToServer } from "app/api/auth/auth";
 import { PATHS } from "@/constants";
+import { sendAuthCodeToServer } from "lib/auth/sendAuthCodeToServer";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
@@ -26,30 +26,28 @@ export default function Kakao() {
     </Suspense>
   );
 }
-
 function KakaoLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
-
   const { redirectUrl, isLocal } = getRedirectUrl();
 
   useEffect(() => {
+    if (window.location.hostname === "www.movie-bookie.shop") {
+      const { pathname, search } = window.location;
+      window.location.replace(`https://movie-bookie.shop${pathname}${search}`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.location.hostname === "www.movie-bookie.shop") return;
+
     if (!code) {
-      //TODO: 토스트 변경
-      console.warn("인가 코드가 없습니다. 카카오 로그인 페이지로 이동합니다.");
-
-      const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-        redirectUrl,
-      )}`;
-
+      const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}`;
       window.location.href = kakaoAuthUrl;
       return;
     }
 
-    if (process.env.NODE_ENV === "development") {
-      console.log("인가코드 수신됨:", code);
-    }
     const handleLogin = async () => {
       try {
         const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
