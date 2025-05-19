@@ -33,15 +33,6 @@ function KakaoLogin() {
   const { redirectUrl, isLocal } = getRedirectUrl();
 
   useEffect(() => {
-    if (window.location.hostname === "www.movie-bookie.shop") {
-      const { pathname, search } = window.location;
-      window.location.replace(`https://movie-bookie.shop${pathname}${search}`);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (window.location.hostname === "www.movie-bookie.shop") return;
-
     if (!code) {
       const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}`;
       window.location.href = kakaoAuthUrl;
