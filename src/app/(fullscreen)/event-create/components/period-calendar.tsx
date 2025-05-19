@@ -127,7 +127,7 @@ const DeadlineCalendar = ({
           return (
             <div
               key={`bar-${row}`}
-              className="absolute z-0 h-10 rounded-full bg-gray-900"
+              className="bg-red-main absolute z-0 h-10 rounded-full"
               style={{ top, left, width }}
             />
           );
