@@ -62,10 +62,12 @@ export default function FeedbackPage() {
         <div className="pt-10 text-white">
           {feedbackType && step === 1 && (
             <div className="flex flex-col">
-              <p className="caption-1-medium text-gray-500">
-                ‘{feedbackType === "good" ? "만족해요" : "아쉬워요"}’를
-                선택했어요
-              </p>
+              <div className="mb-3">
+                <span className="caption-1-medium inline-block rounded-lg bg-gray-950 px-3 py-1 text-gray-200">
+                  ‘{feedbackType === "good" ? "만족해요" : "아쉬워요"}’를
+                  선택했어요
+                </span>
+              </div>
               <p className="title-2-semibold mb-8">
                 무비부키의 어떤 점이 <br />
                 가장{" "}
@@ -88,7 +90,11 @@ export default function FeedbackPage() {
           )}
           {step === 2 && feedbackType !== null && (
             <div>
-              <p className="caption-1-medium mb-1 text-gray-500">자유 피드백</p>
+              <div className="mb-3">
+                <span className="caption-1-medium inline-block rounded-lg bg-gray-950 px-3 py-1 text-gray-200">
+                  자유 피드백
+                </span>
+              </div>
               <p className="title-3-semibold mb-4">
                 더 나은 무비부키를 위해, <br /> 여러분의 의견을 들려주세요!
               </p>
@@ -113,7 +119,6 @@ export default function FeedbackPage() {
       {feedbackType && (
         <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
           <Button
-            className="bg-red-main text-white"
             onClick={() => {
               if (step === 1) {
                 setStep(2);

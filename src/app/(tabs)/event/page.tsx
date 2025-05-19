@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { STATUS_MAP, PATH_IMAGES, PATHS } from "@/constants/index";
+import { STATUS_MAP, PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 import { PlusIcon } from "lucide-react";
