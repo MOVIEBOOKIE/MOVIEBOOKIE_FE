@@ -2,12 +2,14 @@ name: Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     container: pandoc/latex
+
     steps:
       - uses: actions/checkout@v2
 
@@ -24,11 +26,11 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
           source-directory: "output"
-          destination-github-username: anhyeryeon2
+          destination-github-username: Sohyunnnn
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
-          target-branch: main
+          target-branch: develop
 
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
