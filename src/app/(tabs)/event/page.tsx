@@ -1,58 +1,73 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { STATUS_MAP, PATH_IMAGES, PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
-import { useRouter } from "next/navigation";
+import { PlusIcon } from "lucide-react";
+import { PopcornIcon } from "@/icons/index";
 
 export default function EventPage() {
   const router = useRouter();
-
   const [topTab, setTopTab] = useState<"모집" | "참여" | "티켓">("모집");
 
   return (
-    <div className="min-h-screen px-5 pb-24 text-white">
-      <nav className="title-1-semibold flex gap-5 pt-5.75 pb-3 text-start">
-        {(["모집", "참여", "티켓"] as const).map((tab) => (
-          <span
-            key={tab}
-            onClick={() => setTopTab(tab)}
-            className={`${topTab === tab ? "text-gray-100" : "text-gray-800"}`}
-          >
-            {tab}
-          </span>
-        ))}
-      </nav>
-
-      <section className="relative mt-5 overflow-hidden rounded-xl">
+    <div className="relative min-h-screen pb-32 text-white">
+      <h1 className="title-1-semibold px-5 pt-6 pb-7.5">이벤트</h1>
+      <section className="relative mx-5 overflow-hidden rounded-3xl">
         <img
-          src={PATH_IMAGES.EVENT_BANNER}
+          src="/images/event-banner.png"
           alt="이벤트 배너"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="body-1-semibold relative z-50 flex h-full flex-col items-center justify-center px-4.5 pt-8.5 text-center text-white">
-          <p className="body-1-semibold">같이 보고 싶은 콘텐츠가 있다면?</p>
-          <p className="caption-1-medium mt-1.5 text-gray-300">
-            지금 바로 이벤트를 만들어 보세요
+
+        <div className="relative z-10 flex flex-col items-center px-5 py-8 text-center text-white">
+          <PopcornIcon className="mb-3 h-11 w-11 rotate-[-15.59deg]" />
+          <p className="title-3-semibold leading-snug">
+            지금, 같이 보고 싶은 <br /> 콘텐츠가 있다면?
           </p>
           <button
-            className="px-4.2 bg-red-main body-3-semibold mt-3.5 mb-6.25 w-full rounded-xl py-3.5"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
+            className="bg-red-main body-3-semibold mt-5 rounded-xl px-6 py-3 text-white"
           >
             나만의 이벤트 만들러 가기
           </button>
         </div>
       </section>
-
-      {topTab === "모집" && (
-        <EventTab type="모집" statusMap={STATUS_MAP.RECRUITMENT} />
-      )}
-      {topTab === "참여" && (
-        <EventTab type="참여" statusMap={STATUS_MAP.PARTICIPATION} />
-      )}
-
-      {topTab === "티켓" && <TicketTab />}
+      <nav className="px-5 pt-6 text-base font-semibold">
+        {(["모집", "참여", "티켓"] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setTopTab(tab)}
+            className={`relative px-3 pb-2 transition-colors ${
+              topTab === tab ? "text-white" : "text-gray-700"
+            }`}
+          >
+            {tab}
+            {topTab === tab && (
+              <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-white" />
+            )}
+          </button>
+        ))}
+      </nav>{" "}
+      <div className="mx-5 border-b border-gray-900" />
+      <div className="px-5">
+        {topTab === "모집" && (
+          <EventTab type="모집" statusMap={STATUS_MAP.RECRUITMENT} />
+        )}
+        {topTab === "참여" && (
+          <EventTab type="참여" statusMap={STATUS_MAP.PARTICIPATION} />
+        )}
+        {topTab === "티켓" && <TicketTab />}
+      </div>
+      <button
+        onClick={() => router.push(PATHS.EVENT_CREATE)}
+        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-2 rounded-full px-4 py-4 text-white shadow-xl"
+      >
+        <PlusIcon size={18} />
+        이벤트 만들기
+      </button>
     </div>
   );
 }
