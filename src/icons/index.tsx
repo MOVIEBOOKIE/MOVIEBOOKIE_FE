@@ -5,17 +5,6 @@ export { default as MyIcon } from "./tab/my.svg";
 export { default as NotificationIcon } from "./tab/notification.svg";
 export { default as LightIcon } from "./tab/light.svg";
 
-//ui
-export { default as SwipeDownIcon } from "./ui/swipe-down.svg";
-export { default as SearchIcon } from "./ui/search.svg";
-export { default as DefaultProfileIcon } from "./ui/default-profile.svg";
-export { default as KakaoIcon } from "./ui/kakao.svg";
-export { default as ShareIcon } from "./ui/share.svg";
-export { default as CompleteIcon } from "./ui/complete.svg";
-export { default as PhoneIcon } from "./ui/phone.svg";
-export { default as EtcIcon } from "./ui/etc.svg";
-export { default as RotateIcon } from "./ui/rotate.svg";
-
 //common
 export { default as BackIcon } from "./common/back.svg";
 export { default as CloseIcon } from "./common/close.svg";
@@ -43,6 +32,17 @@ export { default as PopcornIcon } from "./trait/popcorn.svg";
 export { default as SmileIcon } from "./trait/smile.svg";
 export { default as TelevisionIcon } from "./trait/television.svg";
 
+//ui
+export { default as SwipeDownIcon } from "./ui/swipe-down.svg";
+export { default as SearchIcon } from "./ui/search.svg";
+export { default as DefaultProfileIcon } from "./ui/default-profile.svg";
+export { default as KakaoIcon } from "./ui/kakao.svg";
+export { default as ShareIcon } from "./ui/share.svg";
+export { default as CompleteIcon } from "./ui/complete.svg";
+export { default as PhoneIcon } from "./ui/phone.svg";
+export { default as EtcIcon } from "./ui/etc.svg";
+export { default as RotateIcon } from "./ui/rotate.svg";
+
 export { default as BellIcon } from "./ui/bell.svg";
 export { default as MailIcon } from "./ui/mail.svg";
 export { default as NotiCancelIcon } from "./ui/noti-cancel.svg";
@@ -51,3 +51,6 @@ export { default as NotiConfirmIcon } from "./ui/noti-confirm.svg";
 export { default as MyKakaoIcon } from "./ui/mypage-kakao.svg";
 export { default as ImageIcon } from "./ui/image.svg";
 export { default as ImageDeleteIcon } from "./ui/image-delete.svg";
+
+export { default as ThinkingFaceIcon } from "./ui/thinkingface.svg";
+export { default as KissingFaceIcon } from "./ui/kissingface.svg";
