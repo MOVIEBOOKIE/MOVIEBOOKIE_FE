@@ -11,8 +11,9 @@ import Step5 from "./components/step5-people";
 import Step6 from "./components/step6-place";
 import Step7 from "./components/step7-writing";
 import { FixedLayout } from "@/components";
+import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import { EventFormValues } from "app/_types/event";
 import { PATHS } from "@/constants";
-import { useCreateEvent } from "app/_hooks/useCreateEvent";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -27,7 +28,6 @@ const steps = [
 export default function EventCreatePage() {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  const { mutate } = useCreateEvent();
 
   const methods = useForm({
     defaultValues: {
@@ -75,34 +75,9 @@ export default function EventCreatePage() {
     );
   })();
 
-  const makePayload = (data: typeof formValues) => ({
-    request: {
-      mediaType: data.mediaType ?? "",
-      eventDate: data.eventDate ?? "",
-      eventStartTime: data.eventStartTime ?? "",
-      eventProgressTime: Number(data.eventProgressTime ?? 0),
-      recruitmentStart: data.recruitmentStart ?? "",
-      recruitmentEnd: data.recruitmentEnd ?? "",
-      minParticipants: Number(data.minParticipants ?? 0),
-      maxParticipants: Number(data.maxParticipants ?? 0),
-      locationId: Number(data.locationId ?? 0),
-      mediaTitle: data.mediaTitle ?? "",
-      eventTitle: data.eventTitle ?? "",
-      description: data.description ?? "",
-    },
-    eventImage: data.thumbnail || null,
-  });
-
-  const onSubmit = (data: typeof formValues) => {
-    mutate(makePayload(data), {
-      onSuccess: () => {
-        router.push(PATHS.EVENT_SUCCESS);
-      },
-      onError: (error) => {
-        console.error("이벤트 생성 실패:", error);
-        alert("이벤트 생성 중 문제가 발생했어요. 다시 시도해 주세요.");
-      },
-    });
+  const onSubmit = (data: EventFormValues) => {
+    useEventFormStore.getState().setFormData(data);
+    router.push(PATHS.EVENT_SUCCESS);
   };
 
   const onNext = async () => {
