@@ -62,6 +62,7 @@ export default function EventCreatePage() {
       eventTitle,
       mediaTitle,
       description,
+      thumbnail,
     } = formValues;
 
     return (
@@ -71,7 +72,7 @@ export default function EventCreatePage() {
       (step === 3 && !recruitmentEnd) ||
       (step === 4 && (!minParticipants || !maxParticipants)) ||
       (step === 5 && !locationId) ||
-      (step === 6 && (!eventTitle || !mediaTitle || !description))
+      (step === 6 && (!eventTitle || !mediaTitle || !description || !thumbnail))
     );
   })();
 
