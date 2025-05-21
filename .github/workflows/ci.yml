@@ -1,0 +1,43 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 📦 Setup Node and pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # 현재 사용 중인 pnpm 버전
+          run_install: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Vercel과 동일한 버전 권장
+          cache: "pnpm"
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: ✅ Run type-check
+        run: pnpm tsc --noEmit
+
+      - name: ✅ Run lint
+        run: pnpm lint
+
+      - name: 🔨 Build project
+        run: pnpm build
+
+    env:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_PROD_URL: https://api.movie-bookie.shop
