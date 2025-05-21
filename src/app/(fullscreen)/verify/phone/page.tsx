@@ -4,18 +4,30 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
+import { useSendSms } from "app/_hooks/useSendCode";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
   const router = useRouter();
+  const { mutate: sendSmsCode } = useSendSms();
+
+  const handleSendCode = () => {
+    sendSmsCode(phone, {
+      onSuccess: () => {
+        router.push(`/verify/verify-number?type=phone&target=${phone}`);
+      },
+      onError: () => {
+        alert("SMS 인증번호 발송에 실패했어요. 다시 시도해 주세요.");
+      },
+    });
+  };
+
   return (
     <FixedLayout
       title="회원가입"
       isButtonDisabled={!isValidPhone}
-      onButtonClick={() => {
-        router.push(`/verify/verify-number?type=phone&target=${phone}`);
-      }}
+      onButtonClick={handleSendCode}
     >
       <StepHeader
         StepHeader="1/3"

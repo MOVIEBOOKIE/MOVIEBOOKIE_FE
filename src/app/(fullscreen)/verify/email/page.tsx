@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowDownIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
+import { useSendEmail } from "app/_hooks/useSendCode";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
 
@@ -17,14 +18,23 @@ export default function EmailStep() {
   const isValidEmail = /^[a-zA-Z0-9._%+-]+$/.test(email);
   const fullEmail = `${email}@${emailDomain}`;
   const otherDomain = EMAIL_DOMAINS.find((d) => d !== emailDomain)!;
+  const { mutate: sendEmailCode } = useSendEmail();
 
+  const handleSendCode = () => {
+    sendEmailCode(fullEmail, {
+      onSuccess: () => {
+        router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
+      },
+      onError: () => {
+        alert("이메일 인증번호 전송에 실패했어요. 다시 시도해 주세요.");
+      },
+    });
+  };
   return (
     <FixedLayout
       title="회원가입"
       isButtonDisabled={!isValidEmail}
-      onButtonClick={() => {
-        router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
-      }}
+      onButtonClick={handleSendCode}
     >
       <StepHeader
         StepHeader="2/3"

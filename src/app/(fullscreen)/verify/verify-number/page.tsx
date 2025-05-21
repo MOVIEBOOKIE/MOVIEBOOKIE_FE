@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
+import { useVerifyEmail, useVerifySms } from "app/_hooks/useVerifyCode";
 
 export default function VerifyNumberPage() {
   return (
@@ -19,7 +20,6 @@ function VerifyNumberContent() {
   const router = useRouter();
   const [code, setCode] = useState(Array(4).fill(""));
 
-  // 자동 포커스
   useEffect(() => {
     const firstInput = document.getElementById(
       "code-0",
@@ -42,13 +42,33 @@ function VerifyNumberContent() {
 
   const isComplete = code.every((char) => char !== "");
   const fullCode = code.join("");
-
+  const { mutate: verifySmsCode } = useVerifySms();
+  const { mutate: verifyEmailCode } = useVerifyEmail();
   const handleComplete = () => {
+    const certificationCode = fullCode;
     if (type === "phone") {
-      router.push("/verify/email");
+      verifySmsCode(
+        { phoneNum: target.replace(/-/g, ""), certificationCode },
+        {
+          onSuccess: () => router.push("/verify/email"),
+          onError: handleError,
+        },
+      );
     } else {
-      router.push("/set-profile");
+      verifyEmailCode(
+        { email: target, certificationCode },
+        {
+          onSuccess: () => router.push("/set-profile"),
+          onError: handleError,
+        },
+      );
     }
+  };
+  const handleError = () => {
+    alert("인증번호가 올바르지 않아요. 다시 시도해 주세요.");
+    setCode(Array(4).fill(""));
+    const firstInput = document.getElementById("code-0");
+    firstInput?.focus();
   };
 
   return (
