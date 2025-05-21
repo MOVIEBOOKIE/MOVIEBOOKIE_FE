@@ -31,6 +31,7 @@ jobs:
 
       - name: 🛠 Install husky hooks (manually)
         run: pnpm husky install
+        continue-on-error: true
 
       - name: ✅ Run lint
         run: pnpm lint
