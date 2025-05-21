@@ -4,7 +4,7 @@ import { MOCK_DATA } from "@/mocks/mock-data";
 import { EmptyIcon } from "@/icons/index";
 
 interface EventTabProps {
-  type: "모집" | "참여" | "티켓";
+  type: "신청 목록" | "내 이벤트" | "내 티켓";
   statusMap: Record<string, string[]>;
 }
 

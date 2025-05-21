@@ -43,6 +43,10 @@ export default function PwaPromptModal() {
     if (osType === "ios") {
       setShowModal(true);
     }
+    if (osType === "other") {
+      setShowModal(false); // 웹에서는 모달을 아예 안 띄움
+      return;
+    }
   }, []);
 
   const handleInstall = () => {
