@@ -22,11 +22,6 @@ export default function FeedbackPage() {
   }, [type]);
 
   const handleSubmit = () => {
-    console.log({
-      type: feedbackType,
-      reason: selectedReason,
-      text,
-    });
     router.push(PATHS.NOTIFICATIONS);
   };
 

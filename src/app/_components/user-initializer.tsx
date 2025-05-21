@@ -17,7 +17,7 @@ export default function UserInitializer() {
           setUser(parsed);
         }
       } catch (e) {
-        console.error("userProfile 파싱 실패", e);
+        throw new Error("데이터 파싱 실패");
       }
     }
   }, [setUser]);

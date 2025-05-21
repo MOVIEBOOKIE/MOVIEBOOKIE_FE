@@ -19,13 +19,9 @@ export default function Client() {
     if (step === 1) {
       setStep(2);
     } else {
-      console.log(formData);
       mutate(formData, {
         onSuccess: () => {
           router.push(PATHS.HOME);
-        },
-        onError: (error) => {
-          console.error("이벤트 생성 실패", error);
         },
       });
     }

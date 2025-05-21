@@ -57,7 +57,6 @@ export default function Login() {
         <Button
           className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00]"
           onClick={() => {
-            console.log("카카오 로그인 버튼");
             router.push(PATHS.KAKAO_LOGIN);
           }}
         >

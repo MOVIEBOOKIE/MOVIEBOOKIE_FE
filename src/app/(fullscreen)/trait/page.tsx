@@ -32,7 +32,6 @@ export default function Trait() {
   };
 
   const onSubmit = methods.handleSubmit((data) => {
-    console.log("제출된 데이터:", data);
     router.push(PATHS.TRAIT_RESULT);
   });
 

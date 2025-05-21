@@ -13,7 +13,6 @@ import { useUserStore } from "app/_stores/useUserStore";
 export default function Home() {
   const user = useUserStore((state) => state.user);
 
-  console.log("user", user);
   const router = useRouter();
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
