@@ -72,7 +72,10 @@ export default function EventCreatePage() {
       (step === 1 && !eventDate) ||
       (step === 2 && (!eventStartTime || !eventProgressTime)) ||
       (step === 3 && !recruitmentEnd) ||
-      (step === 4 && (!minParticipants || !maxParticipants)) ||
+      (step === 4 &&
+        (!minParticipants ||
+          Number(minParticipants) <= 0 ||
+          !maxParticipants)) ||
       (step === 5 && !locationId) ||
       (step === 6 && (!eventTitle || !mediaTitle || !description || !thumbnail))
     );
