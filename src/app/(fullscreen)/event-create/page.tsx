@@ -75,7 +75,8 @@ export default function EventCreatePage() {
       (step === 4 &&
         (!minParticipants ||
           Number(minParticipants) <= 0 ||
-          !maxParticipants)) ||
+          !maxParticipants ||
+          Number(maxParticipants) > 320)) ||
       (step === 5 && !locationId) ||
       (step === 6 && (!eventTitle || !mediaTitle || !description || !thumbnail))
     );
