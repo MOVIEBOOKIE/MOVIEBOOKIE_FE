@@ -7,10 +7,11 @@ import {
   useVerifyEmail,
   useVerifySms,
 } from "app/_hooks/onboarding/useVerifyCode";
+import Loading from "app/loading";
 
 export default function VerifyNumberPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <VerifyNumberContent />
     </Suspense>
   );

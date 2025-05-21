@@ -4,6 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PATHS } from "@/constants";
 import { useKakaoLogin } from "app/_hooks/onboarding/useKakaoLogin";
+import Loading from "app/loading";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
@@ -21,7 +22,7 @@ const getRedirectUrl = () => {
 
 export default function Kakao() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <KakaoLogin />
     </Suspense>
   );
@@ -64,9 +65,5 @@ function KakaoLogin() {
     handleLogin();
   }, [code, redirectUrl, isLocal, router]);
 
-  return (
-    <div className="bg-gray-black flex h-screen items-center justify-center">
-      <h1 className="text-xl text-white">로그인 중...</h1>
-    </div>
-  );
+  return <Loading />;
 }
