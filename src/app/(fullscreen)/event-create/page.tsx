@@ -14,6 +14,7 @@ import { FixedLayout } from "@/components";
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
 import { EventFormValues } from "app/_types/event";
 import { PATHS } from "@/constants";
+import Modal from "@/components/modal";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -28,6 +29,7 @@ const steps = [
 export default function EventCreatePage() {
   const [step, setStep] = useState(0);
   const router = useRouter();
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const methods = useForm({
     defaultValues: {
@@ -100,6 +102,17 @@ export default function EventCreatePage() {
     }
   };
   const CurrentStep = steps[step].component;
+  const handleCloseClick = () => {
+    setShowExitConfirm(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowExitConfirm(false);
+    router.push(PATHS.HOME);
+  };
+  const handleCancelExit = () => {
+    setShowExitConfirm(false);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -109,9 +122,23 @@ export default function EventCreatePage() {
         isButtonDisabled={isButtonDisabled}
         showCloseButton={true}
         onBackClick={onBack}
+        onClose={handleCloseClick}
       >
         <CurrentStep />
       </FixedLayout>
+      {showExitConfirm && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
+          <Modal
+            iconType="alert"
+            title="이벤트 생성을 취소할까요?"
+            description="지금까지 작성한 내용은 저장되지 않아요"
+            confirmText="생성 취소하기"
+            cancelText="아니오"
+            onConfirm={handleConfirmExit}
+            onCancel={handleCancelExit}
+          />
+        </div>
+      )}
     </FormProvider>
   );
 }
