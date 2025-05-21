@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
-import { useSendSms } from "app/_hooks/useSendCode";
+import { useSendSms } from "app/_hooks/onboarding/useSendCode";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");

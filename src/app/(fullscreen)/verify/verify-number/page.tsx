@@ -3,7 +3,10 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
-import { useVerifyEmail, useVerifySms } from "app/_hooks/useVerifyCode";
+import {
+  useVerifyEmail,
+  useVerifySms,
+} from "app/_hooks/onboarding/useVerifyCode";
 
 export default function VerifyNumberPage() {
   return (

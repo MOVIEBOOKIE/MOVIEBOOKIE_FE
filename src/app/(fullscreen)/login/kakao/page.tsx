@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PATHS } from "@/constants";
-import { sendAuthCodeToServer } from "lib/auth/sendAuthCodeToServer";
+import { useKakaoLogin } from "app/_hooks/onboarding/useKakaoLogin";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
@@ -31,6 +31,7 @@ function KakaoLogin() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const { redirectUrl, isLocal } = getRedirectUrl();
+  const { mutateAsync: kakaoLogin } = useKakaoLogin();
 
   useEffect(() => {
     if (!code) {
@@ -41,14 +42,19 @@ function KakaoLogin() {
 
     const handleLogin = async () => {
       try {
-        const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
-        const { success, data } = response;
+        const response = await kakaoLogin({
+          code,
+          redirectUri: redirectUrl,
+          isLocal,
+        });
+
+        const { success, data, message } = response;
 
         if (success) {
           localStorage.setItem("userProfile", JSON.stringify(data));
           router.push(PATHS.HOME);
         } else {
-          router.push(`/login?error=${encodeURIComponent(response.message)}`);
+          router.push(`/login?error=${encodeURIComponent(message)}`);
         }
       } catch (error: any) {
         router.push(`/login?error=${encodeURIComponent(error.message)}`);
