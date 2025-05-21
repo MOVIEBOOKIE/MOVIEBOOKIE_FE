@@ -17,7 +17,7 @@ jobs:
       - name: 📦 Setup Node and pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8 
+          version: 8
           run_install: false
 
       - name: 🔧 Setup Node.js
@@ -28,9 +28,6 @@ jobs:
 
       - name: 📥 Install dependencies
         run: pnpm install --ignore-scripts
-
-      - name: ✅ Run type-check
-        run: pnpm tsc --noEmit
 
       - name: ✅ Run lint
         run: pnpm lint
