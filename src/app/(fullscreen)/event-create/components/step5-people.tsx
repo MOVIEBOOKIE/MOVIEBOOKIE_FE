@@ -12,20 +12,20 @@ export default function Step5() {
   const [minError, setMinError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [maxError, setMaxError] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleMinChange = (e: any) => {
     const value = parseInt(e.target.value, 10);
 
     if (value <= 0) {
       setMinError(true);
+      setToastMessage("최소 인원은 1명부터 설정 가능해요");
       setShowToast(true);
     } else {
       setMinError(false);
     }
 
-    setValue("minParticipants", e.target.value, {
-      shouldValidate: true,
-    });
+    setValue("minParticipants", e.target.value, { shouldValidate: true });
   };
 
   const handleMaxChange = (e: any) => {
@@ -33,14 +33,13 @@ export default function Step5() {
 
     if (value > 320) {
       setMaxError(true);
+      setToastMessage("최대 인원은 320명까지 설정 가능해요");
       setShowToast(true);
     } else {
       setMaxError(false);
     }
 
-    setValue("maxParticipants", e.target.value, {
-      shouldValidate: true,
-    });
+    setValue("maxParticipants", e.target.value, { shouldValidate: true });
   };
 
   useEffect(() => {
@@ -111,13 +110,7 @@ export default function Step5() {
       </div>
       {showToast && (
         <div className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2 transform">
-          <Toast iconType="alert">
-            {minError
-              ? "최소 인원은 1명부터 설정 가능해요"
-              : maxError
-                ? "최대 인원은 320명까지 설정 가능해요"
-                : ""}
-          </Toast>
+          <Toast iconType="alert">{toastMessage}</Toast>
         </div>
       )}
     </>
