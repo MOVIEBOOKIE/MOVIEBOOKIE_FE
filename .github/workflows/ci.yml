@@ -26,10 +26,10 @@ jobs:
           node-version: 18
           cache: "pnpm"
 
-      - name: 📥 Install dependencies (with husky)
-        run: pnpm install
+      - name: 📥 Install dependencies (ignore prepare)
+        run: pnpm install --ignore-scripts
 
-      - name: 🛠 Install husky hooks (manually)
+      - name: 🛠 Install husky hooks manually
         run: pnpm husky install
         continue-on-error: true
 
