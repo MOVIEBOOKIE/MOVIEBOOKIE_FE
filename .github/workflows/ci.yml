@@ -27,7 +27,10 @@ jobs:
           cache: "pnpm"
 
       - name: 📥 Install dependencies
-        run: pnpm install --ignore-scripts
+        run: pnpm install
+        env:
+          HUSKY: 0 # 🛡️ husky prepare 방지
+
 
       - name: ✅ Run lint
         run: pnpm lint
