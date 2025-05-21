@@ -3,9 +3,14 @@
 import { FixedLayout, StepHeader } from "@/components";
 import { DefaultProfileIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
+import { useUserInfo } from "app/_hooks/useUserInfo";
+import Loading from "app/loading";
+import { formatPhoneNumberToBasic } from "@/utils/format-phone";
 
 export default function VerifyFlow() {
   const router = useRouter();
+
+  const { data: userInfo, isLoading, isError } = useUserInfo();
 
   return (
     <FixedLayout
@@ -32,19 +37,38 @@ export default function VerifyFlow() {
       />
 
       <div className="mt-14">
-        <div className="flex flex-col items-center">
-          <div className="border-red-main flex h-31.75 w-31.75 items-center justify-center rounded-full border-2">
-            <DefaultProfileIcon className="h-28 w-28 rounded-full" />
+        {isLoading && <Loading fixed />}
+        {isError && (
+          <div className="text-center text-red-500">
+            유저 정보를 불러오는 데 실패했어요.
           </div>
+        )}
 
-          <div className="title-3-semibold mt-4 text-gray-200">카톡이름</div>
-          <div className="caption-1-medium mt-1 text-gray-500">
-            moviebookie@gmail.com
+        {userInfo && (
+          <div className="flex flex-col items-center">
+            <div className="border-red-main flex h-31.75 w-31.75 items-center justify-center rounded-full border-2">
+              {userInfo.profileImage ? (
+                <img
+                  src={userInfo.profileImage}
+                  alt="프로필"
+                  className="h-28 w-28 rounded-full object-cover"
+                />
+              ) : (
+                <DefaultProfileIcon className="h-28 w-28 rounded-full" />
+              )}
+            </div>
+
+            <div className="title-3-semibold mt-4 text-gray-200">
+              {userInfo.username}
+            </div>
+            <div className="caption-1-medium mt-1 text-gray-500">
+              {userInfo.email}
+            </div>
+            <div className="caption-1-medium mt-1 text-gray-500">
+              {formatPhoneNumberToBasic(userInfo.phoneNumber)}
+            </div>
           </div>
-          <div className="caption-1-medium mt-1 text-gray-500">
-            010-1535-354
-          </div>
-        </div>
+        )}
       </div>
     </FixedLayout>
   );

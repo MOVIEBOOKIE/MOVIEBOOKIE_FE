@@ -8,6 +8,9 @@ export const PATHS = {
   EVENT_CREATE: "/event-create",
   KAKAO_LOGIN: "/login/kakao",
   EVENT_SUCCESS: "/event/success",
+  VERIFY_PHONE: "/verify/phone",
+  VERIFY_EMAIL: "/verify/email",
+  SET_PROFILE: "/set-profile",
   CATEGORY: {
     POPULAR: "/category/popular",
     RECENT: "/category/recent",

@@ -8,6 +8,7 @@ import {
   useVerifySms,
 } from "app/_hooks/onboarding/useVerifyCode";
 import Loading from "app/loading";
+import { PATHS } from "@/constants";
 
 export default function VerifyNumberPage() {
   return (
@@ -54,7 +55,7 @@ function VerifyNumberContent() {
       verifySmsCode(
         { phoneNum: target.replace(/-/g, ""), certificationCode },
         {
-          onSuccess: () => router.push("/verify/email"),
+          onSuccess: () => router.push(PATHS.VERIFY_EMAIL),
           onError: handleError,
         },
       );
@@ -62,7 +63,7 @@ function VerifyNumberContent() {
       verifyEmailCode(
         { email: target, certificationCode },
         {
-          onSuccess: () => router.push("/set-profile"),
+          onSuccess: () => router.push(PATHS.SET_PROFILE),
           onError: handleError,
         },
       );
