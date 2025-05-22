@@ -1,17 +1,14 @@
-"use client";
+import { useMutation } from "@tanstack/react-query";
+import { apiPost } from "../_apis/methods";
+import { EventFormValues } from "app/_types/event";
+import { createEventFormData } from "@/utils/create-event-formdata";
 
-import { useQuery } from "@tanstack/react-query";
-import { apiGet } from "../_apis/methods";
-export interface UserInfo {
-  username: string;
-  email: string;
-  phoneNumber: string;
-  profileImage: string | null;
-}
-export const useUserInfo = () => {
-  return useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => apiGet<UserInfo>("/auth/user"),
-    staleTime: 1000 * 60 * 5,
+export const useCreateEvent = () => {
+  return useMutation({
+    mutationFn: async (payload: EventFormValues) => {
+      const formData = createEventFormData(payload);
+
+      return await apiPost<FormData, FormData>("/events", formData);
+    },
   });
 };

@@ -6,8 +6,8 @@ import Step2 from "./step2";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
-import { useCreateEvent } from "app/_hooks/useCreateEvent";
 import { PATHS } from "@/constants";
+import { useCreateEvent } from "app/_hooks/use-create-event";
 
 export default function Client() {
   const [step, setStep] = useState(1);
