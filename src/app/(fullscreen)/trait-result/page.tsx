@@ -5,6 +5,7 @@ import { LogoWhiteIcon } from "@/icons/index";
 import { useUserStore } from "app/_stores/useUserStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useGetUserTypeResult } from "../trait/hooks/use-user-type";
 
 export default function TraitResult() {
   const router = useRouter();
@@ -14,6 +15,15 @@ export default function TraitResult() {
   const user = useUserStore((state) => state.user);
   const userName = user?.nickname ?? "회원";
   //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
+
+  const { data } = useGetUserTypeResult();
+
+  console.log(data);
+
+  const imageSrc =
+    data?.userTypeCode &&
+    PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
+
   return (
     <div className="relative flex h-screen w-full items-center justify-center">
       <Image
@@ -29,25 +39,34 @@ export default function TraitResult() {
       >
         <p className="body-3-semibold text-gray-100">{userName}님은</p>
         <p className="body-1-semibold mt-2.25 text-center">
-          영화의 한 장면, 대사까지 곱씹으며
-          <br />
-          아주 깊게 보는 스타일이네요!
+          {data?.label.split("\n").map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
         </p>
         <div className="card-shadow-blur mt-10 flex h-96.5 w-72.25 flex-col items-center rounded-[20px] bg-white/30 px-3.5 pt-8.75 pb-4">
-          <Image
-            src={PATH_IMAGES.TRAIT.MOVIE_DETAIL_COLLECTOR}
-            width={120}
-            height={94}
-            alt="type-image"
-          />
+          {imageSrc && (
+            <Image src={imageSrc} width={120} height={94} alt="type-image" />
+          )}
+
           <p className="title-3-bold text-gray-white mb-3">
-            디테일 수집형 영화 몰입러
+            {data?.title.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
           </p>
           <div className="bg-gray-white mt-5.5 h-0.25 w-full opacity-14" />
-          <p className="body-3-regular mt-7.25 text-gray-100">
-            스토리에 푹 빠져 정주행할 수 있는
-            <br />
-            이벤트들을 모아 추천해 드릴게요!
+          <p className="body-3-regular mt-7.25 text-center text-gray-100">
+            {data?.description.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
           </p>
           <LogoWhiteIcon
             width={30}

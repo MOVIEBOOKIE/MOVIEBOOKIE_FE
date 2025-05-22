@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useState } from "react";
 import Step0 from "./_components/step0";
 import Step1 from "./_components/step1";
@@ -10,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 import { useUserStore } from "app/_stores/useUserStore";
+import { usePostUserType } from "./hooks/use-user-type";
 
 export default function Trait() {
   const router = useRouter();
@@ -20,6 +20,8 @@ export default function Trait() {
   const user = useUserStore((state) => state.user);
   const userName = user?.nickname ?? "회원";
   //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
+
+  const { mutate } = usePostUserType();
 
   const handleClick = () => {
     setStep((prev) => prev + 1);
@@ -36,8 +38,11 @@ export default function Trait() {
   };
 
   const onSubmit = methods.handleSubmit((data) => {
-    console.log("제출된 데이터:", data);
-    router.push(PATHS.TRAIT_RESULT);
+    mutate({
+      step1Question: data.mood,
+      step2Question: data.criterion,
+      favoriteCategory: data.content,
+    });
   });
 
   const mood = methods.watch("mood");
