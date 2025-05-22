@@ -28,7 +28,8 @@
       "@/constants/*": ["app/_constants/*"],
       "@/utils/*": ["app/_utils/*"],
       "@/mocks/*": ["app/_mocks/*"],
-      "@/icons/*": ["icons/*"]
+      "@/icons/*": ["icons/*"],
+      "@/lotties/*": ["lotties/*"]
     }
   },
   "include": [
