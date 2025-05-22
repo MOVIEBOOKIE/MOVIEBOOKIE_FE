@@ -9,6 +9,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { usePostUserType } from "app/_hooks/use-user-type";
+import { useUserStore } from "app/_stores/useUserStore";
 
 export default function Trait() {
   const router = useRouter();
@@ -16,8 +17,8 @@ export default function Trait() {
   const methods = useForm({
     defaultValues: { mood: "", criterion: "", content: "" },
   });
-  // const user = useUserStore((state) => state.user);
-  // const userName = user?.nickname ?? "회원";
+  const user = useUserStore((state) => state.user);
+  const userName = user?.nickname ?? "회원";
   //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
 
   const { mutate } = usePostUserType();
@@ -74,10 +75,10 @@ export default function Trait() {
           onBackClick={handleClickBack}
         >
           <div className="mb-28 w-full flex-grow overflow-y-auto">
-            {/* {step === 0 && <Step0 nickname={userName} />}
+            {step === 0 && <Step0 nickname={userName} />}
             {step === 1 && <Step1 nickname={userName} />}
             {step === 2 && <Step2 />}
-            {step === 3 && <Step3 nickname={userName} />} */}
+            {step === 3 && <Step3 nickname={userName} />}
           </div>
         </FixedLayout>
       </form>

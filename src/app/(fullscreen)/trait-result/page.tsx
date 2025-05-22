@@ -1,8 +1,11 @@
+"use client";
+
 import { Button } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
 import { LogoWhiteIcon } from "@/icons/index";
 import { useGetUserTypeResult } from "app/_hooks/use-user-type";
+import { useUserStore } from "app/_stores/useUserStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -11,8 +14,8 @@ export default function TraitResult() {
   const handleClick = () => {
     router.push(PATHS.HOME);
   };
-  // const user = useUserStore((state) => state.user);
-  // const userName = user?.nickname ?? "회원";
+  const user = useUserStore((state) => state.user);
+  const userName = user?.nickname ?? "회원";
   //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
 
   const { data } = useGetUserTypeResult();
@@ -33,7 +36,7 @@ export default function TraitResult() {
         className="absolute flex flex-col items-center"
         style={{ top: "7%" }}
       >
-        {/* <p className="body-3-semibold text-gray-100">{userName}님은</p> */}
+        <p className="body-3-semibold text-gray-100">{userName}님은</p>
         <p className="body-1-semibold mt-2.25 text-center">
           <LineBreak text={data?.label} />
         </p>
