@@ -42,6 +42,9 @@ export default function PwaPromptModal() {
 
     if (osType === "ios") {
       setShowModal(true);
+    } else if (osType === "other") {
+      setShowModal(false); // 웹에서는 모달을 아예 안 띄움
+      return;
     }
   }, []);
 
