@@ -193,6 +193,7 @@ body {
   backdrop-filter: blur(22.5px);
 }
 
+<<<<<<< HEAD
 /* 자동입력 시 브라우저 css 배경색 제거 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -214,4 +215,12 @@ select:-webkit-autofill {
   .drop-shadow-2 {
     box-shadow: 0px -2px 12px 0px rgba(0, 0, 0, 0.14);
   }
+=======
+.drap-shadow {
+  box-shadow: 0px 0px 16.3px 0px rgba(0, 0, 0, 0.6);
+}
+
+.drop-shadow-2 {
+  box-shadow: 0px -2px 12px 0px rgba(0, 0, 0, 0.14);
+>>>>>>> 1678df4759995a68360a5446d21dbe0ab85c8109
 }
