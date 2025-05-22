@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
 import { useUserStore } from "app/_stores/useUserStore";
+import { useEffect, useState } from "react";
 
 export default function DetailContent() {
   const user = useUserStore((state) => state.user);
@@ -21,9 +24,16 @@ export default function DetailContent() {
     maxParticipants,
   } = formData;
 
-  const thumbnailUrl = thumbnail
-    ? URL.createObjectURL(thumbnail)
-    : "/images/image.png";
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("/images/image.png");
+
+  useEffect(() => {
+    if (thumbnail) {
+      const url = URL.createObjectURL(thumbnail);
+      setThumbnailUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [thumbnail]);
+
   return (
     <>
       <div className="relative h-75 w-full">
@@ -89,7 +99,6 @@ export default function DetailContent() {
 
           <span>모집 인원</span>
           <span>
-            {" "}
             {minParticipants} - {maxParticipants}명
           </span>
         </div>
