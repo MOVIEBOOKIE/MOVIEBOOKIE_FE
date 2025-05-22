@@ -41,7 +41,11 @@ export default function Modal({
         {description}
       </p>
       <div className="flex w-full gap-2.75">
-        <Button variant="secondary" onClick={onCancel}>
+        <Button
+          variant="secondary"
+          onClick={onCancel}
+          className="bg-gray-800 text-gray-200"
+        >
           {cancelText}
         </Button>
         <Button onClick={onConfirm}>{confirmText}</Button>
