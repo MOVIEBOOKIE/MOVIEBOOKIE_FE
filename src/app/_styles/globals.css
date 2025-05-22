@@ -43,85 +43,81 @@
   --fs-caption-2: 0.6875rem;
   --fs-caption-3: 0.625rem;
 }
-
 @layer components {
   .container-padding {
     padding-left: 20px;
     padding-right: 20px;
   }
-
   .title-1-bold {
     font-size: var(--fs-title-1);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 150%;
   }
   .title-1-semibold {
     font-size: var(--fs-title-1);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 150%;
   }
 
   .title-2-bold {
     font-size: var(--fs-title-2);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 150%;
   }
   .title-2-semibold {
     font-size: var(--fs-title-2);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 150%;
   }
 
   .title-3-bold {
     font-size: var(--fs-title-3);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 140%;
   }
   .title-3-semibold {
     font-size: var(--fs-title-3);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-1-semibold {
     font-size: var(--fs-body-1);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-1-medium {
     font-size: var(--fs-body-1);
     font-weight: 500;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-2-semibold {
     font-size: var(--fs-body-2);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-2-medium {
     font-size: var(--fs-body-2);
     font-weight: 500;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-3-semibold {
     font-size: var(--fs-body-3);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-3-medium {
     font-size: var(--fs-body-3);
     font-weight: 500;
     line-height: 140%;
   }
-
   .body-3-regular {
     font-size: var(--fs-body-3);
     font-weight: 400;
     line-height: 140%;
   }
-
   .caption-1-medium {
     font-size: var(--fs-caption-1);
     font-weight: 500;
@@ -173,6 +169,7 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch; /* iOS momentum scroll */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -192,7 +189,7 @@ body {
   backdrop-filter: blur(22.5px);
 }
 
-.drap-shadow {
+.drop-shadow {
   box-shadow: 0px 0px 16.3px 0px rgba(0, 0, 0, 0.6);
 }
 
