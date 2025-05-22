@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
+import Toast from "@/components/toast";
 
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -27,7 +28,7 @@ const DeadlineCalendar = ({
   const [barBlocks, setBarBlocks] = useState<
     { row: number; startIdx: number; endIdx: number }[]
   >([]);
-
+  const [showToast, setShowToast] = useState(false);
   const startDay = currentMonth.startOf("month").day();
   const daysInMonth = currentMonth.daysInMonth();
   const dates = Array.from({ length: daysInMonth }, (_, i) =>
@@ -44,10 +45,21 @@ const DeadlineCalendar = ({
       (date.isAfter(today) && date.isBefore(latestDeadline.add(1, "day")))
     ) {
       onSelectDeadline(date.format("YYYY-MM-DD"));
+    } else {
+      setShowToast(true);
     }
   };
 
   const isPrevDisabled = currentMonth.isSame(today, "month");
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   useEffect(() => {
     const deadline = dayjs(selectedDeadline);
@@ -93,7 +105,14 @@ const DeadlineCalendar = ({
   }, [selectedDeadline, currentMonth]);
 
   return (
-    <div className="mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+    <div className="relative mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+      {showToast && (
+        <div className="absolute top-full left-1/2 z-50 mt-4 -translate-x-1/2">
+          <Toast iconType="alert">
+            진행일 기준, 최대 2주 전까지만 설정할 수 있어요
+          </Toast>
+        </div>
+      )}
       <div className="body-3-regular mb-8 flex items-center justify-center gap-5">
         <button
           onClick={() => setCurrentMonth((prev) => prev.subtract(1, "month"))}
@@ -174,7 +193,6 @@ const DeadlineCalendar = ({
               )}
               <button
                 onClick={() => handleSelect(current)}
-                disabled={isDisabled}
                 className={clsx(
                   "body-3-regular absolute z-30 flex h-10 w-10 items-center justify-center",
                   {

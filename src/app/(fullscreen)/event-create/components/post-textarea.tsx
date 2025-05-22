@@ -14,14 +14,14 @@ export default function PostTextArea() {
         <input
           {...register("mediaTitle")}
           type="text"
-          placeholder="제목을 입력해 주세요"
+          placeholder="모집글의 제목을 입력해 주세요"
           className="body-2-medium w-full border-b border-gray-950 bg-transparent pb-3 text-gray-300 placeholder-gray-700 outline-none"
         />
 
         <textarea
           {...register("description")}
           rows={4}
-          placeholder={`모집 게시물에 올릴 홍보글을 작성해주세요\n\n함께 추억을 공유하고 싶은 사람들에 대한 이야기와\n자신에 대한 어필을 적어주시면 모집 효과가 올라가요!`}
+          placeholder={`모집 게시물에 올릴 홍보글을 작성해주세요`}
           className="body-3-regular w-full resize-none bg-transparent text-gray-300 placeholder-gray-700 outline-none"
         />
       </div>
