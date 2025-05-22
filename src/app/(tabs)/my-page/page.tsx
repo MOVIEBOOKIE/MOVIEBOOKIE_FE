@@ -41,15 +41,25 @@ export default function MyPage() {
 
       <ul className="body-2-medium px-2 text-gray-300">
         {[
-          { label: "서비스이용약관" },
-
-          { label: "개인정보처리방침" },
+          { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
+          {
+            label: "개인정보처리방침",
+            onClick: () => router.push(PATHS.PRIVACY),
+          },
           {
             label: "무비부키 평가 및 피드백",
             onClick: () => router.push(PATHS.FEEDBACK),
           },
-          { label: "로그아웃" },
-          { label: "회원탈퇴" },
+          {
+            label: "로그아웃",
+            onClick: () => {
+              console.log("로그아웃");
+            },
+          },
+          {
+            label: "회원탈퇴",
+            onClick: () => router.push(PATHS.WITHDRAWAL),
+          },
         ].map((item) => (
           <li
             key={item.label}
@@ -61,12 +71,14 @@ export default function MyPage() {
             <ArrowRightIcon size={16} className="text-gray-400" />
           </li>
         ))}
-        <li className="flex items-center justify-between">
-          <span>
-            연결된 소셜 계정{" "}
-            <span className="ml-2 inline-block py-4 align-middle">
-              <MyKakaoIcon />
-            </span>
+
+        <li
+          className="flex cursor-pointer items-center justify-between py-4"
+          onClick={() => router.push(PATHS.SOCIAL_ACCOUNTS)}
+          role="button"
+        >
+          <span className="flex items-center gap-2">
+            연결된 소셜 계정 <MyKakaoIcon />
           </span>
           <ArrowRightIcon size={16} className="text-gray-400" />
         </li>

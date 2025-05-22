@@ -18,7 +18,12 @@ export const PATHS = {
     SPORTS: "/category/sports",
     ETC: "/category/etc",
   },
-  FEEDBACK: "/feedback",
+  TOS: "/terms-of-service", //서비스이용약관
+  PRIVACY: "/my-page/privacy", // 개인정보처리방침
+  FEEDBACK: "/my-page/feedback",
+  WITHDRAWAL: "/my-page/withdraw",
+  SOCIAL_ACCOUNTS: "/my-page/accounts", // 연결된 소셜계정
+
   FEEDBACK_RESULT: "/feedback/result",
   FEEDBACK_RESULT_WITH_TYPE: (type: "good" | "bad") =>
     `/feedback/result?type=${type}`,
