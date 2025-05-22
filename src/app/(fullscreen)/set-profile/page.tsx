@@ -11,6 +11,9 @@ export default function VerifyFlow() {
   const router = useRouter();
 
   const { data: userInfo, isLoading, isError } = useUserInfo();
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <FixedLayout
@@ -37,7 +40,6 @@ export default function VerifyFlow() {
       />
 
       <div className="mt-14">
-        {isLoading && <Loading fixed />}
         {isError && (
           <div className="text-center text-red-500">
             유저 정보를 불러오는 데 실패했어요.
