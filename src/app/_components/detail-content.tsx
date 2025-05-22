@@ -27,7 +27,7 @@ export default function DetailContent() {
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("/images/image.png");
 
   useEffect(() => {
-    if (thumbnail) {
+    if (typeof window !== "undefined" && thumbnail instanceof Blob) {
       const url = URL.createObjectURL(thumbnail);
       setThumbnailUrl(url);
       return () => URL.revokeObjectURL(url);

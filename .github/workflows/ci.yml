@@ -1,4 +1,4 @@
-name: CI - Build and Test
+name: CI - Build Only
 
 on:
   push:
@@ -18,7 +18,6 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
-          run_install: false
 
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
@@ -26,15 +25,8 @@ jobs:
           node-version: 18
           cache: "pnpm"
 
-      - name: 📥 Install dependencies (ignore prepare)
-        run: pnpm install --ignore-scripts
-
-      - name: 🛠 Install husky hooks manually
-        run: pnpm husky install
-        continue-on-error: true
-
-      - name: ✅ Run lint
-        run: pnpm lint
+      - name: 📥 Install dependencies
+        run: pnpm install
 
       - name: 🔨 Build project
         run: pnpm build

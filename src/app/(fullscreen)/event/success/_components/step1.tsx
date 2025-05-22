@@ -9,7 +9,7 @@ export default function Step1() {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (formData.thumbnail) {
+    if (typeof window !== "undefined" && formData.thumbnail instanceof Blob) {
       const objectUrl = URL.createObjectURL(formData.thumbnail);
       setThumbnailUrl(objectUrl);
 
