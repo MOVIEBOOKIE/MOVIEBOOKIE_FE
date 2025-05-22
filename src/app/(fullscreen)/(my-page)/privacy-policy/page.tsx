@@ -4,6 +4,7 @@ import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 import { PRIVACY_POLICY_SECTIONS } from "@/constants/mypage/privacy";
 import { useRouter } from "next/navigation";
+
 export default function PrivacyPolicy() {
   const router = useRouter();
   return (
