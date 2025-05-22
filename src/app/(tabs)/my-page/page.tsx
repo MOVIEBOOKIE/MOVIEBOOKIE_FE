@@ -1,8 +1,10 @@
 "use client";
 
+import Modal from "@/components/modal";
 import { PATHS } from "@/constants";
 import { ArrowRightIcon, MyKakaoIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 interface MyPageStatProps {
   label: string;
   value: number | string;
@@ -18,6 +20,13 @@ function MyPageStat({ label, value }: MyPageStatProps) {
 }
 export default function MyPage() {
   const router = useRouter();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const handleLogout = () => {
+    console.log("로그아웃");
+    setShowLogoutModal(false);
+  };
+
   return (
     <div className="min-h-screen px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
@@ -50,12 +59,7 @@ export default function MyPage() {
             label: "무비부키 평가 및 피드백",
             onClick: () => router.push(PATHS.FEEDBACK),
           },
-          {
-            label: "로그아웃",
-            onClick: () => {
-              console.log("로그아웃");
-            },
-          },
+          { label: "로그아웃", onClick: () => setShowLogoutModal(true) },
           {
             label: "회원탈퇴",
             onClick: () => router.push(PATHS.WITHDRAWAL),
@@ -83,6 +87,22 @@ export default function MyPage() {
           <ArrowRightIcon size={16} className="text-gray-400" />
         </li>
       </ul>
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/70">
+          <Modal
+            iconType="alert"
+            title="로그아웃"
+            description="정말 로그아웃 하시겠습니까?"
+            confirmText="확인"
+            cancelText="취소"
+            onConfirm={() => {
+              setShowLogoutModal(false);
+              console.log("로그아웃 로직 실행");
+            }}
+            onCancel={() => setShowLogoutModal(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }
