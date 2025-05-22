@@ -2,28 +2,46 @@ import Image from "next/image";
 import React from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
+import { useUserStore } from "app/_stores/useUserStore";
+import { useEventFormStore } from "app/_stores/useEventCreateForm";
 
 export default function DetailContent() {
+  const user = useUserStore((state) => state.user);
   const percentage = 60;
+  const { formData } = useEventFormStore();
+  const {
+    thumbnail,
+    mediaTitle,
+    eventTitle,
+    description,
+    eventDate,
+    recruitmentStart,
+    recruitmentEnd,
+    minParticipants,
+    maxParticipants,
+  } = formData;
 
+  const thumbnailUrl = thumbnail
+    ? URL.createObjectURL(thumbnail)
+    : "/images/image.png";
   return (
     <>
       <div className="relative h-75 w-full">
-        <Image
-          src="/images/image.png"
-          alt="movie poster"
-          fill
-          className="object-cover"
-        />
+        {thumbnailUrl && (
+          <Image
+            src={thumbnailUrl}
+            alt="movie-poster"
+            fill
+            className="object-cover"
+          />
+        )}
         <div className="from-gray-black/20 to-gray-black absolute inset-0 z-1 bg-gradient-to-b" />
         <p className="caption-1-medium absolute bottom-0 z-10 text-gray-500">
-          영화 · 신촌 아트레온
+          {mediaTitle} · 신촌 아트레온
         </p>
       </div>
       <div>
-        <p className="text-gray-white title-2-semibold mt-1">
-          더 폴: 오디어스와 환상의 문
-        </p>
+        <p className="text-gray-white title-2-semibold mt-1">{eventTitle}</p>
         <div className="mt-3.5 flex justify-between">
           <p className="body-3-medium text-gray-500">모집 달성률</p>
           <p className="body-2-semibold text-red-main">{percentage}%</p>
@@ -44,40 +62,36 @@ export default function DetailContent() {
               className="h-8.5 w-8.5 rounded-full object-cover"
             />
             <div className="flex flex-col gap-0.5">
-              <p className="body-3-medium text-gray-200">닉네임</p>
+              <p className="body-3-medium text-gray-200"> {user?.nickname}</p>
               <p className="caption-1-regular text-gray-500">
                 단관 경험 00회 (상세정보)
               </p>
             </div>
           </div>
-          <p className="body-2-medium text-gray-300">
-            더 폴은 진짜 정말 명작입니다!
-          </p>
-          <p className="body-3-medium text-gray-600">
-            이번에 영화 단체 관람 같이 보러 갈 사람 구해요! 영화 진짜 재밌고
-            같이 보면 훨씬 더 웃기고 몰입감도 두 배임ㅋㅋ 혼자 보기 아까운
-            작품이라 같이 보면 좋을 것 같아서요 :) 같이 가고 싶은 사람 편하게
-            신청해줘요~!
-          </p>
+          <p className="body-2-medium text-gray-300">{mediaTitle}</p>
+          <p className="body-3-medium text-gray-600">{description}</p>
         </div>
         <div className="caption-1-regular mt-8 grid grid-cols-[74px_1fr] gap-y-2 rounded-xl bg-gray-950 px-5 pt-5 pb-6 text-gray-300">
           <span>예상 가격</span>
-          <span>24,000원</span>
+          <span>{eventDate}</span>
 
           <span>이벤트 일시</span>
-          <span>2025. 05. 26 (월)</span>
+          <span>{eventDate}</span>
 
           <span>모집 기간</span>
 
           <span className="-my-0.25 flex items-center gap-1">
-            2025. 04. 15 - 2025. 04. 20
+            {recruitmentStart} - {recruitmentEnd}
             <Badge variant="primary" className="px-1 py-0.25">
               D-3
             </Badge>
           </span>
 
           <span>모집 인원</span>
-          <span>20 - 56명</span>
+          <span>
+            {" "}
+            {minParticipants} - {maxParticipants}명
+          </span>
         </div>
         <div className="mt-4 mb-6 h-0.25 w-full rounded-sm bg-gray-950" />
         <InformationTab />
