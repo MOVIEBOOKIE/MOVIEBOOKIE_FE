@@ -1,5 +1,5 @@
-import DetailContent from "@/components/detail-content";
+// import DetailContent from "@/components/detail-content";
 
-export default function Step2() {
-  return <DetailContent />;
-}
+// export default function Step2() {
+//   return <DetailContent />;
+// }

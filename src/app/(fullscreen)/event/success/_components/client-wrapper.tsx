@@ -1,9 +1,9 @@
-"use client";
+// "use client";
 
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
-const Client = dynamic(() => import(".//client"), { ssr: false });
+// const Client = dynamic(() => import(".//client"), { ssr: false });
 
-export default function ClientWrapper() {
-  return <Client />;
-}
+// export default function ClientWrapper() {
+//   return <Client />;
+// }
