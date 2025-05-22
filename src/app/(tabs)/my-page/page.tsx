@@ -22,11 +22,6 @@ export default function MyPage() {
   const router = useRouter();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const handleLogout = () => {
-    console.log("로그아웃");
-    setShowLogoutModal(false);
-  };
-
   return (
     <div className="min-h-screen px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
@@ -53,7 +48,7 @@ export default function MyPage() {
           { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
           {
             label: "개인정보처리방침",
-            onClick: () => router.push(PATHS.PRIVACY),
+            onClick: () => router.push(PATHS.PRIVACY_POLICY),
           },
           {
             label: "무비부키 평가 및 피드백",

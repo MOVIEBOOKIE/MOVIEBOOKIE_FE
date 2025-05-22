@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FixedLayout, StepHeader } from "@/components";
 import { WithDrawCheckIcon } from "@/icons/index";
 import Modal from "@/components/modal";
-import { WITHDRAW_REASONS } from "@/constants/my-page";
+import { WITHDRAW_REASONS } from "@/constants/mypage/my-page";
 
 export default function WithDraw() {
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);

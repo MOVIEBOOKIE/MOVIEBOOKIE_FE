@@ -2,14 +2,13 @@
 
 import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
-import { TERMS_OF_SERVICE_SECTIONS } from "@/constants/terms";
+import { PRIVACY_POLICY_SECTIONS } from "@/constants/mypage/privacy";
 import { useRouter } from "next/navigation";
-
-export default function Privacy() {
+export default function PrivacyPolicy() {
   const router = useRouter();
   return (
     <FixedLayout
-      title="서비스 이용약관"
+      title="개인정보처리방침"
       showBackButton={false}
       isHeader
       showCloseButton={true}
@@ -18,7 +17,7 @@ export default function Privacy() {
       state="default"
     >
       <div className="text-gray-200">
-        {TERMS_OF_SERVICE_SECTIONS.map((section, idx) => (
+        {PRIVACY_POLICY_SECTIONS.map((section, idx) => (
           <div key={idx} className="mb-6">
             <h2 className="body-3-semibold mb-1 text-gray-200">
               {section.title}

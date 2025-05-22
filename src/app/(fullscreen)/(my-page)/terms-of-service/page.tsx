@@ -2,7 +2,7 @@
 
 import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
-import { TERMS_OF_SERVICE_SECTIONS } from "@/constants/terms";
+import { TERMS_OF_SERVICE_SECTIONS } from "@/constants/mypage/terms";
 import { useRouter } from "next/navigation";
 
 export default function TermOfService() {

@@ -19,7 +19,7 @@ export const PATHS = {
     ETC: "/category/etc",
   },
   TOS: "/terms-of-service", //서비스이용약관
-  PRIVACY: "/privacy", // 개인정보처리방침
+  PRIVACY_POLICY: "/privacy-policy", // 개인정보처리방침
   FEEDBACK: "/feedback",
   WITHDRAWAL: "/withdraw",
   SOCIAL_ACCOUNTS: "/accounts", // 연결된 소셜계정
