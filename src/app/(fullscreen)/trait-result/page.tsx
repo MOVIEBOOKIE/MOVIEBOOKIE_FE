@@ -26,7 +26,7 @@ export default function TraitResult() {
   return (
     <div className="relative flex h-screen w-full items-center justify-center">
       <Image
-        src={PATH_IMAGES.CUSTOM_BG}
+        src={PATH_IMAGES.TRAIT.BACKGROUND}
         alt="배경"
         layout="fill"
         objectFit="cover"
