@@ -1,7 +1,12 @@
 import { PATH_IMAGES } from "@/constants";
+import { useEventFormStore } from "app/_stores/useEventCreateForm";
 import Image from "next/image";
 
 export default function Step1() {
+  const { formData } = useEventFormStore();
+  const thumbnailUrl = formData.thumbnail
+    ? URL.createObjectURL(formData.thumbnail)
+    : null;
   return (
     <>
       <div
@@ -10,12 +15,14 @@ export default function Step1() {
       >
         <div className="from-gray-black/0 to-gray-black absolute inset-0 z-10 bg-gradient-to-b" />
         <div className="to-70.53% from-gray-black absolute inset-0 z-10 bg-gradient-to-b from-0% to-black/0" />
-        <Image
-          src={PATH_IMAGES.IMAGE}
-          alt="movie-poster"
-          fill
-          className="object-cover"
-        />
+        {thumbnailUrl && (
+          <Image
+            src={thumbnailUrl}
+            alt="movie-poster"
+            fill
+            className="object-cover"
+          />
+        )}
       </div>
       <div className="mt-11.75 flex w-full flex-col justify-center gap-2">
         <p className="text-gray-white title-1-bold text-center">
