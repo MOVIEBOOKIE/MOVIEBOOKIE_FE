@@ -25,14 +25,18 @@ export default function DetailContent() {
   } = formData;
 
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("/images/image.png");
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && thumbnail instanceof Blob) {
+    if (isClient && thumbnail instanceof Blob) {
       const url = URL.createObjectURL(thumbnail);
       setThumbnailUrl(url);
       return () => URL.revokeObjectURL(url);
     }
-  }, [thumbnail]);
+  }, [thumbnail, isClient]);
 
   return (
     <>
