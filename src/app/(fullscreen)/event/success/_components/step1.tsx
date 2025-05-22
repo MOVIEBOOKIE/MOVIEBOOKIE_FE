@@ -1,4 +1,3 @@
-import { PATH_IMAGES } from "@/constants";
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
 import Image from "next/image";
 
