@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
 import InAppRedirect from "./_components/inapp-redirect";
+import { ReactQueryProvider } from "./providers/react-query-provider";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <InAppRedirect />
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );
