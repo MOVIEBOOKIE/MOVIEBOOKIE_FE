@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@/utils/axios";
+import { apiPost } from "../apis/methods";
 import { EventFormValues } from "app/_types/event";
 import { createEventFormData } from "@/utils/create-event-formdata";
 
@@ -8,9 +8,7 @@ export const useCreateEvent = () => {
     mutationFn: async (payload: EventFormValues) => {
       const formData = createEventFormData(payload);
 
-      const res = await apiClient.post("/api/events", formData);
-
-      return res.data;
+      return await apiPost<FormData, FormData>("/events", formData);
     },
   });
 };

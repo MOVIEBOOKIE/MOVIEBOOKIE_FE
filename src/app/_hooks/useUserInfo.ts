@@ -1,21 +1,17 @@
-import { apiClient } from "@/utils/axios";
-import { useQuery } from "@tanstack/react-query";
+"use client";
 
-export type UserInfo = {
+import { useQuery } from "@tanstack/react-query";
+import { apiGet } from "../apis/methods";
+export interface UserInfo {
+  username: string;
   email: string;
   phoneNumber: string;
-  username: string;
-  profileImage: string;
-};
-
-const fetchUserInfo = async (): Promise<UserInfo> => {
-  const { data } = await apiClient.get("/api/auth/user");
-  return data.result;
-};
-
+  profileImage: string | null;
+}
 export const useUserInfo = () => {
   return useQuery({
     queryKey: ["userInfo"],
-    queryFn: fetchUserInfo,
+    queryFn: () => apiGet<UserInfo>("/auth/user"),
+    staleTime: 1000 * 60 * 5,
   });
 };

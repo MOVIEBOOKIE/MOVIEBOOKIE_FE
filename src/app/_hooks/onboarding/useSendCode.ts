@@ -1,24 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@/utils/axios";
+import { apiPost } from "app/apis/methods";
 
 export const useSendEmail = () => {
   return useMutation({
     mutationFn: async (email: string) => {
-      const res = await apiClient.post("/api/email/send", { email });
-      return res.data;
+      return await apiPost<null, { email: string }>("/email/send", { email });
     },
   });
 };
+
 const formatPhoneNumberForApi = (phone: string) => phone.replace(/-/g, "");
 
 export const useSendSms = () => {
   return useMutation({
     mutationFn: async (phone: string) => {
       const cleaned = formatPhoneNumberForApi(phone);
-      const response = await apiClient.post("/api/sms/send", {
+      return await apiPost<null, { phoneNum: string }>("/sms/send", {
         phoneNum: cleaned,
       });
-      return response.data;
     },
   });
 };

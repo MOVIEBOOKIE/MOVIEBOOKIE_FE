@@ -1,19 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@/utils/axios";
+import { apiPost } from "app/apis/methods";
 
-interface VerifyPayload {
+interface VerifySmsPayload {
   phoneNum: string;
   certificationCode: string;
 }
 
 export const useVerifySms = () => {
   return useMutation({
-    mutationFn: async ({ phoneNum, certificationCode }: VerifyPayload) => {
-      const res = await apiClient.post("/api/sms/verify", {
-        phoneNum,
-        certificationCode,
-      });
-      return res.data;
+    mutationFn: async (payload: VerifySmsPayload) => {
+      return await apiPost<null, VerifySmsPayload>("/sms/verify", payload);
     },
   });
 };
@@ -25,12 +21,8 @@ interface VerifyEmailPayload {
 
 export const useVerifyEmail = () => {
   return useMutation({
-    mutationFn: async ({ email, certificationCode }: VerifyEmailPayload) => {
-      const res = await apiClient.post("/api/email/verify", {
-        email,
-        certificationCode,
-      });
-      return res.data;
+    mutationFn: async (payload: VerifyEmailPayload) => {
+      return await apiPost<null, VerifyEmailPayload>("/email/verify", payload);
     },
   });
 };
