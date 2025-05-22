@@ -1,12 +1,25 @@
-import { PATH_IMAGES } from "@/constants";
+"use client";
+
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Step1() {
   const { formData } = useEventFormStore();
-  const thumbnailUrl = formData.thumbnail
-    ? URL.createObjectURL(formData.thumbnail)
-    : null;
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (formData.thumbnail) {
+      const objectUrl = URL.createObjectURL(formData.thumbnail);
+      setThumbnailUrl(objectUrl);
+
+      return () => {
+        URL.revokeObjectURL(objectUrl);
+      };
+    } else {
+      setThumbnailUrl(null);
+    }
+  }, [formData.thumbnail]);
 
   return (
     <>

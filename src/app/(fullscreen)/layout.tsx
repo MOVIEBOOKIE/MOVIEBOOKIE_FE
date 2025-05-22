@@ -6,5 +6,9 @@ export default function FullscreenLayout({
 }: {
   children: ReactNode;
 }) {
-  return <main className="h-screen w-full">{children}</main>;
+  return (
+    <main className="scrollbar-hide h-screen w-full overflow-auto">
+      {children}
+    </main>
+  );
 }
