@@ -4,7 +4,7 @@ import { MOCK_DATA } from "@/mocks/mock-data";
 import { EmptyIcon } from "@/icons/index";
 
 interface EventTabProps {
-  type: "모집" | "참여" | "티켓";
+  type: "신청 목록" | "내 이벤트" | "내 티켓";
   statusMap: Record<string, string[]>;
 }
 
@@ -38,7 +38,7 @@ export default function EventTab({ type, statusMap }: EventTabProps) {
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-500">
             <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
-              아직 모집 이벤트가 없어요 <br />
+              아직 신청 목록 이벤트가 없어요 <br />
               지금 바로 나만의 이벤트를 만들어보세요
             </p>
           </div>

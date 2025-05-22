@@ -10,7 +10,9 @@ import { PopcornIcon } from "@/icons/index";
 
 export default function EventPage() {
   const router = useRouter();
-  const [topTab, setTopTab] = useState<"모집" | "참여" | "티켓">("모집");
+  const [topTab, setTopTab] = useState<"신청 목록" | "내 이벤트" | "내 티켓">(
+    "신청 목록",
+  );
 
   return (
     <div className="relative min-h-screen pb-32 text-white">
@@ -36,7 +38,7 @@ export default function EventPage() {
         </div>
       </section>
       <nav className="px-5 pt-6 text-base font-semibold">
-        {(["모집", "참여", "티켓"] as const).map((tab) => (
+        {(["신청 목록", "내 이벤트", "내 티켓"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setTopTab(tab)}
@@ -53,13 +55,13 @@ export default function EventPage() {
       </nav>{" "}
       <div className="mx-5 border-b border-gray-900" />
       <div className="px-5">
-        {topTab === "모집" && (
-          <EventTab type="모집" statusMap={STATUS_MAP.RECRUITMENT} />
+        {topTab === "신청 목록" && (
+          <EventTab type="신청 목록" statusMap={STATUS_MAP.RECRUITMENT} />
         )}
-        {topTab === "참여" && (
-          <EventTab type="참여" statusMap={STATUS_MAP.PARTICIPATION} />
+        {topTab === "내 이벤트" && (
+          <EventTab type="내 이벤트" statusMap={STATUS_MAP.PARTICIPATION} />
         )}
-        {topTab === "티켓" && <TicketTab />}
+        {topTab === "내 티켓" && <TicketTab />}
       </div>
       <button
         onClick={() => router.push(PATHS.EVENT_CREATE)}
