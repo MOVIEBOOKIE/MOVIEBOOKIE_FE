@@ -6,6 +6,7 @@ import { useUserStore } from "app/_stores/useUserStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetUserTypeResult } from "../trait/hooks/use-user-type";
+import { LineBreak } from "@/components/line-break";
 
 export default function TraitResult() {
   const router = useRouter();
@@ -39,12 +40,7 @@ export default function TraitResult() {
       >
         <p className="body-3-semibold text-gray-100">{userName}님은</p>
         <p className="body-1-semibold mt-2.25 text-center">
-          {data?.label.split("\n").map((line, index) => (
-            <span key={index}>
-              {line}
-              <br />
-            </span>
-          ))}
+          <LineBreak text={data?.label} />
         </p>
         <div className="card-shadow-blur mt-10 flex h-96.5 w-72.25 flex-col items-center rounded-[20px] bg-white/30 px-3.5 pt-8.75 pb-4">
           {imageSrc && (
@@ -52,21 +48,11 @@ export default function TraitResult() {
           )}
 
           <p className="title-3-bold text-gray-white mb-3">
-            {data?.title.split("\n").map((line, index) => (
-              <span key={index}>
-                {line}
-                <br />
-              </span>
-            ))}
+            <LineBreak text={data?.title} />
           </p>
           <div className="bg-gray-white mt-5.5 h-0.25 w-full opacity-14" />
           <p className="body-3-regular mt-7.25 text-center text-gray-100">
-            {data?.description.split("\n").map((line, index) => (
-              <span key={index}>
-                {line}
-                <br />
-              </span>
-            ))}
+            <LineBreak text={data?.description} />
           </p>
           <LogoWhiteIcon
             width={30}
