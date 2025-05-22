@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+
 import { useState } from "react";
 import Step0 from "./_components/step0";
 import Step1 from "./_components/step1";
@@ -8,7 +8,7 @@ import Step3 from "./_components/step3";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
-import { PATHS } from "@/constants";
+import { usePostUserType } from "app/_hooks/use-user-type";
 
 export default function Trait() {
   const router = useRouter();
@@ -16,7 +16,11 @@ export default function Trait() {
   const methods = useForm({
     defaultValues: { mood: "", criterion: "", content: "" },
   });
+  // const user = useUserStore((state) => state.user);
+  // const userName = user?.nickname ?? "회원";
+  //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
 
+  const { mutate } = usePostUserType();
   const handleClick = () => {
     setStep((prev) => prev + 1);
     window.scrollTo(0, 0);
@@ -32,8 +36,11 @@ export default function Trait() {
   };
 
   const onSubmit = methods.handleSubmit((data) => {
-    console.log("제출된 데이터:", data);
-    router.push(PATHS.TRAIT_RESULT);
+    mutate({
+      step1Question: data.mood,
+      step2Question: data.criterion,
+      favoriteCategory: data.content,
+    });
   });
 
   const mood = methods.watch("mood");
@@ -67,10 +74,10 @@ export default function Trait() {
           onBackClick={handleClickBack}
         >
           <div className="mb-28 w-full flex-grow overflow-y-auto">
-            {step === 0 && <Step0 nickname={nickname} />}
-            {step === 1 && <Step1 nickname={nickname} />}
+            {/* {step === 0 && <Step0 nickname={userName} />}
+            {step === 1 && <Step1 nickname={userName} />}
             {step === 2 && <Step2 />}
-            {step === 3 && <Step3 nickname={nickname} />}
+            {step === 3 && <Step3 nickname={userName} />} */}
           </div>
         </FixedLayout>
       </form>
