@@ -1,4 +1,5 @@
 "use client";
+
 import { FixedLayout, StepHeader } from "@/components";
 import { DefaultProfileIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
