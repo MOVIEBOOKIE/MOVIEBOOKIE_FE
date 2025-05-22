@@ -53,62 +53,62 @@
   .title-1-bold {
     font-size: var(--fs-title-1);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 150%;
   }
   .title-1-semibold {
     font-size: var(--fs-title-1);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 150%;
   }
 
   .title-2-bold {
     font-size: var(--fs-title-2);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 150%;
   }
   .title-2-semibold {
     font-size: var(--fs-title-2);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 150%;
   }
 
   .title-3-bold {
     font-size: var(--fs-title-3);
     font-weight: 700;
-    line-height: 130%;
+    line-height: 140%;
   }
   .title-3-semibold {
     font-size: var(--fs-title-3);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-1-semibold {
     font-size: var(--fs-body-1);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-1-medium {
     font-size: var(--fs-body-1);
     font-weight: 500;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-2-semibold {
     font-size: var(--fs-body-2);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-2-medium {
     font-size: var(--fs-body-2);
     font-weight: 500;
-    line-height: 130%;
+    line-height: 140%;
   }
 
   .body-3-semibold {
     font-size: var(--fs-body-3);
     font-weight: 600;
-    line-height: 130%;
+    line-height: 140%;
   }
   .body-3-medium {
     font-size: var(--fs-body-3);
