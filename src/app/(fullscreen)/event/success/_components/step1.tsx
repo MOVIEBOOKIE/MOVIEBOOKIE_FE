@@ -7,9 +7,13 @@ import { useEffect, useState } from "react";
 export default function Step1() {
   const { formData } = useEventFormStore();
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && formData.thumbnail instanceof Blob) {
+    if (isClient && formData.thumbnail instanceof Blob) {
       const objectUrl = URL.createObjectURL(formData.thumbnail);
       setThumbnailUrl(objectUrl);
 
@@ -19,7 +23,7 @@ export default function Step1() {
     } else {
       setThumbnailUrl(null);
     }
-  }, [formData.thumbnail]);
+  }, [formData.thumbnail, isClient]);
 
   return (
     <>
