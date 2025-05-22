@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiPost } from "app/apis/methods";
+import { apiPost } from "app/_apis/methods";
 
 export const useSendEmail = () => {
   return useMutation({

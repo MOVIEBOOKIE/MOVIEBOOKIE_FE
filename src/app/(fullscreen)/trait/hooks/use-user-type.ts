@@ -4,11 +4,11 @@ import { UserTypeData } from "app/_types/user-type";
 import {
   getUserTypeResult,
   postUserType,
-} from "app/apis/auth/user-type/user-type";
+} from "app/_apis/auth/user-type/user-type";
 import {
   USER_TYPE_KEY,
   USER_TYPE_OPTION,
-} from "app/apis/auth/user-type/user-type-queries";
+} from "app/_apis/auth/user-type/user-type-queries";
 import { useRouter } from "next/navigation";
 
 export const usePostUserType = () => {

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiPost } from "../apis/methods";
+import { apiPost } from "../_apis/methods";
 import { EventFormValues } from "app/_types/event";
 import { createEventFormData } from "@/utils/create-event-formdata";
 

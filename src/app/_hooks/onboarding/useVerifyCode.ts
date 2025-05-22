@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiPost } from "app/apis/methods";
-
+import { apiPost } from "app/_apis/methods";
 interface VerifySmsPayload {
   phoneNum: string;
   certificationCode: string;

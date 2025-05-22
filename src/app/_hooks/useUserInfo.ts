@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { apiGet } from "../apis/methods";
+import { apiGet } from "../_apis/methods";
 export interface UserInfo {
   username: string;
   email: string;
