@@ -16,8 +16,6 @@ export const usePostUserType = () => {
   return useMutation({
     mutationFn: (body: UserTypeData) => postUserType(body),
     onSuccess: () => {
-      // 페이지 이동
-      //api get
       router.push(PATHS.TRAIT_RESULT);
     },
   });
