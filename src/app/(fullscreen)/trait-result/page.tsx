@@ -19,8 +19,6 @@ export default function TraitResult() {
 
   const { data } = useGetUserTypeResult();
 
-  console.log(data);
-
   const imageSrc =
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
