@@ -25,6 +25,7 @@ export const PATH_IMAGES = {
     SPORTS_MOMENT_LOVER: "/images/trait/movie8.png",
     CONCERT_STAGE_DIVER: "/images/trait/movie9.png",
     CONCERT_FANCAM_LOVER: "/images/trait/movie10.png",
+    BACKGROUND: "/images/trait/gradation-background.png",
   },
 };
 
