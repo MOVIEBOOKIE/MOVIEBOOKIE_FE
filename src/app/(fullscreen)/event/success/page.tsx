@@ -1,6 +1,6 @@
-"use client";
+import dynamic from "next/dynamic";
 
-import Client from "./_components/client";
+const Client = dynamic(() => import("./_components/client"), { ssr: false });
 
 export default function Success() {
   return <Client />;
