@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import Badge from "./badge";
@@ -40,7 +42,7 @@ export default function DetailContent() {
           {mediaTitle} · 신촌 아트레온
         </p>
       </div>
-      <div>
+      <div className="px-3">
         <p className="text-gray-white title-2-semibold mt-1">{eventTitle}</p>
         <div className="mt-3.5 flex justify-between">
           <p className="body-3-medium text-gray-500">모집 달성률</p>
@@ -89,7 +91,6 @@ export default function DetailContent() {
 
           <span>모집 인원</span>
           <span>
-            {" "}
             {minParticipants} - {maxParticipants}명
           </span>
         </div>
