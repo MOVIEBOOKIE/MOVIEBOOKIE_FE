@@ -9,7 +9,7 @@ export default function InformationTab() {
   const [selected, setSelected] = useState("이벤트");
 
   return (
-    <div>
+    <>
       <ToggleTab
         options={["이벤트", "모집"]}
         selected={selected}
@@ -56,7 +56,7 @@ export default function InformationTab() {
           />
         </div>
       ) : (
-        <div className="mt-5 pb-17">
+        <div className="mt-5 pb-44">
           <p className="body-2-medium mb-2 text-gray-400">모집 일정</p>
           <div className="flex gap-3">
             <p className="body-3-medium text-gray-400">모집 기간</p>
@@ -82,6 +82,6 @@ export default function InformationTab() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
