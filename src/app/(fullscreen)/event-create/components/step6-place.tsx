@@ -1,13 +1,27 @@
 "use client";
 
 import { StepHeader } from "@/components";
-import { mockCinemas } from "@/mocks/mock-cinemas";
+import { useRecommendedCinemas } from "app/_hooks/use-recommend-cinema";
+import Loading from "app/loading";
 import Image from "next/image";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 export default function Step6() {
-  const { setValue, watch } = useFormContext();
-  const selectedLocationId = watch("locationId");
+  const { setValue, control } = useFormContext();
+  const selectedLocationId = useWatch({ control, name: "locationId" });
+  const mediaType = useWatch({ control, name: "mediaType" });
+  const min = useWatch({ control, name: "minParticipants" });
+  const max = useWatch({ control, name: "maxParticipants" });
+  const startTime = useWatch({ control, name: "eventStartTime" });
+  const progressTime = useWatch({ control, name: "eventProgressTime" });
+
+  const { data: cinemas = [], isLoading } = useRecommendedCinemas({
+    mediaType,
+    min: Number(min),
+    max: Number(max),
+    startTime,
+    progressTime: Number(progressTime),
+  });
 
   const handleSelectCinema = (cinemaId: number) => {
     setValue("locationId", cinemaId, { shouldValidate: true });
@@ -29,63 +43,64 @@ export default function Step6() {
           />
         </div>
         <div className="flex-1 overflow-y-auto px-5 pt-6 pb-32">
-          {mockCinemas.map((cinema) => {
-            const isSelected = selectedLocationId === cinema.id;
-            return (
-              <div
-                key={cinema.id}
-                className={`${isSelected ? "bg-gray-950" : ""}`}
-              >
+          {isLoading ? (
+            <Loading />
+          ) : (
+            cinemas.map((cinema: any) => {
+              const isSelected = selectedLocationId === cinema.locationId;
+              return (
                 <div
-                  className="relative flex gap-4 border-b border-gray-950 py-5"
-                  onClick={() => handleSelectCinema(cinema.id)}
+                  key={cinema.locationId}
+                  className={`${isSelected ? "bg-gray-950" : ""}`}
                 >
-                  {!isSelected && selectedLocationId !== null && (
-                    <div className="bg-gray-black bg-opacity-70 absolute inset-0 z-10" />
-                  )}
-
-                  <div className="relative z-20 flex-1 gap-3">
-                    <div className="mb-2 flex flex-wrap gap-1">
-                      {cinema.tags.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className={`caption-3-medium rounded-md px-1.5 py-1 ${
-                            tag === "대규모" || tag === "소규모"
-                              ? "bg-[#F19226] text-white"
-                              : "bg-gray-850 text-gray-300"
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                  <div
+                    className="relative flex gap-4 border-b border-gray-950 py-5"
+                    onClick={() => handleSelectCinema(cinema.locationId)}
+                  >
+                    {!isSelected && selectedLocationId !== null && (
+                      <div className="bg-gray-black bg-opacity-70 absolute inset-0 z-10" />
+                    )}
+                    <div className="relative z-20 flex-1 gap-3">
+                      <div className="mb-2 flex flex-wrap gap-1">
+                        {cinema.locationKeywordList.map(
+                          (tag: string, idx: number) => (
+                            <span
+                              key={idx}
+                              className={`caption-3-medium rounded-md px-1.5 py-1 ${
+                                tag === "대규모" || tag === "소규모"
+                                  ? "bg-[#F19226] text-white"
+                                  : "bg-gray-850 text-gray-300"
+                              }`}
+                            >
+                              {tag}
+                            </span>
+                          ),
+                        )}
+                      </div>
+                      <div className="body-2-semibold pt-2 text-gray-200">
+                        {cinema.locationName}
+                      </div>
+                      <div className="caption-1-medium mb-1 text-gray-400">
+                        {cinema.address}
+                      </div>
+                      <div className="caption-1-medium mb-1 text-gray-400">
+                        좌석 {cinema.seatCount} | {cinema.pricePerHour}원/시간
+                      </div>
                     </div>
-                    <div className="body-2-semibold pt-2 text-gray-200">
-                      {cinema.name}
+                    <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
+                      <Image
+                        src={cinema.locationImageUrl}
+                        alt={cinema.locationName}
+                        width={96}
+                        height={96}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
-                    <div className="body-2-semibold pb-2 text-gray-200">
-                      {cinema.hall}
-                    </div>
-                    <div className="caption-1-medium mb-1 text-gray-400">
-                      {cinema.address}
-                    </div>
-                    <div className="caption-1-medium mb-1 text-gray-400">
-                      좌석 {cinema.seats} | {cinema.price}
-                    </div>
-                  </div>
-
-                  <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
-                    <Image
-                      src={cinema.image}
-                      alt={cinema.hall}
-                      width={96}
-                      height={96}
-                      className="h-full w-full object-cover"
-                    />
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>
