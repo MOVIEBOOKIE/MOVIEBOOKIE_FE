@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 interface CardProps {
   id?: string;
   imageUrl: string;
-  category?: string;
-  title?: string;
+  category: string;
+  title: string;
   placeAndDate?: string;
   description?: string;
   ddayBadge?: string | null;
