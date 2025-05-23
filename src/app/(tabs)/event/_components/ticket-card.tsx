@@ -1,40 +1,40 @@
 "use client";
 
-import { EventCard } from "app/_types/card";
+import { CardProps } from "app/_types/card";
 import Image from "next/image";
 
 export function Card({
-  posterImageUrl,
-  mediaTitle,
-  locationName,
-  eventDate,
+  imageUrl,
+  title,
+  placeAndDate,
   description,
-  eventStatus,
-  rate,
+  ddayBadge,
+  statusBadge,
+  progressRate,
   estimatedPrice,
-}: EventCard) {
-  const progressRate = rate !== undefined ? `${rate}%` : undefined;
-  const placeAndDate = `${locationName} · ${eventDate}`;
-
+}: CardProps) {
   return (
     <div className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950">
       <div className="relative h-41.75 w-full overflow-hidden">
-        <Image
-          src={posterImageUrl}
-          alt={mediaTitle}
-          fill
-          className="object-cover"
-        />
-
-        {eventStatus && (
-          <div className="caption-1-medium absolute top-2.5 left-2.5 flex h-6 items-center justify-center rounded-md bg-gray-950 px-1.5 py-1 text-center text-gray-200">
-            {eventStatus}
+        <Image src={imageUrl} alt={title} fill className="object-cover" />
+        {(ddayBadge || statusBadge) && (
+          <div className="absolute top-2.5 left-2.5 flex h-6 items-center gap-1">
+            {statusBadge && (
+              <div className="caption-1-medium rounded-md bg-gray-950 px-1.5 py-1 text-white">
+                {statusBadge}
+              </div>
+            )}
+            {ddayBadge && (
+              <div className="caption-1-medium bg-red-main rounded-md px-1.5 py-1 text-white">
+                {ddayBadge}
+              </div>
+            )}
           </div>
         )}
       </div>
 
       <div className="mt-4.75 mb-4.5 flex flex-col px-4">
-        <h2 className="body-1-semibold text-white">{mediaTitle}</h2>
+        <h2 className="body-1-semibold text-white">{title}</h2>
         <p className="caption-1-medium pt-0.5 text-gray-500">{placeAndDate}</p>
 
         {description && (
@@ -53,7 +53,7 @@ export function Card({
                 </span>
               </span>
             )}
-            {estimatedPrice && (
+            {estimatedPrice !== undefined && (
               <span>
                 예상 가격{" "}
                 <span className="body-3-semibold pl-1.25 text-gray-200">

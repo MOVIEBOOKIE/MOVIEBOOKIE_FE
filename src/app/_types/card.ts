@@ -11,3 +11,15 @@ export interface EventCard {
   locationName: string;
   posterImageUrl: string;
 }
+export interface CardProps {
+  id?: string;
+  imageUrl: string;
+  category?: string;
+  title: string;
+  placeAndDate: string;
+  description?: string;
+  ddayBadge?: string | null;
+  statusBadge?: string;
+  progressRate?: string;
+  estimatedPrice?: number | string;
+}

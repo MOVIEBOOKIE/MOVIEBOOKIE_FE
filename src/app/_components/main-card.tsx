@@ -9,12 +9,12 @@ interface CardProps {
   imageUrl: string;
   category: string;
   title: string;
-  placeAndDate?: string;
+  placeAndDate: string;
   description?: string;
   ddayBadge?: string | null;
   statusBadge?: string;
   progressRate?: string;
-  estimatedPrice?: any;
+  estimatedPrice?: string;
 }
 
 export default function Card({

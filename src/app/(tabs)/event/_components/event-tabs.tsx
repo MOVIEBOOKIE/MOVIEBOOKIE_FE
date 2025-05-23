@@ -2,6 +2,7 @@
 
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
+import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
 import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 
 interface EventTabProps {
@@ -39,16 +40,7 @@ export default function EventTab({ type }: EventTabProps) {
         {events.length > 0 ? (
           events.map((event, index) => (
             <div key={event.eventId}>
-              <Card
-                imageUrl={event.posterImageUrl}
-                category={event.mediaType}
-                title={event.mediaTitle}
-                placeAndDate={`${event.locationName} · ${event.eventDate}`}
-                description={event.description}
-                statusBadge={event.eventStatus}
-                progressRate={String(event.rate)}
-                estimatedPrice={event.estimatedPrice}
-              />
+              <Card {...mapEventCardToCardProps(event)} />
               {index < events.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
               )}

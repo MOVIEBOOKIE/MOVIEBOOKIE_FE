@@ -1,19 +1,17 @@
-import { EventCard } from "app/_types/card";
-
-export function mapToEventCard(mock: any): EventCard {
+export function mapEventCardToCardProps(event: any) {
   return {
-    eventId: mock.eventId ?? "",
-    mediaType: mock.mediaType ?? "",
-    d_day: mock.d_day ?? 0,
-    posterImageUrl: mock.imageUrl,
-    mediaTitle: mock.title,
-    locationName: mock.placeAndDate.split(" | ")[0] ?? "",
-    eventDate: mock.placeAndDate.split(" | ")[1] ?? "",
-    description: mock.description,
-    eventStatus: mock.statusBadge,
-    rate: parseInt(mock.progressRate.replace("%", "")),
-    estimatedPrice: parseInt(
-      String(mock.estimatedPrice).replace(/[^0-9]/g, ""),
-    ),
+    eventId: event.eventId,
+    mediaType: event.mediaType,
+    mediaTitle: event.mediaTitle,
+    rate: event.rate,
+    imageUrl: event.imageUrl,
+    category: event.category,
+    title: event.title,
+    placeAndDate: event.placeAndDate,
+    description: event.description,
+    ddayBadge: event.ddayBadge,
+    statusBadge: event.statusBadge,
+    progressRate: event.progressRate,
+    estimatedPrice: event.estimatedPrice,
   };
 }
