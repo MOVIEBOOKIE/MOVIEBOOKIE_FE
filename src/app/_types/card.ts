@@ -1,11 +1,13 @@
-export type CardData = {
-  imageUrl: any;
-  category: string;
-  title: string;
-  placeAndDate: string;
-  description?: string;
-  ddayBadge?: string;
-  statusBadge?: string;
-  progressRate?: string;
-  estimatedPrice?: string;
-};
+export interface EventCard {
+  eventId: number;
+  mediaType: string;
+  mediaTitle: string;
+  description: string;
+  rate: number;
+  estimatedPrice: number;
+  eventDate: string;
+  eventStatus: string;
+  d_day: string | null;
+  locationName: string;
+  posterImageUrl: string;
+}

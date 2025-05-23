@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { STATUS_MAP, PATHS } from "@/constants/index";
+import { PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 import { PlusIcon } from "lucide-react";
@@ -55,12 +55,8 @@ export default function EventPage() {
       </nav>{" "}
       <div className="mx-5 border-b border-gray-900" />
       <div className="px-5">
-        {topTab === "신청 목록" && (
-          <EventTab type="신청 목록" statusMap={STATUS_MAP.RECRUITMENT} />
-        )}
-        {topTab === "내 이벤트" && (
-          <EventTab type="내 이벤트" statusMap={STATUS_MAP.PARTICIPATION} />
-        )}
+        {topTab === "신청 목록" && <EventTab type="신청 목록" />}
+        {topTab === "내 이벤트" && <EventTab type="내 이벤트" />}
         {topTab === "내 티켓" && <TicketTab />}
       </div>
       <button
