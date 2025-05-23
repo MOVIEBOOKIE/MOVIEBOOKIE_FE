@@ -3,6 +3,7 @@
 import { Card } from "./ticket-card";
 import { EmptyTicketIcon } from "@/icons/index";
 import { MOCK_DATA } from "@/mocks/mock-data";
+import { mapToEventCard } from "@/utils/map-to-eventcard";
 
 export default function TicketTab() {
   const filteredEvents = MOCK_DATA.filter((event) =>
@@ -15,16 +16,7 @@ export default function TicketTab() {
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event, index) => (
             <div key={index}>
-              <Card
-                imageUrl={event.imageUrl}
-                category={event.category}
-                title={event.title}
-                placeAndDate={event.placeAndDate}
-                description={event.description}
-                statusBadge={event.statusBadge}
-                progressRate={event.progressRate}
-                estimatedPrice={event.estimatedPrice}
-              />
+              <Card {...mapToEventCard(event)} />
             </div>
           ))
         ) : (

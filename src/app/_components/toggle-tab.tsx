@@ -2,12 +2,14 @@ interface ToggleTabProps {
   options: string[];
   selected: string;
   onSelect: (selected: string) => void;
+  withSuffix?: string;
 }
 
 export default function ToggleTab({
   options,
   selected,
   onSelect,
+  withSuffix,
 }: ToggleTabProps) {
   return (
     <div className="flex h-12.5 rounded-[12px] bg-gray-950 p-1">
@@ -22,6 +24,7 @@ export default function ToggleTab({
           }`}
         >
           {option}
+          {withSuffix ? ` ${withSuffix}` : ""}
         </button>
       ))}
     </div>

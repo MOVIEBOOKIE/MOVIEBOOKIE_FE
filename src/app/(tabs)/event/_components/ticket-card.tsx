@@ -1,31 +1,40 @@
 "use client";
 
-import { CardData } from "app/_types/card";
+import { EventCard } from "app/_types/card";
 import Image from "next/image";
 
 export function Card({
-  imageUrl,
-  title,
-  placeAndDate,
+  posterImageUrl,
+  mediaTitle,
+  locationName,
+  eventDate,
   description,
-  statusBadge,
-  progressRate,
+  eventStatus,
+  rate,
   estimatedPrice,
-}: CardData) {
+}: EventCard) {
+  const progressRate = rate !== undefined ? `${rate}%` : undefined;
+  const placeAndDate = `${locationName} · ${eventDate}`;
+
   return (
     <div className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950">
       <div className="relative h-41.75 w-full overflow-hidden">
-        <Image src={imageUrl} alt={title} fill className="object-cover" />
+        <Image
+          src={posterImageUrl}
+          alt={mediaTitle}
+          fill
+          className="object-cover"
+        />
 
-        {statusBadge && (
+        {eventStatus && (
           <div className="caption-1-medium absolute top-2.5 left-2.5 flex h-6 items-center justify-center rounded-md bg-gray-950 px-1.5 py-1 text-center text-gray-200">
-            {statusBadge}
+            {eventStatus}
           </div>
         )}
       </div>
 
       <div className="mt-4.75 mb-4.5 flex flex-col px-4">
-        <h2 className="body-1-semibold text-white">{title}</h2>
+        <h2 className="body-1-semibold text-white">{mediaTitle}</h2>
         <p className="caption-1-medium pt-0.5 text-gray-500">{placeAndDate}</p>
 
         {description && (
@@ -48,7 +57,7 @@ export function Card({
               <span>
                 예상 가격{" "}
                 <span className="body-3-semibold pl-1.25 text-gray-200">
-                  {estimatedPrice}
+                  {estimatedPrice.toLocaleString()}원
                 </span>
               </span>
             )}
