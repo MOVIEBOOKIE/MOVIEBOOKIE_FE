@@ -12,7 +12,7 @@ export interface EventCard {
   posterImageUrl: string;
 }
 export interface CardProps {
-  id?: string;
+  id?: string | number;
   imageUrl: string;
   category?: string;
   title: string;

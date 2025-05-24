@@ -2,21 +2,32 @@
 
 import { Card } from "./ticket-card";
 import { EmptyTicketIcon } from "@/icons/index";
-import { MOCK_DATA } from "@/mocks/mock-data";
-import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
+import { useTickets } from "app/_hooks/events/use-ticket";
+import Loading from "app/loading";
 
 export default function TicketTab() {
-  const filteredEvents = MOCK_DATA.filter((event) =>
-    ["대관확정", "상영완료"].includes(event.statusBadge),
-  );
+  const { data: tickets = [], isLoading } = useTickets();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="pb-24">
       <div className="mt-6 flex flex-col gap-5">
-        {filteredEvents.length > 0 ? (
-          filteredEvents.map((event, index) => (
-            <div key={index}>
-              <Card {...mapEventCardToCardProps(event)} />
+        {tickets.length > 0 ? (
+          tickets.map((ticket) => (
+            <div key={ticket.ticketId}>
+              <Card
+                id={ticket.ticketId}
+                imageUrl={ticket.eventImageUrl}
+                title={ticket.title}
+                placeAndDate={`${ticket.location} · ${ticket.scheduledAt}`}
+                description={ticket.description}
+                ddayBadge={null}
+                progressRate={undefined}
+                estimatedPrice={undefined}
+              />
             </div>
           ))
         ) : (
