@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
+import Lottie from "lottie-react";
 
 export default function Login() {
   const router = useRouter();
@@ -26,16 +27,26 @@ export default function Login() {
           {slides.map((slide, index) => (
             <SwiperSlide
               key={index}
-              className="flex flex-col items-center justify-between px-5 pb-24"
+              className="flex flex-col items-center justify-between pb-11"
             >
-              <div
-                className="mt-24 text-center"
-                style={{ whiteSpace: "pre-line" }}
-              >
-                <h2 className="title-1-bold mb-2">{slide.title}</h2>
-                <p className="body-3-medium mt-3 mb-11 text-gray-400">
-                  {slide.description}
-                </p>
+              <div className="flex w-full flex-1 flex-col items-center justify-center">
+                <div
+                  className="px-4 pt-12 text-center"
+                  style={{ whiteSpace: "pre-line" }}
+                >
+                  <h2 className="title-1-bold mb-2">{slide.title}</h2>
+                  <p className="body-3-medium mt-2 mb-2 text-gray-400">
+                    {slide.description}
+                  </p>
+                </div>
+                <div className="mt-5 flex w-full items-center justify-center">
+                  <Lottie
+                    autoplay
+                    loop
+                    animationData={slide.animation}
+                    style={{ height: "333px", width: "full" }}
+                  />
+                </div>
               </div>
             </SwiperSlide>
           ))}
@@ -53,7 +64,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-125 -translate-x-1/2 px-5 pb-19">
+      <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-125 -translate-x-1/2 px-5 pb-12">
         <Button
           className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00]"
           onClick={() => {

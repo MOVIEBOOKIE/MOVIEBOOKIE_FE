@@ -10,7 +10,12 @@ const withSvgr = require("next-svgr");
 const nextConfig = {
   trailingSlash: true,
   images: {
-    domains: ["movie-bookie-storage.kr.object.ncloudstorage.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "kr.object.ncloudstorage.com",
+      },
+    ],
   },
   async rewrites() {
     const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
