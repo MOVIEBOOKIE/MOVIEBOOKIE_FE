@@ -88,12 +88,14 @@ export default function EventCreatePage() {
 
   const onNext = async () => {
     const isValid = await methods.trigger();
+    console.log("현재 저장된 모든 폼 데이터:", methods.getValues());
 
     if (!isValid) return;
 
     if (step < steps.length - 1) {
       setStep((s) => s + 1);
     } else {
+      methods.handleSubmit(onSubmit)();
       methods.handleSubmit(onSubmit)();
     }
   };

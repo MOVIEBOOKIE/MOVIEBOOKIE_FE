@@ -1,5 +1,11 @@
-import Client from "./_components/client";
+// import ClientWrapper from "./_components/client-wrapper";
+
+// export default function Success() {
+//   return <ClientWrapper />;
+// }
+
+import React from "react";
 
 export default function Success() {
-  return <Client />;
+  return <div>page</div>;
 }

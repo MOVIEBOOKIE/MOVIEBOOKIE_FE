@@ -4,7 +4,13 @@ const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
 });
 
-const withSvgr = require("next-svgr");
+let withSvgr = (config: any) => config;
+
+try {
+  withSvgr = require("next-svgr");
+} catch (err) {
+  console.warn("'next-svgr' not found. Skipping SVGR plugin in CI.");
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,6 +20,16 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "kr.object.ncloudstorage.com",
+      },
+      {
+        protocol: "http",
+        hostname: "img1.kakaocdn.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
+        pathname: "/**",
       },
     ],
   },

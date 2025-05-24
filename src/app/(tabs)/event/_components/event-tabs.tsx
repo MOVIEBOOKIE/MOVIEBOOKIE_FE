@@ -6,7 +6,8 @@ import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
 import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 
 interface EventTabProps {
-  type: "신청 목록" | "내 이벤트";
+  type: "신청 목록" | "내 이벤트" | "내 티켓";
+  statusMap: Record<string, string[]>;
 }
 
 const TOGGLES = { "모집 이벤트": 0, "확정 이벤트": 1 } as const;
