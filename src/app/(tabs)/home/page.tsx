@@ -89,7 +89,10 @@ export default function Home() {
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
-          <p className="body-3-medium text-gray-300"> {user?.userTypeTitle}</p>
+          <p className="body-3-medium text-gray-300">
+            {" "}
+            {user?.userTypeTitle || "~~러"}
+          </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "사용자"}님을 위한 추천
           </h2>
