@@ -44,7 +44,6 @@ export default function TraitResult() {
           {imageSrc && (
             <Image src={imageSrc} width={120} height={94} alt="type-image" />
           )}
-
           <p className="title-3-bold text-gray-white mb-3">
             <LineBreak text={data?.title} />
           </p>

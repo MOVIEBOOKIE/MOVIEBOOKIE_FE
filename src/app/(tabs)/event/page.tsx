@@ -13,6 +13,9 @@ export default function EventPage() {
   const [topTab, setTopTab] = useState<"신청 목록" | "내 이벤트" | "내 티켓">(
     "신청 목록",
   );
+  const [topTab, setTopTab] = useState<"신청 목록" | "내 이벤트" | "내 티켓">(
+    "신청 목록",
+  );
 
   return (
     <div className="relative min-h-screen pb-32 text-white">
