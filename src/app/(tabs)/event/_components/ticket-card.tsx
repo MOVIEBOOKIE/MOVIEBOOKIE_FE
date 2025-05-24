@@ -1,6 +1,6 @@
 "use client";
 
-import { CardData } from "app/_types/card";
+import { CardProps } from "app/_types/card";
 import Image from "next/image";
 
 export function Card({
@@ -8,18 +8,27 @@ export function Card({
   title,
   placeAndDate,
   description,
+  ddayBadge,
   statusBadge,
   progressRate,
   estimatedPrice,
-}: CardData) {
+}: CardProps) {
   return (
     <div className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950">
       <div className="relative h-41.75 w-full overflow-hidden">
         <Image src={imageUrl} alt={title} fill className="object-cover" />
-
-        {statusBadge && (
-          <div className="caption-1-medium absolute top-2.5 left-2.5 flex h-6 items-center justify-center rounded-md bg-gray-950 px-1.5 py-1 text-center text-gray-200">
-            {statusBadge}
+        {(ddayBadge || statusBadge) && (
+          <div className="absolute top-2.5 left-2.5 flex h-6 items-center gap-1">
+            {statusBadge && (
+              <div className="caption-1-medium rounded-md bg-gray-950 px-1.5 py-1 text-white">
+                {statusBadge}
+              </div>
+            )}
+            {ddayBadge && (
+              <div className="caption-1-medium bg-red-main rounded-md px-1.5 py-1 text-white">
+                {ddayBadge}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -44,11 +53,11 @@ export function Card({
                 </span>
               </span>
             )}
-            {estimatedPrice && (
+            {estimatedPrice !== undefined && (
               <span>
                 예상 가격{" "}
                 <span className="body-3-semibold pl-1.25 text-gray-200">
-                  {estimatedPrice}
+                  {estimatedPrice.toLocaleString()}원
                 </span>
               </span>
             )}

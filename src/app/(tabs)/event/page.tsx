@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { STATUS_MAP, PATHS } from "@/constants/index";
+import { PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
 import { PlusIcon } from "lucide-react";
@@ -16,7 +16,7 @@ export default function EventPage() {
 
   return (
     <div className="relative min-h-screen pb-32 text-white">
-      <h1 className="title-1-semibold px-5 pt-6 pb-7.5">이벤트</h1>
+      <h1 className="title-1-semibold px-5 pt-6 pb-5">이벤트</h1>
       <section className="relative mx-5 overflow-hidden rounded-3xl">
         <img
           src="/images/event-banner.png"
@@ -37,7 +37,7 @@ export default function EventPage() {
           </button>
         </div>
       </section>
-      <nav className="px-5 pt-6 text-base font-semibold">
+      <nav className="body-2-medium px-5 pt-6">
         {(["신청 목록", "내 이벤트", "내 티켓"] as const).map((tab) => (
           <button
             key={tab}
@@ -55,17 +55,13 @@ export default function EventPage() {
       </nav>{" "}
       <div className="mx-5 border-b border-gray-900" />
       <div className="px-5">
-        {topTab === "신청 목록" && (
-          <EventTab type="신청 목록" statusMap={STATUS_MAP.RECRUITMENT} />
-        )}
-        {topTab === "내 이벤트" && (
-          <EventTab type="내 이벤트" statusMap={STATUS_MAP.PARTICIPATION} />
-        )}
+        {topTab === "신청 목록" && <EventTab type="신청 목록" />}
+        {topTab === "내 이벤트" && <EventTab type="내 이벤트" />}
         {topTab === "내 티켓" && <TicketTab />}
       </div>
       <button
         onClick={() => router.push(PATHS.EVENT_CREATE)}
-        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-2 rounded-full px-4 py-4 text-white shadow-xl"
+        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-1.5 rounded-full px-4 py-4 text-white shadow-xl"
       >
         <PlusIcon size={18} />
         이벤트 만들기

@@ -3,12 +3,12 @@ import { PATHS } from "./paths";
 
 export const EVENT_CATEGORIES = [
   {
-    label: "인기 이벤트",
+    label: "인기 \n 이벤트",
     src: PATH_IMAGES.POPULAR,
     path: PATHS.CATEGORY.POPULAR,
   },
   {
-    label: "최근 이벤트",
+    label: "최근  \n 이벤트",
     src: PATH_IMAGES.RECENT,
     path: PATHS.CATEGORY.RECENT,
   },
