@@ -11,10 +11,6 @@ export default function Loading() {
         style={{ paddingTop: "30vh" }}
       >
         <Lottie animationData={loadingAnimation} loop autoplay />
-        <p className="body-1-medium z-1 -mt-15.5 text-center text-gray-200">
-          무비부키가 열심히
-          <br /> 정보를 가져오고 있어요
-        </p>
       </div>
     </div>
   );
