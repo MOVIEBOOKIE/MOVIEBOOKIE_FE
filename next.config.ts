@@ -15,6 +15,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "kr.object.ncloudstorage.com",
       },
+      {
+        protocol: "http",
+        hostname: "img1.kakaocdn.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {
