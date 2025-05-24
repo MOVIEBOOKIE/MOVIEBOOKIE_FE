@@ -58,8 +58,8 @@ export default function Step5() {
         StepHeader="5/7"
         title={
           <>
-            이벤트를 진행하기 위해 <br />
-            인원을 설정해주세요
+            참여자의 최소 인원과, <br />
+            최대 인원을 설정해주세요
           </>
         }
         description={

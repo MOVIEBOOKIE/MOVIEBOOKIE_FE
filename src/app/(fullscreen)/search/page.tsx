@@ -5,9 +5,11 @@ import { BackIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
 import { EVENT_CATEGORIES } from "@/constants";
 import { useRouter } from "next/navigation";
+import React, { useRef } from "react";
 
 export default function Search() {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
     router.back();
@@ -16,7 +18,7 @@ export default function Search() {
     <div className="w-full">
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
         <BackIcon onClick={handleClick} />
-        <Input type="INPUT" />
+        <Input type="INPUT" ref={inputRef} />
       </div>
       <p className="body-2-medium mt-6 ml-5.5 text-gray-300">
         어떤 이벤트를 찾으시나요?
