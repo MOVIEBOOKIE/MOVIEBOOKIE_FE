@@ -16,6 +16,7 @@ export default function InformationTab({
   minParticipants,
   maxParticipants,
   recruitmentRate,
+  currentParticipants,
 }: EventData) {
   const [selected, setSelected] = useState("이벤트");
 
@@ -89,7 +90,9 @@ export default function InformationTab({
               {minParticipants} - {maxParticipants}명
             </p>
             <span className="body-3-medium text-gray-600">현재 참여자</span>
-            <p className="body-3-regular text-gray-200">12명 신청</p>
+            <p className="body-3-regular text-gray-200">
+              {currentParticipants}명 신청
+            </p>
             <span className="body-3-medium text-gray-600">모집 달성률</span>
             <p className="body-3-medium text-red-main">{recruitmentRate}%</p>
           </div>
