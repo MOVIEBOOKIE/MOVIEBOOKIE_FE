@@ -10,7 +10,8 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      window.location.href = PATHS.LOGIN;
+      // window.location.href = PATHS.LOGIN;
+      console.error("Unauthorized access - redirecting to login");
     }
     return Promise.reject(error);
   },

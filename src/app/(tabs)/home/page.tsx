@@ -9,9 +9,11 @@ import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
 import { MOCK_DATA } from "@/mocks/mock-data";
 import { useUserStore } from "app/_stores/useUserStore";
+import { getMyPageInfo } from "app/_apis/auth/mypage";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
 
   const router = useRouter();
   const [selected, setSelected] =
@@ -19,6 +21,32 @@ export default function Home() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (user) return;
+
+      try {
+        const res = await getMyPageInfo();
+        if (res) {
+          setUser({
+            email: res.certificationEmail,
+            nickname: res.username,
+            profileImage: res.profileImage,
+            userTypeTitle: res.userType,
+            hostExperienceCount: res.hostExperienceCount,
+            participationExperienceCount: res.participationExperienceCount,
+            ticketCount: 0,
+          });
+        }
+      } catch (err) {
+        console.error("유저 정보 요청 실패", err);
+        // router.push("/login");
+      }
+    };
+
+    fetchUser();
+  }, [user, setUser]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,13 +85,13 @@ export default function Home() {
   return (
     <div
       ref={containerRef}
-      className="scrollbar-hide h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
+      className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
-          <p className="body-3-medium text-gray-300">못말리는 영화러버</p>
+          <p className="body-3-medium text-gray-300"> {user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
-            {user?.nickname}님을 위한 추천
+            {user?.nickname || "사용자"}님을 위한 추천
           </h2>
         </div>
         <Carousel />
