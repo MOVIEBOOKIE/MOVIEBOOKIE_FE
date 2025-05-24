@@ -2,6 +2,7 @@
 
 import { CardProps } from "app/_types/card";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export function Card({
   imageUrl,
@@ -13,8 +14,17 @@ export function Card({
   progressRate,
   estimatedPrice,
 }: CardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/event/ticket");
+  };
+
   return (
-    <div className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950">
+    <div
+      onClick={handleClick}
+      className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950"
+    >
       <div className="relative h-41.75 w-full overflow-hidden">
         <Image src={imageUrl} alt={title} fill className="object-cover" />
         {(ddayBadge || statusBadge) && (

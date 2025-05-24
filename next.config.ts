@@ -13,7 +13,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "kr.object.ncloudstorage.com",
+        hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
       },
     ],
   },
