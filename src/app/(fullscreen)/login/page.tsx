@@ -44,7 +44,7 @@ export default function Login() {
                     autoplay
                     loop
                     animationData={slide.animation}
-                    style={{ height: "333px", width: "375px" }}
+                    style={{ height: "333px", width: "full" }}
                   />
                 </div>
               </div>
