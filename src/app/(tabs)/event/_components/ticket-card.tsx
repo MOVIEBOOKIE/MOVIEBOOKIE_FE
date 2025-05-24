@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export function Card({
+  id,
   imageUrl,
   title,
   placeAndDate,
@@ -17,9 +18,8 @@ export function Card({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/event/ticket");
+    router.push(`/event/ticket?id=${id}`);
   };
-
   return (
     <div
       onClick={handleClick}
