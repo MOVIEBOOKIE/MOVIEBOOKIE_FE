@@ -20,10 +20,10 @@ export default function CategoryButton({
     router.push(path);
   };
 
-  const formattedLabel = label.split("/n").map((line, index) => (
+  const formattedLabel = label.split("\n").map((line, index) => (
     <span key={index}>
       {line}
-      {index < label.split("/n").length - 1 && <br />}
+      {index < label.split("\n").length - 1 && <br />}
     </span>
   ));
 
@@ -33,8 +33,8 @@ export default function CategoryButton({
       onClick={handleNavigate}
       aria-label={`${label} 카테고리로 이동`}
     >
-      <Image width={161} height={35} src={src} alt={label} priority />
-      <p className="body-2-medium absolute top-4 left-4 text-start text-gray-100">
+      <Image width={161} height={135} src={src} alt={label} priority />
+      <p className="body-2-semibold absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>
     </button>

@@ -93,12 +93,12 @@ export default function Step7() {
         </div>
         <div>
           <label className="body-3-medium mb-3 block text-gray-300">
-            이벤트 제목
+            콘텐츠 제목
           </label>
           <input
             {...register("eventTitle")}
             type="text"
-            placeholder="이벤트의 제목을 입력해 주세요 (ex 타이타닉)"
+            placeholder="콘텐츠의 제목을 입력해 주세요 (ex 타이타닉)"
             className="body-3-medium w-full rounded-xl border border-gray-900 p-5 text-gray-300 placeholder-gray-800 focus:outline-none"
           />
         </div>

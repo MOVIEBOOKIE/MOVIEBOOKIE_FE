@@ -1,7 +1,8 @@
 "use client";
 
 import { PATHS } from "@/constants";
-import { ArrowRightIcon, MyKakaoIcon } from "@/icons/index";
+import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
+import { useUserStore } from "app/_stores/useUserStore";
 import { useRouter } from "next/navigation";
 interface MyPageStatProps {
   label: string;
@@ -10,36 +11,50 @@ interface MyPageStatProps {
 
 function MyPageStat({ label, value }: MyPageStatProps) {
   return (
-    <div>
+    <div className="py-5">
       <p className="caption-1-medium text-gray-400">{label}</p>
       <p className="body-2-semibold mt-2 text-gray-200">{value}</p>
     </div>
   );
 }
 export default function MyPage() {
+  const user = useUserStore((state) => state.user);
+
   const router = useRouter();
   return (
     <div className="min-h-screen px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
 
       <div className="mb-5 flex items-center gap-4">
-        <div className="border-red-main h-20 w-20 rounded-full border-2 bg-gray-800" />
+        <div className="border-red-main flex h-20 w-20 items-center justify-center rounded-full border-2">
+          {user && user.profileImage ? (
+            <img
+              src={user.profileImage}
+              alt="프로필"
+              className="h-18 w-18 rounded-full"
+            />
+          ) : (
+            <DefaultProfileIcon className="h-18 w-18 rounded-full" />
+          )}
+        </div>
         <div>
           <p className="text-lg font-semibold">서현</p>
-          <p className="title-3-medium text-gray-500">
+          <p className="body-3-medium text-gray-500">
             디테일 수집형 영화 덕후러
           </p>
           <p className="caption-1-medium text-gray-500">aoeidenkim@gmail.com</p>
         </div>
       </div>
 
-      <div className="mb-3 flex justify-around rounded-xl bg-gray-950 py-5 text-center">
-        <MyPageStat label="모집경험" value={0} />
-        <MyPageStat label="참여경험" value={8} />
-        <MyPageStat label="티켓" value={4} />
+      <div className="flex justify-center">
+        <div className="mb-3 flex h-21.75 w-84 justify-around rounded-xl bg-gray-950 text-center">
+          <MyPageStat label="모집경험" value={0} />
+          <MyPageStat label="참여경험" value={8} />
+          <MyPageStat label="티켓" value={4} />
+        </div>
       </div>
 
-      <ul className="body-2-medium px-2 text-gray-300">
+      <ul className="body-3-medium pl-2 text-gray-100">
         {[
           { label: "서비스이용약관" },
 
