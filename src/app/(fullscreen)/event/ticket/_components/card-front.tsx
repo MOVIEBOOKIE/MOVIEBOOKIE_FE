@@ -7,6 +7,7 @@ export default function CardFront({ ticket }: { ticket: any }) {
     { label: "장소", value: ticket?.location },
     { label: "예상 금액", value: ticket?.price },
   ];
+
   return (
     <div className="card-shadow-blur absolute h-full w-full overflow-hidden rounded-[20px] bg-white/30 p-3 backface-hidden">
       <div className="relative h-66.25 w-66.25 overflow-hidden">
@@ -19,12 +20,19 @@ export default function CardFront({ ticket }: { ticket: any }) {
       </div>
       <p className="title-3-bold mt-5 pl-0.5">{ticket?.title}</p>
       <div className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-1.5 pl-0.5">
-        {infoData.map(({ label, value }) => (
-          <div key={label} className="flex flex-col items-start">
-            <h2 className="caption-3-medium opacity-48">{label}</h2>
-            <p className="caption-1-medium opacity-48">{value}</p>
-          </div>
-        ))}
+        {infoData.map(({ label, value }) => {
+          const displayValue =
+            label === "예상 금액" && typeof value === "number"
+              ? `${value.toLocaleString()}원`
+              : value;
+
+          return (
+            <div key={label} className="flex flex-col items-start">
+              <h2 className="caption-3-medium opacity-48">{label}</h2>
+              <p className="caption-1-medium opacity-48">{displayValue}</p>
+            </div>
+          );
+        })}
       </div>
 
       <LogoWhiteIcon

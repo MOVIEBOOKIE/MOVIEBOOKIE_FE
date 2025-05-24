@@ -21,24 +21,36 @@ export default function CardBack({ ticket }: { ticket: any }) {
       <div className="bg-gray-white mt-2.25 h-0.25 w-full opacity-14" />
 
       <div className="mt-5 grid grid-cols-[auto_1fr] gap-x-4.5 gap-y-2">
-        {cardInfo.map(({ label, value, isSectionStart }) => (
-          <Fragment key={label}>
-            <p
-              className={`caption-1-medium text-gray-200 ${
-                isSectionStart ? "mt-3" : ""
-              }`}
-            >
-              {label}
-            </p>
-            <p
-              className={`caption-1-regular text-gray-100 ${
-                isSectionStart ? "mt-3" : ""
-              }`}
-            >
-              {value}
-            </p>
-          </Fragment>
-        ))}
+        {cardInfo.map(({ label, value, isSectionStart }) => {
+          let displayValue = value;
+
+          if (label === "가격" && typeof value === "number") {
+            displayValue = `${value.toLocaleString()}원`;
+          }
+
+          if (label === "인원" && typeof value === "number") {
+            displayValue = `모집인원 ${value}명`;
+          }
+
+          return (
+            <Fragment key={label}>
+              <p
+                className={`caption-1-medium text-gray-200 ${
+                  isSectionStart ? "mt-3" : ""
+                }`}
+              >
+                {label}
+              </p>
+              <p
+                className={`caption-1-regular text-gray-100 ${
+                  isSectionStart ? "mt-3" : ""
+                }`}
+              >
+                {displayValue}
+              </p>
+            </Fragment>
+          );
+        })}
       </div>
 
       <LogoWhiteIcon

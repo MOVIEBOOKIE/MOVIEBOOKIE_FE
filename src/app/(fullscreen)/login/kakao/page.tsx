@@ -52,8 +52,8 @@ function KakaoLogin() {
         const { success, data, message } = response;
 
         if (success) {
-          localStorage.setItem("userProfile", JSON.stringify(data));
           router.push(PATHS.AGREEMENT);
+          localStorage.setItem("userProfile", JSON.stringify(data));
         } else {
           router.push(`/login?error=${encodeURIComponent(message)}`);
         }
