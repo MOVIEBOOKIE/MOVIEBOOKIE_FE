@@ -1,8 +1,8 @@
-import { MOCK_IMAGES } from "@/constants/path-images";
+import { PATH_IMAGES } from "@/constants";
 
 export const MOCK_DATA = [
   {
-    imageUrl: MOCK_IMAGES.IMAGE_1,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "인터스텔라",
     placeAndDate: "메가박스 코엑스 | 2025.05.10",
@@ -15,7 +15,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_2,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "극한직업",
     placeAndDate: "을지영화관 | 2025.05.15",
@@ -28,7 +28,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_3,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "환승연애2",
     placeAndDate: "좋은영화관 필름포럼 | 2025.05.20",
@@ -41,7 +41,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_4,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "오징어게임3",
     placeAndDate: "좋은영화관 필름포럼 | 2025.05.30",
@@ -54,7 +54,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_5,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "콘서트",
     title: "아이유 콘서트 : 더 위닝",
     placeAndDate: "CGV 골드 클래스 | 2025.05.22",
@@ -67,7 +67,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_6,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "스포츠",
     title: "KBO 리그 (KT 위즈 vs LG 트윈스)",
     placeAndDate: "CGV강변  | 2025.05.18",
@@ -80,7 +80,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_7,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "스포츠",
     title: "KBO 리그 (SSG 랜더스 vs 한화 이글스)",
     placeAndDate: "CGV용산  | 2025.05.18",
@@ -93,7 +93,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_8,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "스포츠",
     title: "국가대표 친선경기 (한국VS미국)",
     placeAndDate: "용산 칠인더시네마 | 2025.06.03",
@@ -106,7 +106,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_9,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "콘서트",
     title: "세븐틴 콘서트 : Be The Sun",
     placeAndDate: "CGV 청담씨네시티 | 2025.06.01",
@@ -119,7 +119,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_10,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "더 글로리",
     placeAndDate: "시글로 건대점 | 2025.05.26",
@@ -132,7 +132,7 @@ export const MOCK_DATA = [
   },
 
   {
-    imageUrl: MOCK_IMAGES.IMAGE_11,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "솔로지옥4 마지막회",
     placeAndDate: "좋은영화관 필름포럼 | 2025.05.27",
@@ -144,7 +144,7 @@ export const MOCK_DATA = [
     estimatedPrice: "11,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_12,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "무한도전 - 무인도 특집",
     placeAndDate: "CGV 강남 | 2025.05.18",
@@ -156,7 +156,7 @@ export const MOCK_DATA = [
     estimatedPrice: "10,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_13,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "1박 2일 - 전설의 복불복 특집",
     placeAndDate: "메가박스 이수 | 2025.05.22",
@@ -168,7 +168,7 @@ export const MOCK_DATA = [
     estimatedPrice: "9,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_14,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "패밀리가 떴다 - 이천 쌀 특집",
     placeAndDate: "롯데시네마 수원 | 2025.05.29",
@@ -180,7 +180,7 @@ export const MOCK_DATA = [
     estimatedPrice: "9,500원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_15,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "예능",
     title: "런닝맨 - 이름표 뜯기 레전드 매치",
     placeAndDate: "필름포럼 신촌 | 2025.06.01",
@@ -192,7 +192,7 @@ export const MOCK_DATA = [
     estimatedPrice: "11,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_16,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "응답하라 1994 - 1화 극장 상영",
     placeAndDate: "메가박스 상암 | 2025.05.21",
@@ -204,7 +204,7 @@ export const MOCK_DATA = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_17,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "기황후 - 초반 몰입회",
     placeAndDate: "CGV 인천터미널 | 2025.06.02",
@@ -216,7 +216,7 @@ export const MOCK_DATA = [
     estimatedPrice: "10,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_18,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "드라마",
     title: "백년의 유산 - 눈물 엔딩 상영회",
     placeAndDate: "롯데시네마 건대입구 | 2025.05.30",
@@ -228,7 +228,7 @@ export const MOCK_DATA = [
     estimatedPrice: "9,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_19,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "명탐정 코난: 순흑의 악몽",
     placeAndDate: "좋은영화관 필름포럼 | 2025.05.30",
@@ -240,7 +240,7 @@ export const MOCK_DATA = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_20,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "말할 수 없는 비밀",
     placeAndDate: "CGV 대학로 | 2025.06.05",
@@ -252,7 +252,7 @@ export const MOCK_DATA = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_21,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "나의 청춘은 너의 것",
     placeAndDate: "CGV 영등포 | 2025.05.18",
@@ -264,7 +264,7 @@ export const MOCK_DATA = [
     estimatedPrice: "18,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_22,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "대도시의 사랑법",
     placeAndDate: "용인 칠인더시네마 | 2025.05.21",
@@ -276,7 +276,7 @@ export const MOCK_DATA = [
     estimatedPrice: "14,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_23,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "비긴 어게인",
     placeAndDate: "메가박스 성수 | 2025.06.12",
@@ -288,7 +288,7 @@ export const MOCK_DATA = [
     estimatedPrice: "12,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_24,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "영화",
     title: "인사이드 아웃2",
     placeAndDate: "용인 칠인더시네마 | 2025.05.28",
@@ -300,7 +300,7 @@ export const MOCK_DATA = [
     estimatedPrice: "13,000원",
   },
   {
-    imageUrl: MOCK_IMAGES.IMAGE_25,
+    imageUrl: PATH_IMAGES.IMAGE,
     category: "애니메이션",
     title: "진격의 거인 극장판 - 홍련의 화살",
     placeAndDate: "롯데시네마 용산 | 2025.06.15",
