@@ -11,6 +11,7 @@ export const PATHS = {
   VERIFY_PHONE: "/verify/phone",
   VERIFY_EMAIL: "/verify/email",
   SET_PROFILE: "/set-profile",
+  AGREEMENT: "/agreement",
   CATEGORY: {
     POPULAR: "/category/popular",
     RECENT: "/category/recent",
