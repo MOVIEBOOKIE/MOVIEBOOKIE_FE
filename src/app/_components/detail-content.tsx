@@ -5,23 +5,43 @@ import React from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
 import { useUserStore } from "app/_stores/useUserStore";
-import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import { EventData } from "app/_types/event";
+// import { useEventFormStore } from "app/_stores/useEventCreateForm";
 
-export default function DetailContent() {
+export default function DetailContent({
+  mediaType,
+  mediaTitle,
+  eventTitle,
+  description,
+  eventDate,
+  eventTime,
+  recruitmentDate,
+  d_day,
+  minParticipants,
+  maxParticipants,
+  currentParticipants,
+  recruitmentRate,
+  posterImageUrl,
+  recruitment,
+  locationImageUrl,
+  locationName,
+}: EventData) {
   const user = useUserStore((state) => state.user);
   const percentage = 60;
-  const { formData } = useEventFormStore();
-  const {
-    thumbnail,
-    mediaTitle,
-    eventTitle,
-    description,
-    eventDate,
-    recruitmentStart,
-    recruitmentEnd,
-    minParticipants,
-    maxParticipants,
-  } = formData;
+  // const { formData } = useEventFormStore();
+  // const {
+  //   thumbnail,
+  //   mediaTitle,
+  //   eventTitle,
+  //   description,
+  //   eventDate,
+  //   recruitmentStart,
+  //   recruitmentEnd,
+  //   minParticipants,
+  //   maxParticipants,
+  // } = formData;
+
+  const thumbnail = null;
 
   const thumbnailUrl = thumbnail
     ? URL.createObjectURL(thumbnail)
@@ -38,12 +58,12 @@ export default function DetailContent() {
           />
         )}
         <div className="from-gray-black/20 to-gray-black absolute inset-0 z-1 bg-gradient-to-b" />
-        <p className="caption-1-medium absolute bottom-0 z-10 text-gray-500">
-          {mediaTitle} · 신촌 아트레온
+        <p className="caption-1-medium absolute bottom-0 z-10 pl-5 text-gray-500">
+          {mediaType} · {locationName}
         </p>
       </div>
-      <div className="px-3">
-        <p className="text-gray-white title-2-semibold mt-1">{eventTitle}</p>
+      <div className="px-5">
+        <p className="text-gray-white title-2-semibold mt-1">{mediaTitle}</p>
         <div className="mt-3.5 flex justify-between">
           <p className="body-3-medium text-gray-500">모집 달성률</p>
           <p className="body-2-semibold text-red-main">{percentage}%</p>
@@ -70,7 +90,7 @@ export default function DetailContent() {
               </p>
             </div>
           </div>
-          <p className="body-2-medium text-gray-300">{mediaTitle}</p>
+          <p className="body-2-medium text-gray-300">{eventTitle}</p>
           <p className="body-3-medium text-gray-600">{description}</p>
         </div>
         <div className="caption-1-regular mt-8 grid grid-cols-[74px_1fr] gap-y-2 rounded-xl bg-gray-950 px-5 pt-5 pb-6 text-gray-300">
@@ -83,9 +103,11 @@ export default function DetailContent() {
           <span>모집 기간</span>
 
           <span className="-my-0.25 flex items-center gap-1">
-            {recruitmentStart} - {recruitmentEnd}
+            {/* {recruitmentStart} - {recruitmentEnd} */}
+            {recruitmentDate}
             <Badge variant="primary" className="px-1 py-0.25">
-              D-3
+              {/* D-3 */}
+              {d_day}
             </Badge>
           </span>
 
