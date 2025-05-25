@@ -34,21 +34,23 @@ export default function Modal({
   onCancel,
 }: ModalProps) {
   return (
-    <div className="drap-shadow flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
-      {iconType === "confirm" ? <CheckIcon /> : <AlertIcon />}
-      <h3 className="title-3-semibold mt-4.75">{title}</h3>
-      <p className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
-        {description}
-      </p>
-      <div className="flex w-full gap-2.75">
-        <Button
-          variant="secondary"
-          onClick={onCancel}
-          className="bg-gray-800 text-gray-200"
-        >
-          {cancelText}
-        </Button>
-        <Button onClick={onConfirm}>{confirmText}</Button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div className="drap-shadow flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
+        {iconType === "confirm" ? <CheckIcon /> : <AlertIcon />}
+        <h3 className="title-3-semibold mt-4.75">{title}</h3>
+        <p className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
+          {description}
+        </p>
+        <div className="flex w-full gap-2.75">
+          <Button
+            variant="secondary"
+            onClick={onCancel}
+            className="bg-gray-800 text-gray-200"
+          >
+            {cancelText}
+          </Button>
+          <Button onClick={onConfirm}>{confirmText}</Button>
+        </div>
       </div>
     </div>
   );
