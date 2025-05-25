@@ -9,10 +9,12 @@ import Image from "next/image";
 import { MOVIE_SLIDES } from "@/mocks/movie-slides";
 import { Badge } from "@/components";
 import EmptyCarouselSlide from "./EmptyCarouselSlide";
+import { useHomeEvents } from "app/_hooks/events/use-home-events";
 
 export default function Carousel() {
   const swiperRef = useRef<SwiperCore | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const { data: events, isLoading, isError } = useHomeEvents();
 
   const applySlideEffect = () => {
     const swiper = swiperRef.current;
@@ -51,50 +53,48 @@ export default function Carousel() {
         watchSlidesProgress
         onProgress={applySlideEffect}
       >
-        {Array.isArray(MOVIE_SLIDES) && MOVIE_SLIDES.length > 0 ? (
-          MOVIE_SLIDES.map(
-            (movie: { id: number; title: string; image: string }) => (
-              <SwiperSlide
-                style={{ width: "282px", height: "404px" }}
-                key={movie.id}
-                className="flex items-center transition-transform duration-300 ease-in-out"
-              >
-                <div className="relative flex h-full w-full items-center justify-center">
-                  <div className="relative flex h-full w-full items-center justify-center rounded-xl">
-                    <Image
-                      width={282}
-                      height={404}
-                      src={movie.image}
-                      alt="poster"
-                      className="absolute h-full w-full rounded-xl object-cover"
-                    />
-                    <Badge
-                      variant="secondary"
-                      className="absolute top-4 left-4 z-10"
-                    >
-                      모집 중
-                    </Badge>
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/16 from-0% to-black/64 to-[81.97%]" />
-                    <div className="absolute bottom-0 h-42 w-full">
-                      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(22,22,22,0)] from-[29.9%] via-[rgba(25,25,25,0.10)] to-[rgba(29,29,29,0.50)] opacity-54" />
-
-                      <div className="absolute bottom-0 h-30 w-full bg-gradient-to-b opacity-54 backdrop-blur-[4px]" />
-                    </div>
-
-                    <div className="absolute bottom-8 left-5 flex flex-col gap-0.75">
-                      <h2 className="body-3-medium text-gray-300">영화</h2>
-                      <h1 className="title-3-bold text-gray-white">
-                        {movie.title}
-                      </h1>
-                      <p className="caption-1-medium text-gray-200">
-                        신촌 아트레온 · 2025. 05. 26
-                      </p>
-                    </div>
+        {Array.isArray(events) && events.length > 0 ? (
+          events.map((event) => (
+            <SwiperSlide
+              style={{ width: "282px", height: "404px" }}
+              key={event.eventId}
+              className="flex items-center transition-transform duration-300 ease-in-out"
+            >
+              <div className="relative flex h-full w-full items-center justify-center rounded-[12px]">
+                <div className="relative h-full w-full rounded-xl">
+                  <Image
+                    width={282}
+                    height={404}
+                    src={event.posterImageUrl}
+                    alt={event.title}
+                    className="absolute h-full w-full rounded-[12px] object-cover"
+                  />
+                  <Badge
+                    variant="secondary"
+                    className="absolute top-4 left-4 z-10"
+                  >
+                    {event.eventStatus}
+                  </Badge>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/16 to-black/64" />
+                  <div className="absolute bottom-0 h-42 w-full rounded-[12px]">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/50 opacity-54" />
+                    <div className="absolute bottom-0 h-30 w-full bg-gradient-to-b opacity-54 backdrop-blur-[4px]" />
+                  </div>
+                  <div className="absolute bottom-8 left-5 flex flex-col gap-0.75">
+                    <h2 className="body-3-medium text-gray-300">
+                      {event.type}
+                    </h2>
+                    <h1 className="title-3-bold text-gray-white">
+                      {event.title}
+                    </h1>
+                    <p className="caption-1-medium text-gray-200">
+                      {event.locationName} · {event.eventDate}
+                    </p>
                   </div>
                 </div>
-              </SwiperSlide>
-            ),
-          )
+              </div>
+            </SwiperSlide>
+          ))
         ) : (
           <EmptyCarouselSlide />
         )}
