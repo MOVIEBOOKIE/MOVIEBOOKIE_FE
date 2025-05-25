@@ -4,7 +4,7 @@ import { Button } from "@/components";
 import TopBar from "../_components/top-bar";
 import DetailContent from "@/components/detail-content";
 import { useParams } from "next/navigation";
-import { useGetEvent } from "app/_hooks/events/use-events";
+import { useGetEvent, usePostEvent } from "app/_hooks/events/use-events";
 import { useState } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
@@ -57,8 +57,11 @@ export default function Detail() {
 
   const currentModal = modalType ? modalContent[modalType] : null;
 
+  const { mutate } = usePostEvent();
+
   const handleApply = () => {
     setIsComplete(true);
+    mutate(eventId);
   };
 
   const handleCancel = () => {};

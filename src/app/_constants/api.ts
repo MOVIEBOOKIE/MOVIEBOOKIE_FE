@@ -4,4 +4,5 @@ export const END_POINTS = {
   GET_PARTICIPATION_REGISTERED: "/participation/registered",
   GET_PARICIPATION_HOSTED: "/participation/hosted",
   GET_EVENT: (eventId: number) => `/events/${eventId}`,
+  GET_EVENT_REGISTER: (eventId: number) => `/events/${eventId}/register`,
 };
