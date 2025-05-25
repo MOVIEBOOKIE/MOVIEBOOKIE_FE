@@ -1,4 +1,4 @@
-import { MOCK_IMAGES } from "@/constants/path-images";
+import { PATH_IMAGES } from "@/constants/path-images";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -14,7 +14,7 @@ export default function CardFront() {
     <div className="card-shadow-blur absolute h-full w-full overflow-hidden rounded-[20px] bg-white/30 p-3 backface-hidden">
       <div className="relative h-66.25 w-66.25 overflow-hidden">
         <Image
-          src={MOCK_IMAGES.IMAGE_1}
+          src={PATH_IMAGES.IMAGE}
           fill
           alt="ticket-image"
           className="rounded-lg object-cover"
