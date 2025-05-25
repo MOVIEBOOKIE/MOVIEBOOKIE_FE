@@ -1,5 +1,5 @@
 import { END_POINTS } from "@/constants/api";
-import { apiGet, apiPost } from "../methods";
+import { apiDelete, apiGet, apiPost } from "../methods";
 import { EventData } from "app/_types/event";
 
 export const getEvents = (eventId: number) => {
@@ -7,5 +7,9 @@ export const getEvents = (eventId: number) => {
 };
 
 export const postEventsRegister = (eventId: number) => {
-  return apiPost(END_POINTS.GET_EVENT_REGISTER(eventId));
+  return apiPost(END_POINTS.EVENT_REGISTER(eventId));
+};
+
+export const DeleteEventsRegister = (eventId: number) => {
+  return apiDelete(END_POINTS.EVENT_REGISTER(eventId));
 };

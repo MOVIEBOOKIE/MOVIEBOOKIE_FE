@@ -5,6 +5,7 @@ import TopBar from "../_components/top-bar";
 import DetailContent from "@/components/detail-content";
 import { useParams } from "next/navigation";
 import {
+  useDeleteEvent,
   useGetEvent,
   usePostEventRegister,
 } from "app/_hooks/events/use-events";
@@ -61,13 +62,16 @@ export default function Detail() {
   const currentModal = modalType ? modalContent[modalType] : null;
 
   const { mutate } = usePostEventRegister();
+  const { mutate: recruitCancel } = useDeleteEvent();
 
   const handleApply = () => {
     setIsComplete(true);
     mutate(eventId);
   };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    recruitCancel(eventId);
+  };
 
   const handleRecruitCancel = () => {};
 
