@@ -6,6 +6,7 @@ import DetailContent from "@/components/detail-content";
 import { useParams } from "next/navigation";
 import {
   useDeleteEvent,
+  useDeleteEventsRecruit,
   useGetEvent,
   usePostEventRegister,
 } from "app/_hooks/events/use-events";
@@ -62,7 +63,8 @@ export default function Detail() {
   const currentModal = modalType ? modalContent[modalType] : null;
 
   const { mutate } = usePostEventRegister();
-  const { mutate: recruitCancel } = useDeleteEvent();
+  const { mutate: applyCancel } = useDeleteEvent();
+  const { mutate: recruitCancel } = useDeleteEventsRecruit();
 
   const handleApply = () => {
     setIsComplete(true);
@@ -70,10 +72,12 @@ export default function Detail() {
   };
 
   const handleCancel = () => {
-    recruitCancel(eventId);
+    applyCancel(eventId);
   };
 
-  const handleRecruitCancel = () => {};
+  const handleRecruitCancel = () => {
+    recruitCancel(eventId);
+  };
 
   const handleComplete = () => {
     setIsComplete(false);

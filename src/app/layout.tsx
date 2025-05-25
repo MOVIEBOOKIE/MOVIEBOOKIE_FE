@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
 import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
-import ToastRenderer from "./_components/Toast-renderer";
+import ToastRenderer from "./_components/toast-renderer";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

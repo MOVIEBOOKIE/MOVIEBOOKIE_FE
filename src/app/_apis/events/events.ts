@@ -13,3 +13,7 @@ export const postEventsRegister = (eventId: number) => {
 export const DeleteEventsRegister = (eventId: number) => {
   return apiDelete(END_POINTS.EVENT_REGISTER(eventId));
 };
+
+export const DeleteEventsRecruit = (eventId: number) => {
+  return apiDelete(END_POINTS.DELETE_EVENT_RECRUIT(eventId));
+};

@@ -5,4 +5,5 @@ export const END_POINTS = {
   GET_PARICIPATION_HOSTED: "/participation/hosted",
   GET_EVENT: (eventId: number) => `/events/${eventId}`,
   EVENT_REGISTER: (eventId: number) => `/events/${eventId}/register`,
+  DELETE_EVENT_RECRUIT: (eventId: number) => `/events/${eventId}/recruit`,
 };

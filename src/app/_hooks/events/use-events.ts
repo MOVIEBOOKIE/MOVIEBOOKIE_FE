@@ -33,3 +33,16 @@ export const useDeleteEvent = () => {
     },
   });
 };
+
+export const useDeleteEventsRecruit = () => {
+  const queryClient = useQueryClient();
+  const { showToast } = useToastStore();
+
+  return useMutation({
+    mutationFn: (eventId: number) => DeleteEventsRegister(eventId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: EVENT_KEY.EVENT() });
+      showToast("이벤트 모집이 취소됐어요", "checkbox");
+    },
+  });
+};
