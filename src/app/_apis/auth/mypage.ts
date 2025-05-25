@@ -3,10 +3,11 @@ import { apiGet } from "../methods";
 export interface MyPageResponse {
   profileImage: string;
   username: string;
-  userType: string;
+  userTypeTitle: string;
   certificationEmail: string;
   hostExperienceCount: number;
   participationExperienceCount: number;
+  ticketCount: number;
 }
 
 export const getMyPageInfo = () => {

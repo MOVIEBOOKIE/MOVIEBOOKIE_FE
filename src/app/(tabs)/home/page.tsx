@@ -9,8 +9,6 @@ import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
 import { MOCK_DATA } from "@/mocks/mock-data";
 import { useUserStore } from "app/_stores/useUserStore";
-import { getMyPageInfo } from "app/_apis/auth/mypage";
-import { useQuery } from "@tanstack/react-query";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Home() {

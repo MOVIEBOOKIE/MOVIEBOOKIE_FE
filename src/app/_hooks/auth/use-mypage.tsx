@@ -15,15 +15,14 @@ export const useMyPage = () => {
           email: res.certificationEmail,
           nickname: res.username,
           profileImage: res.profileImage,
-          userTypeTitle: res.userType,
+          userTypeTitle: res.userTypeTitle,
           hostExperienceCount: res.hostExperienceCount,
           participationExperienceCount: res.participationExperienceCount,
-          ticketCount: 0,
+          ticketCount: res.ticketCount,
         });
       }
       return res;
     },
-    enabled: !user, // 유저가 없을 때만 fetch
-    staleTime: Infinity, // 무한 캐시
+    enabled: !user,
   });
 };
