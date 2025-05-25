@@ -9,10 +9,12 @@ import Image from "next/image";
 import { MOVIE_SLIDES } from "@/mocks/movie-slides";
 import { Badge } from "@/components";
 import EmptyCarouselSlide from "./EmptyCarouselSlide";
+import { useRouter } from "next/navigation";
 
 export default function Carousel() {
   const swiperRef = useRef<SwiperCore | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
 
   const applySlideEffect = () => {
     const swiper = swiperRef.current;
@@ -59,7 +61,11 @@ export default function Carousel() {
                 key={movie.id}
                 className="flex items-center transition-transform duration-300 ease-in-out"
               >
-                <div className="relative flex h-full w-full items-center justify-center">
+                <div
+                  // onClick={() => router.push(`/detail/${movie.id}`)}
+                  onClick={() => router.push(`/detail/1`)}
+                  className="relative flex h-full w-full items-center justify-center"
+                >
                   <div className="relative flex h-full w-full items-center justify-center rounded-xl">
                     <Image
                       width={282}
