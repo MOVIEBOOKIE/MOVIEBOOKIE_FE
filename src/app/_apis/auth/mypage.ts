@@ -7,6 +7,7 @@ export interface MyPageResponse {
   certificationEmail: string;
   hostExperienceCount: number;
   participationExperienceCount: number;
+  ticketCount: number;
 }
 
 export const getMyPageInfo = () => {

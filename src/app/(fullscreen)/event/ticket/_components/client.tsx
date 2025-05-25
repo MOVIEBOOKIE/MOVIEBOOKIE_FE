@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import CardBack from "./card-back";
-import CardFront from "./card-front";
-import { RotateIcon } from "@/icons/index";
+import { useSearchParams } from "next/navigation";
 
-export default function Client() {
+import CardFront from "./card-front";
+import CardBack from "./card-back";
+import { RotateIcon } from "@/icons/index";
+import { useState } from "react";
+import Loading from "app/loading";
+import { useTicketDetail } from "app/_hooks/events/use-ticket-detail";
+
+export default function TicketPage() {
+  const searchParams = useSearchParams();
+  const ticketId = searchParams.get("id");
+  const { data: ticket, isLoading } = useTicketDetail(ticketId);
   const [flipped, setFlipped] = useState(false);
+
+  if (isLoading) return <Loading />;
+  if (!ticket)
+    return <p className="text-center text-white">티켓이 없습니다.</p>;
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-8.5">
@@ -16,8 +27,8 @@ export default function Client() {
           flipped ? "rotate-y-180" : ""
         }`}
       >
-        <CardFront />
-        <CardBack />
+        <CardFront ticket={ticket} />
+        <CardBack ticket={ticket} />
       </div>
       <button
         type="button"

@@ -9,6 +9,7 @@ import { PATHS, CATEGORY_LABELS } from "@/constants";
 import { useUserStore } from "app/_stores/useUserStore";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
+import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -19,6 +20,7 @@ export default function Home() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
+  useMyPage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,13 +51,16 @@ export default function Home() {
   return (
     <div
       ref={containerRef}
-      className="scrollbar-hide h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
+      className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
-          <p className="body-3-medium text-gray-300">못말리는 영화러버</p>
+          <p className="body-3-medium text-gray-300">
+            {" "}
+            {user?.userTypeTitle || "~~러"}
+          </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
-            {user?.nickname || "사용자"}님을 위한 추천
+            {user?.nickname || "회원"}님을 위한 추천
           </h2>
         </div>
         <Carousel />
