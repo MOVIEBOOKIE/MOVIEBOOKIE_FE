@@ -10,6 +10,8 @@ import { categoryMap } from "@/constants/category-map";
 import { MOCK_DATA } from "@/mocks/mock-data";
 import { useUserStore } from "app/_stores/useUserStore";
 import { getMyPageInfo } from "app/_apis/auth/mypage";
+import { useQuery } from "@tanstack/react-query";
+import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -21,32 +23,7 @@ export default function Home() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (user) return;
-
-      try {
-        const res = await getMyPageInfo();
-        if (res) {
-          setUser({
-            email: res.certificationEmail,
-            nickname: res.username,
-            profileImage: res.profileImage,
-            userTypeTitle: res.userType,
-            hostExperienceCount: res.hostExperienceCount,
-            participationExperienceCount: res.participationExperienceCount,
-            ticketCount: 0,
-          });
-        }
-      } catch (err) {
-        console.error("유저 정보 요청 실패", err);
-        // router.push("/login");
-      }
-    };
-
-    fetchUser();
-  }, [user, setUser]);
+  useMyPage();
 
   useEffect(() => {
     const handleScroll = () => {
