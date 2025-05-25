@@ -7,11 +7,13 @@ import { useParams } from "next/navigation";
 import { useGetEvent } from "app/_hooks/events/use-events";
 import { useState } from "react";
 import Modal from "@/components/modal";
+import Complete from "@/components/complete";
 
 type ModalType = "apply" | "cancel" | "recruitCancel" | null;
 
 export default function Detail() {
   const [modalType, setModalType] = useState<ModalType>(null);
+  const [isComplete, setIsComplete] = useState(false);
   const params = useParams();
   const id = params?.id;
   const eventId = Number(id);
@@ -55,6 +57,28 @@ export default function Detail() {
 
   const currentModal = modalType ? modalContent[modalType] : null;
 
+  const handleApply = () => {
+    setIsComplete(true);
+  };
+
+  const handleCancel = () => {};
+
+  const handleRecruitCancel = () => {};
+
+  const handleComplete = () => {
+    setIsComplete(false);
+  };
+
+  if (isComplete) {
+    return (
+      <Complete
+        state="이벤트 신청"
+        buttonText="신청목록 확인하기"
+        onButtonClick={handleComplete}
+      />
+    );
+  }
+
   return (
     <>
       <TopBar />
@@ -79,7 +103,12 @@ export default function Detail() {
           title={currentModal.title}
           description={currentModal.description}
           confirmText={currentModal.confirmText}
-          onConfirm={() => setModalType(null)}
+          onConfirm={() => {
+            if (modalType === "apply") handleApply();
+            if (modalType === "cancel") handleCancel();
+            if (modalType === "recruitCancel") handleRecruitCancel();
+            setModalType(null);
+          }}
           onCancel={() => setModalType(null)}
         />
       )}
