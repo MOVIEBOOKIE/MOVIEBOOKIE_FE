@@ -2,7 +2,7 @@ import { PATHS } from "@/constants";
 import axios, { AxiosInstance } from "axios";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_PROD_URL}/api`,
+  baseURL: "/api",
   withCredentials: true,
 });
 
