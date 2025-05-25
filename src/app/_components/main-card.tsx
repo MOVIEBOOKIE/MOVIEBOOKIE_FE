@@ -14,7 +14,7 @@ interface CardProps {
   ddayBadge?: string | null;
   statusBadge?: string;
   progressRate?: string;
-  estimatedPrice?: string;
+  estimatedPrice?: string | number;
 }
 
 export default function Card({
@@ -37,8 +37,8 @@ export default function Card({
     >
       <div className="relative h-30 w-30 overflow-hidden rounded-md">
         <Image
-          src={imageUrl}
-          alt="포스터 이미지"
+          src={imageUrl || "/images/default-image.png"}
+          alt={title}
           fill
           className="object-cover"
         />

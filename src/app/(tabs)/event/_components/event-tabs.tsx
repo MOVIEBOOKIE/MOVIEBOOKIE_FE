@@ -2,11 +2,12 @@
 
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
-import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
+
 import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
+  statusMap: Record<string, string[]>;
 }
 
 const TOGGLES = { "모집 이벤트": 0, "확정 이벤트": 1 } as const;
@@ -20,10 +21,7 @@ export default function EventTab({ type }: EventTabProps) {
   } = useEventTabQuery(type);
 
   if (isError) {
-    return (
-      <p className="text-center">이벤트를 불러오지 못했습니다.</p>
-      //TODO: 에러 처리
-    );
+    return <p className="text-center">이벤트를 불러오지 못했습니다.</p>;
   }
 
   return (
@@ -40,7 +38,21 @@ export default function EventTab({ type }: EventTabProps) {
         {events.length > 0 ? (
           events.map((event, index) => (
             <div key={event.eventId}>
-              <Card {...mapEventCardToCardProps(event)} />
+              <Card
+                imageUrl={event.posterImageUrl}
+                category={event.mediaType}
+                title={event.mediaTitle}
+                placeAndDate={`${event.locationName} · ${event.eventDate}`}
+                description={event.description}
+                ddayBadge={
+                  event.d_day !== null ? `D-${event.d_day}` : undefined
+                }
+                statusBadge={event.eventStatus}
+                progressRate={
+                  event.rate !== undefined ? `${event.rate}%` : undefined
+                }
+                estimatedPrice={event.estimatedPrice}
+              />
               {index < events.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
               )}
