@@ -37,7 +37,7 @@ export interface EventData {
   mediaTitle: string;
   eventTitle: string;
   description: string;
-  estimatedPrice: string;
+  estimatedPrice: number;
   eventDate: string;
   eventTime: string;
   recruitmentDate: string;
