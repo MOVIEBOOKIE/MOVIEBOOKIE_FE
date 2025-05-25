@@ -5,15 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button, Card, Input, Carousel } from "@/components";
-import { CATEGORIES, PATHS, CATEGORY_LABELS } from "@/constants";
-import { categoryMap } from "@/constants/category-map";
-import { MOCK_DATA } from "@/mocks/mock-data";
+import { PATHS, CATEGORY_LABELS } from "@/constants";
 import { useUserStore } from "app/_stores/useUserStore";
+import { useCategoryEvents } from "app/_hooks/events/use-category-events";
+import CardSkeleton from "@/components/card-skeleton";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
-
   const router = useRouter();
+
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
 
@@ -33,25 +33,17 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
+    useCategoryEvents(selected);
+
+  const allEvents = data?.pages.flat() ?? [];
+
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
   };
 
-  const handleClick = () => {
-    if (!selected) return;
-
-    const mapped = categoryMap[selected];
-    if (!mapped) return;
-
-    const upperKey = mapped.toUpperCase() as keyof typeof PATHS.CATEGORY;
-
-    router.push(PATHS.CATEGORY[upperKey]);
-  };
-
-  const handleCategoryClick = (category: keyof typeof CATEGORIES) => {
-    if (category === "인기" || category === "최신") return;
-    const type = CATEGORIES[category];
-    router.push(`/category/${type}`);
+  const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
+    setSelected(label);
   };
 
   return (
@@ -63,7 +55,7 @@ export default function Home() {
         <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">못말리는 영화러버</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
-            {user?.nickname}님을 위한 추천
+            {user?.nickname || "사용자"}님을 위한 추천
           </h2>
         </div>
         <Carousel />
@@ -96,7 +88,9 @@ export default function Home() {
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
+
         <Input type="BUTTON" onClick={handleSearch} />
+
         <div className="scrollbar-hide mt-3 -mr-4 mb-4 flex overflow-x-auto whitespace-nowrap">
           {CATEGORY_LABELS.map((label) => (
             <div key={label} className="flex items-center">
@@ -104,10 +98,7 @@ export default function Home() {
                 className={`body-2-semibold rounded-full px-3.5 py-2.25 ${
                   selected === label ? "text-red-main" : "text-gray-500"
                 }`}
-                onClick={() => {
-                  setSelected(label);
-                  handleCategoryClick(label);
-                }}
+                onClick={() => handleCategoryClick(label)}
               >
                 {label}
               </button>
@@ -117,8 +108,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {MOCK_DATA.length === 0 ? (
-          <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
+
+        {isLoading ? (
+          <div className="flex flex-col gap-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <CardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : allEvents.length === 0 ? (
+          <div className="mb-78 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
             <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
               아직 모집 이벤트가 없어요 <br />
@@ -126,31 +124,38 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          MOCK_DATA.map((card, index) => (
-            <div key={index}>
+          allEvents.map((event, index) => (
+            <div key={event.eventId}>
               <Card
-                {...card}
-                imageUrl={
-                  typeof card.imageUrl === "string"
-                    ? card.imageUrl
-                    : (card.imageUrl as any).src
-                }
+                id={String(event.eventId)}
+                imageUrl={event.posterImageUrl}
+                category={event.mediaType}
+                title={event.mediaTitle}
+                placeAndDate={`${event.locationName} · ${event.eventDate}`}
+                description={event.description}
+                ddayBadge={`D-${event.d_day}`}
+                statusBadge={event.eventStatus}
+                progressRate={`${event.rate}%`}
+                estimatedPrice={String(event.estimatedPrice)}
               />
-              {index !== MOCK_DATA.length - 1 && (
+              {index !== allEvents.length - 1 && (
                 <div className="my-4 h-0.25 w-full bg-gray-950" />
               )}
             </div>
           ))
         )}
-        {MOCK_DATA.length > 0 && (
+
+        {hasNextPage && (
           <Button
             className="mt-6 mb-8.5"
             variant="secondary"
-            onClick={handleClick}
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
           >
-            더보기
+            {isFetchingNextPage ? "불러오는 중..." : "더보기"}
           </Button>
         )}
+        {allEvents.length === 1 && <div className="h-105" />}
       </motion.section>
     </div>
   );
