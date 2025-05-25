@@ -69,7 +69,7 @@ export default function Home() {
             {user?.userTypeTitle || "~~러"}
           </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
-            {user?.nickname || "사용자"}님을 위한 추천
+            {user?.nickname || "회원"}님을 위한 추천
           </h2>
         </div>
         <Carousel />
