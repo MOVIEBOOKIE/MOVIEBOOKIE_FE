@@ -2,14 +2,26 @@
 
 import { Badge, ToggleTab } from "@/components";
 import { PATH_IMAGES } from "@/constants";
+import { EventData } from "app/_types/event";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function InformationTab() {
+export default function InformationTab({
+  estimatedPrice,
+  eventDate,
+  eventTime,
+  locationImageUrl,
+  recruitmentDate,
+  d_day,
+  minParticipants,
+  maxParticipants,
+  recruitmentRate,
+  currentParticipants,
+}: EventData) {
   const [selected, setSelected] = useState("이벤트");
 
   return (
-    <div>
+    <>
       <ToggleTab
         options={["이벤트", "모집"]}
         selected={selected}
@@ -23,7 +35,7 @@ export default function InformationTab() {
             *최소 인원 기준 가격으로, 모집인원에 따라 변동가능
           </p>
           <div className="mt-2.5 flex items-center gap-2">
-            <p className="body-2-medium">24,000원</p>
+            <p className="body-2-medium">{estimatedPrice.toLocaleString()}원</p>
             <Badge variant="primary" className="px-1 py-0.5">
               변동 가능
             </Badge>
@@ -32,9 +44,9 @@ export default function InformationTab() {
           <p className="body-2-medium text-gray-400">일정</p>
           <div className="mt-2 grid grid-cols-[auto_1fr] gap-x-3.25 gap-y-1">
             <span className="body-3-medium text-gray-600">날짜</span>
-            <p className="body-3-regular text-gray-200">2025. 05. 26 (월)</p>
+            <p className="body-3-regular text-gray-200">{eventDate}</p>
             <span className="body-3-medium text-gray-600">시간</span>
-            <p className="body-3-regular text-gray-200">00시 00분</p>
+            <p className="body-3-regular text-gray-200">{eventTime}</p>
           </div>
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">위치</p>
@@ -48,23 +60,23 @@ export default function InformationTab() {
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">영화관 내부</p>
           <Image
-            src={PATH_IMAGES.TMP_MOVIE}
+            src={locationImageUrl}
             width={335}
             height={192}
             alt="movie"
-            className="w-full object-cover"
+            className="w-full rounded-[10px] object-cover"
           />
         </div>
       ) : (
-        <div className="mt-5 pb-17">
+        <div className="mt-5 pb-44">
           <p className="body-2-medium mb-2 text-gray-400">모집 일정</p>
           <div className="flex gap-3">
             <p className="body-3-medium text-gray-400">모집 기간</p>
             <div className="flex gap-1.5">
-              <p className="body-3-regular text-gray-200">
-                2025. 04. 15 - 2025. 04. 20
-              </p>
-              <Badge variant="primary">D-4</Badge>
+              <p className="body-3-regular text-gray-200">{recruitmentDate}</p>
+              <Badge variant="primary" className="px-1 py-0.25">
+                {d_day}
+              </Badge>
             </div>
           </div>
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
@@ -74,14 +86,18 @@ export default function InformationTab() {
           </p>
           <div className="mt-2.5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5">
             <span className="body-3-medium text-gray-600">모집 인원</span>
-            <p className="body-3-regular text-gray-200">20 - 56명</p>
+            <p className="body-3-regular text-gray-200">
+              {minParticipants} - {maxParticipants}명
+            </p>
             <span className="body-3-medium text-gray-600">현재 참여자</span>
-            <p className="body-3-regular text-gray-200">12명 신청</p>
+            <p className="body-3-regular text-gray-200">
+              {currentParticipants}명 신청
+            </p>
             <span className="body-3-medium text-gray-600">모집 달성률</span>
-            <p className="body-3-medium text-red-main">60%</p>
+            <p className="body-3-medium text-red-main">{recruitmentRate}%</p>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
