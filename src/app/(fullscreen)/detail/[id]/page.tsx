@@ -9,7 +9,6 @@ import { useGetEvent } from "app/_hooks/events/use-events";
 export default function Detail() {
   const params = useParams();
   const id = params?.id;
-  const price = 24000;
 
   const eventId = Number(id);
 
