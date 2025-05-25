@@ -54,4 +54,6 @@ export interface EventData {
   address: string;
   locationImageUrl: string;
   userImageUrl: string;
+  longitude: number;
+  latitude: number;
 }

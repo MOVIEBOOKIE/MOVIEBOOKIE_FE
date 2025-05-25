@@ -1,10 +1,10 @@
 "use client";
 
 import { Badge, ToggleTab } from "@/components";
-import { PATH_IMAGES } from "@/constants";
 import { EventData } from "app/_types/event";
 import Image from "next/image";
 import { useState } from "react";
+import MapThumbnail from "./map-thumbnail";
 
 export default function InformationTab({
   estimatedPrice,
@@ -17,6 +17,10 @@ export default function InformationTab({
   maxParticipants,
   recruitmentRate,
   currentParticipants,
+  latitude,
+  longitude,
+  address,
+  locationName,
 }: EventData) {
   const [selected, setSelected] = useState("이벤트");
 
@@ -50,22 +54,22 @@ export default function InformationTab({
           </div>
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">위치</p>
-          <Image
-            src={PATH_IMAGES.TMP_MAP}
-            width={335}
-            height={192}
-            alt="map"
-            className="w-full object-cover"
+          <MapThumbnail
+            latitude={latitude}
+            longitude={longitude}
+            locationName={locationName}
+            address={address}
           />
           <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
           <p className="body-2-medium mb-2 text-gray-400">영화관 내부</p>
-          <Image
-            src={locationImageUrl}
-            width={335}
-            height={192}
-            alt="movie"
-            className="w-full rounded-[10px] object-cover"
-          />
+          <div className="relative w-full" style={{ aspectRatio: "335 / 192" }}>
+            <Image
+              src={locationImageUrl}
+              alt="movie"
+              fill
+              className="rounded-[10px] object-cover"
+            />
+          </div>
         </div>
       ) : (
         <div className="mt-5 pb-44">
