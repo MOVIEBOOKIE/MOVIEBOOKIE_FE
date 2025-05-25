@@ -1,4 +1,4 @@
-import { MOCK_IMAGES, PATH_IMAGES } from "@/constants/path-images";
+import { PATH_IMAGES } from "@/constants/path-images";
 import { LogoWhiteIcon } from "@/icons/index";
 import Image from "next/image";
 import { Fragment } from "react";
