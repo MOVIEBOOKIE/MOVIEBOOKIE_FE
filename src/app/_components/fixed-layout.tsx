@@ -16,7 +16,7 @@ type FixedLayoutProps = {
   onClose?: () => void;
   onBackClick?: () => void;
   isHeader?: boolean;
-  state?: "default" | "detail" | "full";
+  state?: "default" | "detail" | "full" | "preview";
   showBottomButton?: boolean;
 };
 
@@ -39,7 +39,9 @@ export default function FixedLayout({
       ? " pt-21.75 px-5"
       : state === "detail"
         ? "pt-15.5 px-5"
-        : "p-0";
+        : state === "preview"
+          ? "pt-15.5 px-0"
+          : "p-0";
 
   return (
     <>
