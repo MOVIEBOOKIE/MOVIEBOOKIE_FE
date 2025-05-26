@@ -1,23 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { CardProps } from "app/_types/card";
 
-interface CardProps {
-  id?: string;
-  imageUrl: string;
-  category: string;
-  title: string;
-  placeAndDate: string;
-  description?: string;
-  ddayBadge?: string | null;
-  statusBadge?: string;
-  progressRate?: string;
-  estimatedPrice?: string | number;
-}
-
-export default function Card({
+function Card({
   id,
   imageUrl,
   category,
@@ -40,6 +28,7 @@ export default function Card({
           src={imageUrl || "/images/default-image.png"}
           alt={title}
           fill
+          loading="lazy"
           className="object-cover"
         />
 
@@ -95,3 +84,4 @@ export default function Card({
     </div>
   );
 }
+export default memo(Card);
