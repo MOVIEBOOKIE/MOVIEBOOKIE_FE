@@ -20,7 +20,7 @@ export default function DetailContent({ ...props }) {
 
   const eventTime = props.eventStartTime
     ? props.eventStartTime
-    : props.evnetTime;
+    : props.eventTime;
   return (
     <>
       <div className="relative h-75 w-full">
