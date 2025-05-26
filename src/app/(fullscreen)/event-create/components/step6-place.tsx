@@ -5,7 +5,8 @@ import { useRecommendedCinemas } from "app/_hooks/use-recommend-cinema";
 import Loading from "app/loading";
 import Image from "next/image";
 import { useFormContext, useWatch } from "react-hook-form";
-
+import { LocationIcon } from "@/icons/index";
+import { formatPrice } from "@/utils/format-price";
 export default function Step6() {
   const { setValue, control } = useFormContext();
   const selectedLocationId = useWatch({ control, name: "locationId" });
@@ -30,7 +31,7 @@ export default function Step6() {
   return (
     <div className="bg-gray-black fixed inset-0 mt-17 flex flex-col items-center overflow-hidden">
       <div className="flex h-full w-full max-w-125 flex-col">
-        <div className="sticky top-0 z-10 px-5 py-5">
+        <div className="sticky top-0 z-10 px-5 pt-5 pb-2">
           <StepHeader
             StepHeader="6/7"
             title={
@@ -66,7 +67,7 @@ export default function Step6() {
                           (tag: string, idx: number) => (
                             <span
                               key={idx}
-                              className={`caption-3-medium rounded-[4px] px-1.5 py-1 ${
+                              className={`caption-3-medium mt-0.5 rounded-[4px] px-1.5 py-1 ${
                                 tag === "소규모"
                                   ? "bg-[#F19226] text-white"
                                   : tag === "중규모"
@@ -81,14 +82,18 @@ export default function Step6() {
                           ),
                         )}
                       </div>
-                      <div className="body-2-semibold pt-2 text-gray-200">
+                      <div className="body-2-semibold text-gray-200">
                         {cinema.locationName}
                       </div>
-                      <div className="caption-1-medium mb-1 text-gray-400">
-                        {cinema.address}
+                      <div className="mt-2 mb-1 flex items-center gap-1">
+                        <LocationIcon />
+                        <div className="caption-1-medium truncate overflow-hidden whitespace-nowrap text-gray-400">
+                          {cinema.address}
+                        </div>
                       </div>
                       <div className="caption-1-medium mb-1 text-gray-400">
-                        좌석 {cinema.seatCount} | {cinema.pricePerHour}원/시간
+                        좌석 {cinema.seatCount} | 시간당{" "}
+                        {formatPrice(cinema.pricePerHour)}
                       </div>
                     </div>
                     <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
