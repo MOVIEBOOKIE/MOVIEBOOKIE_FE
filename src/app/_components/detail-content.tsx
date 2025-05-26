@@ -6,6 +6,7 @@ import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
 import { useUserStore } from "app/_stores/useUserStore";
 import AlertContent from "app/(fullscreen)/detail/_components/alert-content";
+import EventStatus from "app/(fullscreen)/detail/_components/event-status";
 
 export default function DetailContent({ ...props }) {
   const user = useUserStore((state) => state.user);
@@ -53,26 +54,16 @@ export default function DetailContent({ ...props }) {
         <p className="text-gray-white title-2-semibold mt-1">
           {props.mediaTitle || "작품 제목"}
         </p>
-        {props.eventState === "모집 취소" ? (
-          <AlertContent>모집이 취소된 이벤트입니다.</AlertContent>
-        ) : (
-          <>
-            <div className="mt-3.5 flex justify-between">
-              <p className="body-3-medium text-gray-500">모집 달성률</p>
-              <p className="body-2-semibold text-red-main">
-                {props.recruitmentRate ?? "0"}%
-              </p>
-            </div>
-            <div className="mt-2.5 h-1 w-full rounded-[10px] bg-gray-800">
-              <div
-                className="bg-red-main h-1 rounded-[10px]"
-                style={{ width: `${props.recruitmentRate ?? 0}%` }}
-              />
-            </div>
-          </>
-        )}
+        <EventStatus
+          eventState={props.eventState}
+          recruitmentRate={props.recruitmentRate}
+        />
         <div
-          className={`${props.eventState === "모집 취소" ? "opacity-30" : ""}`}
+          className={
+            props.eventState === "모집 취소" || props.eventState === "대관 취소"
+              ? "opacity-30"
+              : ""
+          }
         >
           <div className="mt-8.5 flex flex-col gap-3">
             <div className="flex gap-2">
