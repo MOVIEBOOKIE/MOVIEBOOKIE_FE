@@ -4,6 +4,7 @@ import { getMobile } from "@/utils/get-mobile";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CloseIcon, ShareIcon } from "@/icons/index";
+import { createPortal } from "react-dom";
 
 export default function PwaPromptModal() {
   const [showModal, setShowModal] = useState(true);
@@ -14,18 +15,9 @@ export default function PwaPromptModal() {
     const osType = getMobile();
     setOs(osType);
 
-    // 실제환경
-    // const hasPrompted = localStorage.getItem("pwaPrompted");
-    // if (hasPrompted) return;
+    const hasPrompted = localStorage.getItem("pwaPrompted");
+    if (hasPrompted) return;
 
-    // 개발 중엔 true로 설정
-    const forceShow = true;
-    if (!forceShow) {
-      const hasPrompted = localStorage.getItem("pwaPrompted");
-      if (hasPrompted) return;
-    }
-
-    // Android: beforeinstallprompt 사용
     if (osType === "android") {
       const handler = (e: any) => {
         e.preventDefault();
@@ -65,7 +57,7 @@ export default function PwaPromptModal() {
 
   if (!showModal) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 bg-[rgba(0,0,0,0.7)]">
       <div className="fixed right-5 bottom-10 left-5 mx-auto max-w-md rounded-2xl bg-gray-900 px-5 text-center text-white shadow-xl">
         <button
@@ -132,6 +124,7 @@ export default function PwaPromptModal() {
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
