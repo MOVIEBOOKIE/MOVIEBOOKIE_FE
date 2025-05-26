@@ -5,10 +5,10 @@ import { Card, FixedLayout } from "@/components";
 import Pagination from "@/components/pagination";
 import { PATHS } from "@/constants";
 import { EmptyIcon } from "@/icons/index";
-import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
 import { EventCard } from "app/_types/card";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Loading from "app/loading";
 
 export default function CategoryPageClient({ label }: { label: string }) {
   const itemsPerPage = 10;
@@ -27,16 +27,12 @@ export default function CategoryPageClient({ label }: { label: string }) {
           page: currentPage,
           size: itemsPerPage,
         },
-        headers: {
-          // 필요 시 인증
-          // Authorization: `Bearer ${yourToken}`
-        },
       });
 
-      setCards(res.data.result); // 배열
-      setTotalCount(res.data.totalCount ?? 100); // 백엔드가 지원하면 정확히
+      setCards(res.data.result.eventList);
+      setTotalCount(res.data.result.totalPages * itemsPerPage);
     } catch (err) {
-      console.error("이벤트 불러오기 실패:", err);
+      throw new Error(String(err));
     } finally {
       setIsLoading(false);
     }
@@ -46,21 +42,33 @@ export default function CategoryPageClient({ label }: { label: string }) {
     fetchEvents();
   }, [currentPage, label]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <FixedLayout
       title={label}
       showBackButton
       isHeader
       showBottomButton={false}
-      state="default"
+      state="detail"
     >
       <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-        {isLoading ? (
-          <div className="text-center text-gray-500">불러오는 중...</div>
-        ) : cards.length > 0 ? (
+        {cards.length > 0 ? (
           cards.map((card, idx) => (
             <div key={card.eventId}>
-              <Card {...mapEventCardToCardProps(card)} />
+              <Card
+                id={String(card.eventId)}
+                imageUrl={card.posterImageUrl}
+                category={card.mediaType}
+                title={card.mediaTitle}
+                placeAndDate={`${card.locationName} · ${card.eventDate}`}
+                description={card.description}
+                ddayBadge={`D-${card.d_day}`}
+                statusBadge={card.eventStatus}
+                progressRate={`${card.rate}%`}
+                estimatedPrice={card.estimatedPrice}
+              />
               {idx < cards.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
               )}

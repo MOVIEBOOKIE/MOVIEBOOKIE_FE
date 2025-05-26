@@ -36,10 +36,10 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
+  const { data, hasNextPage, isLoading, isFetchingNextPage } =
     useCategoryEvents(selected);
 
-  const allEvents = data?.pages.flat() ?? [];
+  const allEvents = data?.pages.flatMap((page) => page.eventList) ?? [];
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
@@ -48,7 +48,6 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
-
   return (
     <div
       ref={containerRef}

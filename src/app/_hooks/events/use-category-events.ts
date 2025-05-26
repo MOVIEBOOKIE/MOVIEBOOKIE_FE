@@ -7,9 +7,10 @@ export const useCategoryEvents = (category: string) => {
     queryFn: ({ pageParam = 0 }) =>
       getEventsByCategory(category, pageParam, 10),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 10 ? allPages.length : undefined,
-
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage || !lastPage.eventList) return undefined;
+      return lastPage.eventList.length === 10 ? allPages.length : undefined;
+    },
     staleTime: 1000 * 60 * 10,
     enabled: !!category,
   });
