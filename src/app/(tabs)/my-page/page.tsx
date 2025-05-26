@@ -96,20 +96,18 @@ export default function MyPage() {
         </li>
       </ul>
       {showLogoutModal && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/70">
-          <Modal
-            iconType="alert"
-            title="로그아웃"
-            description="정말 로그아웃 하시겠습니까?"
-            confirmText="확인"
-            cancelText="취소"
-            onConfirm={() => {
-              setShowLogoutModal(false);
-              console.log("로그아웃 로직 실행");
-            }}
-            onCancel={() => setShowLogoutModal(false)}
-          />
-        </div>
+        <Modal
+          iconType="alert"
+          title="로그아웃"
+          description="정말 로그아웃 하시겠습니까?"
+          confirmText="확인"
+          cancelText="취소"
+          onConfirm={() => {
+            setShowLogoutModal(false);
+            console.log("로그아웃 로직 실행");
+          }}
+          onCancel={() => setShowLogoutModal(false)}
+        />
       )}
     </div>
   );

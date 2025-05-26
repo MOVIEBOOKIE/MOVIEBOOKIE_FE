@@ -4,15 +4,75 @@ import { Button } from "@/components";
 import TopBar from "../_components/top-bar";
 import DetailContent from "@/components/detail-content";
 import { useParams } from "next/navigation";
-import { useGetEvent } from "app/_hooks/events/use-events";
+import {
+  useDeleteEvent,
+  useDeleteEventsRecruit,
+  useGetEvent,
+  usePostEventRegister,
+} from "app/_hooks/events/use-events";
+import { useState } from "react";
+import Modal from "@/components/modal";
+import Complete from "@/components/complete";
+import { MODAL_CONTENT } from "app/(fullscreen)/detail/_constants/detail";
+
+type ModalType = "apply" | "cancel" | "recruitCancel" | null;
 
 export default function Detail() {
+  const [modalType, setModalType] = useState<ModalType>(null);
+  const [isComplete, setIsComplete] = useState(false);
   const params = useParams();
   const id = params?.id;
-
   const eventId = Number(id);
 
   const { data } = useGetEvent(eventId);
+
+  const handleClick = () => {
+    switch (data?.buttonState) {
+      case "신청하기":
+        setModalType("apply");
+        break;
+      case "신청 취소":
+        setModalType("cancel");
+        break;
+      case "모집 취소":
+        setModalType("recruitCancel");
+        break;
+    }
+  };
+
+  const currentModal = modalType ? MODAL_CONTENT[modalType] : null;
+
+  const { mutate } = usePostEventRegister();
+  const { mutate: applyCancel } = useDeleteEvent();
+  const { mutate: recruitCancel } = useDeleteEventsRecruit();
+
+  const handleApply = () => {
+    setIsComplete(true);
+    mutate(eventId);
+  };
+
+  const handleCancel = () => {
+    applyCancel(eventId);
+  };
+
+  const handleRecruitCancel = () => {
+    recruitCancel(eventId);
+  };
+
+  const handleComplete = () => {
+    setIsComplete(false);
+  };
+
+  if (isComplete) {
+    return (
+      <Complete
+        state="이벤트 신청"
+        buttonText="신청목록 확인하기"
+        onButtonClick={handleComplete}
+      />
+    );
+  }
+
   return (
     <>
       <TopBar />
@@ -26,8 +86,26 @@ export default function Detail() {
             </p>
           )}
         </div>
-        <Button variant="primary">{data?.buttonState}</Button>
+        <Button variant="primary" onClick={handleClick}>
+          {data?.buttonState}
+        </Button>
       </div>
+
+      {currentModal && (
+        <Modal
+          iconType={currentModal.iconType as "confirm" | "alert"}
+          title={currentModal.title}
+          description={currentModal.description}
+          confirmText={currentModal.confirmText}
+          onConfirm={() => {
+            if (modalType === "apply") handleApply();
+            if (modalType === "cancel") handleCancel();
+            if (modalType === "recruitCancel") handleRecruitCancel();
+            setModalType(null);
+          }}
+          onCancel={() => setModalType(null)}
+        />
+      )}
     </>
   );
 }
