@@ -1,24 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
-
-import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
+import {
+  ToggleType,
+  useEventTabQuery,
+} from "app/_hooks/events/use-event-tab-query";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
-  statusMap: Record<string, string[]>;
 }
 
-const TOGGLES = { "모집 이벤트": 0, "확정 이벤트": 1 } as const;
-
 export default function EventTab({ type }: EventTabProps) {
-  const {
-    selectedToggle,
-    setSelectedToggle,
-    data: events = [],
-    isError,
-  } = useEventTabQuery(type);
+  const toggles =
+    type === "신청 목록"
+      ? ["모집 이벤트", "확정 이벤트"]
+      : ["신청 이벤트", "확정 이벤트"];
+
+  const [selectedToggle, setSelectedToggle] = useState(toggles[0]);
+
+  const { data: events = [], isError } = useEventTabQuery(
+    type,
+    selectedToggle as ToggleType,
+  );
 
   if (isError) {
     return <p className="text-center">이벤트를 불러오지 못했습니다.</p>;
@@ -27,11 +32,9 @@ export default function EventTab({ type }: EventTabProps) {
   return (
     <div className="mt-5">
       <ToggleTab
-        options={Object.keys(TOGGLES)}
+        options={toggles}
         selected={selectedToggle}
-        onSelect={(selected) =>
-          setSelectedToggle(selected as keyof typeof TOGGLES)
-        }
+        onSelect={(selected) => setSelectedToggle(selected)}
       />
 
       <div className="mt-6 flex flex-col">
