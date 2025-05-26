@@ -14,10 +14,13 @@ import { useState } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "app/(fullscreen)/detail/_constants/detail";
+import { useRouter } from "next/navigation";
+import { PATHS } from "@/constants";
 
 type ModalType = "apply" | "cancel" | "recruitCancel" | null;
 
 export default function Detail() {
+  const router = useRouter();
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
   const params = useParams();
@@ -36,6 +39,9 @@ export default function Detail() {
         break;
       case "모집 취소":
         setModalType("recruitCancel");
+        break;
+      case "티켓으로 이동":
+        router.push(PATHS.TICKET);
         break;
     }
   };
@@ -89,7 +95,11 @@ export default function Detail() {
         <Button
           variant="primary"
           onClick={handleClick}
-          disabled={data?.eventState === "모집 취소"}
+          disabled={
+            data?.eventState === "모집 취소" ||
+            data?.eventState === "모집 완료" ||
+            data?.eventState === "대관 취소"
+          }
         >
           {data?.buttonState}
         </Button>
