@@ -17,7 +17,11 @@ export default function TicketPage() {
 
   if (isLoading) return <Loading />;
   if (!ticket)
-    return <p className="text-center text-white">티켓이 없습니다.</p>;
+    return (
+      <p className="flex h-full items-center text-center text-white">
+        티켓이 없습니다.
+      </p>
+    );
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-8.5">
