@@ -1,50 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, FixedLayout } from "@/components";
 import Pagination from "@/components/pagination";
 import { PATHS } from "@/constants";
 import { EmptyIcon } from "@/icons/index";
-import { EventCard } from "app/_types/card";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import Loading from "app/loading";
+import { useCategoryPageEvents } from "app/_hooks/events/use-category-events";
 
 export default function CategoryPageClient({ label }: { label: string }) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
-  const [cards, setCards] = useState<EventCard[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  const fetchEvents = async () => {
-    try {
-      setIsLoading(true);
-      const res = await axios.get("/api/events/category", {
-        params: {
-          category: label,
-          page: currentPage,
-          size: itemsPerPage,
-        },
-      });
+  const { data, isLoading } = useCategoryPageEvents(
+    label,
+    currentPage,
+    itemsPerPage,
+  );
 
-      setCards(res.data.result.eventList);
-      setTotalCount(res.data.result.totalPages * itemsPerPage);
-    } catch (err) {
-      throw new Error(String(err));
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const cards = data?.eventList ?? [];
+  const totalPages = data?.totalPages ?? 0;
 
-  useEffect(() => {
-    fetchEvents();
-  }, [currentPage, label]);
+  if (isLoading) return <Loading />;
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <FixedLayout
       title={label}
@@ -94,7 +74,7 @@ export default function CategoryPageClient({ label }: { label: string }) {
       {!isLoading && cards.length > 0 && (
         <div className="w-full">
           <Pagination
-            pageCount={Math.ceil(totalCount / itemsPerPage)}
+            pageCount={totalPages}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
           />

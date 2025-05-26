@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getEventsByCategory } from "app/_apis/events/category";
 
 export const useCategoryEvents = (category: string) => {
@@ -11,7 +11,19 @@ export const useCategoryEvents = (category: string) => {
       if (!lastPage || !lastPage.eventList) return undefined;
       return lastPage.eventList.length === 10 ? allPages.length : undefined;
     },
-    staleTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 5,
     enabled: !!category,
+  });
+};
+
+export const useCategoryPageEvents = (
+  category: string,
+  page: number,
+  size: number = 10,
+) => {
+  return useQuery({
+    queryKey: ["category-page-events", category, page],
+    queryFn: () => getEventsByCategory(category, page, size),
+    staleTime: 1000 * 60 * 5,
   });
 };
