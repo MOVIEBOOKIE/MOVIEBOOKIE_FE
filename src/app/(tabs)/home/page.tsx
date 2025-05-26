@@ -10,6 +10,7 @@ import { useUserStore } from "app/_stores/useUserStore";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
+import { categoryMap } from "@/constants/category-map";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -154,7 +155,10 @@ export default function Home() {
           <Button
             className="mt-6 mb-8.5"
             variant="secondary"
-            onClick={() => fetchNextPage()}
+            onClick={() => {
+              const categorySlug = categoryMap[selected];
+              router.push(`/category/${categorySlug}`);
+            }}
             disabled={isFetchingNextPage}
           >
             {isFetchingNextPage ? "불러오는 중..." : "더보기"}
