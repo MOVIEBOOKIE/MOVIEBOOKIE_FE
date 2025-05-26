@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
 import { useUserStore } from "app/_stores/useUserStore";
@@ -9,9 +9,17 @@ import { useUserStore } from "app/_stores/useUserStore";
 export default function DetailContent({ ...props }) {
   const user = useUserStore((state) => state.user);
 
-  const posterImageUrl = props.thumbnail
-    ? URL.createObjectURL(props.thumbnail)
-    : props.posterImageUrl;
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (props.thumbnail) {
+      const url = URL.createObjectURL(props.thumbnail);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [props.thumbnail]);
+
+  const posterImageUrl = previewUrl || props.posterImageUrl;
 
   const recruitmentDate =
     props.recruitmentStart && props.recruitmentEnd
@@ -87,10 +95,7 @@ export default function DetailContent({ ...props }) {
         </div>
         <div className="caption-1-regular mt-8 grid grid-cols-[74px_1fr] gap-y-2 rounded-xl bg-gray-950 px-5 pt-5 pb-6 text-gray-300">
           <span>예상 가격</span>
-          <span>
-            {(props.estimatedPrice ?? "24,000").toLocaleString?.() || "24,000"}
-            원
-          </span>
+          <span>{props.estimatedPrice?.toLocaleString() ?? "24,000"} 원</span>
 
           <span>이벤트 일시</span>
           <span>{props.eventDate || "2025. 05. 30 (금)"}</span>
