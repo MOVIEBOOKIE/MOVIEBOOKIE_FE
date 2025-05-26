@@ -20,7 +20,6 @@ export default function Client() {
     if (step === 1) {
       setStep(2);
     } else {
-      console.log(formData);
       mutate(formData, {
         onSuccess: () => {
           router.push(PATHS.HOME);
@@ -40,6 +39,7 @@ export default function Client() {
       showCloseButton={true}
       onButtonClick={handleButtonClick}
       title="이벤트 미리보기"
+      state="preview"
     >
       {step === 1 && <Step1 />}
       {step === 2 && <Step2 />}
