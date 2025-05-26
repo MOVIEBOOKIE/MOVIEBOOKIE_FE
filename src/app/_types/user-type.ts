@@ -6,6 +6,7 @@ export interface UserTypeData {
 
 export interface UserTypeResponse {
   userTypeCode: string;
+  username: string;
   title: string;
   label: string;
   description: string;
