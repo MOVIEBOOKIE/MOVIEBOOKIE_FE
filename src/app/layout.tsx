@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
 import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
+import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -18,7 +19,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <InAppRedirect />
         <ToastRenderer />
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <GlobalLoading />
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

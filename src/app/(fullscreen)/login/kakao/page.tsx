@@ -32,7 +32,7 @@ function KakaoLogin() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const { redirectUrl, isLocal } = getRedirectUrl();
-  const { mutateAsync: kakaoLogin } = useKakaoLogin();
+  const { mutateAsync: kakaoLogin, isPending } = useKakaoLogin();
 
   useEffect(() => {
     if (!code) {
@@ -64,5 +64,5 @@ function KakaoLogin() {
     handleLogin();
   }, [code, redirectUrl, isLocal, router]);
 
-  return <Loading />;
+  return isPending ? <Loading /> : null;
 }
