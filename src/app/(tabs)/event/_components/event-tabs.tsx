@@ -7,6 +7,7 @@ import {
   ToggleType,
   useEventTabQuery,
 } from "app/_hooks/events/use-event-tab-query";
+import { EVENT_TOGGLES } from "@/constants/event-tab";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -15,8 +16,8 @@ interface EventTabProps {
 export default function EventTab({ type }: EventTabProps) {
   const toggles =
     type === "신청 목록"
-      ? ["모집 이벤트", "확정 이벤트"]
-      : ["신청 이벤트", "확정 이벤트"];
+      ? EVENT_TOGGLES.APPLY.LABELS
+      : EVENT_TOGGLES.MINE.LABELS;
 
   const [selectedToggle, setSelectedToggle] = useState(toggles[0]);
 
