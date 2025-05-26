@@ -9,6 +9,7 @@ import {
   useDeleteEventsRecruit,
   useGetEvent,
   usePostEventRegister,
+  usePostEventsVenue,
 } from "app/_hooks/events/use-events";
 import { useState } from "react";
 import Modal from "@/components/modal";
@@ -17,7 +18,7 @@ import { MODAL_CONTENT } from "app/(fullscreen)/detail/_constants/detail";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 
-type ModalType = "apply" | "cancel" | "recruitCancel" | null;
+type ModalType = "apply" | "cancel" | "recruitCancel" | "venueApply" | null;
 
 export default function Detail() {
   const router = useRouter();
@@ -43,6 +44,9 @@ export default function Detail() {
       case "티켓으로 이동":
         router.push(PATHS.TICKET);
         break;
+      case "대관 신청하기":
+        setModalType("venueApply");
+        break;
     }
   };
 
@@ -51,6 +55,7 @@ export default function Detail() {
   const { mutate } = usePostEventRegister();
   const { mutate: applyCancel } = useDeleteEvent();
   const { mutate: recruitCancel } = useDeleteEventsRecruit();
+  const { mutate: postEventVenue } = usePostEventsVenue();
 
   const handleApply = () => {
     setIsComplete(true);
@@ -67,6 +72,10 @@ export default function Detail() {
 
   const handleComplete = () => {
     setIsComplete(false);
+  };
+
+  const handleVenueApply = () => {
+    postEventVenue({ eventId, type: 1 });
   };
 
   if (isComplete) {
@@ -97,7 +106,7 @@ export default function Detail() {
           onClick={handleClick}
           disabled={
             data?.eventState === "모집 취소" ||
-            data?.eventState === "모집 완료" ||
+            (data?.eventState === "모집 완료" && data?.userRole != "주최자") ||
             data?.eventState === "대관 취소"
           }
         >
@@ -115,6 +124,7 @@ export default function Detail() {
             if (modalType === "apply") handleApply();
             if (modalType === "cancel") handleCancel();
             if (modalType === "recruitCancel") handleRecruitCancel();
+            if (modalType === "venueApply") handleVenueApply();
             setModalType(null);
           }}
           onCancel={() => setModalType(null)}

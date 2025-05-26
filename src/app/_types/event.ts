@@ -59,3 +59,8 @@ export interface EventData {
   eventState: string;
   userRole: string;
 }
+
+export interface PostEventsVenueParams {
+  eventId: number;
+  type: number;
+}

@@ -1,6 +1,6 @@
 import { END_POINTS } from "@/constants/api";
 import { apiDelete, apiGet, apiPost } from "../methods";
-import { EventData } from "app/_types/event";
+import { EventData, PostEventsVenueParams } from "app/_types/event";
 
 export const getEvents = (eventId: number) => {
   return apiGet<EventData>(END_POINTS.GET_EVENT(eventId));
@@ -16,4 +16,10 @@ export const DeleteEventsRegister = (eventId: number) => {
 
 export const DeleteEventsRecruit = (eventId: number) => {
   return apiDelete(END_POINTS.DELETE_EVENT_RECRUIT(eventId));
+};
+
+export const PostEventsVenue = ({ eventId, type }: PostEventsVenueParams) => {
+  return apiPost(END_POINTS.POST_EVENT_VENUE(eventId), null, {
+    params: { type },
+  });
 };

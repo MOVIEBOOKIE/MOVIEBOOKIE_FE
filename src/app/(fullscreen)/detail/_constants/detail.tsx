@@ -1,4 +1,13 @@
-export const MODAL_CONTENT = {
+import { ReactNode } from "react";
+
+type ModalContentItem = {
+  iconType: "confirm" | "alert";
+  title: string;
+  description: string | ReactNode;
+  confirmText: string;
+};
+
+export const MODAL_CONTENT: Record<string, ModalContentItem> = {
   apply: {
     iconType: "confirm",
     title: "이벤트를 신청할까요?",
@@ -16,5 +25,16 @@ export const MODAL_CONTENT = {
     title: "정말 이벤트 모집을 취소할까요?",
     description: "지금 취소하면 이벤트가 완전히 삭제돼요",
     confirmText: "모집 취소",
+  },
+  venueApply: {
+    iconType: "confirm",
+    title: "영화관 대관 신청을 진행할까요?",
+    description: (
+      <>
+        진행 가능 여부는 <span className="text-red-main">이메일</span>을 통해
+        알려드려요
+      </>
+    ),
+    confirmText: "신청하기",
   },
 };
