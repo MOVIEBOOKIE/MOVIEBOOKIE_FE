@@ -27,4 +27,10 @@ export const TOGGLE_TO_TYPE = {
   "확정 이벤트": 1,
 } as const;
 
+export const TOGGLE_LABELS = [
+  ...EVENT_TOGGLES.APPLY.LABELS,
+  ...EVENT_TOGGLES.MINE.LABELS,
+] as const;
+
 export type ToggleLabel = keyof typeof TOGGLE_TO_TYPE;
+export type ToggleType = (typeof TOGGLE_LABELS)[number];

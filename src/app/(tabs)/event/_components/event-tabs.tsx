@@ -3,11 +3,8 @@
 import { useState } from "react";
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
-import {
-  ToggleType,
-  useEventTabQuery,
-} from "app/_hooks/events/use-event-tab-query";
-import { EVENT_TOGGLES } from "@/constants/event-tab";
+import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
+import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -19,8 +16,9 @@ export default function EventTab({ type }: EventTabProps) {
       ? EVENT_TOGGLES.APPLY.LABELS
       : EVENT_TOGGLES.MINE.LABELS;
 
-  const [selectedToggle, setSelectedToggle] = useState(toggles[0]);
-
+  const [selectedToggle, setSelectedToggle] = useState<ToggleType>(
+    toggles[0] as ToggleType,
+  );
   const { data: events = [], isError } = useEventTabQuery(
     type,
     selectedToggle as ToggleType,
@@ -33,9 +31,9 @@ export default function EventTab({ type }: EventTabProps) {
   return (
     <div className="mt-5">
       <ToggleTab
-        options={toggles}
+        options={[...toggles]}
         selected={selectedToggle}
-        onSelect={(selected) => setSelectedToggle(selected)}
+        onSelect={(selected) => setSelectedToggle(selected as ToggleType)}
       />
 
       <div className="mt-6 flex flex-col">
