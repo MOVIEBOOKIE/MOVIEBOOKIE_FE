@@ -3,7 +3,8 @@
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PATHS } from "@/constants";
-import { sendAuthCodeToServer } from "lib/auth/sendAuthCodeToServer";
+import Loading from "app/loading";
+import { useKakaoLogin } from "app/_hooks/onboarding/useKakaoLogin";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 
@@ -21,7 +22,7 @@ const getRedirectUrl = () => {
 
 export default function Kakao() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <KakaoLogin />
     </Suspense>
   );
@@ -31,6 +32,7 @@ function KakaoLogin() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const { redirectUrl, isLocal } = getRedirectUrl();
+  const { mutateAsync: kakaoLogin, isPending } = useKakaoLogin();
 
   useEffect(() => {
     if (!code) {
@@ -41,26 +43,26 @@ function KakaoLogin() {
 
     const handleLogin = async () => {
       try {
-        const response = await sendAuthCodeToServer(code, redirectUrl, isLocal);
-        const { success, data } = response;
+        const response = await kakaoLogin({
+          code,
+          redirectUri: redirectUrl,
+          isLocal,
+        });
+
+        const { success, data, message } = response;
 
         if (success) {
           localStorage.setItem("userProfile", JSON.stringify(data));
-          router.push(PATHS.HOME);
+          router.push(PATHS.AGREEMENT);
         } else {
-          router.push(`/login?error=${encodeURIComponent(response.message)}`);
+          router.push(`/login?error=${encodeURIComponent(message)}`);
         }
       } catch (error: any) {
         router.push(`/login?error=${encodeURIComponent(error.message)}`);
       }
     };
-
     handleLogin();
   }, [code, redirectUrl, isLocal, router]);
 
-  return (
-    <div className="bg-gray-black flex h-screen items-center justify-center">
-      <h1 className="text-xl text-white">로그인 중...</h1>
-    </div>
-  );
+  return isPending ? <Loading /> : null;
 }

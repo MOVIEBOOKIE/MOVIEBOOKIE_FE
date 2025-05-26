@@ -1,7 +1,7 @@
 import axiosInstance from "./instance";
 import { ApiResponse } from "./type";
 
-export const apiGet = async <T, P = undefined>(
+export const apiGet = async <T, P = Record<string, any>>(
   url: string,
   params?: P,
 ): Promise<T> => {
@@ -9,7 +9,7 @@ export const apiGet = async <T, P = undefined>(
   return response.data.result;
 };
 
-export const apiPost = async <T, B = undefined>(
+export const apiPost = async <T, B = Record<string, any>>(
   url: string,
   body?: B,
 ): Promise<T> => {
@@ -17,7 +17,7 @@ export const apiPost = async <T, B = undefined>(
   return response.data.result;
 };
 
-export const apiPatch = async <T, B = undefined>(
+export const apiPatch = async <T, B = Record<string, any>>(
   url: string,
   body?: B,
 ): Promise<T> => {
@@ -25,7 +25,7 @@ export const apiPatch = async <T, B = undefined>(
   return response.data.result;
 };
 
-export const apiPut = async <T, B = undefined>(
+export const apiPut = async <T, B = Record<string, any>>(
   url: string,
   body?: B,
 ): Promise<T> => {
@@ -33,7 +33,7 @@ export const apiPut = async <T, B = undefined>(
   return response.data.result;
 };
 
-export const apiDelete = async <T, P = undefined>(
+export const apiDelete = async <T, P = Record<string, any>>(
   url: string,
   params?: P,
 ): Promise<T> => {

@@ -14,6 +14,7 @@ import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 import { EventFormValues } from "app/_types/event";
 import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import Modal from "@/components/modal";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -28,7 +29,7 @@ const steps = [
 export default function EventCreatePage() {
   const [step, setStep] = useState(0);
   const router = useRouter();
-
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
   const methods = useForm({
     defaultValues: {
       mediaType: "",
@@ -70,7 +71,11 @@ export default function EventCreatePage() {
       (step === 1 && !eventDate) ||
       (step === 2 && (!eventStartTime || !eventProgressTime)) ||
       (step === 3 && !recruitmentEnd) ||
-      (step === 4 && (!minParticipants || !maxParticipants)) ||
+      (step === 4 &&
+        (!minParticipants ||
+          Number(minParticipants) <= 0 ||
+          !maxParticipants ||
+          Number(maxParticipants) > 320)) ||
       (step === 5 && !locationId) ||
       (step === 6 && (!eventTitle || !mediaTitle || !description || !thumbnail))
     );
@@ -101,6 +106,18 @@ export default function EventCreatePage() {
     }
   };
   const CurrentStep = steps[step].component;
+  const handleCloseClick = () => {
+    setShowExitConfirm(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowExitConfirm(false);
+    router.push(PATHS.HOME);
+  };
+  const handleCancelExit = () => {
+    setShowExitConfirm(false);
+  };
+
   return (
     <FormProvider {...methods}>
       <FixedLayout
@@ -109,9 +126,21 @@ export default function EventCreatePage() {
         isButtonDisabled={isButtonDisabled}
         showCloseButton={true}
         onBackClick={onBack}
+        onClose={handleCloseClick}
       >
         <CurrentStep />
       </FixedLayout>
+      {showExitConfirm && (
+        <Modal
+          iconType="alert"
+          title="이벤트 생성을 취소할까요?"
+          description="지금까지 작성한 내용은 저장되지 않아요"
+          confirmText="생성 취소하기"
+          cancelText="아니오"
+          onConfirm={handleConfirmExit}
+          onCancel={handleCancelExit}
+        />
+      )}
     </FormProvider>
   );
 }

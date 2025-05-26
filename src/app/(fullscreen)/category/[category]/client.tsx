@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Card, FixedLayout, Header } from "@/components";
+import { Card, FixedLayout } from "@/components";
 import Pagination from "@/components/pagination";
 import { PATHS } from "@/constants";
 import { EmptyIcon } from "@/icons/index";
-import { CardData } from "app/_types/card";
+import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
+import { EventCard } from "app/_types/card";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -13,7 +14,7 @@ export default function CategoryPageClient({
   cards,
 }: {
   label: string;
-  cards: CardData[];
+  cards: EventCard[];
 }) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -33,7 +34,7 @@ export default function CategoryPageClient({
         {paginated.length > 0 ? (
           paginated.map((card, idx) => (
             <div key={idx} className="relative">
-              <Card {...card} />
+              <Card {...mapEventCardToCardProps(card)} />
               {idx < paginated.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
               )}

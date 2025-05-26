@@ -2,11 +2,16 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { FixedLayout, StepHeader } from "@/components";
-
+import { FixedLayout, StepHeader, Toast } from "@/components";
+import {
+  useVerifyEmail,
+  useVerifySms,
+} from "app/_hooks/onboarding/useVerifyCode";
+import Loading from "app/loading";
+import { PATHS } from "@/constants";
 export default function VerifyNumberPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <VerifyNumberContent />
     </Suspense>
   );
@@ -18,6 +23,7 @@ function VerifyNumberContent() {
   const target = searchParams.get("target") || "";
   const router = useRouter();
   const [code, setCode] = useState(Array(4).fill(""));
+  const [showToast, setShowToast] = useState(false);
 
   // 자동 포커스
   useEffect(() => {
@@ -42,15 +48,41 @@ function VerifyNumberContent() {
 
   const isComplete = code.every((char) => char !== "");
   const fullCode = code.join("");
+  const { mutate: verifySmsCode } = useVerifySms();
+  const { mutate: verifyEmailCode } = useVerifyEmail();
 
   const handleComplete = () => {
+    const certificationCode = fullCode;
     if (type === "phone") {
-      router.push("/verify/email");
+      verifySmsCode(
+        { phoneNum: target.replace(/-/g, ""), certificationCode },
+        {
+          onSuccess: () => router.push(PATHS.VERIFY_EMAIL),
+          onError: handleError,
+        },
+      );
     } else {
-      router.push("/set-profile");
+      verifyEmailCode(
+        { email: target, certificationCode },
+        {
+          onSuccess: () => router.push(PATHS.SET_PROFILE),
+          onError: handleError,
+        },
+      );
     }
   };
-
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+  const handleError = () => {
+    setShowToast(true);
+    setCode(Array(4).fill(""));
+    const firstInput = document.getElementById("code-0");
+    firstInput?.focus();
+  };
   return (
     <FixedLayout
       title="회원가입"
@@ -83,6 +115,11 @@ function VerifyNumberContent() {
           />
         ))}
       </div>
+      {showToast && (
+        <div className="mt-6 px-2">
+          <Toast>인증번호가 올바르지 않아요. 다시 시도해 주세요.</Toast>
+        </div>
+      )}
     </FixedLayout>
   );
 }

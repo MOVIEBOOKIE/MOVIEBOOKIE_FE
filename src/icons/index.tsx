@@ -60,3 +60,5 @@ export { default as KissingFaceIcon } from "./ui/kissingface.svg";
 export { default as CheckIcon } from "./ui/check.svg";
 export { default as AlertIcon } from "./ui/alert.svg";
 export { default as ToastAlertIcon } from "./ui/toast-alert.svg";
+export { default as WithDrawCheckIcon } from "./ui/withdraw-check.svg";
+export { default as LocationIcon } from "./ui/location.svg";

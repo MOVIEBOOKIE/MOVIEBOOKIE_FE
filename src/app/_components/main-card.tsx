@@ -14,7 +14,7 @@ interface CardProps {
   ddayBadge?: string | null;
   statusBadge?: string;
   progressRate?: string;
-  estimatedPrice?: string;
+  estimatedPrice?: string | number;
 }
 
 export default function Card({
@@ -37,8 +37,8 @@ export default function Card({
     >
       <div className="relative h-30 w-30 overflow-hidden rounded-md">
         <Image
-          src={imageUrl}
-          alt="포스터 이미지"
+          src={imageUrl || "/images/default-image.png"}
+          alt={title}
           fill
           className="object-cover"
         />
@@ -84,7 +84,9 @@ export default function Card({
             {estimatedPrice && (
               <p>
                 예상가격{" "}
-                <span className="ml-0.75 text-gray-300">{estimatedPrice}</span>
+                <span className="ml-0.75 text-gray-300">
+                  {Number(estimatedPrice).toLocaleString()}원
+                </span>
               </p>
             )}
           </div>

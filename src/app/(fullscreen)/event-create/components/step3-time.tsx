@@ -22,7 +22,7 @@ export default function Step3() {
         }
         description={<>이벤트를 진행할 시간과 시작 시간을 선택해 주세요</>}
       />
-      <div className="text-body-3-medium mt-9 mb-5 text-gray-300">
+      <div className="body-3-medium mt-9 mb-5 text-gray-300">
         이벤트 시작 시간
       </div>
       <div className="grid grid-cols-4 gap-2">
@@ -31,7 +31,7 @@ export default function Step3() {
             key={time}
             onClick={() => setValue("eventStartTime", time)}
             className={clsx(
-              "px-5.8 rounded-xl border py-3.5 text-center text-gray-200",
+              "body-3-regular h-12 w-19.5 rounded-xl border text-center text-gray-200",
               selectedStartTime === time
                 ? "border-red-main bg-red-main text-white"
                 : "border-gray-900",
@@ -49,9 +49,9 @@ export default function Step3() {
             key={value}
             onClick={() => setValue("eventProgressTime", value)}
             className={clsx(
-              "px-5.8 rounded-xl border py-3.5 text-center text-gray-200",
+              "body-3-regular h-12 w-19.5 rounded-xl border text-center text-gray-200",
               selectedProgress === value
-                ? "border-red-main bg-red-main text-white"
+                ? "border-red-main bg-red-main body-3-semibold text-white"
                 : "border-gray-900",
             )}
           >
