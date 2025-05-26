@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EVENT_KEY, EVENT_OPTION } from "app/_apis/events/event-queries";
 import {
+  DeleteEventsRecruit,
   DeleteEventsRegister,
   postEventsRegister,
 } from "app/_apis/events/events";
@@ -39,7 +40,7 @@ export const useDeleteEventsRecruit = () => {
   const { showToast } = useToastStore();
 
   return useMutation({
-    mutationFn: (eventId: number) => DeleteEventsRegister(eventId),
+    mutationFn: (eventId: number) => DeleteEventsRecruit(eventId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: EVENT_KEY.EVENT() });
       showToast("이벤트 모집이 취소됐어요", "checkbox");

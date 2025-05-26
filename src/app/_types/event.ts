@@ -56,4 +56,6 @@ export interface EventData {
   userImageUrl: string;
   longitude: number;
   latitude: number;
+  eventState: string;
+  userRole: string;
 }

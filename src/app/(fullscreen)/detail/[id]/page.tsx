@@ -86,7 +86,11 @@ export default function Detail() {
             </p>
           )}
         </div>
-        <Button variant="primary" onClick={handleClick}>
+        <Button
+          variant="primary"
+          onClick={handleClick}
+          disabled={data?.eventState === "모집 취소"}
+        >
           {data?.buttonState}
         </Button>
       </div>
