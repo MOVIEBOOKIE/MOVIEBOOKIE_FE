@@ -1,15 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
+import { useQuery } from "@tanstack/react-query";
+import { apiGet } from "app/_apis/methods";
+import Loading from "app/loading";
+import { EventData } from "app/_types/event";
 
 export default function EventCompletedPage() {
   const router = useRouter();
+  const params = useParams();
+  const eventId = Number(params?.eventId);
+
+  const { data, isLoading } = useQuery<EventData>({
+    queryKey: ["event-detail", eventId],
+    queryFn: () => apiGet(`/events/${eventId}`),
+    enabled: !!eventId,
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const event = data!;
 
   const handleComplete = () => {
-    router.push(PATHS.FEEDBACK);
+    router.push(`${PATHS.FEEDBACK}?eventId=${eventId}`);
   };
 
   const handleCancel = () => {
@@ -28,15 +46,13 @@ export default function EventCompletedPage() {
         <div className="mt-31 flex flex-col items-center justify-center text-center">
           <div className="relative mb-6 aspect-square w-[200px]">
             <Image
-              src="/images/image.png"
+              src={event.posterImageUrl || "/images/image.png"}
               alt="이벤트 포스터"
               fill
               className="rounded-xl object-cover"
             />
           </div>
-          <div className="body-2-semibold text-white">
-            “더 폴: 오디언스와 환상의 문”
-          </div>
+          <div className="body-2-semibold text-white">“{event.mediaTitle}”</div>
           <div className="title-2-semibold mt-1 text-white">
             이벤트 상영은 잘 완료되었나요?
           </div>
