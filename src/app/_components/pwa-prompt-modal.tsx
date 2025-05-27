@@ -4,7 +4,6 @@ import { getMobile } from "@/utils/get-mobile";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CloseIcon, ShareIcon } from "@/icons/index";
-import { createPortal } from "react-dom";
 
 export default function PwaPromptModal() {
   const [showModal, setShowModal] = useState(true);
@@ -57,7 +56,7 @@ export default function PwaPromptModal() {
 
   if (!showModal) return null;
 
-  return createPortal(
+  return (
     <div className="fixed inset-0 z-50 bg-[rgba(0,0,0,0.7)]">
       <div className="fixed right-5 bottom-10 left-5 mx-auto max-w-md rounded-2xl bg-gray-900 px-5 text-center text-white shadow-xl">
         <button
@@ -124,7 +123,6 @@ export default function PwaPromptModal() {
           </>
         )}
       </div>
-    </div>,
-    document.body,
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { FixedLayout } from "@/components";
+import NotificationTestButton from "@/components/fcm/noti-test";
 
 export default function PrivacyPolicy() {
   return (
@@ -12,6 +13,7 @@ export default function PrivacyPolicy() {
       showBottomButton={false}
       state="default"
     >
+      <NotificationTestButton />
       <div className="text-gray-200">//TODO: 연결된 소셜 계정 추가</div>
     </FixedLayout>
   );
