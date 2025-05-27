@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, Input } from "@/components";
-import { BackIcon } from "@/icons/index";
+import { BackIcon, EmptyIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
 import { EVENT_CATEGORIES } from "@/constants";
 import { useRouter } from "next/navigation";
@@ -83,7 +83,13 @@ export default function Search() {
                 />
               ))
             ) : (
-              <p>데이터가 없습니다.</p>
+              <div className="mt-64.5 flex flex-col items-center justify-center text-center text-gray-500">
+                <EmptyIcon />
+                <p className="body-3-medium mt-3.5 text-gray-800">
+                  검색 결과가 없어요 <br />
+                  다른 검색어를 입력해보세요
+                </p>
+              </div>
             )}
           </div>
           {/* <Pagination
