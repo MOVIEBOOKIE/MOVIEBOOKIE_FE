@@ -76,8 +76,18 @@ export default function Step6() {
                     )}
                     <div className="relative z-20 flex-1 gap-3">
                       <div className="mb-2 flex flex-wrap gap-1">
-                        {cinema.locationKeywordList.map(
-                          (tag: string, idx: number) => (
+                        {[...cinema.locationKeywordList]
+                          .sort((a, b) => {
+                            const scaleKeywords = [
+                              "소규모",
+                              "중규모",
+                              "대규모",
+                            ];
+                            const aIndex = scaleKeywords.includes(a) ? 0 : 1;
+                            const bIndex = scaleKeywords.includes(b) ? 0 : 1;
+                            return aIndex - bIndex;
+                          })
+                          .map((tag: string, idx: number) => (
                             <span
                               key={idx}
                               className={`caption-3-medium mt-0.5 rounded-[4px] px-1.5 py-1 ${
@@ -92,8 +102,7 @@ export default function Step6() {
                             >
                               {tag}
                             </span>
-                          ),
-                        )}
+                          ))}
                       </div>
                       <div className="body-2-semibold text-gray-200">
                         {cinema.locationName}
