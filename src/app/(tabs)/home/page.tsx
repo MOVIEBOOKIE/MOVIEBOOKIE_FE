@@ -22,7 +22,6 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
-  console.log("현재 저장된 유저 Store 값:", user);
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -145,7 +144,18 @@ export default function Home() {
             </div>
           ))
         )}
-
+        {events.length > 0 && events.length <= 4 && (
+          <div
+            className={
+              {
+                1: "h-105",
+                2: "h-72",
+                3: "h-56",
+                4: "h-40",
+              }[events.length]
+            }
+          />
+        )}
         {events.length === 5 && (
           <Button
             className="mt-1 mb-5"

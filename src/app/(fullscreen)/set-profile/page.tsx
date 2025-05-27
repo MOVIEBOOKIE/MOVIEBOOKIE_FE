@@ -66,7 +66,7 @@ export default function VerifyFlow() {
               {userInfo.certificationEmail}
             </div>
             <div className="caption-1-medium mt-1 text-gray-500">
-              {/* {formatPhoneNumberToBasic(userInfo.phoneNumber)} */}
+              {formatPhoneNumberToBasic(userInfo.phoneNumber)}
             </div>
           </div>
         )}
