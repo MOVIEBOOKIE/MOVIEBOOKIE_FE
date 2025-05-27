@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { usePostUserType } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/useUserStore";
+import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Trait() {
   const router = useRouter();
@@ -17,9 +18,9 @@ export default function Trait() {
   const methods = useForm({
     defaultValues: { mood: "", criterion: "", content: "" },
   });
-  const user = useUserStore((state) => state.user);
-  const userName = user?.nickname ?? "회원";
-  //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
+  const { data: userInfo } = useMyPage();
+
+  const userName = userInfo?.username ?? "회원";
 
   const { mutate } = usePostUserType();
   const handleClick = () => {
@@ -55,7 +56,6 @@ export default function Trait() {
 
   const isLastStep = step === 3;
   const buttonText = isLastStep ? "제출하기" : "다음";
-  const nickname = "서현";
 
   return (
     <FormProvider {...methods}>
