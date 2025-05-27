@@ -4,25 +4,14 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
-import { apiGet } from "app/_apis/methods";
-import Loading from "app/loading";
-import { EventData } from "app/_types/event";
+import { useGetEvent } from "app/_hooks/events/use-events";
 
 export default function EventCompletedPage() {
   const router = useRouter();
   const params = useParams();
   const eventId = Number(params?.id);
 
-  const { data, isLoading } = useQuery<EventData>({
-    queryKey: ["event-detail", eventId],
-    queryFn: () => apiGet(`/events/${eventId}`),
-    enabled: !!eventId,
-  });
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { data } = useGetEvent(eventId);
 
   const handleComplete = () => {
     router.push(`${PATHS.FEEDBACK}?eventId=${eventId}`);
