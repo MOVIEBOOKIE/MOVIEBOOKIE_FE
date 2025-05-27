@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { badReasons, goodReasons, PATHS } from "@/constants";
+import { useSubmitFeedback } from "app/_hooks/auth/use-submit-feedback";
 
 export default function FeedbackPage() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
+  const eventId = searchParams.get("eventId");
 
   const router = useRouter();
   const [feedbackType, setFeedbackType] = useState<"good" | "bad" | null>(null);
   const [step, setStep] = useState<1 | 2>(1);
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [text, setText] = useState("");
+  const { mutate: submitFeedback } = useSubmitFeedback();
 
   useEffect(() => {
     if (type === "good" || type === "bad") {
@@ -22,12 +25,25 @@ export default function FeedbackPage() {
   }, [type]);
 
   const handleSubmit = () => {
-    console.log({
-      type: feedbackType,
-      reason: selectedReason,
-      text,
-    });
-    router.push(PATHS.NOTIFICATIONS);
+    if (!selectedReason) return;
+
+    submitFeedback(
+      {
+        isSatisfied: feedbackType === "good",
+        feedback: selectedReason,
+        comment: text,
+        eventId: eventId ? Number(eventId) : undefined, // optional
+      },
+      {
+        onSuccess: () => {
+          router.push(PATHS.NOTIFICATIONS);
+        },
+        onError: (error) => {
+          console.error("제출 실패", error);
+          alert("피드백 제출에 실패했습니다.");
+        },
+      },
+    );
   };
 
   const reasons = feedbackType === "good" ? goodReasons : badReasons;
@@ -41,7 +57,7 @@ export default function FeedbackPage() {
         showBottomButton={false}
         state="default"
       >
-        <div className="pt-10 text-white">
+        <div className="text-white">
           {feedbackType && step === 1 && (
             <div className="flex flex-col">
               <div className="mb-3">

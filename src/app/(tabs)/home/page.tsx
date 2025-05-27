@@ -9,8 +9,8 @@ import { PATHS, CATEGORY_LABELS } from "@/constants";
 import { useUserStore } from "app/_stores/useUserStore";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
-import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { categoryMap } from "@/constants/category-map";
+import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
