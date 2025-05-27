@@ -23,7 +23,9 @@ const DeadlineCalendar = ({
   const event = dayjs(eventDate);
   const latestDeadline = event.subtract(2, "week");
 
-  const [currentMonth, setCurrentMonth] = useState(dayjs());
+  const [currentMonth, setCurrentMonth] = useState(() =>
+    selectedDeadline ? dayjs(selectedDeadline).startOf("month") : dayjs(),
+  );
   const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [barBlocks, setBarBlocks] = useState<
     { row: number; startIdx: number; endIdx: number }[]
