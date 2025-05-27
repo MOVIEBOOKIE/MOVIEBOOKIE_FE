@@ -27,7 +27,7 @@ export default function Step4() {
           </>
         }
         description={
-          <>이벤트 진행 날짜 기준, 최대 2주 전까지만 설정할 수 있어요</>
+          <>모집 기간은 오늘부터, 진행일 기준 최대 2주 전까지만 가능해요 </>
         }
       />
       <DeadlineCalendar

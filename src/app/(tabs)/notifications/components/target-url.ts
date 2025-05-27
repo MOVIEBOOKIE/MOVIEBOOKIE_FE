@@ -1,3 +1,5 @@
+import { PATHS } from "@/constants";
+
 export const getNotificationTargetUrl = (
   shortTitle: string,
   eventId?: number,
@@ -13,19 +15,19 @@ export const getNotificationTargetUrl = (
       "이벤트 모집 완료",
     ].includes(shortTitle)
   ) {
-    return eventId ? `/detail/${eventId}` : null;
+    return eventId ? PATHS.EVENT_DETAIL(eventId) : null;
   }
 
   if (["이벤트 신청 완료"].includes(shortTitle)) {
-    return `/event`;
+    return PATHS.EVENT;
   }
 
   if (["이벤트 상영 완료"].includes(shortTitle)) {
-    return eventId ? `/event-completed/${eventId}` : null;
+    return eventId ? PATHS.EVENT_COMPLETED(eventId) : null;
   }
 
   if (["이벤트 생성 완료"].includes(shortTitle)) {
-    return `/event?tab=mine`;
+    return `${PATHS.EVENT}?tab=mine`;
   }
 
   return null;

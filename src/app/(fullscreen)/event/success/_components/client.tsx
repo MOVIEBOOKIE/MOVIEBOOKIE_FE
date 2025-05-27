@@ -32,8 +32,7 @@ export default function Client() {
   };
 
   const handlComplete = () => {
-    router.push(PATHS.EVENT);
-    //TODO: 모집목록 연결
+    router.push(`${PATHS.EVENT}?tab=mine`);
   };
   return (
     <>

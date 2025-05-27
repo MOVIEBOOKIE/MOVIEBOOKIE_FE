@@ -7,6 +7,8 @@ export const PATHS = {
   SEARCH: "/search",
   LOGIN: "/login",
   EVENT_CREATE: "/event-create",
+  EVENT_DETAIL: (eventId: number) => `/detail/${eventId}`,
+  EVENT_COMPLETED: (eventId: number) => `/event-completed/${eventId}`,
   KAKAO_LOGIN: "/login/kakao",
   EVENT_SUCCESS: "/event/success",
   VERIFY_PHONE: "/verify/phone",
