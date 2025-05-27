@@ -1,17 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { KissingFaceIcon, ThinkingFaceIcon } from "@/icons/index";
 import { PATHS } from "@/constants";
 
 export default function FeedbackStartPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const eventId = searchParams.get("eventId");
 
   const handleFeedback = (type: "bad" | "good") => {
-    router.push(PATHS.FEEDBACK_RESULT_WITH_TYPE(type));
+    router.push(
+      PATHS.FEEDBACK_RESULT_WITH_TYPE(
+        type,
+        eventId ? Number(eventId) : undefined,
+      ),
+    );
   };
-
   return (
     <FixedLayout
       title="평가 및 피드백"

@@ -1,15 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
+import { useGetEvent } from "app/_hooks/events/use-events";
 
 export default function EventCompletedPage() {
   const router = useRouter();
+  const params = useParams();
+  const eventId = Number(params?.id);
+
+  const { data } = useGetEvent(eventId);
 
   const handleComplete = () => {
-    router.push(PATHS.FEEDBACK);
+    router.push(`${PATHS.FEEDBACK}?eventId=${eventId}`);
   };
 
   const handleCancel = () => {
@@ -28,15 +33,13 @@ export default function EventCompletedPage() {
         <div className="mt-31 flex flex-col items-center justify-center text-center">
           <div className="relative mb-6 aspect-square w-[200px]">
             <Image
-              src="/images/image.png"
+              src={data?.posterImageUrl || "/images/image.png"}
               alt="이벤트 포스터"
               fill
               className="rounded-xl object-cover"
             />
           </div>
-          <div className="body-2-semibold text-white">
-            “더 폴: 오디언스와 환상의 문”
-          </div>
+          <div className="body-2-semibold text-white">“{data?.mediaTitle}”</div>
           <div className="title-2-semibold mt-1 text-white">
             이벤트 상영은 잘 완료되었나요?
           </div>

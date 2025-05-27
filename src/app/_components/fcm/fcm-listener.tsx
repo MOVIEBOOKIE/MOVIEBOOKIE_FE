@@ -1,28 +1,43 @@
 "use client";
 
+import { parseNotificationMeta } from "@/utils/map-noti";
+import { useNotificationStore } from "app/_stores/use-noti";
+import { useToastStore } from "app/_stores/use-toast-store";
+import { onFirebaseMessage } from "app/lib/firebase-notification";
 import { useEffect } from "react";
-import { onMessage } from "firebase/messaging";
-import { messaging } from "../../../../firebase-config";
+
 export default function FcmListener() {
+  const { showToast } = useToastStore();
+  const { addNotification } = useNotificationStore();
+
   useEffect(() => {
-    if (!messaging) return;
+    const unsubscribe = onFirebaseMessage((payload) => {
+      console.log("@@@@알림 수신:", payload);
 
-    const unsubscribe = onMessage(messaging, async (payload) => {
-      console.log("📩 포그라운드 알림 수신:", payload);
-
-      // 시스템 알림처럼 표시 (브라우저 알림 API로 직접 호출)
-      const registration = await navigator.serviceWorker.ready;
-      registration.showNotification(payload.notification?.title || "알림", {
-        body: payload.notification?.body || "",
-        icon: "/images/favicon/48x48.png",
-        data: {
-          url: "https://movie-bookie.shop",
-        },
+      const now = new Date();
+      const timeString = now.toLocaleTimeString("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
-    });
 
-    return () => unsubscribe();
-  }, []);
+      const rawTitle = payload.notification?.title || "알림";
+      const { shortTitle, status } = parseNotificationMeta(rawTitle);
+
+      addNotification({
+        type: shortTitle,
+        title: rawTitle,
+        description: payload.notification?.body || "",
+        time: timeString,
+        status,
+        eventId: payload.data?.eventId
+          ? Number(payload.data.eventId)
+          : undefined,
+        isRead: false,
+      });
+
+      showToast(payload.notification?.body || "새 알림이 도착했습니다!");
+    });
+  }, [addNotification, showToast]);
 
   return null;
 }

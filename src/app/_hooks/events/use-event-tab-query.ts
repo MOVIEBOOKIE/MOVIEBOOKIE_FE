@@ -19,6 +19,8 @@ export function useEventTabQuery(
         page: 0,
         size: 10,
       }),
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   return {

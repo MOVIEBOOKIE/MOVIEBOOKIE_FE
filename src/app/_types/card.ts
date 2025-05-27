@@ -1,5 +1,5 @@
 export interface EventCard {
-  eventId: number;
+  eventId: number | string;
   mediaType: string;
   mediaTitle: string;
   description: string;

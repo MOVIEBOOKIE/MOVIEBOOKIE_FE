@@ -1,4 +1,8 @@
+"use client";
+
 import { NotiCancelIcon, NotiCheckIcon, NotiConfirmIcon } from "@/icons/index";
+import { useRouter } from "next/navigation";
+import { getNotificationTargetUrl } from "./target-url";
 
 export type NotificationStatus = "confirm" | "cancel" | "check";
 
@@ -8,30 +12,49 @@ interface NotificationItemProps {
   description: string;
   time: string;
   status: NotificationStatus;
+  eventId?: number;
+  isRead?: boolean;
+  onClick?: () => void;
 }
 
 export function NotificationItem({
   type,
-  title,
   description,
   time,
   status,
+  eventId,
+  isRead = false,
+  onClick,
 }: NotificationItemProps) {
   const statusIcon = {
     confirm: <NotiConfirmIcon />,
     cancel: <NotiCancelIcon />,
     check: <NotiCheckIcon />,
   }[status];
+  const router = useRouter();
 
   return (
-    <div className="flex gap-2 px-5 py-3.25">
+    <div
+      onClick={() => {
+        if (onClick) onClick();
+        const targetUrl = getNotificationTargetUrl(type, eventId);
+        if (targetUrl) {
+          router.push(targetUrl);
+        }
+      }}
+      className={`flex h-[107px] cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
+        isRead ? "bg-gray-black" : "bg-gray-950"
+      }`}
+    >
       <div>{statusIcon}</div>
-      <div className="flex-1 text-gray-200">
-        <p className="caption-1-medium mb-1 text-gray-500">{type}</p>
-        <p className="body-3-medium">“{title}”</p>
-        <p className="body-3-medium whitespace-pre-line">{description}</p>
+      <div className="flex-1 gap-2 text-gray-100">
+        <p className="caption-1-medium mb-0.8 m-0.5">{type}</p>
+        <p className="body-3-medium text-gray-400">{description}</p>
       </div>
-      <span className="caption-1-regular self-start text-gray-500">{time}</span>
+
+      <span className="caption-1-regular mt-1 whitespace-nowrap text-gray-500">
+        {time}
+      </span>
     </div>
   );
 }
