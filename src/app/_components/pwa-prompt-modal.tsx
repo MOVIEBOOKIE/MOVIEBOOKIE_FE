@@ -14,18 +14,9 @@ export default function PwaPromptModal() {
     const osType = getMobile();
     setOs(osType);
 
-    // 실제환경
-    // const hasPrompted = localStorage.getItem("pwaPrompted");
-    // if (hasPrompted) return;
+    const hasPrompted = localStorage.getItem("pwaPrompted");
+    if (hasPrompted) return;
 
-    // 개발 중엔 true로 설정
-    const forceShow = true;
-    if (!forceShow) {
-      const hasPrompted = localStorage.getItem("pwaPrompted");
-      if (hasPrompted) return;
-    }
-
-    // Android: beforeinstallprompt 사용
     if (osType === "android") {
       const handler = (e: any) => {
         e.preventDefault();

@@ -1,26 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { Card, FixedLayout } from "@/components";
 import Pagination from "@/components/pagination";
 import { PATHS } from "@/constants";
 import { EmptyIcon } from "@/icons/index";
-import { mapEventCardToCardProps } from "@/utils/map-to-eventcard";
-import { EventCard } from "app/_types/card";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Loading from "app/loading";
+import { useCategoryPageEvents } from "app/_hooks/events/use-category-events";
 
-export default function CategoryPageClient({
-  label,
-  cards,
-}: {
-  label: string;
-  cards: EventCard[];
-}) {
+export default function CategoryPageClient({ label }: { label: string }) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const router = useRouter();
-  const start = currentPage * itemsPerPage;
-  const paginated = cards.slice(start, start + itemsPerPage);
+
+  const { data, isLoading } = useCategoryPageEvents(
+    label,
+    currentPage,
+    itemsPerPage,
+  );
+
+  const cards = data?.eventList ?? [];
+  const totalPages = data?.totalPages ?? 0;
+
+  if (isLoading) return <Loading />;
 
   return (
     <FixedLayout
@@ -28,14 +31,25 @@ export default function CategoryPageClient({
       showBackButton
       isHeader
       showBottomButton={false}
-      state="default"
+      state="detail"
     >
       <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-        {paginated.length > 0 ? (
-          paginated.map((card, idx) => (
-            <div key={idx} className="relative">
-              <Card {...mapEventCardToCardProps(card)} />
-              {idx < paginated.length - 1 && (
+        {cards.length > 0 ? (
+          cards.map((card, idx) => (
+            <div key={card.eventId}>
+              <Card
+                id={String(card.eventId)}
+                imageUrl={card.posterImageUrl}
+                category={card.mediaType}
+                title={card.mediaTitle}
+                placeAndDate={`${card.locationName} · ${card.eventDate}`}
+                description={card.description}
+                ddayBadge={`D-${card.d_day}`}
+                statusBadge={card.eventStatus}
+                progressRate={`${card.rate}%`}
+                estimatedPrice={card.estimatedPrice}
+              />
+              {idx < cards.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />
               )}
             </div>
@@ -56,10 +70,11 @@ export default function CategoryPageClient({
           </div>
         )}
       </div>
-      {paginated.length > 0 && (
+
+      {!isLoading && cards.length > 0 && (
         <div className="w-full">
           <Pagination
-            pageCount={Math.ceil(cards.length / itemsPerPage)}
+            pageCount={totalPages}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
           />

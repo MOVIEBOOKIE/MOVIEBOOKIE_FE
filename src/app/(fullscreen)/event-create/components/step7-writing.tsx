@@ -6,11 +6,14 @@ import Image from "next/image";
 import { StepHeader } from "@/components";
 import { ImageIcon, ImageDeleteIcon } from "@/icons/index";
 import PostTextArea from "./post-textarea";
+import { useUserStore } from "app/_stores/useUserStore";
 
 export default function Step7() {
   const { register, setValue } = useFormContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const nickname = useUserStore((state) => state.user?.nickname);
+  const displayName = nickname || "회원님";
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,7 +38,7 @@ export default function Step7() {
         StepHeader="7/7"
         title={
           <>
-            서현님, 거의 다 왔어요!
+            {displayName}님, 거의 다 왔어요!
             <br />
             이벤트를 더 자세히 소개해볼까요?
           </>

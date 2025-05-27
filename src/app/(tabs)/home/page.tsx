@@ -10,6 +10,7 @@ import { useUserStore } from "app/_stores/useUserStore";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
+import { categoryMap } from "@/constants/category-map";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -35,10 +36,8 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
-    useCategoryEvents(selected);
-
-  const allEvents = data?.pages.flat() ?? [];
+  const { data, isLoading } = useCategoryEvents(selected);
+  const events = data?.eventList ?? [];
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
@@ -47,7 +46,6 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
-
   return (
     <div
       ref={containerRef}
@@ -57,7 +55,7 @@ export default function Home() {
         <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">
             {" "}
-            {user?.userTypeTitle || "~~러"}
+            {user?.userTypeTitle || ""}
           </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "회원"}님을 위한 추천
@@ -120,7 +118,7 @@ export default function Home() {
               <CardSkeleton key={idx} />
             ))}
           </div>
-        ) : allEvents.length === 0 ? (
+        ) : events.length === 0 ? (
           <div className="mb-78 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
             <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
@@ -129,7 +127,7 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          allEvents.map((event, index) => (
+          events.map((event, index) => (
             <div key={event.eventId}>
               <Card
                 id={String(event.eventId)}
@@ -143,24 +141,24 @@ export default function Home() {
                 progressRate={`${event.rate}%`}
                 estimatedPrice={String(event.estimatedPrice)}
               />
-              {index !== allEvents.length - 1 && (
-                <div className="my-4 h-0.25 w-full bg-gray-950" />
-              )}
+              <div className="my-4 h-0.25 w-full bg-gray-950" />
             </div>
           ))
         )}
 
-        {hasNextPage && (
+        {events.length === 5 && (
           <Button
-            className="mt-6 mb-8.5"
+            className="mt-1 mb-5"
             variant="secondary"
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
+            onClick={() => {
+              const categorySlug = categoryMap[selected];
+              router.push(`/category/${categorySlug}`);
+            }}
           >
-            {isFetchingNextPage ? "불러오는 중..." : "더보기"}
+            더보기
           </Button>
         )}
-        {allEvents.length === 1 && <div className="h-105" />}
+        {events.length === 1 && <div className="h-105" />}
       </motion.section>
     </div>
   );
