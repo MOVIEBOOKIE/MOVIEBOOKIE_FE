@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PATHS } from "@/constants/index";
 import EventTab from "./_components/event-tabs";
 import TicketTab from "./_components/ticket-tab";
@@ -10,9 +10,22 @@ import { PopcornIcon } from "@/icons/index";
 
 export default function EventPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [topTab, setTopTab] = useState<"신청 목록" | "내 이벤트" | "내 티켓">(
     "신청 목록",
   );
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "mine") {
+      setTopTab("내 이벤트");
+    } else if (tabParam === "ticket") {
+      setTopTab("내 티켓");
+    } else {
+      setTopTab("신청 목록");
+    }
+  }, [searchParams]);
 
   return (
     <div className="relative min-h-screen pb-32 text-white">

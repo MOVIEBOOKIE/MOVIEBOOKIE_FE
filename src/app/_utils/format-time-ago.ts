@@ -1,5 +1,7 @@
 export function formatTimeAgo(isoDate: string): string {
   const date = new Date(isoDate);
+  if (isNaN(date.getTime())) return "";
+
   const diff = (Date.now() - date.getTime()) / 1000;
 
   if (diff < 60) return "방금 전";
