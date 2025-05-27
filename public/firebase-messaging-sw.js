@@ -1,3 +1,4 @@
+importScripts("../src/scripts/generate-firebase-config");
 self.FIREBASE_CONFIG = {
   apiKey: "__API_KEY__",
   authDomain: "__AUTH_DOMAIN__",
