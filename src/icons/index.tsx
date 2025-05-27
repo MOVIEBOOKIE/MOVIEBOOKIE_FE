@@ -62,3 +62,5 @@ export { default as AlertIcon } from "./ui/alert.svg";
 export { default as ToastAlertIcon } from "./ui/toast-alert.svg";
 export { default as WithDrawCheckIcon } from "./ui/withdraw-check.svg";
 export { default as LocationIcon } from "./ui/location.svg";
+export { default as DangerIcon } from "./ui/danger.svg";
+export { default as CheckAlertIcon } from "./ui/check-alert.svg";
