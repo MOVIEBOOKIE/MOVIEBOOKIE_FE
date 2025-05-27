@@ -43,7 +43,7 @@ export default function FeedbackPage() {
         },
         onError: (error) => {
           console.error("제출 실패", error);
-          alert("피드백 제출에 실패했습니다.");
+          showToast("피드백 제출에 실패했습니다. 다시 시도해주세요.", "alert");
         },
       },
     );
