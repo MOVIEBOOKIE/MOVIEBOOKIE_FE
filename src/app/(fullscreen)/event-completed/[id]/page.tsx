@@ -12,7 +12,7 @@ import { EventData } from "app/_types/event";
 export default function EventCompletedPage() {
   const router = useRouter();
   const params = useParams();
-  const eventId = Number(params?.eventId);
+  const eventId = Number(params?.id);
 
   const { data, isLoading } = useQuery<EventData>({
     queryKey: ["event-detail", eventId],
@@ -23,8 +23,6 @@ export default function EventCompletedPage() {
   if (isLoading) {
     return <Loading />;
   }
-
-  const event = data!;
 
   const handleComplete = () => {
     router.push(`${PATHS.FEEDBACK}?eventId=${eventId}`);
@@ -46,13 +44,13 @@ export default function EventCompletedPage() {
         <div className="mt-31 flex flex-col items-center justify-center text-center">
           <div className="relative mb-6 aspect-square w-[200px]">
             <Image
-              src={event.posterImageUrl || "/images/image.png"}
+              src={data?.posterImageUrl || "/images/image.png"}
               alt="이벤트 포스터"
               fill
               className="rounded-xl object-cover"
             />
           </div>
-          <div className="body-2-semibold text-white">“{event.mediaTitle}”</div>
+          <div className="body-2-semibold text-white">“{data?.mediaTitle}”</div>
           <div className="title-2-semibold mt-1 text-white">
             이벤트 상영은 잘 완료되었나요?
           </div>

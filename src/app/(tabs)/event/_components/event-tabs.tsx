@@ -41,6 +41,7 @@ export default function EventTab({ type }: EventTabProps) {
           events.map((event, index) => (
             <div key={event.eventId}>
               <Card
+                id={event.eventId}
                 imageUrl={event.posterImageUrl}
                 category={event.mediaType}
                 title={event.mediaTitle}

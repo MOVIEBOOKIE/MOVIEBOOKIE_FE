@@ -29,7 +29,9 @@ export const PATHS = {
   WITHDRAWAL: "/withdraw",
   SOCIAL_ACCOUNTS: "/accounts", // 연결된 소셜계정
   FEEDBACK_RESULT: "/feedback/result",
-  FEEDBACK_RESULT_WITH_TYPE: (type: "good" | "bad") =>
-    `/feedback/result?type=${type}`,
+  FEEDBACK_RESULT_WITH_TYPE: (type: "good" | "bad", eventId?: number) =>
+    eventId
+      ? `/feedback/result?type=${type}&eventId=${eventId}`
+      : `/feedback/result?type=${type}`,
   TRAIT_RESULT: "/trait-result",
 } as const;
