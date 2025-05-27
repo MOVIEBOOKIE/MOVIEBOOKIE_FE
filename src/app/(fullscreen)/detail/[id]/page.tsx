@@ -17,6 +17,7 @@ import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "app/(fullscreen)/detail/_constants/detail";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
+import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 
 type ModalType = "apply" | "cancel" | "recruitCancel" | "venueApply" | null;
 
@@ -29,6 +30,7 @@ export default function Detail() {
   const eventId = Number(id);
 
   const { data } = useGetEvent(eventId);
+  const { data: moveToTicket } = useGetToTicket(eventId);
 
   const handleClick = () => {
     switch (data?.buttonState) {
@@ -42,7 +44,10 @@ export default function Detail() {
         setModalType("recruitCancel");
         break;
       case "티켓으로 이동":
-        router.push(PATHS.TICKET);
+        if (moveToTicket?.ticketId) {
+          router.push(`${PATHS.TICKET}?id=${moveToTicket.ticketId}`);
+        }
+
         break;
       case "대관 신청하기":
         setModalType("venueApply");

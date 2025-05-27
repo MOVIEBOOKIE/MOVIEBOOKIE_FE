@@ -7,4 +7,5 @@ export const END_POINTS = {
   EVENT_REGISTER: (eventId: number) => `/events/${eventId}/register`,
   DELETE_EVENT_RECRUIT: (eventId: number) => `/events/${eventId}/recruit`,
   POST_EVENT_VENUE: (eventId: number) => `/events/${eventId}/venue`,
+  GET_TO_TICKET: (eventId: number) => `/tickets/${eventId}/to-ticket`,
 };
