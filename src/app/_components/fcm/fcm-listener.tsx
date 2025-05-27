@@ -1,4 +1,3 @@
-// app/_components/fcm-listener.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -15,9 +14,9 @@ export default function FcmListener() {
       const registration = await navigator.serviceWorker.ready;
       registration.showNotification(payload.notification?.title || "알림", {
         body: payload.notification?.body || "",
-        icon: "/icon.png", // ✅ 여기에 아이콘 경로 커스텀 가능
+        icon: "/images/favicon/48x48.png",
         data: {
-          url: "https://movie-bookie.shop", // ✅ 클릭 시 열 페이지
+          url: "https://movie-bookie.shop",
         },
       });
     });

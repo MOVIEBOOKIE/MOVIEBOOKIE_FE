@@ -1,3 +1,4 @@
+"use client";
 import { ReactNode, useEffect } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
@@ -8,6 +9,14 @@ import ToastRenderer from "./_components/toast-renderer";
 import FcmListener from "./_components/fcm/fcm-listener";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
+        .then((reg) => console.log("✅ SW 등록됨:", reg))
+        .catch((err) => console.error("❌ SW 등록 실패", err));
+    }
+  }, []);
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>

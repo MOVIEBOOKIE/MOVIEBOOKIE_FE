@@ -1,4 +1,3 @@
-// app/_components/notification-test-button.tsx
 "use client";
 
 import { useState } from "react";
@@ -12,8 +11,12 @@ export default function NotificationTestButton() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: "🔥 테스트 알림",
-          body: "알림 잘 도착했나요?",
+          notification: {
+            title: "🔥 테스트 알림",
+            body: "알림 잘 도착했나요?",
+            icon: "/icon-192.png",
+            click_action: "https://movie-bookie.shop",
+          },
         }),
       });
 
