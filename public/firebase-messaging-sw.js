@@ -20,7 +20,9 @@ firebase.initializeApp(self.FIREBASE_CONFIG);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
-  const notificationTitle = payload.notification.title;
+  const rawTitle = payload.notification.title || "";
+  const notificationTitle = rawTitle.replace(/ 알림$/, "");
+
   const notificationOptions = {
     body: payload.notification.body,
     data: {
