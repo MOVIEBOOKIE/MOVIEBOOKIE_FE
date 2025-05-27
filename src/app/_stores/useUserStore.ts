@@ -9,6 +9,7 @@ interface UserProfile {
   hostExperienceCount: number;
   participationExperienceCount: number;
   ticketCount: number;
+  phoneNumber: String;
 }
 
 interface UserState {
@@ -21,7 +22,13 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
-      setUser: (user) => set({ user }),
+      setUser: (partialUser) =>
+        set((state) => ({
+          user: {
+            ...state.user,
+            ...partialUser,
+          },
+        })),
       clearUser: () => set({ user: null }),
     }),
     {

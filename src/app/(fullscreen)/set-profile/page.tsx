@@ -5,12 +5,11 @@ import { DefaultProfileIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import Loading from "app/loading";
 import { formatPhoneNumberToBasic } from "@/utils/format-phone";
-import { useUserInfo } from "app/_hooks/use-user-info";
+import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function VerifyFlow() {
   const router = useRouter();
-
-  const { data: userInfo, isLoading, isError } = useUserInfo();
+  const { data: userInfo, isLoading, isError } = useMyPage();
   if (isLoading) {
     return <Loading />;
   }
@@ -64,10 +63,10 @@ export default function VerifyFlow() {
               {userInfo.username}
             </div>
             <div className="caption-1-medium mt-1 text-gray-500">
-              {userInfo.email}
+              {userInfo.certificationEmail}
             </div>
             <div className="caption-1-medium mt-1 text-gray-500">
-              {formatPhoneNumberToBasic(userInfo.phoneNumber)}
+              {/* {formatPhoneNumberToBasic(userInfo.phoneNumber)} */}
             </div>
           </div>
         )}

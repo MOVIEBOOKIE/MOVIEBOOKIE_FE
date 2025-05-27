@@ -19,6 +19,7 @@ export const useMyPage = () => {
           hostExperienceCount: res.hostExperienceCount,
           participationExperienceCount: res.participationExperienceCount,
           ticketCount: res.ticketCount,
+          phoneNumber: res.phoneNumber,
         });
       }
       return res;

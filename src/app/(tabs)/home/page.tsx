@@ -22,7 +22,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
-
+  console.log("현재 저장된 유저 Store 값:", user);
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
