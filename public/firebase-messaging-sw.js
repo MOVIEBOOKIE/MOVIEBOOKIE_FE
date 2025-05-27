@@ -34,6 +34,11 @@ messaging.onBackgroundMessage(function (payload) {
 });
 
 self.addEventListener("notificationclick", function (event) {
+  const eventId = event.notification.data?.eventId;
+  const urlToOpen = eventId
+    ? `/notifications?eventId=${eventId}`
+    : "/notifications";
+
   event.notification.close();
 
   event.waitUntil(
@@ -41,14 +46,9 @@ self.addEventListener("notificationclick", function (event) {
       .matchAll({ type: "window", includeUncontrolled: true })
       .then((clientList) => {
         for (const client of clientList) {
-          if (client.url.includes(targetUrl) && "focus" in client) {
-            return client.focus();
-          }
+          if ("focus" in client) return client.focus();
         }
-
-        if (clients.openWindow) {
-          return clients.openWindow(targetUrl);
-        }
+        if (clients.openWindow) return clients.openWindow(urlToOpen);
       }),
   );
 });
