@@ -42,7 +42,7 @@ export default function EventStatus({
       );
     case "상영 취소":
       return (
-        <AlertContent iconType="check">
+        <AlertContent iconType="danger">
           상영이 취소된 이벤트입니다.
         </AlertContent>
       );
