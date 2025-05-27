@@ -6,7 +6,7 @@ export type NotificationStatus = "confirm" | "cancel" | "check";
 
 interface NotificationState {
   list: NotificationItem[];
-  addNotification: (noti: NotificationItem) => void;
+  addNotification: (n: NotificationItem) => void;
   markAsRead: (index: number) => void;
   clearNotifications: () => void;
 }
@@ -16,15 +16,20 @@ export const useNotificationStore = create<NotificationState>()(
     (set) => ({
       list: [],
       addNotification: (noti) =>
-        set((state) => ({ list: [noti, ...state.list] })),
+        set((state) => {
+          const newList = [noti, ...state.list].slice(0, 50);
+          return { list: newList };
+        }),
       markAsRead: (index) =>
         set((state) => {
           const updated = [...state.list];
-          updated[index] = { ...updated[index], isRead: true };
+          if (updated[index]) updated[index].isRead = true;
           return { list: updated };
         }),
       clearNotifications: () => set({ list: [] }),
     }),
-    { name: "notification-store" },
+    {
+      name: "notifications-store",
+    },
   ),
 );
