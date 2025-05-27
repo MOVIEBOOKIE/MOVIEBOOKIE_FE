@@ -1,6 +1,7 @@
 export const PATHS = {
   HOME: "/",
   EVENT: "/event",
+  TICKET: "/event/ticket",
   NOTIFICATIONS: "/notifications",
   MYPAGE: "/my-page",
   SEARCH: "/search",

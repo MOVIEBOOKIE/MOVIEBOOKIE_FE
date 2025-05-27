@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from "axios";
 import axiosInstance from "./instance";
 import { ApiResponse } from "./type";
 
@@ -12,8 +13,9 @@ export const apiGet = async <T, P = Record<string, any>>(
 export const apiPost = async <T, B = Record<string, any>>(
   url: string,
   body?: B,
+  config?: AxiosRequestConfig,
 ): Promise<T> => {
-  const response = await axiosInstance.post<ApiResponse<T>>(url, body);
+  const response = await axiosInstance.post<ApiResponse<T>>(url, body, config);
   return response.data.result;
 };
 
