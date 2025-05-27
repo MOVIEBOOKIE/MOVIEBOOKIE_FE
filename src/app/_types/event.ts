@@ -64,3 +64,22 @@ export interface PostEventsVenueParams {
   eventId: number;
   type: number;
 }
+
+export interface EventSearchParams {
+  content: string;
+  page?: number;
+}
+
+export interface GetEventSearchResponse {
+  eventId: number;
+  mediaType: string;
+  mediaTitle: string;
+  description: string;
+  rate: number;
+  estimatedPrice: number;
+  eventDate: string;
+  eventStatus: string;
+  d_day: number;
+  locationName: string;
+  posterImageUrl: string;
+}
