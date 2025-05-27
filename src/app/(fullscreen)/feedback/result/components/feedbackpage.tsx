@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { badReasons, goodReasons, PATHS } from "@/constants";
 import { useSubmitFeedback } from "app/_hooks/auth/use-submit-feedback";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 export default function FeedbackPage() {
   const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ export default function FeedbackPage() {
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [text, setText] = useState("");
   const { mutate: submitFeedback } = useSubmitFeedback();
+  const { showToast } = useToastStore();
 
   useEffect(() => {
     if (type === "good" || type === "bad") {
@@ -32,10 +34,11 @@ export default function FeedbackPage() {
         isSatisfied: feedbackType === "good",
         feedback: selectedReason,
         comment: text,
-        eventId: eventId ? Number(eventId) : undefined, // optional
+        eventId: eventId ? Number(eventId) : undefined,
       },
       {
         onSuccess: () => {
+          showToast("무비부키에게 소중한 의견 감사드려요!", "checkbox");
           router.push(PATHS.NOTIFICATIONS);
         },
         onError: (error) => {
