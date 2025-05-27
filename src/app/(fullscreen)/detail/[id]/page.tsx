@@ -80,7 +80,7 @@ export default function Detail() {
   };
 
   const handleVenueApply = () => {
-    postEventVenue({ eventId, type: 1 });
+    postEventVenue({ eventId, type: 0 });
   };
 
   if (isComplete) {
