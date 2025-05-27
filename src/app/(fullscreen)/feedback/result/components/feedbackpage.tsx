@@ -4,16 +4,21 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button, FixedLayout } from "@/components";
 import { badReasons, goodReasons, PATHS } from "@/constants";
+import { useSubmitFeedback } from "app/_hooks/auth/use-submit-feedback";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 export default function FeedbackPage() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
+  const eventId = searchParams.get("eventId");
 
   const router = useRouter();
   const [feedbackType, setFeedbackType] = useState<"good" | "bad" | null>(null);
   const [step, setStep] = useState<1 | 2>(1);
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [text, setText] = useState("");
+  const { mutate: submitFeedback } = useSubmitFeedback();
+  const { showToast } = useToastStore();
 
   useEffect(() => {
     if (type === "good" || type === "bad") {
@@ -22,12 +27,26 @@ export default function FeedbackPage() {
   }, [type]);
 
   const handleSubmit = () => {
-    console.log({
-      type: feedbackType,
-      reason: selectedReason,
-      text,
-    });
-    router.push(PATHS.NOTIFICATIONS);
+    if (!selectedReason) return;
+
+    submitFeedback(
+      {
+        isSatisfied: feedbackType === "good",
+        feedback: selectedReason,
+        comment: text,
+        eventId: eventId ? Number(eventId) : undefined,
+      },
+      {
+        onSuccess: () => {
+          showToast("무비부키에게 소중한 의견 감사드려요!", "checkbox");
+          router.push(PATHS.NOTIFICATIONS);
+        },
+        onError: (error) => {
+          console.error("제출 실패", error);
+          showToast("피드백 제출에 실패했습니다. 다시 시도해주세요.", "alert");
+        },
+      },
+    );
   };
 
   const reasons = feedbackType === "good" ? goodReasons : badReasons;
@@ -41,7 +60,7 @@ export default function FeedbackPage() {
         showBottomButton={false}
         state="default"
       >
-        <div className="pt-10 text-white">
+        <div className="text-white">
           {feedbackType && step === 1 && (
             <div className="flex flex-col">
               <div className="mb-3">

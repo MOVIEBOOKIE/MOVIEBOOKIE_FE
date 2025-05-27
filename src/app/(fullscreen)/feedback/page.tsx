@@ -37,7 +37,7 @@ export default function FeedbackStartPage() {
             <div className="mb-2 text-3xl">
               <ThinkingFaceIcon />
             </div>
-            <div className="body-3-regular">아쉬워요</div>
+            <div className="body-3-regular whitespace-nowrap">아쉬워요</div>
           </button>
           <button
             onClick={() => handleFeedback("good")}
@@ -46,7 +46,7 @@ export default function FeedbackStartPage() {
             <div className="mb-2 text-3xl">
               <KissingFaceIcon />
             </div>
-            <div className="body-3-regular">만족해요</div>
+            <div className="body-3-regular whitespace-nowrap">만족해요</div>
           </button>
         </div>
       </div>
