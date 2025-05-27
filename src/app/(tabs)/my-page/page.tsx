@@ -24,6 +24,7 @@ function MyPageStat({ label, value }: MyPageStatProps) {
 export default function MyPage() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
+  const { mutate: logout } = useLogout();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
