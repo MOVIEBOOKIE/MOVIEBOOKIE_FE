@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useFormContext, useWatch } from "react-hook-form";
 import { LocationIcon } from "@/icons/index";
 import { formatPrice } from "@/utils/format-price";
+import { useSelectedCinemaStore } from "app/_stores/use-selected-cinema-store";
 export default function Step6() {
   const { setValue, control } = useFormContext();
   const selectedLocationId = useWatch({ control, name: "locationId" });
@@ -24,8 +25,20 @@ export default function Step6() {
     progressTime: Number(progressTime),
   });
 
+  const setSelectedCinema = useSelectedCinemaStore(
+    (state) => state.setSelectedCinema,
+  );
+
   const handleSelectCinema = (cinemaId: number) => {
-    setValue("locationId", cinemaId, { shouldValidate: true });
+    const selected = cinemas.find((c: any) => c.locationId === cinemaId);
+    if (selected) {
+      setValue("locationId", cinemaId, { shouldValidate: true });
+      setSelectedCinema({
+        locationName: selected.locationName,
+        address: selected.address,
+        locationImageUrl: selected.locationImageUrl,
+      });
+    }
   };
 
   return (
