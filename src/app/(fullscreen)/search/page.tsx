@@ -66,21 +66,25 @@ export default function Search() {
       ) : (
         <>
           <div className="mt-6 flex flex-col gap-8 px-5">
-            {data.map((card) => (
-              <Card
-                key={String(card.eventId)}
-                id={String(card.eventId)}
-                imageUrl={card.posterImageUrl}
-                category={card.mediaType}
-                title={card.mediaTitle}
-                placeAndDate={`${card.locationName} · ${card.eventDate}`}
-                description={card.description}
-                ddayBadge={`D-${card.d_day}`}
-                statusBadge={card.eventStatus}
-                progressRate={`${card.rate}%`}
-                estimatedPrice={card.estimatedPrice}
-              />
-            ))}
+            {data && Array.isArray(data) && data.length > 0 ? (
+              data.map((card) => (
+                <Card
+                  key={String(card.eventId)}
+                  id={String(card.eventId)}
+                  imageUrl={card.posterImageUrl}
+                  category={card.mediaType}
+                  title={card.mediaTitle}
+                  placeAndDate={`${card.locationName} · ${card.eventDate}`}
+                  description={card.description}
+                  ddayBadge={`D-${card.d_day}`}
+                  statusBadge={card.eventStatus}
+                  progressRate={`${card.rate}%`}
+                  estimatedPrice={card.estimatedPrice}
+                />
+              ))
+            ) : (
+              <p>데이터가 없습니다.</p>
+            )}
           </div>
           {/* <Pagination
             pageCount={totalPages}
