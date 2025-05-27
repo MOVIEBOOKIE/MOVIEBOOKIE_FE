@@ -1,4 +1,4 @@
-import { NotificationStatus } from "app/_stores/noti";
+import { NotificationStatus } from "app/_stores/use-noti";
 
 export interface NotificationItem {
   type: string;

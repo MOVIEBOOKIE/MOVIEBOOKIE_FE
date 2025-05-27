@@ -1,5 +1,5 @@
 "use client";
-import { useNotificationStore } from "app/_stores/noti";
+import { useNotificationStore } from "app/_stores/use-noti";
 import { NotificationItem } from "./components/item";
 
 export default function NotificationPage() {

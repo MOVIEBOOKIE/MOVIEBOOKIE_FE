@@ -1,18 +1,18 @@
 "use client";
 
 import { parseNotificationMeta } from "@/utils/map-noti";
-import { useNotificationStore } from "app/_stores/noti";
+import { useNotificationStore } from "app/_stores/use-noti";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { onFirebaseMessage } from "app/lib/firebase-notification";
 import { useEffect } from "react";
 
 export default function FcmListener() {
-  const { showToast } = useToastStore(); // ✅ 훅 호출 안전
+  const { showToast } = useToastStore();
   const { addNotification } = useNotificationStore();
 
   useEffect(() => {
     const unsubscribe = onFirebaseMessage((payload) => {
-      console.log("📩 알림 수신:", payload);
+      console.log("@@@@알림 수신:", payload);
 
       const now = new Date();
       const timeString = now.toLocaleTimeString("ko-KR", {

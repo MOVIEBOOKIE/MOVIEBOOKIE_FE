@@ -1,8 +1,7 @@
 import { messagingPromise } from "./firebase";
 import { getToken, onMessage } from "firebase/messaging";
 
-const vapidKey =
-  "BDF4NxVFQnNfoxSiJMtSdZdG-T6mvX_6hJHoN_7-FxUZLPMIMQxfyXLASmdCJ5pcvifKblKGGe_Otr56aZab-84";
+const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
 
 export const requestNotificationPermission = async () => {
   if (typeof window === "undefined") return null;
