@@ -1,16 +1,6 @@
+import { UserProfile } from "app/_types/user-profile";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-interface UserProfile {
-  email: string;
-  nickname: string;
-  profileImage: string;
-  userTypeTitle: string;
-  hostExperienceCount: number;
-  participationExperienceCount: number;
-  ticketCount: number;
-  phoneNumber: String;
-}
 
 interface UserState {
   user: UserProfile | null;
