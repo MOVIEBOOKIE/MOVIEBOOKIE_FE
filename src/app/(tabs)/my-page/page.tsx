@@ -3,7 +3,7 @@
 import Modal from "@/components/modal";
 import { PATHS } from "@/constants";
 import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
-import { useLogout } from "app/_hooks/auth/use-logout";
+import { useLogout, useLogoutHandler } from "app/_hooks/auth/use-logout";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { useUserStore } from "app/_stores/useUserStore";
 import { useRouter } from "next/navigation";
@@ -24,10 +24,8 @@ function MyPageStat({ label, value }: MyPageStatProps) {
 export default function MyPage() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
-  const { mutate: logout } = useLogout();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { showToast } = useToastStore();
-  const { clearUser } = useUserStore();
+  const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
   return (
     <div className="min-h-screen px-5 text-white">
@@ -105,20 +103,7 @@ export default function MyPage() {
           description="정말 로그아웃 하시겠습니까?"
           confirmText="확인"
           cancelText="취소"
-          onConfirm={() => {
-            logout(undefined, {
-              onSuccess: () => {
-                setShowLogoutModal(false);
-                clearUser();
-                router.push(PATHS.LOGIN);
-                showToast("로그아웃 되었습니다");
-              },
-              onError: () => {
-                showToast("로그아웃에 실패했습니다", "alert");
-                setShowLogoutModal(false);
-              },
-            });
-          }}
+          onConfirm={handleLogout}
           onCancel={() => setShowLogoutModal(false)}
         />
       )}
