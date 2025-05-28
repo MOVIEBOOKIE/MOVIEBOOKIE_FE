@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Modal from "./modal";
+import Modal from "../../../_components/modal";
 import { ShareKakaoIcon, ShareLinkIcon } from "@/icons/index";
 import { useToastStore } from "app/_stores/use-toast-store";
 

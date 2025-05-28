@@ -1,6 +1,7 @@
 "use client";
 
-import ShareModal from "@/components/share-modal";
+import ShareModal from "app/(fullscreen)/detail/_components/share-modal";
+import { PATHS } from "@/constants";
 import { BackIcon, UploadIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -44,7 +45,7 @@ export default function TopBar({ event }: TopBarProps) {
       </div>
       {showShareModal && (
         <ShareModal
-          shareUrl={`https://movie-bookie.shop/event/${event.eventId}`}
+          shareUrl={PATHS.EVENT_DETAIL(event.eventId)}
           // TODO: shareUrl ->링크공유url로 변경 필요
           imageUrl={event.posterImageUrl}
           title={event.title}
