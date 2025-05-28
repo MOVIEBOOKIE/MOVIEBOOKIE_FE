@@ -58,7 +58,6 @@ export default function Login() {
             ))}
           </Swiper>
 
-          {/* 슬라이드 인디케이터 */}
           <div className="fixed bottom-46.5 left-1/2 z-20 flex -translate-x-1/2 gap-2">
             {[0, 1, 2].map((_, index) => (
               <button
@@ -71,7 +70,6 @@ export default function Login() {
           </div>
         </div>
 
-        {/* 로그인 버튼 */}
         <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-125 -translate-x-1/2 px-5 pb-12">
           <Button
             className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00]"

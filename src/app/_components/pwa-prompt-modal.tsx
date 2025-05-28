@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { CloseIcon, ShareIcon } from "@/icons/index";
 
 export default function PwaPromptModal() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [os, setOs] = useState<"android" | "ios" | "other">("other");
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
@@ -23,19 +23,13 @@ export default function PwaPromptModal() {
         setDeferredPrompt(e);
         setShowModal(true);
       };
-
       window.addEventListener("beforeinstallprompt", handler);
-
-      return () => {
-        window.removeEventListener("beforeinstallprompt", handler);
-      };
+      return () => window.removeEventListener("beforeinstallprompt", handler);
     }
 
-    if (osType === "ios") {
+    // ✅ ios나 other일 경우에도 모달 보여주기
+    if (osType === "ios" || osType === "other") {
       setShowModal(true);
-    } else if (osType === "other") {
-      setShowModal(false); // 웹에서는 모달을 아예 안 띄움
-      return;
     }
   }, []);
 
@@ -74,32 +68,28 @@ export default function PwaPromptModal() {
             height={64}
           />
         </div>
-        {os === "android" && (
+
+        {os === "android" ? (
           <>
-            {" "}
             <h2 className="body-2-semibold mt-4.5 mb-5 text-gray-300">
               홈화면에{" "}
               <span className="body-2-semibold text-gray-100">무비부키 앱</span>
               을 추가하면 <br /> 더 편리하게 서비스를 이용할 수 있어요
             </h2>
-            <>
-              <button
-                onClick={handleInstall}
-                className="bg-red-main body-2-semibold mt-4.2 w-full rounded-lg py-3 text-white"
-              >
-                홈 화면에 추가
-              </button>
-              <button
-                onClick={handleClose}
-                className="caption-1-regular mt-3 mb-4.5 w-full text-gray-500 underline"
-              >
-                오늘은 웹으로 볼게요
-              </button>
-            </>
+            <button
+              onClick={handleInstall}
+              className="bg-red-main body-2-semibold mt-4.2 w-full rounded-lg py-3 text-white"
+            >
+              홈 화면에 추가
+            </button>
+            <button
+              onClick={handleClose}
+              className="caption-1-regular mt-3 mb-4.5 w-full text-gray-500 underline"
+            >
+              오늘은 웹으로 볼게요
+            </button>
           </>
-        )}
-
-        {os === "ios" && (
+        ) : (
           <>
             <h2 className="body-2-semibold mt-4 mb-5 text-gray-300">
               하단의{" "}
@@ -113,7 +103,6 @@ export default function PwaPromptModal() {
               </span>
               를 선택하면 <br />더 편리하게 서비스를 이용할 수 있어요!
             </h2>
-
             <button
               onClick={handleClose}
               className="caption-1-regular mb-7.5 w-full text-gray-500 underline"
