@@ -54,7 +54,7 @@ export default function TraitResult() {
             <Image src={imageSrc} width={120} height={94} alt="type-image" />
           )}
 
-          <p className="title-3-bold text-gray-white mb-3">
+          <p className="title-3-bold text-gray-white mb-3 text-center">
             <LineBreak text={data?.title} />
           </p>
           <div className="bg-gray-white mt-5.5 h-0.25 w-full opacity-14" />
