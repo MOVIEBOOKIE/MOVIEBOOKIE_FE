@@ -100,7 +100,8 @@ export default function Detail() {
           event={{
             eventId: data.eventId,
             posterImageUrl: data.posterImageUrl,
-            title: data.mediaTitle,
+            title: data.eventTitle,
+            description: data.description,
           }}
         />
       )}

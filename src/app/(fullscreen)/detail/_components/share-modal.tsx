@@ -15,6 +15,7 @@ interface ShareModalProps {
   shareUrl: string;
   imageUrl: string;
   title: string;
+  description: string;
   onClose: () => void;
 }
 
@@ -22,6 +23,7 @@ export default function ShareModal({
   shareUrl,
   imageUrl,
   title,
+  description,
   onClose,
 }: ShareModalProps) {
   const showToast = useToastStore((state) => state.showToast);
@@ -47,7 +49,7 @@ export default function ShareModal({
       objectType: "feed",
       content: {
         title: title,
-        description: "무비부키 이벤트에 함께~~~",
+        description: description,
         imageUrl: imageUrl,
         link: {
           mobileWebUrl: shareUrl,

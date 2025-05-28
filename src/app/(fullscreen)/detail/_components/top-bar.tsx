@@ -10,6 +10,7 @@ interface TopBarProps {
     eventId: number;
     posterImageUrl: string;
     title: string;
+    description: string;
   };
 }
 export default function TopBar({ event }: TopBarProps) {
@@ -45,10 +46,10 @@ export default function TopBar({ event }: TopBarProps) {
       </div>
       {showShareModal && (
         <ShareModal
-          shareUrl={PATHS.EVENT_DETAIL(event.eventId)}
-          // TODO: shareUrl ->링크공유url로 변경 필요
+          shareUrl={`https://movie-bookie.shop${event.eventId}`}
           imageUrl={event.posterImageUrl}
           title={event.title}
+          description={event.description}
           onClose={() => setShowShareModal(false)}
         />
       )}
