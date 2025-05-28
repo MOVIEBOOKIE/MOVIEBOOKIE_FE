@@ -20,9 +20,6 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-      dotenv:
-        specifier: ^16.5.0
-        version: 16.5.0
       firebase:
         specifier: ^11.8.1
         version: 11.8.1
@@ -99,6 +96,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.29.1
         version: 8.31.1(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3)
+      dotenv:
+        specifier: ^16.5.0
+        version: 16.5.0
       eslint:
         specifier: ^9
         version: 9.25.1(jiti@2.4.2)
