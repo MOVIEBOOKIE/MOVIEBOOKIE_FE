@@ -46,7 +46,7 @@ export default function TopBar({ event }: TopBarProps) {
       </div>
       {showShareModal && (
         <ShareModal
-          shareUrl={`https://movie-bookie.shop${event.eventId}`}
+          shareUrl={`https://movie-bookie.shop/detail/${event.eventId}`}
           imageUrl={event.posterImageUrl}
           title={event.title}
           description={event.description}
