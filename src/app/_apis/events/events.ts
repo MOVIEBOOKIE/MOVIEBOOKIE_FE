@@ -30,5 +30,5 @@ export const PostEventsVenue = ({ eventId, type }: PostEventsVenueParams) => {
 };
 
 export const GetEventsSearch = (params: EventSearchParams) => {
-  return apiGet<GetEventSearchResponse[]>(END_POINTS.GET_EVENT_SEARCH, params);
+  return apiGet<GetEventSearchResponse>(END_POINTS.GET_EVENT_SEARCH, params);
 };

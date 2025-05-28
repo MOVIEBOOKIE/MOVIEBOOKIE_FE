@@ -71,6 +71,10 @@ export interface EventSearchParams {
 }
 
 export interface GetEventSearchResponse {
+  eventList: EventList[];
+  totalPages: number;
+}
+interface EventList {
   eventId: number;
   mediaType: string;
   mediaTitle: string;

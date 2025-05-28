@@ -14,17 +14,18 @@ export default function Search() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
-  const [debouncedContent] = useDebounce(content, 300);
-  const [page] = useState(0);
+  const [debouncedContent] = useDebounce(content, 2000);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const { data } = useGetEventSearch(
-    { content: debouncedContent, page },
-    {
-      enabled: debouncedContent.trim().length > 0,
-    },
-  );
+  const { data } = useGetEventSearch({
+    content: debouncedContent,
+    page: currentPage,
+  });
 
   console.log(data);
+
+  const cards = data?.eventList ?? [];
+  const totalPages = data?.totalPages ?? 0;
 
   const handleClick = () => {
     router.back();
@@ -32,6 +33,7 @@ export default function Search() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
+    setCurrentPage(0);
   };
 
   return (
@@ -46,6 +48,7 @@ export default function Search() {
           placeholder="이벤트 검색하기"
         />
       </div>
+
       {!data ? (
         <>
           <p className="body-2-medium mt-6 ml-5.5 text-gray-300">
@@ -66,8 +69,8 @@ export default function Search() {
       ) : (
         <>
           <div className="mt-6 flex flex-col gap-8 px-5">
-            {data && Array.isArray(data) && data.length > 0 ? (
-              data.map((card) => (
+            {cards.length > 0 ? (
+              cards.map((card) => (
                 <Card
                   key={String(card.eventId)}
                   id={String(card.eventId)}
@@ -92,11 +95,16 @@ export default function Search() {
               </div>
             )}
           </div>
-          {/* <Pagination
-            pageCount={totalPages}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          /> */}
+
+          {data && (
+            <div className="mt-10 mb-20">
+              <Pagination
+                pageCount={totalPages}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </>
       )}
     </div>

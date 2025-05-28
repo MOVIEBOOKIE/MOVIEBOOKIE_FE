@@ -68,9 +68,6 @@ export const usePostEventsVenue = () => {
   });
 };
 
-export const useGetEventSearch = (
-  params: EventSearchParams,
-  options?: Omit<UseQueryOptions, "queryKey" | "queryFn">,
-) => {
-  return useQuery(EVENT_OPTION.SEARCH(params, options));
+export const useGetEventSearch = (params: EventSearchParams) => {
+  return useQuery(EVENT_OPTION.SEARCH(params));
 };

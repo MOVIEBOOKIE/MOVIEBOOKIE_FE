@@ -13,13 +13,9 @@ export const EVENT_OPTION = {
       queryKey: EVENT_KEY.EVENT(),
       queryFn: () => getEvents(eventId),
     }),
-  SEARCH: (
-    params: EventSearchParams,
-    options?: Omit<UseQueryOptions, "queryKey" | "queryFn">,
-  ) =>
+  SEARCH: (params: EventSearchParams) =>
     queryOptions({
       queryKey: EVENT_KEY.SEARCH(params),
       queryFn: () => GetEventsSearch(params),
-      ...options,
     }),
 };
