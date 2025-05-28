@@ -68,6 +68,9 @@ export const usePostEventsVenue = () => {
   });
 };
 
-export const useGetEventSearch = (params: EventSearchParams) => {
-  return useQuery(EVENT_OPTION.SEARCH(params));
+export const useGetEventSearch = (
+  params: EventSearchParams,
+  option?: { enabled: boolean },
+) => {
+  return useQuery(EVENT_OPTION.SEARCH(params, option));
 };

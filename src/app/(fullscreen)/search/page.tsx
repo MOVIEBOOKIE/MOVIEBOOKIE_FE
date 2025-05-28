@@ -14,13 +14,18 @@ export default function Search() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
-  const [debouncedContent] = useDebounce(content, 2000);
+  const [debouncedContent] = useDebounce(content, 1000);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { data } = useGetEventSearch({
-    content: debouncedContent,
-    page: currentPage,
-  });
+  const { data } = useGetEventSearch(
+    {
+      content: debouncedContent,
+      page: currentPage,
+    },
+    {
+      enabled: debouncedContent.length > 0,
+    },
+  );
 
   const cards = data?.eventList ?? [];
   const totalPages = data?.totalPages ?? 0;

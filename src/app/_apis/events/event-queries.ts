@@ -13,9 +13,10 @@ export const EVENT_OPTION = {
       queryKey: EVENT_KEY.EVENT(),
       queryFn: () => getEvents(eventId),
     }),
-  SEARCH: (params: EventSearchParams) =>
+  SEARCH: (params: EventSearchParams, option?: { enabled?: boolean }) =>
     queryOptions({
       queryKey: EVENT_KEY.SEARCH(params),
       queryFn: () => GetEventsSearch(params),
+      ...option,
     }),
 };
