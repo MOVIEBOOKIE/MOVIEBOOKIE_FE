@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
-import { MODAL_CONTENT } from "app/(fullscreen)/detail/_constants/detail";
+import { MODAL_CONTENT } from "@/constants/detail";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
