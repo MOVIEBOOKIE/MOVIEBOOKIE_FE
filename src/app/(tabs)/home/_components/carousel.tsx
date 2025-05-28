@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { Badge } from "@/components";
-import EmptyCarouselSlide from "./EmptyCarouselSlide";
+import EmptyCarousel from "./empty-carousel";
 import { useHomeEvents } from "app/_hooks/events/use-home-events";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
@@ -99,7 +99,7 @@ export default function Carousel() {
             </SwiperSlide>
           ))
         ) : (
-          <EmptyCarouselSlide />
+          <EmptyCarousel />
         )}
       </Swiper>
     </div>

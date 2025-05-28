@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 import { PopcornIcon } from "@/icons/index";
 
-export default function EmptyCarouselSlide() {
+export default function EmptyCarousel() {
   const router = useRouter();
 
   return (
