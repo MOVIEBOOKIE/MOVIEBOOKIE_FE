@@ -6,15 +6,17 @@ import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
-import { MOVIE_SLIDES } from "@/mocks/movie-slides";
 import { Badge } from "@/components";
 import EmptyCarouselSlide from "./EmptyCarouselSlide";
 import { useHomeEvents } from "app/_hooks/events/use-home-events";
+import { useRouter } from "next/navigation";
+import { PATHS } from "@/constants";
 
 export default function Carousel() {
   const swiperRef = useRef<SwiperCore | null>(null);
   const [isReady, setIsReady] = useState(false);
-  const { data: events, isLoading, isError } = useHomeEvents();
+  const { data: events } = useHomeEvents();
+  const router = useRouter();
 
   const applySlideEffect = () => {
     const swiper = swiperRef.current;
@@ -59,6 +61,7 @@ export default function Carousel() {
               style={{ width: "282px", height: "404px" }}
               key={event.eventId}
               className="flex items-center transition-transform duration-300 ease-in-out"
+              onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
             >
               <div className="relative flex h-full w-full items-center justify-center rounded-[12px]">
                 <div className="relative h-full w-full rounded-xl">

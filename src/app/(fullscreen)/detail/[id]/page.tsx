@@ -95,7 +95,16 @@ export default function Detail() {
 
   return (
     <>
-      <TopBar />
+      {data && (
+        <TopBar
+          event={{
+            eventId: data.eventId,
+            posterImageUrl: data.posterImageUrl,
+            title: data.mediaTitle,
+          }}
+        />
+      )}
+
       {data && <DetailContent {...data} />}
       <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
         <div className="flex flex-col justify-center">
@@ -123,7 +132,6 @@ export default function Detail() {
         <Modal
           iconType={currentModal.iconType as "confirm" | "alert"}
           title={currentModal.title}
-          description={currentModal.description}
           confirmText={currentModal.confirmText}
           onConfirm={() => {
             if (modalType === "apply") handleApply();
@@ -133,7 +141,9 @@ export default function Detail() {
             setModalType(null);
           }}
           onCancel={() => setModalType(null)}
-        />
+        >
+          {currentModal.description}
+        </Modal>
       )}
     </>
   );

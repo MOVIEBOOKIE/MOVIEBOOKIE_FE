@@ -1,4 +1,4 @@
-import { AlertIcon, CheckIcon } from "@/icons/index";
+import { AlertIcon, CheckIcon, CloseIcon } from "@/icons/index";
 import Button from "./button";
 import { ReactNode } from "react";
 
@@ -15,42 +15,63 @@ import { ReactNode } from "react";
  */
 
 interface ModalProps {
-  iconType: "alert" | "confirm";
+  iconType?: "alert" | "confirm" | "";
   title: string;
-  description: ReactNode;
-  confirmText: string;
+  description?: ReactNode;
+  confirmText?: string;
   cancelText?: string;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   onCancel: () => void;
+  showCloseButton?: boolean;
+  hideButtons?: boolean;
+  children: ReactNode;
 }
 
 export default function Modal({
   iconType,
   title,
+  children,
   description,
   confirmText,
   cancelText = "아니요",
   onConfirm,
   onCancel,
+  showCloseButton = false,
+  hideButtons = false,
 }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="drap-shadow flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
-        {iconType === "confirm" ? <CheckIcon /> : <AlertIcon />}
-        <h3 className="title-3-semibold mt-4.75">{title}</h3>
-        <p className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
-          {description}
-        </p>
-        <div className="flex w-full gap-2.75">
-          <Button
-            variant="secondary"
+      <div className="drap-shadow relative flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
+        {showCloseButton && (
+          <button
             onClick={onCancel}
-            className="bg-gray-800 text-gray-200"
+            className="absolute top-2 right-2 z-10 text-gray-100"
           >
-            {cancelText}
-          </Button>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+            <CloseIcon />
+          </button>
+        )}
+
+        {iconType === "confirm" && <CheckIcon />}
+        {iconType === "alert" && <AlertIcon />}
+
+        <h3 className="title-3-semibold mt-4.75">{title}</h3>
+        <div className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
+          {description ?? children}
         </div>
+        {!hideButtons && (
+          <div className="flex w-full gap-2.5">
+            {onCancel && (
+              <Button
+                variant="secondary"
+                onClick={onCancel}
+                className="bg-gray-800 text-gray-200"
+              >
+                {cancelText}
+              </Button>
+            )}
+            {onConfirm && <Button onClick={onConfirm}>{confirmText}</Button>}
+          </div>
+        )}
       </div>
     </div>
   );

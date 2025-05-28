@@ -13,7 +13,7 @@ export default function Badge({
 }: BadgeProps) {
   const badgeStyle =
     variant === "secondary"
-      ? "bg-gray-950 text-gray-300"
+      ? "bg-gray-950 text-white"
       : "bg-red-main text-white";
   return (
     <div

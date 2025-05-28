@@ -64,3 +64,5 @@ export { default as WithDrawCheckIcon } from "./ui/withdraw-check.svg";
 export { default as LocationIcon } from "./ui/location.svg";
 export { default as DangerIcon } from "./ui/danger.svg";
 export { default as CheckAlertIcon } from "./ui/check-alert.svg";
+export { default as ShareKakaoIcon } from "./ui/share-kakao.svg";
+export { default as ShareLinkIcon } from "./ui/share-link.svg";

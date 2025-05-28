@@ -86,7 +86,7 @@ export default function Home() {
       >
         <div className="mt-6.25 mb-4 flex flex-col items-center gap-1.25">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-2-medium text-gray-white opacity-47">
+          <p className="caption-1-medium text-gray-white opacity-[25%]">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
