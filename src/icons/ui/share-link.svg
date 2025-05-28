@@ -1,0 +1,29 @@
+<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="69" height="69" rx="11.0068" fill="#434448"/>
+<rect x="0.5" y="0.5" width="69" height="69" rx="11.0068" stroke="#434448"/>
+<g clip-path="url(#clip0_1871_37299)">
+<circle cx="41.8502" cy="-2.23577" r="17.9517" fill="#563A3A"/>
+<circle cx="49.8033" cy="-7.80609" r="17.9517" fill="#563A3A"/>
+<circle cx="64.7955" cy="-9.50921" r="17.9517" fill="#FF4B4E"/>
+<circle cx="44.1314" cy="-9.39202" r="17.9517" fill="#A41919"/>
+<circle cx="20.9467" cy="-0.303322" r="63.6264" fill="#E7378C"/>
+<circle cx="20.9607" cy="-16.1018" r="28.8591" fill="#FF1F44"/>
+<circle cx="92.3044" cy="-15.9846" r="28.8591" fill="#FF1F44"/>
+<circle cx="65.9382" cy="69.0007" r="44.9929" fill="#FF4646"/>
+<circle cx="10.0533" cy="16.9674" r="17.9517" fill="#FF4646"/>
+<circle cx="48.892" cy="63.3217" r="63.6264" fill="#E7378C"/>
+<circle cx="28.0935" cy="69.0388" r="28.8591" fill="#FF1F44"/>
+<circle cx="62.7837" cy="59.8383" r="14.9243" fill="#FFB9B9"/>
+<ellipse cx="45.6719" cy="27.1849" rx="28.8829" ry="29.4974" fill="#EB0000"/>
+<circle cx="19.8189" cy="54.7955" r="17.9517" fill="#E7378C"/>
+<foreignObject x="-26.6354" y="-26.6354" width="123.271" height="123.271"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(13.32px);clip-path:url(#bgblur_1_1871_37299_clip_path);height:100%;width:100%"></div></foreignObject><rect data-figma-bg-blur-radius="26.6354" width="70" height="70" fill="#FF7E7E" fill-opacity="0.25"/>
+</g>
+<path d="M41.6106 38.011L44.3663 35.2552C46.9029 32.7187 46.9029 28.606 44.3663 26.0695V26.0695C41.8297 23.5329 37.7171 23.5329 35.1805 26.0695L32.4248 28.8252M37.9363 41.6853L35.1805 44.441C32.644 46.9776 28.5313 46.9776 25.9947 44.441V44.441C23.4582 41.9045 23.4582 37.7918 25.9947 35.2553L28.7505 32.4995" stroke="#FAFAFA" stroke-width="3" stroke-linecap="round"/>
+<path d="M37.9412 32.5041L32.4297 38.0156" stroke="#FAFAFA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<clipPath id="bgblur_1_1871_37299_clip_path" transform="translate(26.6354 26.6354)"><rect width="70" height="70"/>
+</clipPath><clipPath id="clip0_1871_37299">
+<rect width="70" height="70" rx="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>

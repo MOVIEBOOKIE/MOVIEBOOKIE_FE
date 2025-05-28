@@ -8,15 +8,26 @@ import { useGetUserTypeResult } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/useUserStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function TraitResult() {
   const router = useRouter();
+
   const handleClick = () => {
     router.push(PATHS.HOME);
   };
-  //TODO: 렌더링 문제 해결(유저 네임 깜빡임 문제)
 
   const { data } = useGetUserTypeResult();
+  const setUser = useUserStore((state) => state.setUser);
+  const user = useUserStore((state) => state.user);
+
+  useEffect(() => {
+    if (!user || !data?.title) return;
+    if (user.userTypeTitle === data.title) return;
+
+    const cleanedTitle = data.title.replace(/\n/g, " ");
+    setUser({ ...user, userTypeTitle: cleanedTitle });
+  }, [data?.title, user?.userTypeTitle, setUser]);
 
   const imageSrc =
     data?.userTypeCode &&

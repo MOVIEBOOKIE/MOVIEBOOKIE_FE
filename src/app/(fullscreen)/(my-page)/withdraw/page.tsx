@@ -63,7 +63,7 @@ export default function WithDraw() {
         <Modal
           iconType="alert"
           title="정말 탈퇴하시겠어요?"
-          description={`탈퇴 시 계정 및 이용 기록은 모두 삭제되며,\n삭제된 데이터는 복구할 수 없습니다.`}
+          children={`탈퇴 시 계정 및 이용 기록은 모두 삭제되며,\n삭제된 데이터는 복구할 수 없습니다.`}
           confirmText="탈퇴하기"
           cancelText="취소"
           onConfirm={() => {

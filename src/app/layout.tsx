@@ -7,6 +7,7 @@ import { ReactQueryProvider } from "./providers/react-query-provider";
 import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
 import FcmListener from "./_components/fcm/fcm-listener";
+import Script from "next/script";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -25,8 +26,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/images/favicon/48x48.png" />
       </head>
       <body>
+        <Script
+          src="https://developers.kakao.com/sdk/js/kakao.js"
+          strategy="beforeInteractive"
+        />
         <InAppRedirect />
         <ToastRenderer />
         <ReactQueryProvider>

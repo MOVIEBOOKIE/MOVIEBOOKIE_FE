@@ -8,6 +8,7 @@ export interface MyPageResponse {
   hostExperienceCount: number;
   participationExperienceCount: number;
   ticketCount: number;
+  phoneNumber: string;
 }
 
 export const getMyPageInfo = () => {

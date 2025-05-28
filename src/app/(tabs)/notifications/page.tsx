@@ -1,9 +1,14 @@
 "use client";
 import { useNotificationStore } from "app/_stores/use-noti";
 import { NotificationItem } from "./components/item";
+import { useEffect } from "react";
 
 export default function NotificationPage() {
   const { list, markAsRead } = useNotificationStore();
+
+  useEffect(() => {
+    console.log("🔔 알림 목록 (zustand):", list);
+  }, [list]);
 
   return (
     <div className="min-h-screen text-white">

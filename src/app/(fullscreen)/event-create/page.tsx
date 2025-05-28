@@ -134,7 +134,7 @@ export default function EventCreatePage() {
         <Modal
           iconType="alert"
           title="이벤트 생성을 취소할까요?"
-          description="지금까지 작성한 내용은 저장되지 않아요"
+          children="지금까지 작성한 내용은 저장되지 않아요"
           confirmText="생성 취소하기"
           cancelText="아니오"
           onConfirm={handleConfirmExit}

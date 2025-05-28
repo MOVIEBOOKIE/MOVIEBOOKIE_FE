@@ -44,7 +44,7 @@ export default function EventPage() {
           </p>
           <button
             onClick={() => router.push(PATHS.EVENT_CREATE)}
-            className="bg-red-main body-3-semibold mt-5 rounded-xl px-6 py-3 text-white"
+            className="bg-red-main body-3-semibold mt-5 rounded-xl px-6 py-3 text-white focus:bg-red-700"
           >
             나만의 이벤트 만들러 가기
           </button>
@@ -74,7 +74,7 @@ export default function EventPage() {
       </div>
       <button
         onClick={() => router.push(PATHS.EVENT_CREATE)}
-        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-1.5 rounded-full px-4 py-4 text-white shadow-xl"
+        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-1.5 rounded-full px-4 py-4 text-white shadow-xl focus:bg-red-700"
       >
         <PlusIcon size={18} />
         이벤트 만들기

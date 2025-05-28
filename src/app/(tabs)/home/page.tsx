@@ -22,7 +22,6 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
-
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -87,7 +86,7 @@ export default function Home() {
       >
         <div className="mt-6.25 mb-4 flex flex-col items-center gap-1.25">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-2-medium text-gray-white opacity-47">
+          <p className="caption-1-medium text-gray-white opacity-[25%]">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
@@ -145,7 +144,18 @@ export default function Home() {
             </div>
           ))
         )}
-
+        {events.length > 0 && events.length <= 4 && (
+          <div
+            className={
+              {
+                1: "h-105",
+                2: "h-72",
+                3: "h-56",
+                4: "h-40",
+              }[events.length]
+            }
+          />
+        )}
         {events.length === 5 && (
           <Button
             className="mt-1 mb-5"
