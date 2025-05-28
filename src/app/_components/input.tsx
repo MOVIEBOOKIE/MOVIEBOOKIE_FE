@@ -11,7 +11,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type, className, ...props }, ref) => {
     const inputClass = cn(
       "body-2-medium w-full h-full placeholder:text-gray-700 pl-4 text-gray-800 text-start focus:outline-none",
-      type === "INPUT" ? "focus:text-gray-100" : "",
+      type === "INPUT" ? "text-gray-100" : "",
       className,
     );
 

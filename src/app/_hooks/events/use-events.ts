@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import { EVENT_KEY, EVENT_OPTION } from "app/_apis/events/event-queries";
 import {
   DeleteEventsRecruit,
@@ -7,7 +12,7 @@ import {
   PostEventsVenue,
 } from "app/_apis/events/events";
 import { useToastStore } from "app/_stores/use-toast-store";
-import { PostEventsVenueParams } from "app/_types/event";
+import { EventSearchParams, PostEventsVenueParams } from "app/_types/event";
 
 export const useGetEvent = (eventId: number) => {
   return useQuery(EVENT_OPTION.EVENT(eventId));
@@ -61,4 +66,11 @@ export const usePostEventsVenue = () => {
       showToast("영화관 대관 신청이 완료됐어요", "checkbox");
     },
   });
+};
+
+export const useGetEventSearch = (
+  params: EventSearchParams,
+  option?: { enabled: boolean },
+) => {
+  return useQuery(EVENT_OPTION.SEARCH(params, option));
 };
