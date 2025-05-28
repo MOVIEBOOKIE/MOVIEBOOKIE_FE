@@ -20,7 +20,6 @@ export function useInfiniteEventTabQuery(
         size: 10,
       }),
     getNextPageParam: (lastPage, allPages) => {
-      // lastPage가 비어있거나 size보다 작으면 더 이상 페이지가 없음
       if (!lastPage || lastPage.length < 10) {
         return undefined;
       }

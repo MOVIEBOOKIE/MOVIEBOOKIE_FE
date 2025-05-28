@@ -5,6 +5,7 @@ import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
 import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
 import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
+import CardSkeleton from "@/components/card-skeleton";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -20,14 +21,8 @@ export default function EventTab({ type }: EventTabProps) {
     toggles[0] as ToggleType,
   );
 
-  const {
-    data,
-    isError,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteEventTabQuery(type, selectedToggle);
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useInfiniteEventTabQuery(type, selectedToggle);
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastEventElementRef = useCallback(
@@ -46,10 +41,6 @@ export default function EventTab({ type }: EventTabProps) {
 
   const events = data?.pages.flatMap((page) => page) ?? [];
 
-  if (isError) {
-    return <p className="text-center">이벤트를 불러오지 못했습니다.</p>;
-  }
-
   return (
     <div className="mt-5">
       <ToggleTab
@@ -59,7 +50,16 @@ export default function EventTab({ type }: EventTabProps) {
       />
 
       <div className="mt-6 flex flex-col">
-        {events.length > 0 ? (
+        {isLoading ? (
+          <div className="mt-6 flex flex-col gap-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <div key={idx}>
+                <CardSkeleton />
+                <div className="my-4 h-px w-full bg-gray-950" />
+              </div>
+            ))}
+          </div>
+        ) : events.length > 0 ? (
           <>
             {[...events]
               .sort(
