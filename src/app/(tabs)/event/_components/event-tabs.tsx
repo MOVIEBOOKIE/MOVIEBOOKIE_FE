@@ -68,7 +68,7 @@ export default function EventTab({ type }: EventTabProps) {
               </div>
             ))
         ) : (
-          <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-500">
+          <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
             <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
               아직 {type} 이벤트가 없어요 <br />

@@ -105,10 +105,10 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
               key={date.format("YYYY-MM-DD")}
               onClick={() => handleSelect(date)}
               className={clsx(
-                "flex h-10 w-10 items-center justify-center rounded-full",
+                "body-3-regular flex h-10 w-10 items-center justify-center rounded-full",
                 {
                   "text-red-main": isToday && !isSelected,
-                  "bg-red-main text-white": isSelected,
+                  "bg-red-main body-3-semibold text-white": isSelected,
                   "text-gray-850": !isSelectable,
                   "text-gray-400": isSelectable && !isSelected,
                 },
