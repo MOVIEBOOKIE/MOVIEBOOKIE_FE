@@ -23,7 +23,11 @@ export const requestNotificationPermission = async () => {
 
 export const onFirebaseMessage = async (callback: (payload: any) => void) => {
   const messaging = await messagingPromise;
-  if (messaging) {
-    onMessage(messaging, callback);
+  if (!messaging) {
+    console.warn("❌ messaging is null - 브라우저에서 FCM 미지원일 수 있음");
+    return;
   }
+  console.log("✅ Firebase messaging 준비 완료");
+  onMessage(messaging, callback);
 };
+console.log("🔥 요청한 VAPID 키:", vapidKey);

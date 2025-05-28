@@ -11,6 +11,7 @@ export default function FcmListener() {
   const { addNotification } = useNotificationStore();
 
   useEffect(() => {
+    console.log("✅ FcmListener mounted");
     const unsubscribe = onFirebaseMessage((payload) => {
       console.log("@@@@알림 수신:", payload);
 
