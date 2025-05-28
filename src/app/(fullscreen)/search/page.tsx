@@ -22,8 +22,6 @@ export default function Search() {
     page: currentPage,
   });
 
-  console.log(data);
-
   const cards = data?.eventList ?? [];
   const totalPages = data?.totalPages ?? 0;
 
@@ -96,7 +94,7 @@ export default function Search() {
             )}
           </div>
 
-          {data && (
+          {cards.length > 0 && (
             <div className="mt-10 mb-20">
               <Pagination
                 pageCount={totalPages}
