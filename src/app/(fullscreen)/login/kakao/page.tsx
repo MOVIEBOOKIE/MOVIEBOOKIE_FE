@@ -49,10 +49,14 @@ function KakaoLogin() {
           isLocal,
         });
 
-        const { success, message } = response;
-
+        const { success, message, data } = response;
+        console.log(data);
         if (success) {
-          router.push(PATHS.AGREEMENT);
+          if (!data?.userType) {
+            router.push(PATHS.AGREEMENT);
+          } else {
+            router.push(PATHS.HOME);
+          }
         } else {
           router.push(`/login?error=${encodeURIComponent(message)}`);
         }
