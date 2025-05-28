@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
-import { useEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
+import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -19,10 +19,32 @@ export default function EventTab({ type }: EventTabProps) {
   const [selectedToggle, setSelectedToggle] = useState<ToggleType>(
     toggles[0] as ToggleType,
   );
-  const { data: events = [], isError } = useEventTabQuery(
-    type,
-    selectedToggle as ToggleType,
+
+  const {
+    data,
+    isError,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteEventTabQuery(type, selectedToggle);
+
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastEventElementRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage, isFetchingNextPage, fetchNextPage],
   );
+
+  const events = data?.pages.flatMap((page) => page) ?? [];
 
   if (isError) {
     return <p className="text-center">이벤트를 불러오지 못했습니다.</p>;
@@ -38,35 +60,46 @@ export default function EventTab({ type }: EventTabProps) {
 
       <div className="mt-6 flex flex-col">
         {events.length > 0 ? (
-          [...events]
-            .sort(
-              (a, b) =>
-                new Date(b.eventDate).getTime() -
-                new Date(a.eventDate).getTime(),
-            ) // 최신순 정렬
-            .map((event, index) => (
-              <div key={event.eventId}>
-                <Card
-                  id={event.eventId}
-                  imageUrl={event.posterImageUrl}
-                  category={event.mediaType}
-                  title={event.mediaTitle}
-                  placeAndDate={`${event.locationName} · ${event.eventDate}`}
-                  description={event.description}
-                  ddayBadge={
-                    event.d_day !== null ? `D-${event.d_day}` : undefined
-                  }
-                  statusBadge={event.eventStatus}
-                  progressRate={
-                    event.rate !== undefined ? `${event.rate}%` : undefined
-                  }
-                  estimatedPrice={event.estimatedPrice}
-                />
-                {index < events.length - 1 && (
-                  <div className="my-4 h-px w-full bg-gray-950" />
-                )}
+          <>
+            {[...events]
+              .sort(
+                (a, b) =>
+                  new Date(b.eventDate).getTime() -
+                  new Date(a.eventDate).getTime(),
+              )
+              .map((event, index) => (
+                <div
+                  key={event.eventId}
+                  ref={index === events.length - 1 ? lastEventElementRef : null}
+                >
+                  <Card
+                    id={event.eventId}
+                    imageUrl={event.posterImageUrl}
+                    category={event.mediaType}
+                    title={event.mediaTitle}
+                    placeAndDate={`${event.locationName} · ${event.eventDate}`}
+                    description={event.description}
+                    ddayBadge={
+                      event.d_day !== null ? `D-${event.d_day}` : undefined
+                    }
+                    statusBadge={event.eventStatus}
+                    progressRate={
+                      event.rate !== undefined ? `${event.rate}%` : undefined
+                    }
+                    estimatedPrice={event.estimatedPrice}
+                  />
+                  {index < events.length - 1 && (
+                    <div className="my-4 h-px w-full bg-gray-950" />
+                  )}
+                </div>
+              ))}
+
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-4">
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
               </div>
-            ))
+            )}
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
             <EmptyIcon />
