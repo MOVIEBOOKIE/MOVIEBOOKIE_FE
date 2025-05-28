@@ -10,6 +10,7 @@ import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
 import Lottie from "lottie-react";
+import AutoImageSlider from "./components/landing-1";
 
 export default function Login() {
   const router = useRouter();
@@ -25,9 +26,13 @@ export default function Login() {
       <div className="bg-gray-black relative min-h-screen text-white">
         <div className="relative">
           <Swiper onSlideChange={handleSlideChange} className="h-full">
-            {slides.map((slide, index) => (
+            <SwiperSlide>
+              <AutoImageSlider />
+            </SwiperSlide>
+
+            {slides.slice(1).map((slide, index) => (
               <SwiperSlide
-                key={index}
+                key={index + 1}
                 className="flex flex-col items-center justify-between pb-11"
               >
                 <div className="flex w-full flex-1 flex-col items-center justify-center">
@@ -53,8 +58,9 @@ export default function Login() {
             ))}
           </Swiper>
 
+          {/* 슬라이드 인디케이터 */}
           <div className="fixed bottom-46.5 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-            {slides.map((_, index) => (
+            {[0, 1, 2].map((_, index) => (
               <button
                 key={index}
                 className={`h-1.5 w-1.5 rounded-full ${
@@ -65,6 +71,7 @@ export default function Login() {
           </div>
         </div>
 
+        {/* 로그인 버튼 */}
         <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-125 -translate-x-1/2 px-5 pb-12">
           <Button
             className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00]"
