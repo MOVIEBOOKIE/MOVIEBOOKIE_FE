@@ -1,9 +1,9 @@
 self.FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID",
+  "apiKey": "AIzaSyCfoF3SI3S7G_AxNSmao1V0BaOD_mYo8jQ",
+  "authDomain": "moviebooky-2009d.firebaseapp.com",
+  "projectId": "moviebooky-2009d",
+  "storageBucket": "moviebooky-2009d.appspot.com",
+  "messagingSenderId": "854250295423",
+  "appId": "1:854250295423:web:d99f7f0f3e5102e2beef4a",
+  "measurementId": "G-9KGXJLXLZE"
 };

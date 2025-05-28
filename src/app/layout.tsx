@@ -8,6 +8,7 @@ import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
 import FcmListener from "./_components/fcm/fcm-listener";
 import Script from "next/script";
+import { requestNotificationPermission } from "./lib/firebase-notification";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         .catch((err) => console.error("❌ SW 등록 실패", err));
     }
   }, []);
-
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
