@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         .catch((err) => console.error("❌ SW 등록 실패", err));
     }
   }, []);
+
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/images/favicon/48x48.png" />
       </head>
       <body>
+        <Script src="/firebase-config.js" strategy="beforeInteractive" />
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.js"
           strategy="beforeInteractive"
