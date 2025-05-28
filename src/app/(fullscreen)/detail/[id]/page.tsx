@@ -79,8 +79,8 @@ export default function Detail() {
     setIsComplete(false);
   };
 
-  const handleVenueApply = () => {
-    postEventVenue({ eventId, type: 0 });
+  const handleVenueApply = (type: number) => {
+    postEventVenue({ eventId, type: type });
   };
 
   if (isComplete) {
@@ -134,14 +134,18 @@ export default function Detail() {
           iconType={currentModal.iconType as "confirm" | "alert"}
           title={currentModal.title}
           confirmText={currentModal.confirmText}
+          cancelText={currentModal.cancelText}
           onConfirm={() => {
             if (modalType === "apply") handleApply();
             if (modalType === "cancel") handleCancel();
             if (modalType === "recruitCancel") handleRecruitCancel();
-            if (modalType === "venueApply") handleVenueApply();
+            if (modalType === "venueApply") handleVenueApply(0);
             setModalType(null);
           }}
-          onCancel={() => setModalType(null)}
+          onCancel={() => {
+            if (modalType === "venueApply") handleVenueApply(1);
+            setModalType(null);
+          }}
         >
           {currentModal.description}
         </Modal>
