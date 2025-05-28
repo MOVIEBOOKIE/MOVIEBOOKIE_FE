@@ -63,7 +63,7 @@ export default function Home() {
         <Carousel />
 
         <motion.div
-          className="from-gray-black/0 to-gray-black fixed bottom-0 z-10 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+          className="from-gray-black/0 to-gray-black fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
           initial={{ opacity: 1 }}
           animate={{
             opacity: isFirstScreen ? 1 : 0,
@@ -84,7 +84,7 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="flex snap-start flex-col px-5"
       >
-        <div className="mt-6.25 mb-4 flex flex-col items-center gap-1.25">
+        <div className="z-0 mt-6.25 mb-4 flex flex-col items-center gap-1.25">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
           <p className="caption-1-medium text-gray-white opacity-[25%]">
             맞춤 이벤트 추천은 위로 스와이프

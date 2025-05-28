@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
-    "generate-firebase-config": "node script/generate-firebase-config.js",
+    "prebuild": "node scripts/generate-firebase-config.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -16,6 +16,7 @@
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
     "firebase": "^11.8.1",
     "framer-motion": "^12.9.2",
     "lottie-react": "^2.4.1",
