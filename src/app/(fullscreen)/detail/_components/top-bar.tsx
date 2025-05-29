@@ -18,7 +18,7 @@ export default function TopBar({ event }: TopBarProps) {
   const [showShareModal, setShowShareModal] = useState(false);
 
   const handleBack = () => {
-    router.back();
+    router.push("/?to=category");
   };
   const handleShare = () => {
     setShowShareModal(true);

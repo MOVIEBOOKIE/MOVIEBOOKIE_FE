@@ -31,7 +31,7 @@ export default function Search() {
   const totalPages = data?.totalPages ?? 0;
 
   const handleClick = () => {
-    router.back();
+    router.push("/?to=category");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
