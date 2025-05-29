@@ -371,8 +371,6 @@
 
 ![Slide 16_9 - 1107](https://github.com/user-attachments/assets/647cb6f0-3999-4193-a5b5-35ac4f9831eb)
 
-[Uploading 포지셔닝 맵.jpg…]()
-
 ## 🧑🏻‍💻 백엔드
 
 
