@@ -3,7 +3,7 @@
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Card, Input, Carousel } from "@/components";
 import { PATHS, CATEGORY_LABELS } from "@/constants";
 import { useUserStore } from "app/_stores/use-user-store";
@@ -15,19 +15,38 @@ import { useMyPage } from "app/_hooks/auth/use-mypage";
 export default function Home() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
-
+  const searchParams = useSearchParams();
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
+
+  //  스크롤 위치 복원
+  useEffect(() => {
+    const scrollY = sessionStorage.getItem("homeScrollY");
+    const fromSearch = searchParams.get("to") === "category";
+
+    if (scrollY && fromSearch) {
+      const el = containerRef.current;
+      requestAnimationFrame(() => {
+        el?.scrollTo({ top: Number(scrollY), behavior: "auto" });
+      });
+    }
+  }, [searchParams]);
+
+  // 스크롤 시 위치 저장
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const scrollTop = containerRef.current.scrollTop;
+      const el = containerRef.current;
+      if (!el) return;
+      const scrollTop = el.scrollTop;
       const screenHeight = window.innerHeight;
+
       setIsFirstScreen(scrollTop < screenHeight / 2);
+
+      sessionStorage.setItem("homeScrollY", String(scrollTop));
     };
 
     const el = containerRef.current;

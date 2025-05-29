@@ -11,7 +11,7 @@ export default function GlobalLoading() {
   const isMutating = useIsMutating();
   const isLoading = isFetching > 0 || isMutating > 0;
 
-  if (!isLoading || pathname?.startsWith("/event")) return null;
-
+  if (!isLoading || pathname?.startsWith("/event") || pathname === "/")
+    return null;
   return <Loading />;
 }

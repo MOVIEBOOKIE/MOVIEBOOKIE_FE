@@ -8,6 +8,7 @@ import { EmptyIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import Loading from "app/loading";
 import { useCategoryPageEvents } from "app/_hooks/events/use-category-events";
+import CardSkeleton from "@/components/card-skeleton";
 
 export default function CategoryPageClient({ label }: { label: string }) {
   const itemsPerPage = 10;
@@ -23,8 +24,6 @@ export default function CategoryPageClient({ label }: { label: string }) {
   const cards = data?.eventList ?? [];
   const totalPages = data?.totalPages ?? 0;
 
-  if (isLoading) return <Loading />;
-
   return (
     <FixedLayout
       title={label}
@@ -34,7 +33,13 @@ export default function CategoryPageClient({ label }: { label: string }) {
       state="detail"
     >
       <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-        {cards.length > 0 ? (
+        {isLoading ? (
+          <div className="mt-6 flex flex-1 flex-col gap-4 px-5">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <CardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : cards.length > 0 ? (
           cards.map((card, idx) => (
             <div key={card.eventId}>
               <Card
