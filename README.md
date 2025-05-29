@@ -1,4 +1,4 @@
-
+![Slide 16_9 - 1128](https://github.com/user-attachments/assets/85c1bc46-dbc9-4c2f-baaf-16a40650a3c6)
 🍿 영화관을 더 쉽고 더 자유롭게, 무비부키
 
 ## **⭐️ 팀 소개**
@@ -192,14 +192,11 @@
 ![Slide 16_9 - 1124](https://github.com/user-attachments/assets/0f780236-b722-42c7-a76d-c79b6ed07e85)
 
 
-## AS IS → TO BE
-![As is To be](https://github.com/user-attachments/assets/69d8bc7b-6721-4d36-8f6c-de8e54c106f3)
-
-
 ## 서비스 목표 (Service Goal) 
-![Slide 16_9 - 1127](https://github.com/user-attachments/assets/0acc22ef-e225-4ab7-95ac-af02886e7abc)
+![Slide 16_9 - 1128](https://github.com/user-attachments/assets/2fa61402-3fe1-41e6-a49a-1613e3bcbd5e)
 
-## 서비스 소개
+
+## 핵심 MVP 기능 
 ![Slide 16_9 - 1081](https://github.com/user-attachments/assets/9f7dcddf-eb28-44b3-b77e-8137b4c9d91e)
 
 
