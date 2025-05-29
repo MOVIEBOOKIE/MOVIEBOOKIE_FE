@@ -19,8 +19,8 @@ export default function Trait() {
     defaultValues: { mood: "", criterion: "", content: "" },
   });
   const { data: userInfo } = useMyPage();
-
-  const userName = userInfo?.username ?? "회원";
+  const nickname = useUserStore((state) => state.user?.nickname);
+  const userName = nickname ?? "회원";
 
   const { mutate } = usePostUserType();
   const handleClick = () => {
