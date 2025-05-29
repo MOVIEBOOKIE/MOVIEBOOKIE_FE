@@ -407,6 +407,11 @@
 
 <aside>
 
+![인스타 콘텐츠 기획](https://github.com/user-attachments/assets/a87ed1e5-ccab-48bf-ad04-d468e3a55da9)
+
+![화면 캡처 2025-05-29 201139](https://github.com/user-attachments/assets/8e9a93a3-99e6-4975-8137-25409ca8b258)
+
+
 ### 목적
 
 - 영화관 공간 활용의 다양성을 홍보하고 알리기
