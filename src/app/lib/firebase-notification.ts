@@ -13,10 +13,18 @@ export const requestNotificationPermission = async () => {
   if (!messaging) return null;
 
   try {
-    const token = await getToken(messaging, { vapidKey });
+    // ✅ 서비스 워커 명시적으로 등록
+    const registration = await navigator.serviceWorker.register("/sw.js");
+
+    const token = await getToken(messaging, {
+      vapidKey,
+      serviceWorkerRegistration: registration, // 중요!!
+    });
+
+    console.log("✅ FCM 토큰 발급됨:", token);
     return token;
   } catch (err) {
-    console.error("FCM 토큰 요청 실패", err);
+    console.error("❌ FCM 토큰 요청 실패", err);
     return null;
   }
 };
@@ -30,4 +38,5 @@ export const onFirebaseMessage = async (callback: (payload: any) => void) => {
   console.log("✅ Firebase messaging 준비 완료");
   onMessage(messaging, callback);
 };
+
 console.log("🔥 요청한 VAPID 키:", vapidKey);

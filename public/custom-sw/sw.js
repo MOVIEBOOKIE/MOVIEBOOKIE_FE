@@ -1,3 +1,5 @@
+// ✅ 기존 next-pwa의 sw.js에 추가할 내용
+
 importScripts("/firebase-config.js");
 importScripts(
   "https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js",
@@ -9,6 +11,7 @@ importScripts(
 firebase.initializeApp(self.FIREBASE_CONFIG);
 
 const messaging = firebase.messaging();
+self.__WB_MANIFEST;
 
 messaging.onBackgroundMessage(function (payload) {
   const rawTitle = payload.notification.title || "";
@@ -24,11 +27,29 @@ messaging.onBackgroundMessage(function (payload) {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
+// self.addEventListener("notificationclick", function (event) {
+//   const eventId = event.notification.data?.eventId;
+//   const urlToOpen = eventId
+//     ? `/notifications?eventId=${eventId}`
+//     : "/notifications";
+
+//   event.notification.close();
+
+//   event.waitUntil(
+//     clients
+//       .matchAll({ type: "window", includeUncontrolled: true })
+//       .then((clientList) => {
+//         for (const client of clientList) {
+//           if ("focus" in client) return client.focus();
+//         }
+//         if (clients.openWindow) return clients.openWindow(urlToOpen);
+//       }),
+//   );
+// });
+
 self.addEventListener("notificationclick", function (event) {
   const eventId = event.notification.data?.eventId;
-  const urlToOpen = eventId
-    ? `/notifications?eventId=${eventId}`
-    : "/notifications";
+  const url = eventId ? `/notifications?eventId=${eventId}` : "/notifications";
 
   event.notification.close();
 
@@ -39,7 +60,7 @@ self.addEventListener("notificationclick", function (event) {
         for (const client of clientList) {
           if ("focus" in client) return client.focus();
         }
-        if (clients.openWindow) return clients.openWindow(urlToOpen);
+        if (clients.openWindow) return clients.openWindow(url);
       }),
   );
 });
