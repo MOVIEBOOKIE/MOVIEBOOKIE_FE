@@ -17,6 +17,7 @@ export default function Step2() {
             어떤 기준으로 고르시나요?
           </>
         }
+        description="나에게 딱 맞는 기준, 하나만 골라주세요!"
       />
       <Controller
         control={control}

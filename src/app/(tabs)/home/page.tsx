@@ -53,7 +53,6 @@ export default function Home() {
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">
-            {" "}
             {user?.userTypeTitle || ""}
           </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
@@ -63,7 +62,7 @@ export default function Home() {
         <Carousel />
 
         <motion.div
-          className="from-gray-black/0 to-gray-black fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+          className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
           initial={{ opacity: 1 }}
           animate={{
             opacity: isFirstScreen ? 1 : 0,

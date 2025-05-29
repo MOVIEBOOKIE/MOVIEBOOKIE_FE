@@ -81,7 +81,7 @@ export default function DetailContent({ ...props }) {
                   {props.username || "회원"}
                 </p>
                 <p className="caption-1-regular text-gray-500">
-                  단관 경험 {props.recruitment ?? "0"}회 (상세정보)
+                  단관 경험 {props.recruitment ?? "0"}회
                 </p>
               </div>
             </div>

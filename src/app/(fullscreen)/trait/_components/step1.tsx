@@ -23,6 +23,7 @@ export default function Step1({ nickname }: Step1Props) {
             어떤 느낌인가요?
           </>
         }
+        description="나에게 딱 맞는 느낌, 하나만 골라주세요!"
       />
       <Controller
         control={control}
