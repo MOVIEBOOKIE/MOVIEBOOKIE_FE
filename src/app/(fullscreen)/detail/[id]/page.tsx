@@ -67,9 +67,7 @@ export default function Detail() {
 
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
 
-  const { data: moveToTicket } = useGetToTicket(eventId, {
-    enabled: isInitialized && loggedIn && !!eventId,
-  });
+  const { data: moveToTicket } = useGetToTicket(eventId);
 
   const handleClick = () => {
     if (!loggedIn) {
@@ -89,7 +87,7 @@ export default function Detail() {
         break;
       case "티켓으로 이동":
         if (moveToTicket?.ticketId) {
-          router.push(`${PATHS.TICKET}?id=${moveToTicket.ticketId}`);
+          router.push(`${PATHS.TICKET}/${moveToTicket.ticketId}`);
         }
         break;
       case "대관 신청하기":
