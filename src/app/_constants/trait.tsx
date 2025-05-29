@@ -64,7 +64,7 @@ export const CRITERION: Record<
     icon: <FireIcon />,
     text: "요즘 핫한 작품은 놓칠 수 없어요",
   },
-  FIRED_TAG: {
+  FIREND_TAG: {
     icon: <TargetIcon />,
     text: "친구들이 추천한 작품들은 무조건 챙겨봐요",
   },
