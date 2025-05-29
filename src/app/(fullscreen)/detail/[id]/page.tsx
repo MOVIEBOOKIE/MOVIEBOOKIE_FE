@@ -17,9 +17,9 @@ import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "@/constants/detail";
 import { PATHS } from "@/constants";
 import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
-import { useUserStore } from "app/_stores/useUserStore";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
+import { useUserStore } from "app/_stores/use-user-store";
 
 type ModalType =
   | "apply"
