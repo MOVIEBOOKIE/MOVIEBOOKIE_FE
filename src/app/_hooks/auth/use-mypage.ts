@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMyPageInfo } from "app/_apis/auth/mypage";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 
 export const useMyPage = () => {
   const user = useUserStore((state) => state.user);

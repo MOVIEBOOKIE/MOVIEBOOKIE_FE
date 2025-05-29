@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import EventStatus from "app/(fullscreen)/detail/_components/event-status";
 
 export default function DetailContent({ ...props }) {

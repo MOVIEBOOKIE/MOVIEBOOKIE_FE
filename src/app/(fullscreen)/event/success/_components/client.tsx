@@ -5,7 +5,7 @@ import Step1 from "./step1";
 import Step2 from "./step2";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 import { PATHS } from "@/constants";
 import { useCreateEvent } from "app/_hooks/use-create-event";
 import Complete from "@/components/complete";

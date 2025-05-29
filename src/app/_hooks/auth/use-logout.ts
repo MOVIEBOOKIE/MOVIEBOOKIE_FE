@@ -2,7 +2,7 @@ import { PATHS } from "@/constants";
 import { useMutation } from "@tanstack/react-query";
 import { postLogout } from "app/_apis/auth/auth";
 import { useToastStore } from "app/_stores/use-toast-store";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import { useRouter } from "next/navigation";
 
 export const useLogout = () => {

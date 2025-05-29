@@ -2,7 +2,7 @@
 
 import { FixedLayout } from "@/components";
 import { MyKakaoIcon } from "@/icons/index";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 
 export default function PrivacyPolicy() {
   const user = useUserStore((state) => state.user);

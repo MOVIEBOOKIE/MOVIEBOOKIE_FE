@@ -6,7 +6,7 @@ import Image from "next/image";
 import { StepHeader } from "@/components";
 import { ImageIcon, ImageDeleteIcon } from "@/icons/index";
 import PostTextArea from "./post-textarea";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 
 export default function Step7() {
   const { register, setValue } = useFormContext();

@@ -13,7 +13,7 @@ import Step7 from "./components/step7-writing";
 import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 import { EventFormValues } from "app/_types/event";
-import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Modal from "@/components/modal";
 
 const steps = [
