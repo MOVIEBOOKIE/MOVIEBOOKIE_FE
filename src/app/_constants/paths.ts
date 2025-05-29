@@ -35,5 +35,6 @@ export const PATHS = {
     eventId
       ? `/feedback/result?type=${type}&eventId=${eventId}`
       : `/feedback/result?type=${type}`,
-  TRAIT_RESULT: "/trait-result",
+  TRAIT_RESULT: "/trait/result",
+  TRAIT: "/trait",
 } as const;
