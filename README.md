@@ -160,8 +160,6 @@
 ![Slide 16_9 - 1010](https://github.com/user-attachments/assets/beee733d-0f82-4209-8cb9-5ae8559b5af0)
 
 
-![Slide 16_9 - 1073](https://github.com/user-attachments/assets/a016efe3-89e6-43dd-a0e6-91e4bd1f781f)
-
 
 
 ## 🔦 서비스 방향성 설정
