@@ -210,3 +210,9 @@ select:-webkit-autofill {
   background-color: transparent !important;
   color: inherit !important;
 }
+
+svg {
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+  image-rendering: crisp-edges;
+}
