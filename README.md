@@ -35,7 +35,8 @@
 🍿 ***영화관에서 영화를 ‘예매’하듯, 당신의 추억을 ‘예약’하며**  
 영화 관람 그 이상으로, 일상을 특별한 순간으로 만들게 해줍니다.*
 
-![Mssion, Slogan, VIsion](https://github.com/user-attachments/assets/f35bdf11-bcc1-4f48-8796-941b359eedf9)
+
+
 ### 슬로건 (Slogan)
 
 <aside>
@@ -111,7 +112,7 @@
 
 </aside>
 ## 우리는 영화관 활용 용도와 문화의 변화 속에서 새로운 수요와 가능성을 발견했습니다.
-![Slide 16_9 - 1066](https://github.com/user-attachments/assets/c03e2902-9c82-4ea5-a5d9-bf68c942b63a)
+![Slide 16_9 - 1066](https://github.com/user-attachments/assets/d30d37c4-1aad-41ea-ab37-316d7e5a9dba)
 
 
 
