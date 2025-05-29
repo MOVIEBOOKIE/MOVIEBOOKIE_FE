@@ -17,19 +17,15 @@ export default function PwaPromptModal() {
     const hasPrompted = localStorage.getItem("pwaPrompted");
     if (hasPrompted) return;
 
+    setShowModal(true);
+
     if (osType === "android") {
       const handler = (e: any) => {
         e.preventDefault();
         setDeferredPrompt(e);
-        setShowModal(true);
       };
       window.addEventListener("beforeinstallprompt", handler);
       return () => window.removeEventListener("beforeinstallprompt", handler);
-    }
-
-    // ✅ ios나 other일 경우에도 모달 보여주기
-    if (osType === "ios" || osType === "other") {
-      setShowModal(true);
     }
   }, []);
 

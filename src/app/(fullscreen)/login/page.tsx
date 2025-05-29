@@ -9,8 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
-import Lottie from "lottie-react";
-import AutoImageSlider from "./components/landing-1";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -26,13 +25,9 @@ export default function Login() {
       <div className="bg-gray-black relative min-h-screen text-white">
         <div className="relative">
           <Swiper onSlideChange={handleSlideChange} className="h-full">
-            <SwiperSlide>
-              <AutoImageSlider />
-            </SwiperSlide>
-
-            {slides.slice(1).map((slide, index) => (
+            {slides.map((slide, index) => (
               <SwiperSlide
-                key={index + 1}
+                key={index}
                 className="flex flex-col items-center justify-between pb-11"
               >
                 <div className="flex w-full flex-1 flex-col items-center justify-center">
@@ -45,13 +40,16 @@ export default function Login() {
                       {slide.description}
                     </p>
                   </div>
-                  <div className="mt-5 flex w-full items-center justify-center">
-                    <Lottie
-                      autoplay
-                      loop
-                      animationData={slide.animation}
-                      style={{ height: "333px", width: "full" }}
-                    />
+                  <div className="mt-12 flex w-full items-center justify-center">
+                    <div className="relative h-[333px] w-[375px]">
+                      <Image
+                        src={slide.image}
+                        alt={slide.title}
+                        fill
+                        className="object-contain"
+                        priority={index === 0}
+                      />
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>
