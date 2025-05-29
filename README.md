@@ -36,7 +36,7 @@
 영화 관람 그 이상으로, 일상을 특별한 순간으로 만들게 해줍니다.*
 
 ![Mssion, Slogan, VIsion](https://github.com/user-attachments/assets/f35bdf11-bcc1-4f48-8796-941b359eedf9)
-### 슬로건 (Slogon)
+### 슬로건 (Slogan)
 
 <aside>
 
