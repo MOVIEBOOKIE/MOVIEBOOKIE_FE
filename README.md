@@ -111,8 +111,11 @@
 ‘환승연애2’ 단관, 월드컵 경기 단관 등 대중적인 콘텐츠부터 애니메이션이나 아이돌 콘텐츠 중심의 팬덤 상영회까지, **다양한 단체관람 이벤트가 팬덤에 의해 자발적으로 기획**되고 있다.  이들은 상영회를 직접 기획하고, 콘텐츠를 확산시키는 ‘주최자이자 기획자’로서 적극적으로 움직이고 있다. 
 
 </aside>
+
 ## 우리는 영화관 활용 용도와 문화의 변화 속에서 새로운 수요와 가능성을 발견했습니다.
-![Slide 16_9 - 1066](https://github.com/user-attachments/assets/d30d37c4-1aad-41ea-ab37-316d7e5a9dba)
+
+![image](https://github.com/user-attachments/assets/db5cbbba-65b9-48c2-8eaf-331f76b750fd)
+
 
 
 
