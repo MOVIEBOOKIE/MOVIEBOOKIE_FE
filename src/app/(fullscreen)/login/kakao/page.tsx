@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PATHS } from "@/constants";
 import Loading from "app/loading";
-import { useKakaoLogin } from "app/_hooks/onboarding/useKakaoLogin";
+import { useKakaoLogin } from "app/_hooks/onboarding/use-kakao-login";
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string;
 

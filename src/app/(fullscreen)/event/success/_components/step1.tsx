@@ -1,6 +1,6 @@
 "use client";
 
-import { useEventFormStore } from "app/_stores/useEventCreateForm";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 

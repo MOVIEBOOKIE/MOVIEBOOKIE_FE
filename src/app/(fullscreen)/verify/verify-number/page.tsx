@@ -6,7 +6,7 @@ import { FixedLayout, StepHeader, Toast } from "@/components";
 import {
   useVerifyEmail,
   useVerifySms,
-} from "app/_hooks/onboarding/useVerifyCode";
+} from "app/_hooks/onboarding/use-verify-code";
 import Loading from "app/loading";
 import { PATHS } from "@/constants";
 export default function VerifyNumberPage() {

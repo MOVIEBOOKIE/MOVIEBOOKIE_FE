@@ -1,19 +1,35 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import Image from "next/image";
 import { StepHeader } from "@/components";
 import { ImageIcon, ImageDeleteIcon } from "@/icons/index";
 import PostTextArea from "./post-textarea";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 
 export default function Step7() {
   const { register, setValue } = useFormContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const formData = useEventFormStore((state) => state.formData);
+  const setFormData = useEventFormStore((state) => state.setFormData);
+
   const nickname = useUserStore((state) => state.user?.nickname);
   const displayName = nickname || "회원님";
+
+  useEffect(() => {
+    if (formData.thumbnail) {
+      const url = URL.createObjectURL(formData.thumbnail);
+      setPreviewUrl(url);
+
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [formData.thumbnail]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -21,12 +37,18 @@ export default function Step7() {
 
     const imageUrl = URL.createObjectURL(file);
     setPreviewUrl(imageUrl);
+
     setValue("thumbnail", file);
+
+    setFormData({ ...formData, thumbnail: file });
   };
 
   const handleRemoveImage = () => {
     setPreviewUrl(null);
     setValue("thumbnail", null);
+
+    setFormData({ ...formData, thumbnail: null });
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
