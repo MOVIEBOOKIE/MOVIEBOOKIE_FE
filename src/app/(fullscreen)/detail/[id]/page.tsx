@@ -83,6 +83,10 @@ export default function Detail() {
     postEventVenue({ eventId, type: type });
   };
 
+  const handleModalClose = () => {
+    setModalType(null);
+  };
+
   if (isComplete) {
     return (
       <Complete
@@ -159,6 +163,7 @@ export default function Detail() {
             setModalType(null);
           }}
           showCloseButton
+          onClose={handleModalClose}
         >
           {currentModal.description}
         </Modal>
