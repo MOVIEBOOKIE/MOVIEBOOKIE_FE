@@ -3,7 +3,7 @@
 import { Button } from "@/components";
 import TopBar from "../_components/top-bar";
 import DetailContent from "@/components/detail-content";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   useDeleteEvent,
   useDeleteEventsRecruit,
@@ -11,28 +11,72 @@ import {
   usePostEventRegister,
   usePostEventsVenue,
 } from "app/_hooks/events/use-events";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "@/constants/detail";
-import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
+import { useUserStore } from "app/_stores/useUserStore";
+import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
+import { EventData } from "app/_types/event";
 
-type ModalType = "apply" | "cancel" | "recruitCancel" | "venueApply" | null;
+type ModalType =
+  | "apply"
+  | "cancel"
+  | "recruitCancel"
+  | "venueApply"
+  | "loginRequired"
+  | null;
+
+const LOGIN_REQUIRED_MODAL = {
+  iconType: "alert" as const,
+  title: "이벤트 신청은 로그인 후에 가능해요",
+  description: "지금 바로 로그인하고 신청해보세요",
+  confirmText: "로그인하기",
+  cancelText: "취소",
+};
 
 export default function Detail() {
   const router = useRouter();
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const params = useParams();
   const id = params?.id;
   const eventId = Number(id);
+  const user = useUserStore((state) => state.user);
+  const loggedIn = !!user;
 
-  const { data, isPending } = useGetEvent(eventId);
-  const { data: moveToTicket } = useGetToTicket(eventId);
+  const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
+    eventId,
+    {
+      enabled: !!user && !!eventId,
+    },
+  );
+
+  const { data: dataAnonymousRaw, isPending: isPendingAnonymous } =
+    useGetAnonymousEvent(eventId, {
+      enabled: !user && !!eventId,
+    });
+
+  const data = (loggedIn ? dataWithAuth : dataAnonymousRaw) as
+    | EventData
+    | undefined;
+
+  const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
+
+  const { data: moveToTicket } = useGetToTicket(eventId, {
+    enabled: isInitialized && loggedIn && !!eventId,
+  });
 
   const handleClick = () => {
+    if (!loggedIn) {
+      setModalType("loginRequired");
+      return;
+    }
+
     switch (data?.buttonState) {
       case "신청하기":
         setModalType("apply");
@@ -47,7 +91,6 @@ export default function Detail() {
         if (moveToTicket?.ticketId) {
           router.push(`${PATHS.TICKET}?id=${moveToTicket.ticketId}`);
         }
-
         break;
       case "대관 신청하기":
         setModalType("venueApply");
@@ -55,7 +98,10 @@ export default function Detail() {
     }
   };
 
-  const currentModal = modalType ? MODAL_CONTENT[modalType] : null;
+  const currentModal =
+    modalType && modalType !== "loginRequired"
+      ? MODAL_CONTENT[modalType]
+      : null;
 
   const { mutate } = usePostEventRegister();
   const { mutate: applyCancel } = useDeleteEvent();
@@ -80,7 +126,7 @@ export default function Detail() {
   };
 
   const handleVenueApply = (type: number) => {
-    postEventVenue({ eventId, type: type });
+    postEventVenue({ eventId, type });
   };
 
   const handleModalClose = () => {
@@ -125,7 +171,7 @@ export default function Detail() {
             <p className="caption-1-medium text-gray-500">예상 가격</p>
             {data && (
               <p className="body-3-semibold whitespace-nowrap text-gray-300">
-                {data.estimatedPrice.toLocaleString()}원
+                {data.estimatedPrice?.toLocaleString?.() ?? "-"}원
               </p>
             )}
           </div>
@@ -135,23 +181,44 @@ export default function Detail() {
             disabled={
               data?.eventState === "모집 취소" ||
               (data?.eventState === "모집 완료" &&
-                data?.userRole != "주최자") ||
+                data?.userRole !== "주최자") ||
               data?.eventState === "대관 취소" ||
               data?.buttonState === "대관 진행 중"
             }
           >
-            {data?.buttonState}
+            {data?.buttonState ?? ""}
           </Button>
         </div>
       )}
 
-      {currentModal && (
+      {modalType && (
         <Modal
-          iconType={currentModal.iconType as "confirm" | "alert"}
-          title={currentModal.title}
-          confirmText={currentModal.confirmText}
-          cancelText={currentModal.cancelText}
+          iconType={
+            modalType === "loginRequired"
+              ? "alert"
+              : (currentModal?.iconType as "confirm" | "alert" | "")
+          }
+          title={
+            modalType === "loginRequired"
+              ? LOGIN_REQUIRED_MODAL.title
+              : currentModal?.title || ""
+          }
+          confirmText={
+            modalType === "loginRequired"
+              ? LOGIN_REQUIRED_MODAL.confirmText
+              : currentModal?.confirmText || "확인"
+          }
+          cancelText={
+            modalType === "loginRequired"
+              ? LOGIN_REQUIRED_MODAL.cancelText
+              : currentModal?.cancelText || "취소"
+          }
           onConfirm={() => {
+            if (modalType === "loginRequired") {
+              router.push(PATHS.LOGIN);
+              setModalType(null);
+              return;
+            }
             if (modalType === "apply") handleApply();
             if (modalType === "cancel") handleCancel();
             if (modalType === "recruitCancel") handleRecruitCancel();
@@ -165,7 +232,9 @@ export default function Detail() {
           showCloseButton
           onClose={handleModalClose}
         >
-          {currentModal.description}
+          {modalType === "loginRequired"
+            ? LOGIN_REQUIRED_MODAL.description
+            : currentModal?.description}
         </Modal>
       )}
     </>

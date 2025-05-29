@@ -14,8 +14,14 @@ import {
 import { useToastStore } from "app/_stores/use-toast-store";
 import { EventSearchParams, PostEventsVenueParams } from "app/_types/event";
 
-export const useGetEvent = (eventId: number) => {
-  return useQuery(EVENT_OPTION.EVENT(eventId));
+export const useGetEvent = (
+  eventId: number,
+  options?: { enabled?: boolean },
+) => {
+  return useQuery({
+    ...EVENT_OPTION.EVENT(eventId),
+    ...options,
+  });
 };
 
 export const usePostEventRegister = () => {
