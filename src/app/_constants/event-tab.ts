@@ -14,10 +14,10 @@ export const STATUS_MAP = {
 
 export const EVENT_TOGGLES = {
   APPLY: {
-    LABELS: ["모집 이벤트", "확정 이벤트"] as const,
+    LABELS: ["신청 이벤트", "확정 이벤트"] as const,
   },
   MINE: {
-    LABELS: ["신청 이벤트", "확정 이벤트"] as const,
+    LABELS: ["모집 이벤트", "확정 이벤트"] as const,
   },
 } as const;
 
