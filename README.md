@@ -183,9 +183,6 @@
 </aside>
 
 
-![Slide 16_9 - 1079](https://github.com/user-attachments/assets/709435d4-22c3-453e-a5c1-dc7390705041)
-
-
 ![Slide 16_9 - 1125](https://github.com/user-attachments/assets/5a84a361-b132-4d2a-a776-72844daaf095)
 
 
