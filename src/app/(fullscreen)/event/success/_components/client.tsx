@@ -13,7 +13,7 @@ import Complete from "@/components/complete";
 export default function Client() {
   const [step, setStep] = useState(1);
   const router = useRouter();
-  const { formData } = useEventFormStore();
+  const { formData, resetFormData } = useEventFormStore();
   const { mutate } = useCreateEvent();
 
   const handleButtonClick = () => {
@@ -22,6 +22,7 @@ export default function Client() {
     } else {
       mutate(formData, {
         onSuccess: () => {
+          resetFormData();
           setStep(3);
         },
         onError: (error) => {
