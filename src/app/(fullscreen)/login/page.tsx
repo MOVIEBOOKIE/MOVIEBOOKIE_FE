@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
-import Lottie from "lottie-react";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -40,13 +40,16 @@ export default function Login() {
                       {slide.description}
                     </p>
                   </div>
-                  <div className="mt-5 flex w-full items-center justify-center">
-                    <Lottie
-                      autoplay
-                      loop
-                      animationData={slide.animation}
-                      style={{ height: "333px", width: "full" }}
-                    />
+                  <div className="mt-12 flex w-full items-center justify-center">
+                    <div className="relative h-[333px] w-[375px]">
+                      <Image
+                        src={slide.image}
+                        alt={slide.title}
+                        fill
+                        className="object-contain"
+                        priority={index === 0}
+                      />
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>
@@ -54,7 +57,7 @@ export default function Login() {
           </Swiper>
 
           <div className="fixed bottom-46.5 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-            {slides.map((_, index) => (
+            {[0, 1, 2].map((_, index) => (
               <button
                 key={index}
                 className={`h-1.5 w-1.5 rounded-full ${
