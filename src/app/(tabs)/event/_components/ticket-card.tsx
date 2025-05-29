@@ -18,7 +18,7 @@ export function TicketCard({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/event/ticket?id=${id}`);
+    router.push(`/event/ticket/${id}`);
   };
   return (
     <div
