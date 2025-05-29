@@ -1,18 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { StepHeader } from "@/components";
 import { CONTENT } from "@/constants/trait";
 import TypeList from "@/components/type-list";
 import { EtcIcon } from "@/icons/index";
 import { useFormContext } from "react-hook-form";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 
-type ContentItem = {
-  icon: React.ReactNode;
-  text: string;
-};
-
-const CONTENT_WITH_ETC: { [key: string]: ContentItem } = {
+const CONTENT_WITH_ETC = {
   ...CONTENT,
   기타: {
     icon: <EtcIcon className="h-7 w-7" />,
@@ -21,8 +16,11 @@ const CONTENT_WITH_ETC: { [key: string]: ContentItem } = {
 };
 
 export default function Step1() {
-  const [selected, setSelected] = useState<string | null>(null);
   const { setValue } = useFormContext();
+  const formData = useEventFormStore((state) => state.formData);
+  const setFormData = useEventFormStore((state) => state.setFormData);
+
+  const selected = formData.mediaType;
 
   return (
     <>
@@ -40,11 +38,11 @@ export default function Step1() {
           <TypeList
             key={key}
             onClick={() => {
-              setSelected(key);
-              setValue("mediaType", CONTENT_WITH_ETC[key].text);
+              setFormData({ ...formData, mediaType: text });
+              setValue("mediaType", text);
             }}
             direction="col"
-            className={selected === key ? "bg-gray-900" : ""}
+            className={selected === text ? "bg-gray-900" : ""}
           >
             {icon}
             <span>{text}</span>

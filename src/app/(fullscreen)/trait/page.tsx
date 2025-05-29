@@ -9,7 +9,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { usePostUserType } from "app/_hooks/use-user-type";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Trait() {

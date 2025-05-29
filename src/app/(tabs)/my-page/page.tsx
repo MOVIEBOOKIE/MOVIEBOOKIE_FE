@@ -5,7 +5,7 @@ import { PATHS } from "@/constants";
 import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
 import { useLogout, useLogoutHandler } from "app/_hooks/auth/use-logout";
 import { useToastStore } from "app/_stores/use-toast-store";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 interface MyPageStatProps {
@@ -29,7 +29,7 @@ export default function MyPage() {
   const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
   return (
-    <div className="min-h-screen px-5 text-white">
+    <div className="h-[calc(100vh-102px)] overflow-y-scroll px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
       <div className="mb-5 flex items-center gap-4">
         <div className="border-red-main flex h-20 w-20 items-center justify-center rounded-full border-2">

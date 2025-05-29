@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import CardFront from "./card-front";
 import CardBack from "./card-back";
@@ -10,13 +10,15 @@ import Loading from "app/loading";
 import { useTicketDetail } from "app/_hooks/events/use-ticket-detail";
 
 export default function TicketPage() {
-  const searchParams = useSearchParams();
-  const ticketId = searchParams.get("id");
-  const { data: ticket, isLoading } = useTicketDetail(ticketId);
+  const { id } = useParams();
+  const ticketId = Number(id);
+  const { data: ticket, isLoading } = useTicketDetail(ticketId, {
+    enabled: !isNaN(ticketId),
+  });
   const [flipped, setFlipped] = useState(false);
 
   if (isLoading) return <Loading />;
-  if (!ticket)
+  if (!ticketId)
     return (
       <p className="flex h-full items-center text-center text-white">
         티켓이 없습니다.

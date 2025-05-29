@@ -4,11 +4,13 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import EventStatus from "app/(fullscreen)/detail/_components/event-status";
 
 export default function DetailContent({ ...props }) {
   const user = useUserStore((state) => state.user);
+
+  console.log(user);
 
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
 
@@ -81,7 +83,7 @@ export default function DetailContent({ ...props }) {
                   {props.username || "회원"}
                 </p>
                 <p className="caption-1-regular text-gray-500">
-                  단관 경험 {props.recruitment ?? "0"}회 (상세정보)
+                  단관 경험 {props.recruitment ?? "0"}회
                 </p>
               </div>
             </div>

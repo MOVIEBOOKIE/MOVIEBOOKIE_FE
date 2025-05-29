@@ -4,7 +4,7 @@ export { default as BottomNavigation } from "./bottom-navibar";
 export { default as Input } from "./input";
 export { default as LightEffect } from "./light-effect";
 export { default as Card } from "./main-card";
-export { default as Carousel } from "./carousel";
+export { default as Carousel } from "../(tabs)/home/_components/carousel";
 export { default as StepHeader } from "./step-header";
 export { default as Header } from "./header";
 export { default as FixedLayout } from "./fixed-layout";

@@ -3,10 +3,10 @@
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Card, Input, Carousel } from "@/components";
 import { PATHS, CATEGORY_LABELS } from "@/constants";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
 import { categoryMap } from "@/constants/category-map";
@@ -15,19 +15,38 @@ import { useMyPage } from "app/_hooks/auth/use-mypage";
 export default function Home() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
-
+  const searchParams = useSearchParams();
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
+
+  //  스크롤 위치 복원
+  useEffect(() => {
+    const scrollY = sessionStorage.getItem("homeScrollY");
+    const fromSearch = searchParams.get("to") === "category";
+
+    if (scrollY && fromSearch) {
+      const el = containerRef.current;
+      requestAnimationFrame(() => {
+        el?.scrollTo({ top: Number(scrollY), behavior: "auto" });
+      });
+    }
+  }, [searchParams]);
+
+  // 스크롤 시 위치 저장
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const scrollTop = containerRef.current.scrollTop;
+      const el = containerRef.current;
+      if (!el) return;
+      const scrollTop = el.scrollTop;
       const screenHeight = window.innerHeight;
+
       setIsFirstScreen(scrollTop < screenHeight / 2);
+
+      sessionStorage.setItem("homeScrollY", String(scrollTop));
     };
 
     const el = containerRef.current;
@@ -53,7 +72,6 @@ export default function Home() {
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">
-            {" "}
             {user?.userTypeTitle || ""}
           </p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
@@ -63,7 +81,7 @@ export default function Home() {
         <Carousel />
 
         <motion.div
-          className="from-gray-black/0 to-gray-black fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+          className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
           initial={{ opacity: 1 }}
           animate={{
             opacity: isFirstScreen ? 1 : 0,

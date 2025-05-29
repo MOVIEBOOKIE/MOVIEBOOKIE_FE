@@ -4,7 +4,7 @@ import { CardProps } from "app/_types/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export function Card({
+export function TicketCard({
   id,
   imageUrl,
   title,
@@ -18,7 +18,7 @@ export function Card({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/event/ticket?id=${id}`);
+    router.push(`/event/ticket/${id}`);
   };
   return (
     <div
@@ -26,7 +26,13 @@ export function Card({
       className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950"
     >
       <div className="relative h-41.75 w-full overflow-hidden">
-        <Image src={imageUrl} alt={title} fill className="object-cover" />
+        <Image
+          src={imageUrl}
+          alt={title}
+          fill
+          className="object-cover"
+          priority
+        />
         {(ddayBadge || statusBadge) && (
           <div className="absolute top-2.5 left-2.5 flex h-6 items-center gap-1">
             {statusBadge && (

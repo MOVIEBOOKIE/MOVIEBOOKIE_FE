@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ArrowDownIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
-import { useSendEmail } from "app/_hooks/onboarding/useSendCode";
+import { useSendEmail } from "app/_hooks/onboarding/use-send-code";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
 

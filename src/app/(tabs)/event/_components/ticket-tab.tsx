@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "./ticket-card";
+import { TicketCard } from "./ticket-card";
 import { EmptyTicketIcon } from "@/icons/index";
 import { useTickets } from "app/_hooks/events/use-ticket";
 import Loading from "app/loading";
@@ -18,7 +18,7 @@ export default function TicketTab() {
         {tickets.length > 0 ? (
           tickets.map((ticket) => (
             <div key={ticket.ticketId}>
-              <Card
+              <TicketCard
                 id={ticket.ticketId}
                 imageUrl={ticket.eventImageUrl}
                 title={ticket.title}

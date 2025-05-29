@@ -55,7 +55,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   return (
     <div className="relative mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
       {showToast && (
-        <div className="absolute top-full left-1/2 z-50 mt-4 -translate-x-1/2">
+        <div className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2">
           <Toast iconType="alert">
             오늘을 기준으로 4주 후부터 선택 가능해요
           </Toast>

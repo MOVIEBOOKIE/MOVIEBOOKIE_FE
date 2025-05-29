@@ -1,19 +1,35 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import Image from "next/image";
 import { StepHeader } from "@/components";
 import { ImageIcon, ImageDeleteIcon } from "@/icons/index";
 import PostTextArea from "./post-textarea";
-import { useUserStore } from "app/_stores/useUserStore";
+import { useUserStore } from "app/_stores/use-user-store";
+import { useEventFormStore } from "app/_stores/use-event-create-form";
 
 export default function Step7() {
   const { register, setValue } = useFormContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const formData = useEventFormStore((state) => state.formData);
+  const setFormData = useEventFormStore((state) => state.setFormData);
+
   const nickname = useUserStore((state) => state.user?.nickname);
   const displayName = nickname || "회원님";
+
+  useEffect(() => {
+    if (formData.thumbnail instanceof File) {
+      const url = URL.createObjectURL(formData.thumbnail);
+      setPreviewUrl(url);
+
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [formData.thumbnail]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -21,12 +37,18 @@ export default function Step7() {
 
     const imageUrl = URL.createObjectURL(file);
     setPreviewUrl(imageUrl);
+
     setValue("thumbnail", file);
+
+    setFormData({ ...formData, thumbnail: file });
   };
 
   const handleRemoveImage = () => {
     setPreviewUrl(null);
     setValue("thumbnail", null);
+
+    setFormData({ ...formData, thumbnail: null });
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -99,7 +121,7 @@ export default function Step7() {
             콘텐츠 제목
           </label>
           <input
-            {...register("eventTitle")}
+            {...register("mediaTitle")}
             type="text"
             placeholder="콘텐츠의 제목을 입력해 주세요 (ex 타이타닉)"
             className="body-3-medium w-full rounded-xl border border-gray-900 p-5 text-gray-300 placeholder-gray-800 focus:outline-none"

@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import Modal from "../../../_components/modal";
-import { ShareKakaoIcon, ShareLinkIcon } from "@/icons/index";
+import { ShareKakaoIcon } from "@/icons/index";
 import { useToastStore } from "app/_stores/use-toast-store";
-
+import Image from "next/image";
 declare global {
   interface Window {
     Kakao: any;
@@ -71,7 +71,7 @@ export default function ShareModal({
   return (
     <Modal
       title="링크 공유하기"
-      onCancel={onClose}
+      onClose={onClose}
       hideButtons
       showCloseButton={true}
     >
@@ -83,7 +83,13 @@ export default function ShareModal({
           <ShareKakaoIcon />
         </button>
         <button onClick={handleCopyLink}>
-          <ShareLinkIcon />
+          <Image
+            src="/images/share-link.png"
+            alt="공유 아이콘"
+            width={70}
+            height={70}
+            priority
+          />
         </button>
       </div>
     </Modal>

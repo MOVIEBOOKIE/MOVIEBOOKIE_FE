@@ -21,6 +21,7 @@ export default function Step3({ nickname }: Step3Props) {
             콘텐츠는 무엇인가요?
           </>
         }
+        description="나에게 딱 맞는 기준, 하나만 골라주세요!"
       />
       <Controller
         control={control}

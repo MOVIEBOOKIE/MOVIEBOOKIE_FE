@@ -51,7 +51,7 @@ export default function EventTab({ type }: EventTabProps) {
 
       <div className="mt-6 flex flex-col">
         {isLoading ? (
-          <div className="mt-6 flex flex-col gap-4">
+          <div className="mt-2 flex flex-col gap-4">
             {Array.from({ length: 4 }).map((_, idx) => (
               <div key={idx}>
                 <CardSkeleton />
