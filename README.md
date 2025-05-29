@@ -370,6 +370,7 @@
 ## 서비스 목표 (Service Goal) 
 
 ![Slide 16_9 - 1107](https://github.com/user-attachments/assets/647cb6f0-3999-4193-a5b5-35ac4f9831eb)
+![KakaoTalk_Photo_2025-05-29-16-21-15](https://github.com/user-attachments/assets/f6b27488-efec-4eb5-a5ca-b3fce0441c5f)
 
 ## 🧑🏻‍💻 백엔드
 
