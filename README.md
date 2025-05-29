@@ -112,18 +112,18 @@
 </aside>
 ## 우리는 영화관 활용 용도와 문화의 변화 속에서 새로운 수요와 가능성을 발견했습니다.
 
-# 🧑🏻‍💻 백엔드
+## 🧑🏻‍💻 백엔드
 
-## ERD
+### ERD
 <img width="800" alt="무비부키 ERD" src="https://github.com/user-attachments/assets/75c7d96b-4853-4284-9c5c-d77272540763" />
 
-## System Architecture
+### System Architecture
 <img width="700" alt="무비부키 아키텍쳐" src="https://github.com/user-attachments/assets/3e2c150a-8a57-499c-a197-1347baf21147" />
 
-## API Docs
+### API Docs
 **노션 링크**: https://waiting-candle-f33.notion.site/API-1cc3e5c872e78094864ccd251d8ea004?pvs=4
 
-## Project Structure
+### Project Structure
 ```markdown
 src
 ├── main
@@ -162,7 +162,7 @@ src
     ├── application-dev.yml
     └── application-prod.yml
 ```
-## Tech Stack
+### Tech Stack
 - `Jdk 21`
 - `Spring Boot 3.2.5`
 - `MySQL 9.3.0`, `Redis 5.0.7`
