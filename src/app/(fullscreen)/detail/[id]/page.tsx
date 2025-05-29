@@ -29,7 +29,7 @@ export default function Detail() {
   const id = params?.id;
   const eventId = Number(id);
 
-  const { data } = useGetEvent(eventId);
+  const { data, isPending } = useGetEvent(eventId);
   const { data: moveToTicket } = useGetToTicket(eventId);
 
   const handleClick = () => {
@@ -76,11 +76,15 @@ export default function Detail() {
   };
 
   const handleComplete = () => {
-    setIsComplete(false);
+    router.push(PATHS.EVENT);
   };
 
   const handleVenueApply = (type: number) => {
     postEventVenue({ eventId, type: type });
+  };
+
+  const handleModalClose = () => {
+    setModalType(null);
   };
 
   if (isComplete) {
@@ -107,27 +111,39 @@ export default function Detail() {
       )}
 
       {data && <DetailContent {...data} />}
-      <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
-        <div className="flex flex-col justify-center">
-          <p className="caption-1-medium text-gray-500">예상 가격</p>
-          {data && (
-            <p className="body-3-semibold whitespace-nowrap text-gray-300">
-              {data.estimatedPrice.toLocaleString()}원
-            </p>
-          )}
+
+      {!isPending && (
+        <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
+          <div
+            className={`flex flex-col justify-center ${
+              data?.eventState === "모집 취소" ||
+              data?.eventState === "대관 취소"
+                ? "opacity-30"
+                : ""
+            }`}
+          >
+            <p className="caption-1-medium text-gray-500">예상 가격</p>
+            {data && (
+              <p className="body-3-semibold whitespace-nowrap text-gray-300">
+                {data.estimatedPrice.toLocaleString()}원
+              </p>
+            )}
+          </div>
+          <Button
+            variant="primary"
+            onClick={handleClick}
+            disabled={
+              data?.eventState === "모집 취소" ||
+              (data?.eventState === "모집 완료" &&
+                data?.userRole != "주최자") ||
+              data?.eventState === "대관 취소" ||
+              data?.buttonState === "대관 진행 중"
+            }
+          >
+            {data?.buttonState}
+          </Button>
         </div>
-        <Button
-          variant="primary"
-          onClick={handleClick}
-          disabled={
-            data?.eventState === "모집 취소" ||
-            (data?.eventState === "모집 완료" && data?.userRole != "주최자") ||
-            data?.eventState === "대관 취소"
-          }
-        >
-          {data?.buttonState}
-        </Button>
-      </div>
+      )}
 
       {currentModal && (
         <Modal
@@ -146,6 +162,8 @@ export default function Detail() {
             if (modalType === "venueApply") handleVenueApply(1);
             setModalType(null);
           }}
+          showCloseButton
+          onClose={handleModalClose}
         >
           {currentModal.description}
         </Modal>

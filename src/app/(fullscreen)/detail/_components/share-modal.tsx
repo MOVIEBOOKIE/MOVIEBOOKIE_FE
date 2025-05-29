@@ -71,7 +71,7 @@ export default function ShareModal({
   return (
     <Modal
       title="링크 공유하기"
-      onCancel={onClose}
+      onClose={onClose}
       hideButtons
       showCloseButton={true}
     >
