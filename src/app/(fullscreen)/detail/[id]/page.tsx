@@ -132,7 +132,8 @@ export default function Detail() {
               data?.eventState === "모집 취소" ||
               (data?.eventState === "모집 완료" &&
                 data?.userRole != "주최자") ||
-              data?.eventState === "대관 취소"
+              data?.eventState === "대관 취소" ||
+              data?.buttonState === "대관 진행 중"
             }
           >
             {data?.buttonState}
@@ -157,6 +158,7 @@ export default function Detail() {
             if (modalType === "venueApply") handleVenueApply(1);
             setModalType(null);
           }}
+          showCloseButton
         >
           {currentModal.description}
         </Modal>
