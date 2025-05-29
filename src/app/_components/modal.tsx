@@ -12,6 +12,7 @@ import { ReactNode } from "react";
  * @param cancelText - 취소 버튼에 표시될 텍스트. 기본값: `"아니요"`
  * @param onConfirm - 확인 버튼 클릭 시 실행할 콜백 함수.
  * @param onCancel - 취소 버튼 클릭 시 실행할 콜백 함수.
+ * @param onClose - x 버튼 클릭 시 실행할 콜백 함수.
  */
 
 interface ModalProps {
@@ -21,10 +22,11 @@ interface ModalProps {
   confirmText?: string;
   cancelText?: string;
   onConfirm?: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   showCloseButton?: boolean;
   hideButtons?: boolean;
   children: ReactNode;
+  onClose?: () => void;
 }
 
 export default function Modal({
@@ -36,6 +38,7 @@ export default function Modal({
   cancelText = "아니요",
   onConfirm,
   onCancel,
+  onClose,
   showCloseButton = false,
   hideButtons = false,
 }: ModalProps) {
@@ -44,7 +47,7 @@ export default function Modal({
       <div className="drap-shadow relative flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
         {showCloseButton && (
           <button
-            onClick={onCancel}
+            onClick={onClose}
             className="absolute top-2 right-2 z-10 text-gray-100"
           >
             <CloseIcon />
