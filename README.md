@@ -140,7 +140,7 @@
 
 ![Slide 16_9 - 1070](https://github.com/user-attachments/assets/340cd22c-ee6c-4dee-a81f-6a20d9f39283)
 
-## 📌서비스 수요 검증
+## 📌그러나, 영화 팬중심의 접근은 다양한 니즈 수용과 확산을 제한했습니다.
 
 ![Slide 16_9 - 1103](https://github.com/user-attachments/assets/5e2abd16-ed68-4f7d-b85d-5b3cd48318a1)
 
