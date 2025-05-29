@@ -110,7 +110,14 @@ export default function Detail() {
 
       {!isPending && (
         <div className="bg-gray-black fixed bottom-0 flex w-full max-w-125 gap-9.5 px-5 pt-4.25 pb-10.75">
-          <div className="flex flex-col justify-center">
+          <div
+            className={`flex flex-col justify-center ${
+              data?.eventState === "모집 취소" ||
+              data?.eventState === "대관 취소"
+                ? "opacity-30"
+                : ""
+            }`}
+          >
             <p className="caption-1-medium text-gray-500">예상 가격</p>
             {data && (
               <p className="body-3-semibold whitespace-nowrap text-gray-300">
