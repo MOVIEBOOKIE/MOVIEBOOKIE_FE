@@ -11,7 +11,7 @@ import {
   usePostEventRegister,
   usePostEventsVenue,
 } from "app/_hooks/events/use-events";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "@/constants/detail";
@@ -19,7 +19,6 @@ import { PATHS } from "@/constants";
 import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useUserStore } from "app/_stores/useUserStore";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
-import { isLoggedIn } from "@/utils/is-logged-in";
 import { EventData } from "app/_types/event";
 
 type ModalType =
@@ -42,21 +41,24 @@ export default function Detail() {
   const router = useRouter();
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const params = useParams();
   const id = params?.id;
   const eventId = Number(id);
   const user = useUserStore((state) => state.user);
-  const loggedIn = isLoggedIn();
+  const loggedIn = !!user;
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
     {
-      enabled: loggedIn && !!eventId,
+      enabled: !!user && !!eventId,
     },
   );
+
   const { data: dataAnonymousRaw, isPending: isPendingAnonymous } =
     useGetAnonymousEvent(eventId, {
-      enabled: !loggedIn && !!eventId,
+      enabled: !user && !!eventId,
     });
 
   const data = (loggedIn ? dataWithAuth : dataAnonymousRaw) as
@@ -65,7 +67,9 @@ export default function Detail() {
 
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
 
-  const { data: moveToTicket } = useGetToTicket(eventId, { enabled: loggedIn });
+  const { data: moveToTicket } = useGetToTicket(eventId, {
+    enabled: isInitialized && loggedIn && !!eventId,
+  });
 
   const handleClick = () => {
     if (!loggedIn) {
