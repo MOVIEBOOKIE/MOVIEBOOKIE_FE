@@ -1,4 +1,4 @@
-# MOVIEBOOKIE_FE
+![Frame](https://github.com/user-attachments/assets/7602b377-55e2-441c-bf3f-a89954431f04)# MOVIEBOOKIE_FE
 🍿 영화관을 더 쉽고 더 자유롭게, 무비부키
 
 ## **⭐️ 팀 소개**
@@ -114,7 +114,8 @@
 
 ## 우리는 영화관 활용 용도와 문화의 변화 속에서 새로운 수요와 가능성을 발견했습니다.
 
-![image](https://github.com/user-attachments/assets/db5cbbba-65b9-48c2-8eaf-331f76b750fd)
+![Uploading Frame.png…]()
+
 
 ## 💡문제 검증
 
