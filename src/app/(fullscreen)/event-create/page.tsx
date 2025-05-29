@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import Step1 from "./components/step1-category";
@@ -15,6 +14,7 @@ import { PATHS } from "@/constants";
 import { EventFormValues } from "app/_types/event";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Modal from "@/components/modal";
+import { useState } from "react";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -27,25 +27,14 @@ const steps = [
 ];
 
 export default function EventCreatePage() {
-  const [step, setStep] = useState(0);
   const router = useRouter();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const storedForm = useEventFormStore((state) => state.formData);
+  const step = useEventFormStore((state) => state.step);
+  const setStep = useEventFormStore((state) => state.setStep);
+
   const methods = useForm({
-    defaultValues: {
-      mediaType: "",
-      eventDate: "",
-      eventStartTime: "",
-      eventProgressTime: "",
-      recruitmentStart: "",
-      recruitmentEnd: "",
-      minParticipants: "",
-      maxParticipants: "",
-      locationId: null,
-      mediaTitle: "",
-      eventTitle: "",
-      description: "",
-      thumbnail: null,
-    },
+    defaultValues: storedForm,
   });
 
   const formValues = useWatch({ control: methods.control });
@@ -92,7 +81,7 @@ export default function EventCreatePage() {
     if (!isValid) return;
 
     if (step < steps.length - 1) {
-      setStep((s) => s + 1);
+      setStep(step + 1);
     } else {
       methods.handleSubmit(onSubmit)();
     }
@@ -100,20 +89,24 @@ export default function EventCreatePage() {
 
   const onBack = () => {
     if (step > 0) {
-      setStep((s) => s - 1);
+      setStep(step - 1);
     } else {
       router.back();
     }
   };
+
   const CurrentStep = steps[step].component;
+
   const handleCloseClick = () => {
     setShowExitConfirm(true);
   };
 
   const handleConfirmExit = () => {
     setShowExitConfirm(false);
+    useEventFormStore.getState().resetFormData();
     router.push(PATHS.HOME);
   };
+
   const handleCancelExit = () => {
     setShowExitConfirm(false);
   };
