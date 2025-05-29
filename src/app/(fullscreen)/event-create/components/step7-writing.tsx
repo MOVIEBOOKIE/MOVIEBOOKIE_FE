@@ -21,7 +21,7 @@ export default function Step7() {
   const displayName = nickname || "회원님";
 
   useEffect(() => {
-    if (formData.thumbnail) {
+    if (formData.thumbnail instanceof File) {
       const url = URL.createObjectURL(formData.thumbnail);
       setPreviewUrl(url);
 
