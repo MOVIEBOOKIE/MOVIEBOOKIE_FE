@@ -23,10 +23,10 @@ interface NotificationStore {
   markAllAsRead: () => void;
   clearNotifications: () => void;
 
-  // ✅ 추가: 중복 알림 방지를 위한 상태
   notifiedEventIds: number[];
   addNotifiedEventId: (eventId: number) => void;
   hasBeenNotified: (eventId: number) => boolean;
+  clearNotifiedEventIds: () => void;
 }
 
 export const useNotificationStore = create<NotificationStore>()(
@@ -41,7 +41,7 @@ export const useNotificationStore = create<NotificationStore>()(
       addNotification: (notification) => {
         const newNotification: NotificationItem = {
           ...notification,
-          id: Date.now().toString(),
+          id: `${Date.now()}-${Math.random()}`, // 더 고유한 ID 생성
           createdAt: new Date().toISOString(),
           isRead: false,
         };
@@ -84,22 +84,49 @@ export const useNotificationStore = create<NotificationStore>()(
         set({ notifications: [], unreadCount: 0 });
       },
 
-      // ✅ 중복 방지를 위한 추가 상태 및 메서드
+      // 중복 방지를 위한 상태 및 메서드
       notifiedEventIds: [],
       addNotifiedEventId: (eventId) => {
         const { notifiedEventIds } = get();
         if (!notifiedEventIds.includes(eventId)) {
+          const newNotifiedEventIds = [...notifiedEventIds, eventId];
+          console.log("이벤트 ID 추가:", { eventId, newNotifiedEventIds });
           set({
-            notifiedEventIds: [...notifiedEventIds, eventId],
+            notifiedEventIds: newNotifiedEventIds,
           });
+        } else {
+          console.log("이미 존재하는 이벤트 ID:", eventId);
         }
       },
       hasBeenNotified: (eventId) => {
-        return get().notifiedEventIds.includes(eventId);
+        const hasNotified = get().notifiedEventIds.includes(eventId);
+        console.log("알림 이력 확인:", {
+          eventId,
+          hasNotified,
+          notifiedEventIds: get().notifiedEventIds,
+        });
+        return hasNotified;
+      },
+      clearNotifiedEventIds: () => {
+        console.log("알림 이력 초기화");
+        set({ notifiedEventIds: [] });
       },
     }),
     {
       name: "notification-storage",
+      // persist 설정 개선
+      partialize: (state) => ({
+        notifications: state.notifications,
+        unreadCount: state.unreadCount,
+        notifiedEventIds: state.notifiedEventIds, // 중요: 이 부분이 저장되어야 함
+      }),
+      // 스토리지 복원 시 로그 추가
+      onRehydrateStorage: () => (state) => {
+        console.log("스토리지 복원 완료:", {
+          notifiedEventIds: state?.notifiedEventIds || [],
+          notifications: state?.notifications?.length || 0,
+        });
+      },
     },
   ),
 );

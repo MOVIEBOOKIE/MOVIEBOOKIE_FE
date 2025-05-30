@@ -80,7 +80,8 @@ export default function Step5() {
               value={min}
               onChange={handleMinChange}
               placeholder="최소인원"
-              className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none"
+              className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
+              style={{ fontSize: "16px" }} // 16px 이상으로 설정하여 자동 확대 방지
             />
             <span className="absolute right-4 text-sm text-white">명</span>
           </div>
@@ -102,7 +103,8 @@ export default function Step5() {
               value={max}
               onChange={handleMaxChange}
               placeholder="최대인원"
-              className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none"
+              className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
+              style={{ fontSize: "16px" }}
             />
             <span className="absolute right-4 text-sm text-white">명</span>
           </div>

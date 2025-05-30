@@ -11,7 +11,7 @@ import {
   usePostEventRegister,
   usePostEventsVenue,
 } from "app/_hooks/events/use-events";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Modal from "@/components/modal";
 import Complete from "@/components/complete";
 import { MODAL_CONTENT } from "@/constants/detail";
@@ -48,8 +48,8 @@ export default function Detail() {
   const [shouldPoll, setShouldPoll] = useState(true);
 
   const params = useParams();
-  const id = params?.id;
-  const eventId = Number(id);
+  const eventId = useMemo(() => Number(params?.id), [params?.id]);
+  const isValidEventId = !isNaN(eventId) && eventId > 0;
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
   const { showToast } = useToast();
@@ -58,14 +58,14 @@ export default function Detail() {
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
     {
-      enabled: !!user && !!eventId,
+      enabled: loggedIn && isValidEventId,
       refetchInterval: shouldPoll ? 5000 : false,
     },
   );
 
   const { data: dataAnonymousRaw, isPending: isPendingAnonymous } =
     useGetAnonymousEvent(eventId, {
-      enabled: !user && !!eventId,
+      enabled: !loggedIn && isValidEventId,
     });
 
   const data = (loggedIn ? dataWithAuth : dataAnonymousRaw) as
@@ -78,6 +78,7 @@ export default function Detail() {
     }
   }, [data?.buttonState, showToast]);
 
+  //TODO: 주석처리
   useConfirmedNoti({ eventId, buttonState: data?.buttonState });
 
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;

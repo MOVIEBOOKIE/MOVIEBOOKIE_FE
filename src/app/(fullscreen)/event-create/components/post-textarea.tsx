@@ -22,7 +22,7 @@ export default function PostTextArea() {
           {...register("description")}
           rows={4}
           placeholder={`모집 게시물에 올릴 홍보글을 작성해주세요`}
-          className="body-3-regular w-full resize-none bg-transparent text-gray-300 placeholder-gray-700 outline-none"
+          className="body-3-regular w-full resize-none bg-transparent text-gray-300 placeholder-gray-700 outline-none placeholder:text-[14px]"
         />
       </div>
     </>

@@ -1,13 +1,3 @@
-// export interface NotificationItem {
-//   type: string;
-//   title: string;
-//   description: string;
-//   time: string;
-//   status: NotificationStatus;
-//   eventId?: number;
-//   isRead?: boolean;
-// }
-// app/_types/notification.ts
 export interface NotificationPreview {
   title: string;
   body: string;
