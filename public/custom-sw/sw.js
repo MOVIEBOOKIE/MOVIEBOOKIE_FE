@@ -1,4 +1,4 @@
-// ✅ 기존 next-pwa의 sw.js에 추가할 내용
+// public/custom-sw/sw.js
 
 importScripts("/firebase-config.js");
 importScripts(

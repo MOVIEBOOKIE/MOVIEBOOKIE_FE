@@ -1,3 +1,4 @@
+//public/firebase-config.js
 self.FIREBASE_CONFIG = {
   "apiKey": "AIzaSyCfoF3SI3S7G_AxNSmao1V0BaOD_mYo8jQ",
   "authDomain": "moviebooky-2009d.firebaseapp.com",
