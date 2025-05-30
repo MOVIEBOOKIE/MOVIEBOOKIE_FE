@@ -8,6 +8,7 @@ import { RotateIcon } from "@/icons/index";
 import { useState } from "react";
 import Loading from "app/loading";
 import { useTicketDetail } from "app/_hooks/events/use-ticket-detail";
+import CardFrontSkeleton from "./card-front-skeleton";
 
 export default function TicketPage() {
   const { id } = useParams();
@@ -17,7 +18,6 @@ export default function TicketPage() {
   });
   const [flipped, setFlipped] = useState(false);
 
-  if (isLoading) return <Loading />;
   if (!ticketId)
     return (
       <p className="flex h-full items-center text-center text-white">
@@ -33,7 +33,7 @@ export default function TicketPage() {
           flipped ? "rotate-y-180" : ""
         }`}
       >
-        <CardFront ticket={ticket} />
+        {isLoading ? <CardFrontSkeleton /> : <CardFront ticket={ticket} />}
         <CardBack ticket={ticket} />
       </div>
       <button

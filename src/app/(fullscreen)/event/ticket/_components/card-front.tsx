@@ -11,12 +11,15 @@ export default function CardFront({ ticket }: { ticket: any }) {
   return (
     <div className="card-shadow-blur absolute h-full w-full overflow-hidden rounded-[20px] bg-white/30 p-3 backface-hidden">
       <div className="relative h-66.25 w-66.25 overflow-hidden">
-        <Image
-          src={ticket?.eventImageUrl}
-          fill
-          alt="ticket-image"
-          className="rounded-lg object-cover"
-        />
+        {ticket?.eventImageUrl && (
+          <Image
+            src={ticket?.eventImageUrl}
+            fill
+            alt="ticket-image"
+            className="rounded-lg object-cover"
+            priority
+          />
+        )}
       </div>
       <p className="title-3-bold mt-5 pl-0.5">{ticket?.title}</p>
       <div className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-1.5 pl-0.5">
