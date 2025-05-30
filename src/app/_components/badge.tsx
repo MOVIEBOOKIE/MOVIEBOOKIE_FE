@@ -18,7 +18,7 @@ export default function Badge({
   return (
     <div
       className={cn(
-        "caption-1-medium rounded-md px-1.75 py-1 text-gray-300",
+        "caption-1-medium text-gray-white rounded-md px-1.75 py-1",
         className,
         badgeStyle,
       )}
