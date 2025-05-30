@@ -16,7 +16,11 @@ import { EventSearchParams, PostEventsVenueParams } from "app/_types/event";
 
 export const useGetEvent = (
   eventId: number,
-  options?: { enabled?: boolean },
+  options?: {
+    enabled?: boolean;
+    refetchInterval?: number | false | (() => number | false);
+    onSuccess?: (data: any) => void;
+  },
 ) => {
   return useQuery({
     ...EVENT_OPTION.EVENT(eventId),

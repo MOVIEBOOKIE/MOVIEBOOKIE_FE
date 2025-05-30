@@ -20,6 +20,10 @@ import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
+import { useNotificationStore } from "app/_stores/use-noti";
+import { useToast } from "app/_context/toast-context";
+import { useConfirmedNoti } from "app/_hooks/use-confirmed-noti";
+import { ParticipantNotificationType } from "app/_types/noti";
 
 type ModalType =
   | "apply"
@@ -41,18 +45,21 @@ export default function Detail() {
   const router = useRouter();
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [shouldPoll, setShouldPoll] = useState(true);
 
   const params = useParams();
   const id = params?.id;
   const eventId = Number(id);
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
+  const { showToast } = useToast();
+  const { addNotification } = useNotificationStore();
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
     {
       enabled: !!user && !!eventId,
+      refetchInterval: shouldPoll ? 5000 : false,
     },
   );
 
@@ -65,15 +72,29 @@ export default function Detail() {
     | EventData
     | undefined;
 
-  const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
+  useEffect(() => {
+    if (data?.buttonState?.trim() === "티켓으로 이동") {
+      setShouldPoll(false);
+    }
+  }, [data?.buttonState, showToast]);
 
-  const { data: moveToTicket } = useGetToTicket(eventId);
+  useConfirmedNoti({ eventId, buttonState: data?.buttonState });
+
+  const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
+  const { data: moveToTicket } = useGetToTicket(eventId, {
+    enabled: data?.buttonState === "티켓으로 이동",
+  });
+
+  console.log("티켓데이터", data);
+  console.log("moveToTicket 데이터", moveToTicket);
 
   const handleClick = () => {
     if (!loggedIn) {
       setModalType("loginRequired");
       return;
     }
+
+    console.log("버튼 클릭 - buttonState:", data?.buttonState);
 
     switch (data?.buttonState) {
       case "신청하기":
@@ -86,13 +107,24 @@ export default function Detail() {
         setModalType("recruitCancel");
         break;
       case "티켓으로 이동":
+        console.log("티켓으로 이동 케이스 진입");
         if (moveToTicket?.ticketId) {
-          router.push(`${PATHS.TICKET}/${moveToTicket.ticketId}`);
+          console.log("티켓 ID 존재:", moveToTicket.ticketId);
+          const ticketPath = `${PATHS.TICKET}/${moveToTicket.ticketId}`;
+          console.log("이동할 경로:", ticketPath);
+          router.push(ticketPath);
+        } else {
+          console.log("티켓 ID가 없음:", moveToTicket);
+          if (eventId) {
+            router.push(`${PATHS.TICKET}?eventId=${eventId}`);
+          }
         }
         break;
       case "대관 신청하기":
         setModalType("venueApply");
         break;
+      default:
+        console.log("매칭되지 않는 buttonState:", data?.buttonState);
     }
   };
 
@@ -106,13 +138,58 @@ export default function Detail() {
   const { mutate: recruitCancel } = useDeleteEventsRecruit();
   const { mutate: postEventVenue } = usePostEventsVenue();
 
+  const showNotificationAndSave = async (notificationCode: number) => {
+    const excludedCodes = [1, 2, 10, 11, 12];
+    if (excludedCodes.includes(notificationCode)) return;
+
+    try {
+      const response = await fetch(
+        `/api/notifications/notifications/preview/participant/${eventId}/${notificationCode}`,
+      );
+
+      if (response.ok) {
+        const notification = await response.json();
+
+        showToast({
+          title: notification.title,
+          body: notification.body,
+          type: "success",
+        });
+
+        addNotification({
+          eventId,
+          code: notificationCode,
+          title: notification.title,
+          body: notification.body,
+        });
+      }
+    } catch (error) {
+      console.error("알림을 가져오는데 실패했습니다:", error);
+    }
+  };
+
   const handleApply = () => {
     setIsComplete(true);
-    mutate(eventId);
+    mutate(eventId, {
+      onSuccess: () => {
+        showNotificationAndSave(ParticipantNotificationType.APPLY_COMPLETED);
+      },
+      onError: (error) => {
+        console.error("이벤트 신청 실패:", error);
+        setIsComplete(false);
+      },
+    });
   };
 
   const handleCancel = () => {
-    applyCancel(eventId);
+    applyCancel(eventId, {
+      onSuccess: () => {
+        showNotificationAndSave(ParticipantNotificationType.APPLY_CANCEL);
+      },
+      onError: (error) => {
+        console.error("이벤트 신청 취소 실패:", error);
+      },
+    });
   };
 
   const handleRecruitCancel = () => {

@@ -42,7 +42,7 @@ export function NotificationItem({
           router.push(targetUrl);
         }
       }}
-      className={`flex cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
+      className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
         isRead ? "bg-gray-black" : "bg-gray-950"
       }`}
     >

@@ -6,7 +6,7 @@ export default function DebugLogger() {
       id="debug-log"
       className="fixed bottom-25 left-0 z-[9999] max-h-[200px] w-full overflow-y-auto bg-black/80 p-2 font-mono text-xs whitespace-pre-wrap text-green-300"
     >
-      📋 디버그 로그...
+      알림 콘솔 확인용
     </div>
   );
 }

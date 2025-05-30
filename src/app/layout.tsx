@@ -6,23 +6,12 @@ import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
 import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
-import FcmListener from "./_components/fcm/fcm-listener";
 import Script from "next/script";
-import { requestNotificationPermission } from "./lib/firebase-notification";
-import DebugLogger from "./_components/fcm/debug-logger";
+import DebugLogger from "./_components/debug-logger";
+import { ToastProvider } from "./_context/toast-context";
+import Toast from "./_components/noti-toast";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/custom-sw/sw.js")
-        .then((reg) => console.log("✅ Custom SW 등록됨:", reg))
-        .catch((err) => console.error("❌ SW 등록 실패:", err));
-    }
-  }, []);
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []);
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
@@ -34,19 +23,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/images/favicon/48x48.png" />
       </head>
       <body>
-        {/* <DebugLogger /> */}
-        <Script src="/firebase-config.js" strategy="beforeInteractive" />
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-          strategy="beforeInteractive"
-        />
-        <InAppRedirect />
-        <ToastRenderer />
-        <ReactQueryProvider>
-          <GlobalLoading />
-          <FcmListener />
-          {children}
-        </ReactQueryProvider>
+        {" "}
+        <ToastProvider>
+          {/* <DebugLogger /> */}
+          <Script
+            src="https://developers.kakao.com/sdk/js/kakao.js"
+            strategy="beforeInteractive"
+          />
+          <InAppRedirect />
+          <ToastRenderer />
+          <ReactQueryProvider>
+            {/* <GlobalLoading /> */}
+            {children}
+            <Toast />
+          </ReactQueryProvider>{" "}
+        </ToastProvider>
       </body>
     </html>
   );
