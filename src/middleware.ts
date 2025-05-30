@@ -7,12 +7,10 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("accessToken")?.value;
-  const pathname = req.nextUrl.pathname;
-
-  if (!token && pathname === "/") {
-    return NextResponse.redirect(new URL(PATHS.LOGIN, req.url));
-  }
-
-  return NextResponse.next();
+  // const token = req.cookies.get("accessToken")?.value;
+  // const pathname = req.nextUrl.pathname;
+  // if (!token && pathname === "/") {
+  //   return NextResponse.redirect(new URL(PATHS.LOGIN, req.url));
+  // }
+  // return NextResponse.next();
 }
