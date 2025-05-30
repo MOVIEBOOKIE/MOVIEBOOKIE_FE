@@ -1,4 +1,4 @@
-import { NotificationStatus } from "app/_stores/use-noti";
+import { NotificationStatus } from "app/(tabs)/notifications/components/item";
 
 export const parseNotificationMeta = (
   rawTitle: string,
