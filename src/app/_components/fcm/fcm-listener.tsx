@@ -1,5 +1,6 @@
 "use client";
 
+import { devLog } from "@/utils/dev-logger";
 import { parseNotificationMeta } from "@/utils/map-noti";
 import { useNotificationStore } from "app/_stores/use-noti";
 import { useToastStore } from "app/_stores/use-toast-store";
@@ -12,8 +13,11 @@ export default function FcmListener() {
 
   useEffect(() => {
     console.log("✅ FcmListener mounted");
+    devLog("✅ FcmListener mounted");
+
     const unsubscribe = onFirebaseMessage((payload) => {
-      console.log("@@@@알림 수신:", payload);
+      console.log("@@@@ 알림 수신:", payload);
+      devLog("@@@@ 알림 수신:", payload);
 
       const now = new Date();
       const timeString = now.toLocaleTimeString("ko-KR", {
@@ -21,22 +25,24 @@ export default function FcmListener() {
         minute: "2-digit",
       });
 
-      const rawTitle = payload.notification?.title || "알림";
+      // ✅ title/body를 data에서 무조건 파싱
+      const rawTitle = payload.data?.title || "알림";
+      const body = payload.data?.body || "내용 없음";
+      const eventId = payload.data?.eventId;
+
       const { shortTitle, status } = parseNotificationMeta(rawTitle);
 
       addNotification({
         type: shortTitle,
         title: rawTitle,
-        description: payload.notification?.body || "",
+        description: body,
         time: timeString,
         status,
-        eventId: payload.data?.eventId
-          ? Number(payload.data.eventId)
-          : undefined,
+        eventId: eventId ? Number(eventId) : undefined,
         isRead: false,
       });
 
-      showToast(payload.notification?.body || "새 알림이 도착했습니다!");
+      showToast(body); // ✅ 토스트 표시
     });
   }, [addNotification, showToast]);
 

@@ -1,3 +1,4 @@
+import { devLog } from "@/utils/dev-logger";
 import { messagingPromise } from "./firebase";
 import { getToken, onMessage } from "firebase/messaging";
 
@@ -14,7 +15,8 @@ export const requestNotificationPermission = async () => {
 
   try {
     // ✅ 서비스 워커 명시적으로 등록
-    const registration = await navigator.serviceWorker.register("/sw.js");
+    const registration =
+      await navigator.serviceWorker.register("/custom-sw/sw.js");
 
     const token = await getToken(messaging, {
       vapidKey,
@@ -22,6 +24,8 @@ export const requestNotificationPermission = async () => {
     });
 
     console.log("✅ FCM 토큰 발급됨:", token);
+    devLog("✅ FCM 토큰 발급됨:", token);
+
     return token;
   } catch (err) {
     console.error("❌ FCM 토큰 요청 실패", err);
