@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { BackIcon, UploadIcon } from "@/icons/index";
 import ShareModal from "./share-modal";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface TopBarProps {
   event: {
@@ -19,11 +19,16 @@ export default function TopBar({ event }: TopBarProps) {
   const searchParams = useSearchParams();
   const [showShareModal, setShowShareModal] = useState(false);
 
-  const handleBack = () => {
-    const from = searchParams.get("from");
+  const from = useMemo(() => searchParams.get("from"), [searchParams]);
+  const tab = useMemo(() => searchParams.get("tab"), [searchParams]);
+  const toggle = useMemo(() => searchParams.get("toggle"), [searchParams]);
 
+  const handleBack = () => {
     if (from === "event") {
-      router.push("/event");
+      const query = new URLSearchParams();
+      if (tab) query.set("tab", tab);
+      if (toggle) query.set("toggle", toggle);
+      router.push(`/event?${query.toString()}`);
     } else if (from === "home") {
       router.push("/?to=category");
     } else {
@@ -43,8 +48,8 @@ export default function TopBar({ event }: TopBarProps) {
         </button>
         <button
           type="button"
-          className="absolute top-2.5 right-5 h-9.5 w-9.5 rounded-full bg-gray-950"
           onClick={() => setShowShareModal(true)}
+          className="absolute top-2.5 right-5 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-950"
         >
           <UploadIcon />
         </button>
