@@ -20,6 +20,11 @@ import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
+import { useNotificationStore } from "app/_stores/use-noti";
+import { useGetParticipantNotificationPreview } from "app/_hooks/use-noti";
+import { ParticipantNotificationType } from "app/_types/noti";
+import { useToastStore } from "app/_stores/use-toast-store";
+import { useToast } from "app/_context/toast-context";
 
 type ModalType =
   | "apply"
@@ -48,6 +53,8 @@ export default function Detail() {
   const eventId = Number(id);
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
+  const { showToast } = useToast();
+  const { addNotification } = useNotificationStore();
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
@@ -68,6 +75,22 @@ export default function Detail() {
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
 
   const { data: moveToTicket } = useGetToTicket(eventId);
+
+  // 신청 완료 알림 미리보기
+  const { data: applyCompleteNotification } =
+    useGetParticipantNotificationPreview(
+      eventId,
+      ParticipantNotificationType.APPLY_COMPLETED,
+      { enabled: false }, // 필요할 때만 수동으로 호출
+    );
+
+  // 신청 취소 알림 미리보기
+  const { data: applyCancelNotification } =
+    useGetParticipantNotificationPreview(
+      eventId,
+      ParticipantNotificationType.APPLY_CANCEL,
+      { enabled: false }, // 필요할 때만 수동으로 호출
+    );
 
   const handleClick = () => {
     if (!loggedIn) {
@@ -106,13 +129,61 @@ export default function Detail() {
   const { mutate: recruitCancel } = useDeleteEventsRecruit();
   const { mutate: postEventVenue } = usePostEventsVenue();
 
+  // 알림 표시 및 저장 함수
+  const showNotificationAndSave = async (notificationCode: number) => {
+    try {
+      // API에서 알림 미리보기 가져오기
+      const response = await fetch(
+        `/api/notifications/notifications/preview/participant/${eventId}/${notificationCode}`,
+      );
+
+      if (response.ok) {
+        const notification = await response.json();
+
+        // 토스트 알림 표시
+        showToast({
+          title: notification.title,
+          body: notification.body,
+          type: "success",
+        });
+
+        // 알림 목록에 저장
+        addNotification({
+          eventId,
+          code: notificationCode,
+          title: notification.title,
+          body: notification.body,
+        });
+      }
+    } catch (error) {
+      console.error("알림을 가져오는데 실패했습니다:", error);
+    }
+  };
+
   const handleApply = () => {
     setIsComplete(true);
-    mutate(eventId);
+    mutate(eventId, {
+      onSuccess: () => {
+        // 신청 완료 알림 표시
+        showNotificationAndSave(ParticipantNotificationType.APPLY_COMPLETED);
+      },
+      onError: (error) => {
+        console.error("이벤트 신청 실패:", error);
+        setIsComplete(false);
+      },
+    });
   };
 
   const handleCancel = () => {
-    applyCancel(eventId);
+    applyCancel(eventId, {
+      onSuccess: () => {
+        // 신청 취소 알림 표시
+        showNotificationAndSave(ParticipantNotificationType.APPLY_CANCEL);
+      },
+      onError: (error) => {
+        console.error("이벤트 신청 취소 실패:", error);
+      },
+    });
   };
 
   const handleRecruitCancel = () => {

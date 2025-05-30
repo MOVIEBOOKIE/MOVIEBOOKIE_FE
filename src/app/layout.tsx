@@ -8,6 +8,8 @@ import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
 import Script from "next/script";
 import DebugLogger from "./_components/debug-logger";
+import { ToastProvider } from "./_context/toast-context";
+import Toast from "./_components/noti-toast";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -21,18 +23,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/images/favicon/48x48.png" />
       </head>
       <body>
-        <DebugLogger />
-        <Script src="/firebase-config.js" strategy="beforeInteractive" />
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-          strategy="beforeInteractive"
-        />
-        <InAppRedirect />
-        <ToastRenderer />
-        <ReactQueryProvider>
-          <GlobalLoading />
-          {children}
-        </ReactQueryProvider>
+        {" "}
+        <ToastProvider>
+          {/* <DebugLogger /> */}
+          <Script
+            src="https://developers.kakao.com/sdk/js/kakao.js"
+            strategy="beforeInteractive"
+          />
+          <InAppRedirect />
+          <ToastRenderer />
+          <ReactQueryProvider>
+            <GlobalLoading />
+            {children}
+            <Toast />
+          </ReactQueryProvider>{" "}
+        </ToastProvider>
       </body>
     </html>
   );
