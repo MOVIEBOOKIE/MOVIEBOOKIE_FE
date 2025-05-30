@@ -25,6 +25,11 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "http",
+        hostname: "k.kakaocdn.net",
+        pathname: "/**",
+      },
+      {
         protocol: "https",
         hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
         pathname: "/**",

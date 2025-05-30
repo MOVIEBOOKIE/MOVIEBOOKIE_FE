@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <InAppRedirect />
           <ToastRenderer />
           <ReactQueryProvider>
-            <GlobalLoading />
+            {/* <GlobalLoading /> */}
             {children}
             <Toast />
           </ReactQueryProvider>{" "}
