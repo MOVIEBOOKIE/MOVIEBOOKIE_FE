@@ -25,6 +25,7 @@ import { useGetParticipantNotificationPreview } from "app/_hooks/use-noti";
 import { ParticipantNotificationType } from "app/_types/noti";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { useToast } from "app/_context/toast-context";
+import { useConfirmedNoti } from "app/_hooks/use-confirmed-noti";
 
 type ModalType =
   | "apply"
@@ -72,25 +73,26 @@ export default function Detail() {
     | EventData
     | undefined;
 
+  useConfirmedNoti({ eventId, buttonState: data?.buttonState });
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
 
   const { data: moveToTicket } = useGetToTicket(eventId);
 
   // 신청 완료 알림 미리보기
-  const { data: applyCompleteNotification } =
-    useGetParticipantNotificationPreview(
-      eventId,
-      ParticipantNotificationType.APPLY_COMPLETED,
-      { enabled: false }, // 필요할 때만 수동으로 호출
-    );
+  // const { data: applyCompleteNotification } =
+  //   useGetParticipantNotificationPreview(
+  //     eventId,
+  //     ParticipantNotificationType.APPLY_COMPLETED,
+  //     { enabled: false }, // 필요할 때만 수동으로 호출
+  //   );
 
-  // 신청 취소 알림 미리보기
-  const { data: applyCancelNotification } =
-    useGetParticipantNotificationPreview(
-      eventId,
-      ParticipantNotificationType.APPLY_CANCEL,
-      { enabled: false }, // 필요할 때만 수동으로 호출
-    );
+  // // 신청 취소 알림 미리보기
+  // const { data: applyCancelNotification } =
+  //   useGetParticipantNotificationPreview(
+  //     eventId,
+  //     ParticipantNotificationType.APPLY_CANCEL,
+  //     { enabled: false }, // 필요할 때만 수동으로 호출
+  //   );
 
   const handleClick = () => {
     if (!loggedIn) {
@@ -131,8 +133,12 @@ export default function Detail() {
 
   // 알림 표시 및 저장 함수
   const showNotificationAndSave = async (notificationCode: number) => {
+    // 제외할 코드 목록
+    const excludedCodes = [1, 2, 10, 11, 12];
+
+    if (excludedCodes.includes(notificationCode)) return;
+
     try {
-      // API에서 알림 미리보기 가져오기
       const response = await fetch(
         `/api/notifications/notifications/preview/participant/${eventId}/${notificationCode}`,
       );
@@ -140,14 +146,14 @@ export default function Detail() {
       if (response.ok) {
         const notification = await response.json();
 
-        // 토스트 알림 표시
+        // ✅ 토스트 알림 표시
         showToast({
           title: notification.title,
           body: notification.body,
           type: "success",
         });
 
-        // 알림 목록에 저장
+        // ✅ 알림 목록에 저장
         addNotification({
           eventId,
           code: notificationCode,
