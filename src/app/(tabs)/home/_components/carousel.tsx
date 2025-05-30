@@ -60,7 +60,7 @@ export default function Carousel() {
             <SwiperSlide
               style={{ width: "282px", height: "404px" }}
               key={event.eventId}
-              className="flex items-center transition-transform duration-300 ease-in-out"
+              className="flex items-center rounded-[12px] transition-transform duration-300 ease-in-out"
               onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
             >
               <div className="relative flex h-full w-full items-center justify-center rounded-[12px]">

@@ -54,7 +54,9 @@ export default function FixedLayout({
           onBack={onBackClick}
         />
       )}
-      <div className={`${paddingStyle} flex min-h-screen flex-col text-white`}>
+      <div
+        className={`${paddingStyle} flex min-h-[calc(100vh-102px)] flex-col text-white`}
+      >
         <div className="flex-1 pb-30">{children}</div>
       </div>
       {showBottomButton && (
