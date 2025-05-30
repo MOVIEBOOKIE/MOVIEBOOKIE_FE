@@ -15,15 +15,15 @@ export const useConfirmedNoti = ({
   buttonState?: string;
 }) => {
   const { hasBeenNotified, addNotification, addNotifiedEventId } =
-    useNotificationStore();
+    useNotificationStore.getState();
   const { showToast } = useToast();
 
   useEffect(() => {
     if (buttonState !== "티켓으로 이동") return;
     if (hasBeenNotified(eventId)) return;
+    addNotifiedEventId(eventId);
 
     const code = HostNotificationType.RESERVATION_CONFIRMED;
-
     if (EXCLUDED_CODES.includes(code)) return;
 
     const notify = async () => {
@@ -47,8 +47,6 @@ export const useConfirmedNoti = ({
           body: result.body,
           type: "success",
         });
-
-        addNotifiedEventId(eventId);
       } catch (err) {
         console.error("대관 확정 알림 실패:", err);
       }
