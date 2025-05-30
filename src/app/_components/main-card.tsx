@@ -72,7 +72,7 @@ function Card({
             )}
             {estimatedPrice && (
               <p>
-                예상가격{" "}
+                예상가격
                 <span className="ml-0.75 text-gray-300">
                   {Number(estimatedPrice).toLocaleString()}원
                 </span>

@@ -23,7 +23,6 @@ export default function Home() {
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   useMyPage();
 
-  //  스크롤 위치 복원
   useEffect(() => {
     const scrollY = sessionStorage.getItem("homeScrollY");
     const fromSearch = searchParams.get("to") === "category";
@@ -36,7 +35,6 @@ export default function Home() {
     }
   }, [searchParams]);
 
-  // 스크롤 시 위치 저장
   useEffect(() => {
     const handleScroll = () => {
       const el = containerRef.current;
@@ -44,7 +42,7 @@ export default function Home() {
       const scrollTop = el.scrollTop;
       const screenHeight = window.innerHeight;
 
-      setIsFirstScreen(scrollTop < screenHeight / 2);
+      setIsFirstScreen(scrollTop < screenHeight * 0.3);
 
       sessionStorage.setItem("homeScrollY", String(scrollTop));
     };
@@ -81,7 +79,7 @@ export default function Home() {
         <Carousel />
 
         <motion.div
-          className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+          className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
           initial={{ opacity: 1 }}
           animate={{
             opacity: isFirstScreen ? 1 : 0,
@@ -102,9 +100,9 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="flex snap-start flex-col px-5"
       >
-        <div className="z-0 mt-6.25 mb-4 flex flex-col items-center gap-1.25">
+        <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-1-medium text-gray-white opacity-[25%]">
+          <p className="caption-1-medium text-gray-white opacity-25">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
