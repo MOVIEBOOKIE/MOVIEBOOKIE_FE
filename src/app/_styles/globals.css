@@ -210,3 +210,8 @@ select:-webkit-autofill {
   background-color: transparent !important;
   color: inherit !important;
 }
+
+input,
+textarea {
+  font-size: 16px; /* 최소 16px로 하면 iOS 확대 방지 */
+}
