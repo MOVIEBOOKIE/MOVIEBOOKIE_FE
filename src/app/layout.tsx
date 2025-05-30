@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/images/favicon/48x48.png" />
       </head>
       <body>
-        <DebugLogger />
+        {/* <DebugLogger /> */}
         <Script src="/firebase-config.js" strategy="beforeInteractive" />
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.js"
