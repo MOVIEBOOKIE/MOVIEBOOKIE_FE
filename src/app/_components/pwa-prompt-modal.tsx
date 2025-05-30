@@ -5,10 +5,20 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CloseIcon, ShareIcon } from "@/icons/index";
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
 export default function PwaPromptModal() {
   const [showModal, setShowModal] = useState(false);
   const [os, setOs] = useState<"android" | "ios" | "other">("other");
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     const osType = getMobile();
@@ -17,25 +27,36 @@ export default function PwaPromptModal() {
     const hasPrompted = localStorage.getItem("pwaPrompted");
     if (hasPrompted) return;
 
-    setShowModal(true);
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      const promptEvent = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(promptEvent);
+      setShowModal(true);
+    };
 
     if (osType === "android") {
-      const handler = (e: any) => {
-        e.preventDefault();
-        setDeferredPrompt(e);
+      window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      return () => {
+        window.removeEventListener(
+          "beforeinstallprompt",
+          handleBeforeInstallPrompt,
+        );
       };
-      window.addEventListener("beforeinstallprompt", handler);
-      return () => window.removeEventListener("beforeinstallprompt", handler);
+    } else if (osType === "ios") {
+      // iOS는 beforeinstallprompt가 없으므로 바로 모달 보여줌
+      setShowModal(true);
     }
   }, []);
 
-  const handleInstall = () => {
+  const handleInstall = async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
         localStorage.setItem("pwaPrompted", "true");
         setShowModal(false);
-      });
+        setDeferredPrompt(null);
+      }
     }
   };
 

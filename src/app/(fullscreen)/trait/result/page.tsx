@@ -37,9 +37,11 @@ export default function TraitResult() {
       <Image
         src={PATH_IMAGES.TRAIT.BACKGROUND}
         alt="배경"
-        layout="fill"
+        // layout="fill"
         objectFit="cover"
         priority
+        width={500}
+        height={1000}
       />
       <div
         className="absolute flex flex-col items-center"
