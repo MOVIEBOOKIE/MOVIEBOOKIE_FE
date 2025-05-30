@@ -37,7 +37,7 @@ export default function TraitResult() {
       <Image
         src={PATH_IMAGES.TRAIT.BACKGROUND}
         alt="배경"
-        // layout="fill"
+        layout="responsive"
         objectFit="cover"
         priority
         width={500}
@@ -53,7 +53,13 @@ export default function TraitResult() {
         </p>
         <div className="card-shadow-blur mt-10 flex h-96.5 w-72.25 flex-col items-center rounded-[20px] bg-white/30 px-3.5 pt-8.75 pb-4">
           {imageSrc && (
-            <Image src={imageSrc} width={120} height={94} alt="type-image" />
+            <Image
+              src={imageSrc}
+              width={120}
+              height={94}
+              alt="type-image"
+              priority
+            />
           )}
 
           <p className="title-3-bold text-gray-white mb-3 text-center">

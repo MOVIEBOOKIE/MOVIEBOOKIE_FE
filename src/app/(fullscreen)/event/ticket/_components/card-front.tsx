@@ -16,6 +16,7 @@ export default function CardFront({ ticket }: { ticket: any }) {
           fill
           alt="ticket-image"
           className="rounded-lg object-cover"
+          priority
         />
       </div>
       <p className="title-3-bold mt-5 pl-0.5">{ticket?.title}</p>
