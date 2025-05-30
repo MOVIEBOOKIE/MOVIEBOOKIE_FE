@@ -6,23 +6,10 @@ import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
 import GlobalLoading from "./_components/global-loading";
 import ToastRenderer from "./_components/toast-renderer";
-import FcmListener from "./_components/fcm/fcm-listener";
 import Script from "next/script";
-import { requestNotificationPermission } from "./lib/firebase-notification";
-import DebugLogger from "./_components/fcm/debug-logger";
+import DebugLogger from "./_components/debug-logger";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/custom-sw/sw.js")
-        .then((reg) => console.log("✅ Custom SW 등록됨:", reg))
-        .catch((err) => console.error("❌ SW 등록 실패:", err));
-    }
-  }, []);
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []);
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
@@ -44,7 +31,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ToastRenderer />
         <ReactQueryProvider>
           <GlobalLoading />
-          <FcmListener />
           {children}
         </ReactQueryProvider>
       </body>

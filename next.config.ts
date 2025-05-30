@@ -42,5 +42,4 @@ const nextConfig = {
     ];
   },
 };
-
-module.exports = withSvgr(withPWA(nextConfig));
+module.exports = withSvgr(nextConfig);
