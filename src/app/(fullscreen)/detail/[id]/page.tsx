@@ -79,7 +79,7 @@ export default function Detail() {
   }, [data?.buttonState, showToast]);
 
   //TODO: 주석처리
-  useConfirmedNoti({ eventId, buttonState: data?.buttonState });
+  // useConfirmedNoti({ eventId, buttonState: data?.buttonState });
 
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
   const { data: moveToTicket } = useGetToTicket(eventId, {
