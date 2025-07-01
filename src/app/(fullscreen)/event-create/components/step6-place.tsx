@@ -2,12 +2,12 @@
 
 import { StepHeader } from "@/components";
 import { useRecommendedCinemas } from "app/_hooks/use-recommend-cinema";
-import Loading from "app/loading";
 import Image from "next/image";
 import { useFormContext, useWatch } from "react-hook-form";
 import { LocationIcon } from "@/icons/index";
 import { formatPrice } from "@/utils/format-price";
 import { useSelectedCinemaStore } from "app/_stores/use-selected-cinema-store";
+import Loading from "@/components/loading";
 export default function Step6() {
   const { setValue, control } = useFormContext();
   const selectedLocationId = useWatch({ control, name: "locationId" });
