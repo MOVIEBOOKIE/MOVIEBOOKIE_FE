@@ -56,7 +56,7 @@ export default function Home() {
 
         new Notification(title, {
           body,
-          icon: "/icons/icon-192x192.png", // 변경 가능
+          icon: "/images/favicon/96x96.png",
         });
       }
     });
