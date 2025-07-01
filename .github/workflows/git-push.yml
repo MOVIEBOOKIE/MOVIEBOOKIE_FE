@@ -1,30 +1,43 @@
 name: Deploy
 
+# ✅ 워크플로우 실행 조건 설정
 on:
   push:
-    branches: [main]
+    branches: [dev] # 포크된 레포의 dev 브랜치에 푸시될 때만 실행
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # 📦 Pandoc + LaTeX 컨테이너 환경 사용 (PDF 빌드 등 LaTeX 필요한 경우)
     container: pandoc/latex
+
     steps:
+      # 1️⃣ 현재 레포지토리를 체크아웃
       - uses: actions/checkout@v2
+
+      # 2️⃣ mustache 템플릿을 사용하기 위해 ruby 및 mustache 설치
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
+
+      # 3️⃣ 웹사이트 등 최종 출력물 생성 (스크립트는 사용자 정의)
       - name: creates output
         run: sh ./src/web/build.sh
+
+      # 4️⃣ 결과물을 다른 GitHub 레포(예: 배포용)로 push
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }} # 대상 레포에 push 권한 있는 PAT
         with:
-          source-directory: "output"
-          destination-github-username: anhyeryeon2
-          destination-repository-name: MOVIEBOOKIE_FE
-          user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
-          target-branch: main
+          source-directory: "output" # 결과물 디렉토리
+          destination-github-username: anhyeryeon2 # 대상 사용자명 (자신의 깃헙 ID)
+          destination-repository-name: MOVIEBOOKIE_FE # 대상 레포 이름
+          user-email: ${{ secrets.EMAIL }} # 커밋할 이메일 (설정 필요)
+          commit-message: ${{ github.event.commits[0].message }} # 커밋 메시지 재사용
+          target-branch: dev # 대상 레포의 브랜치
+
+      # 5️⃣ push-to-another-repository 액션에서 설정한 환경 변수 확인용
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
