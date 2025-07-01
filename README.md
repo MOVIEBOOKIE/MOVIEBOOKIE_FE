@@ -1,9 +1,10 @@
+<span style="float: right;"><img src="https://avatars.githubusercontent.com/u/206299959?s=200&v=4" height="60"/></span>
+
 # MOVIEBOOKIE
 
 <br />
 
 **🍿 모집부터 상영까지, 영화관 대관 도움 서비스, MOVIEBOOKIE**
-
 
 <br />
 
@@ -16,7 +17,7 @@
 
 누구나 손쉽게 자신만의 순간을 스크린에 담을 수 있는 세상, 그 중심에 무비부키
 
-### 👉 [MOVIEBOOKIE 바로가기](https://www.movie-bookie.shop/)
+###  [MOVIEBOOKIE 바로가기](https://www.movie-bookie.shop/)
 
 ![alt text](/public/images/readme.png)
 
