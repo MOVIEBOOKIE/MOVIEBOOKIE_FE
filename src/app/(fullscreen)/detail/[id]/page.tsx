@@ -86,9 +86,6 @@ export default function Detail() {
     enabled: data?.buttonState === "티켓으로 이동",
   });
 
-  console.log("티켓데이터", data);
-  console.log("moveToTicket 데이터", moveToTicket);
-
   const handleClick = () => {
     if (!loggedIn) {
       setModalType("loginRequired");
