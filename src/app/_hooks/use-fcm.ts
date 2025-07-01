@@ -31,8 +31,12 @@ export const useFCM = () => {
 
   const onForegroundMessage = (callback: (payload: any) => void) => {
     getFirebaseMessaging().then((messaging) => {
-      console.log("🔁 onForegroundMessage 등록");
-      if (!messaging) return;
+      console.log("onForegroundMessage 등록");
+      if (!messaging) {
+        console.warn(" messaging 객체 없음");
+        return;
+      }
+      console.log("onMessage 리스너 등록");
       onMessage(messaging, callback);
     });
   };

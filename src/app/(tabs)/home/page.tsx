@@ -12,6 +12,7 @@ import CardSkeleton from "@/components/card-skeleton";
 import { categoryMap } from "@/constants/category-map";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { useFCM } from "app/_hooks/use-fcm";
+import { useNotificationStore } from "app/_stores/use-noti";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -24,43 +25,51 @@ export default function Home() {
 
   const { requestPermissionAndToken, onForegroundMessage } = useFCM();
 
-  // 유저 정보 요청 (userStore에 설정됨)
   useMyPage();
 
+  //TODO: fcm handler로 분리해야함
   useEffect(() => {
-    if (!user) {
-      console.log("🕓 user가 아직 없음 → FCM 등록 대기");
-      return;
-    }
-
     const alreadyRegistered = localStorage.getItem("fcm-registered");
-    console.log("이미 등록 됐는지,:", alreadyRegistered);
 
-    if (alreadyRegistered === "true") {
-      console.log("✅ 이미 등록된 FCM → 건너뜀");
-      return;
+    // ✅ 토큰 등록은 1회만
+    if (alreadyRegistered !== "true") {
+      console.log("📡 최초 FCM 등록 시작");
+      requestPermissionAndToken().then(() => {
+        localStorage.setItem("fcm-registered", "true");
+      });
+    } else {
+      console.log("✅ 이미 등록된 FCM → 토큰 발급은 건너뜀");
     }
-
-    console.log("📡 최초 FCM 등록 시작");
-
-    requestPermissionAndToken().then(() => {
-      console.log("✅ FCM 등록 완료 → localStorage 저장");
-      localStorage.setItem("fcm-registered", "true");
-    });
 
     onForegroundMessage((payload) => {
-      console.log("📩 포그라운드 알림 수신:", payload);
+      console.log("📩 알림 수신 (fcm handler):", payload);
 
-      if (Notification.permission === "granted" && payload.notification) {
-        const { title, body } = payload.notification;
+      const { title, body } = payload.notification || {};
+      const { code, eventId } = payload.data || {};
 
-        new Notification(title, {
-          body,
-          icon: "/images/favicon/96x96.png",
-        });
+      if (!title || !body || !eventId) {
+        console.warn("필수 필드 누락:", { title, body, eventId });
+        return;
       }
+
+      const parsedCode = code ? Number(code) : 99;
+      const parsedEventId = Number(eventId);
+
+      if (isNaN(parsedEventId)) {
+        console.warn("eventId 파싱 실패:", { eventId });
+        return;
+      }
+
+      useNotificationStore.getState().addNotification({
+        title,
+        body,
+        code: parsedCode,
+        eventId: parsedEventId,
+      });
+
+      console.log("알림 저장 완료");
     });
-  }, [user]);
+  }, []);
 
   // scroll 복원
   useEffect(() => {
