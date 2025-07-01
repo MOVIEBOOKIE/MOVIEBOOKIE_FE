@@ -33,8 +33,12 @@ const nextConfig = {
         hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "maps.googleapis.com",
+        pathname: "/**",
+      },
     ],
-    domains: ["maps.googleapis.com"],
   },
   async rewrites() {
     const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
