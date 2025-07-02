@@ -10,8 +10,6 @@ body:
       description: 어떤 문제가 발생했는지 구체적으로 작성해 주세요.
       placeholder: |
         예: 모바일 화면에서 버튼이 눌리지 않음
-    validations:
-      required: true
 
   - type: textarea
     id: steps
@@ -19,12 +17,10 @@ body:
       label: ✅ How to Reproduce
       description: 어떤 상황에서 문제가 발생했는지 재현 과정을 단계별로 작성해 주세요.
       placeholder: |
-        예: 
+        예:
         1. 로그인 후 프로필 페이지 이동
         2. 버튼 클릭
         3. 동작 없음
-    validations:
-      required: true
 
   - type: textarea
     id: screenshot
