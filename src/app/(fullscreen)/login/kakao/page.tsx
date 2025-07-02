@@ -52,11 +52,11 @@ function KakaoLogin() {
         const { success, message, data } = response;
         console.log(data);
         if (success) {
-          // if (!data?.userType) {
-          //   router.push(PATHS.AGREEMENT);
-          // } else {
-          //   router.push(PATHS.HOME);
-          // }
+          if (!data?.userType) {
+            router.push(PATHS.AGREEMENT);
+          } else {
+            router.push(PATHS.HOME);
+          }
           router.push(PATHS.TRAIT);
         } else {
           router.push(`/login?error=${encodeURIComponent(message)}`);
