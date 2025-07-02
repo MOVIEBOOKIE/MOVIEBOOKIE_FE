@@ -9,11 +9,6 @@ export const PATH_IMAGES = {
 
   FAVICON: "/images/favicon.png",
 
-  //임시 이미지
-  IMAGE: "/images/image.png",
-  TMP_MAP: "/images/tmp-map.png",
-  TMP_MOVIE: "/images/tmp-movie.png",
-
   TRAIT: {
     MOVIE_DETAIL_COLLECTOR: "/images/trait/movie1.png",
     MOVIE_SHARED_EMOTER: "/images/trait/movie2.png",

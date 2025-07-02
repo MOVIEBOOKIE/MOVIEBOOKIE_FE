@@ -57,7 +57,6 @@ function KakaoLogin() {
           } else {
             router.push(PATHS.HOME);
           }
-          router.push(PATHS.TRAIT);
         } else {
           router.push(`/login?error=${encodeURIComponent(message)}`);
         }
