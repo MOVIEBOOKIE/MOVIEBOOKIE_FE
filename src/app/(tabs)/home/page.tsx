@@ -23,7 +23,8 @@ export default function Home() {
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
   const [showPermissionBanner, setShowPermissionBanner] = useState(false);
-  const { requestPermissionAndToken, onForegroundMessage } = useFCM();
+  const { requestPermissionAndToken, onForegroundMessage, getCurrentFCMToken } =
+    useFCM();
 
   useMyPage();
 
@@ -37,9 +38,18 @@ export default function Home() {
 
     // ✅ Android는 자동 요청, iOS는 클릭 유도
     if (!isIOS && alreadyRegistered !== "true") {
-      console.log("📡 Android - FCM 등록");
+      console.log("📡 Android - 최초 FCM 등록");
       requestPermissionAndToken().then(() => {
         localStorage.setItem("fcm-registered", "true");
+      });
+    } else {
+      console.log("이미 등록된 FCM - 토큰 발급 넘어감");
+      getCurrentFCMToken().then((token) => {
+        if (token) {
+          console.log("📦 기존 기기 FCM 토큰:", token);
+        } else {
+          console.warn("⚠️ 토큰 없음 또는 실패");
+        }
       });
     }
 
