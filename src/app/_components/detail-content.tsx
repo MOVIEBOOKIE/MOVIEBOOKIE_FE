@@ -10,8 +10,6 @@ import EventStatus from "app/(fullscreen)/detail/_components/event-status";
 export default function DetailContent({ ...props }) {
   const user = useUserStore((state) => state.user);
 
-  console.log(user);
-
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
 
   useEffect(() => {

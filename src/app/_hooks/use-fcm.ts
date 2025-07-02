@@ -29,6 +29,22 @@ export const useFCM = () => {
     }
   };
 
+  const getCurrentFCMToken = async () => {
+    try {
+      const messaging = await getFirebaseMessaging();
+      const registration = await navigator.serviceWorker.ready;
+
+      const token = await getToken(messaging!, {
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
+        serviceWorkerRegistration: registration,
+      });
+
+      return token;
+    } catch (err) {
+      console.error("❌ FCM 토큰 가져오기 실패:", err);
+      return null;
+    }
+  };
   const onForegroundMessage = (callback: (payload: any) => void) => {
     getFirebaseMessaging().then((messaging) => {
       console.log("onForegroundMessage 등록");
@@ -41,5 +57,5 @@ export const useFCM = () => {
     });
   };
 
-  return { requestPermissionAndToken, onForegroundMessage };
+  return { requestPermissionAndToken, onForegroundMessage, getCurrentFCMToken };
 };
