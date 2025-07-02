@@ -10,6 +10,7 @@ import Script from "next/script";
 import DebugLogger from "./_components/debug-logger";
 import { ToastProvider } from "./_context/toast-context";
 import Toast from "./_components/noti-toast";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ReactQueryProvider>
             {/* <GlobalLoading /> */}
             {children}
+            <SpeedInsights />
             <Toast />
           </ReactQueryProvider>{" "}
         </ToastProvider>
