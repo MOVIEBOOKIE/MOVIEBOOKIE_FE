@@ -11,18 +11,67 @@ import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import CardSkeleton from "@/components/card-skeleton";
 import { categoryMap } from "@/constants/category-map";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
+import { useFCM } from "app/_hooks/use-fcm";
+import { useNotificationStore } from "app/_stores/use-noti";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFirstScreen, setIsFirstScreen] = useState(true);
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isFirstScreen, setIsFirstScreen] = useState(true);
+  const { requestPermissionAndToken, onForegroundMessage } = useFCM();
+
   useMyPage();
 
+  //TODO: fcm handler로 분리해야함
+  useEffect(() => {
+    const alreadyRegistered = localStorage.getItem("fcm-registered");
+
+    // ✅ 토큰 등록은 1회만
+    if (alreadyRegistered !== "true") {
+      console.log("📡 최초 FCM 등록 시작");
+      requestPermissionAndToken().then(() => {
+        localStorage.setItem("fcm-registered", "true");
+      });
+    } else {
+      console.log("✅ 이미 등록된 FCM → 토큰 발급은 건너뜀");
+    }
+
+    onForegroundMessage((payload) => {
+      console.log("📩 알림 수신 (fcm handler):", payload);
+
+      const { title, body } = payload.notification || {};
+      const { code, eventId } = payload.data || {};
+
+      if (!title || !body || !eventId) {
+        console.warn("필수 필드 누락:", { title, body, eventId });
+        return;
+      }
+
+      const parsedCode = code ? Number(code) : 99;
+      const parsedEventId = Number(eventId);
+
+      if (isNaN(parsedEventId)) {
+        console.warn("eventId 파싱 실패:", { eventId });
+        return;
+      }
+
+      useNotificationStore.getState().addNotification({
+        title,
+        body,
+        code: parsedCode,
+        eventId: parsedEventId,
+      });
+
+      console.log("알림 저장 완료");
+    });
+  }, []);
+
+  // scroll 복원
   useEffect(() => {
     const scrollY = sessionStorage.getItem("homeScrollY");
     const fromSearch = searchParams.get("to") === "category";
@@ -35,6 +84,7 @@ export default function Home() {
     }
   }, [searchParams]);
 
+  // scroll 감지
   useEffect(() => {
     const handleScroll = () => {
       const el = containerRef.current;
@@ -43,12 +93,11 @@ export default function Home() {
       const screenHeight = window.innerHeight;
 
       setIsFirstScreen(scrollTop < screenHeight * 0.3);
-
       sessionStorage.setItem("homeScrollY", String(scrollTop));
     };
 
     const el = containerRef.current;
-    if (el) el.addEventListener("scroll", handleScroll);
+    el?.addEventListener("scroll", handleScroll);
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -62,6 +111,7 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
+
   return (
     <div
       ref={containerRef}
@@ -69,9 +119,7 @@ export default function Home() {
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
-          <p className="body-3-medium text-gray-300">
-            {user?.userTypeTitle || ""}
-          </p>
+          <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "회원"}님을 위한 추천
           </h2>
@@ -142,7 +190,7 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          events.map((event, index) => (
+          events.map((event) => (
             <div key={event.eventId}>
               <Card
                 id={String(event.eventId)}
@@ -160,6 +208,7 @@ export default function Home() {
             </div>
           ))
         )}
+
         {events.length > 0 && events.length <= 4 && (
           <div
             className={
@@ -172,6 +221,7 @@ export default function Home() {
             }
           />
         )}
+
         {events.length === 5 && (
           <Button
             className="mt-1 mb-5"
@@ -184,6 +234,7 @@ export default function Home() {
             더보기
           </Button>
         )}
+
         {events.length === 1 && <div className="h-105" />}
       </motion.section>
     </div>

@@ -22,7 +22,7 @@ jobs:
 
       # 3️⃣ 웹사이트 등 최종 출력물 생성 (스크립트는 사용자 정의)
       - name: creates output
-        run: sh ./src/web/build.sh
+        run: sh ./build.sh
 
       # 4️⃣ 결과물을 다른 GitHub 레포(예: 배포용)로 push
       - name: Pushes to another repository

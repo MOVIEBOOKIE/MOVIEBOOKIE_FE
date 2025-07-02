@@ -22,7 +22,6 @@ import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useNotificationStore } from "app/_stores/use-noti";
 import { useToast } from "app/_context/toast-context";
-import { useConfirmedNoti } from "app/_hooks/use-confirmed-noti";
 import { ParticipantNotificationType } from "app/_types/noti";
 
 type ModalType =
@@ -78,16 +77,10 @@ export default function Detail() {
     }
   }, [data?.buttonState, showToast]);
 
-  //TODO: 주석처리
-  // useConfirmedNoti({ eventId, buttonState: data?.buttonState });
-
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
   const { data: moveToTicket } = useGetToTicket(eventId, {
     enabled: data?.buttonState === "티켓으로 이동",
   });
-
-  console.log("티켓데이터", data);
-  console.log("moveToTicket 데이터", moveToTicket);
 
   const handleClick = () => {
     if (!loggedIn) {
