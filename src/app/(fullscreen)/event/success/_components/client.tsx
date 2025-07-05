@@ -45,6 +45,7 @@ export default function Client() {
         />
       ) : (
         <FixedLayout
+          step={step}
           buttonText={step === 1 ? "이벤트 미리보기" : "이벤트 게시하기"}
           showCloseButton={true}
           onButtonClick={handleButtonClick}
