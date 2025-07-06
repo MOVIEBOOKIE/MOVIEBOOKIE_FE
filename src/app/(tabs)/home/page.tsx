@@ -67,21 +67,22 @@ export default function Home() {
     onForegroundMessage((payload) => {
       console.log("📩 알림 수신 (fcm handler):", payload);
 
-      const { title, body } = payload.notification || {};
-      const { code, eventId } = payload.data || {};
+      //  1. 제목/본문 확보 (notification 또는 data에서)
+      const title =
+        payload.notification?.title || payload.data?.title || "알림";
+      const body = payload.notification?.body || payload.data?.body || "";
 
-      if (!title || !body || !eventId) {
-        console.warn("필수 필드 누락:", { title, body, eventId });
-        return;
+      // 2. 브라우저 알림 직접 띄우기
+      if (Notification.permission === "granted") {
+        new Notification(title, { body });
       }
 
+      //  3. 내부 저장소에도 기록 (예: zustand store)
+      const { code, eventId } = payload.data || {};
       const parsedCode = code ? Number(code) : 99;
       const parsedEventId = Number(eventId);
 
-      if (isNaN(parsedEventId)) {
-        console.warn("eventId 파싱 실패:", { eventId });
-        return;
-      }
+      if (!title || !body || !eventId || isNaN(parsedEventId)) return;
 
       useNotificationStore.getState().addNotification({
         title,
@@ -90,7 +91,7 @@ export default function Home() {
         eventId: parsedEventId,
       });
 
-      console.log("알림 저장 완료");
+      console.log("✅ 알림 저장 완료:", title);
     });
   }, []);
 
