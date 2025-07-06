@@ -33,7 +33,7 @@ export default function TraitResult() {
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
   return (
-    <div className="relative flex h-screen w-full items-center justify-center">
+    <div className="pt-safe-top relative flex h-[100dvh] w-full items-center justify-center">
       <Image
         src={PATH_IMAGES.TRAIT.BACKGROUND}
         alt="배경"
