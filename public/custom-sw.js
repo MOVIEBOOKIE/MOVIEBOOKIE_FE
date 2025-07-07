@@ -17,9 +17,14 @@ messaging.onBackgroundMessage((payload) => {
   self.registration.showNotification(title, {
     body,
     icon: "/images/favicon/96x96.png",
+    tag: `event-${eventId}`,
+    // 같은 태그면 알림이 덮어씌워지므로 유사 알림 중복도 막을 수 있음
     data: {
       eventId: payload.data?.eventId,
     },
+    // data: {
+    //   url: `/detail/${payload.data?.eventId}`,
+    // },
   });
 });
 
