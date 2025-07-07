@@ -12,18 +12,14 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   console.log("📩 Background message received:", payload);
-
-  const title =
-    payload.notification?.title || payload.data?.title || "📩 무비부키 알림";
-  const body =
-    payload.notification?.body ||
-    payload.data?.body ||
-    "새로운 알림이 도착했어요!";
   console.log("📬 도착한 Background 알림 내용:", { title, body });
 
   self.registration.showNotification(title, {
     body,
     icon: "/images/favicon/96x96.png",
+    data: {
+      eventId: payload.data?.eventId,
+    },
   });
 });
 
@@ -34,7 +30,29 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  console.log("✅ Service Worker activated");
-  event.waitUntil(self.clients.claim());
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close();
+
+  // eventId 전달받기 (tag 또는 data로부터)
+  const eventId = event.notification?.data?.eventId;
+
+  const targetUrl = eventId ? `/detail/${eventId}` : "/"; // fallback
+
+  event.waitUntil(
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (client.url.includes("/") && "focus" in client) {
+            client.navigate(targetUrl);
+            return client.focus();
+          }
+        }
+
+        // 창이 없으면 새로 열기
+        if (clients.openWindow) {
+          return clients.openWindow(targetUrl);
+        }
+      }),
+  );
 });
