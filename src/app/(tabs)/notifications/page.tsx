@@ -1,14 +1,20 @@
 "use client";
-import { useNotificationStore } from "app/_stores/use-noti";
+import {
+  useNotificationStore,
+  useNotificationHydration,
+} from "app/_stores/use-noti";
 import { NotificationItem } from "./components/item";
 import { useEffect } from "react";
 
 export default function NotificationPage() {
-  const { notifications, unreadCount, markAsRead } = useNotificationStore();
+  const hydrated = useNotificationHydration();
+  const { notifications, markAsRead } = useNotificationStore();
 
   useEffect(() => {
-    console.log("🔔 알림 목록 (zustand):", notifications);
-  }, [notifications]);
+    if (hydrated) {
+      console.log("🔔 알림 목록 (zustand):", notifications);
+    }
+  }, [hydrated, notifications]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -16,28 +22,14 @@ export default function NotificationPage() {
     const diffInHours = Math.floor(
       (now.getTime() - date.getTime()) / (1000 * 60 * 60),
     );
-
-    if (diffInHours < 1) {
-      return "방금 전";
-    } else if (diffInHours < 24) {
-      return `${diffInHours}시간 전`;
-    } else {
-      const diffInDays = Math.floor(diffInHours / 24);
-      return `${diffInDays}일 전`;
-    }
+    if (diffInHours < 1) return "방금 전";
+    if (diffInHours < 24) return `${diffInHours}시간 전`;
+    return `${Math.floor(diffInHours / 24)}일 전`;
   };
 
-  // 알림 코드에 따른 status 매핑
   const getNotificationStatus = (code: number) => {
-    // 신청 완료, 모집 완료, 대관 확정 등 긍정적인 알림
-    if ([1, 4, 5, 10, 14, 16].includes(code)) {
-      return "confirm";
-    }
-    // 취소, 삭제, 거부 등 부정적인 알림
-    if ([2, 3, 6, 11, 12, 13, 15].includes(code)) {
-      return "cancel";
-    }
-    // 완료, 후기 요청 등 중립적인 알림
+    if ([1, 4, 5, 10, 14, 16].includes(code)) return "confirm";
+    if ([2, 3, 6, 11, 12, 13, 15].includes(code)) return "cancel";
     return "check";
   };
 

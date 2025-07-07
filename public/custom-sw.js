@@ -15,8 +15,13 @@ messaging.onBackgroundMessage((payload) => {
   console.log("📩 Background message received:", payload);
 
   //  notification or data에서 title/body 추출
-  const title = payload.notification?.title || payload.data?.title || "알림";
-  const body = payload.notification?.body || payload.data?.body || "";
+  const title =
+    payload.notification?.title || payload.data?.title || "📩 무비부키 알림";
+  const body =
+    payload.notification?.body ||
+    payload.data?.body ||
+    "새로운 알림이 도착했어요!";
+  console.log("📬 도착한 Background 알림 내용:", { title, body });
 
   self.registration.showNotification(title, {
     body,
