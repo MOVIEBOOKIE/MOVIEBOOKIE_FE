@@ -5,16 +5,27 @@ import {
 } from "app/_stores/use-noti";
 import { NotificationItem } from "./components/item";
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function NotificationPage() {
   const hydrated = useNotificationHydration();
   const { notifications, markAsRead } = useNotificationStore();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (hydrated) {
       console.log("🔔 알림 목록 (zustand):", notifications);
     }
   }, [hydrated, notifications]);
+
+  useEffect(() => {
+    const clicked = searchParams.get("clicked");
+    const messageId = searchParams.get("id");
+
+    if (clicked === "1" && messageId && hydrated) {
+      markAsRead(messageId); // ✅ messageId로 읽음 처리
+    }
+  }, [hydrated, searchParams, markAsRead]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -27,6 +38,7 @@ export default function NotificationPage() {
     return `${Math.floor(diffInHours / 24)}일 전`;
   };
 
+  //TODO: FCM 알림은 code 없음
   const getNotificationStatus = (code: number) => {
     if ([1, 4, 5, 10, 14, 16].includes(code)) return "confirm";
     if ([2, 3, 6, 11, 12, 13, 15].includes(code)) return "cancel";
