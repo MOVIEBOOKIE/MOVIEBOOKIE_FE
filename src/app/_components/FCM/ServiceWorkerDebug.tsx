@@ -1,4 +1,3 @@
-// app/_components/ServiceWorkerDebug.tsx
 "use client";
 import { useEffect } from "react";
 
