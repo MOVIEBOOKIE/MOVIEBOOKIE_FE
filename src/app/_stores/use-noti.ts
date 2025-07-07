@@ -13,8 +13,8 @@ export interface NotificationItem {
 
 interface NotificationStore {
   notifications: NotificationItem[];
-  list: NotificationItem[]; // 별칭
   unreadCount: number;
+  _hasHydrated: boolean;
 
   addNotification: (
     notification: Omit<NotificationItem, "id" | "createdAt" | "isRead">,
@@ -33,15 +33,13 @@ export const useNotificationStore = create<NotificationStore>()(
   persist(
     (set, get) => ({
       notifications: [],
-      get list() {
-        return get().notifications;
-      },
       unreadCount: 0,
+      _hasHydrated: false,
 
       addNotification: (notification) => {
         const newNotification: NotificationItem = {
           ...notification,
-          id: `${Date.now()}-${Math.random()}`, // 더 고유한 ID 생성
+          id: `${Date.now()}-${Math.random()}`,
           createdAt: new Date().toISOString(),
           isRead: false,
         };
@@ -58,10 +56,8 @@ export const useNotificationStore = create<NotificationStore>()(
           const wasUnread = notification && !notification.isRead;
 
           return {
-            notifications: state.notifications.map((notification) =>
-              notification.id === id
-                ? { ...notification, isRead: true }
-                : notification,
+            notifications: state.notifications.map((n) =>
+              n.id === id ? { ...n, isRead: true } : n,
             ),
             unreadCount: wasUnread
               ? Math.max(0, state.unreadCount - 1)
@@ -72,8 +68,8 @@ export const useNotificationStore = create<NotificationStore>()(
 
       markAllAsRead: () => {
         set((state) => ({
-          notifications: state.notifications.map((notification) => ({
-            ...notification,
+          notifications: state.notifications.map((n) => ({
+            ...n,
             isRead: true,
           })),
           unreadCount: 0,
@@ -84,49 +80,39 @@ export const useNotificationStore = create<NotificationStore>()(
         set({ notifications: [], unreadCount: 0 });
       },
 
-      // 중복 방지를 위한 상태 및 메서드
       notifiedEventIds: [],
       addNotifiedEventId: (eventId) => {
         const { notifiedEventIds } = get();
         if (!notifiedEventIds.includes(eventId)) {
           const newNotifiedEventIds = [...notifiedEventIds, eventId];
           console.log("이벤트 ID 추가:", { eventId, newNotifiedEventIds });
-          set({
-            notifiedEventIds: newNotifiedEventIds,
-          });
-        } else {
-          console.log("이미 존재하는 이벤트 ID:", eventId);
+          set({ notifiedEventIds: newNotifiedEventIds });
         }
       },
       hasBeenNotified: (eventId) => {
-        const hasNotified = get().notifiedEventIds.includes(eventId);
-        console.log("알림 이력 확인:", {
-          eventId,
-          hasNotified,
-          notifiedEventIds: get().notifiedEventIds,
-        });
-        return hasNotified;
+        return get().notifiedEventIds.includes(eventId);
       },
       clearNotifiedEventIds: () => {
-        console.log("알림 이력 초기화");
         set({ notifiedEventIds: [] });
       },
     }),
     {
       name: "notification-storage",
-      // persist 설정 개선
       partialize: (state) => ({
         notifications: state.notifications,
         unreadCount: state.unreadCount,
-        notifiedEventIds: state.notifiedEventIds, // 중요: 이 부분이 저장되어야 함
+        notifiedEventIds: state.notifiedEventIds,
       }),
-      // 스토리지 복원 시 로그 추가
-      onRehydrateStorage: () => (state) => {
-        console.log("스토리지 복원 완료:", {
-          notifiedEventIds: state?.notifiedEventIds || [],
-          notifications: state?.notifications?.length || 0,
-        });
+      onRehydrateStorage: (state) => {
+        return () => {
+          console.log("✅ 스토리지 복원 완료");
+          (state as any)?.setState?.({ _hasHydrated: true });
+        };
       },
     },
   ),
 );
+
+// ✅ hydration 여부 체크용 훅
+export const useNotificationHydration = () =>
+  useNotificationStore((state) => state._hasHydrated);
