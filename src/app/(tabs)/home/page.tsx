@@ -53,25 +53,19 @@ export default function Home() {
   //     });
   //   }
   useEffect(() => {
+    console.log("🌐 모든 환경에서 FCM 토큰 등록 시도");
+    requestPermissionAndToken();
+
+    // iOS 권한 배너 조건은 유지
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isStandalone = window.matchMedia(
-      "(display-mode: standalone)",
-    ).matches;
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone === true;
 
-    if (isMobile) {
-      console.log("📱 모바일 디바이스에서 FCM 토큰 재등록 시도");
-      requestPermissionAndToken(); // ✅ 항상 재등록
-    } else {
-      console.log("💻 데스크탑 환경 - 토큰 등록 생략");
-    }
-
-    // ✅ iOS: 홈화면(PWA) + 알림 권한이 아직 없음
     if (isIOS && isStandalone && Notification.permission === "default") {
       console.log("ℹ️ iOS PWA - 알림 권한 배너 표시");
       setShowPermissionBanner(true);
     }
-
     onForegroundMessage((payload) => {
       console.log("📩 알림 수신 (fcm handler):", payload);
 
