@@ -72,9 +72,16 @@ export default function Home() {
         payload.notification?.title || payload.data?.title || "알림";
       const body = payload.notification?.body || payload.data?.body || "";
 
-      // 2. 브라우저 알림 직접 띄우기
+      // ✅ 브라우저 알림 띄우기 (모바일/백그라운드 대응)
       if (Notification.permission === "granted") {
-        new Notification(title, { body });
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(title, {
+            body,
+            icon: "/images/favicon/96x96.png",
+            tag: "foreground-noti",
+            renotify: true,
+          } as NotificationOptions);
+        });
       }
 
       //  3. 내부 저장소에도 기록 (예: zustand store)
