@@ -29,48 +29,60 @@ export default function Home() {
   useMyPage();
 
   //TODO: fcm handler로 분리해야함
+  // useEffect(() => {
+  //   const alreadyRegistered = localStorage.getItem("fcm-registered");
+  //   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  //   const isStandalone = window.matchMedia(
+  //     "(display-mode: standalone)",
+  //   ).matches;
+
+  //   // ✅ Android는 자동 요청, iOS는 클릭 유도
+  //   if (!isIOS && alreadyRegistered !== "true") {
+  //     console.log("📡 Android - 최초 FCM 등록");
+  //     requestPermissionAndToken().then(() => {
+  //       localStorage.setItem("fcm-registered", "true");
+  //     });
+  //   } else {
+  //     console.log("이미 등록된 FCM - 토큰 발급 넘어감");
+  //     getCurrentFCMToken().then((token) => {
+  //       if (token) {
+  //         console.log("📦 기존 기기 FCM 토큰:", token);
+  //       } else {
+  //         console.warn("⚠️ 토큰 없음 또는 실패");
+  //       }
+  //     });
+  //   }
   useEffect(() => {
-    const alreadyRegistered = localStorage.getItem("fcm-registered");
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const isStandalone = window.matchMedia(
       "(display-mode: standalone)",
     ).matches;
 
-    // ✅ Android는 자동 요청, iOS는 클릭 유도
-    if (!isIOS && alreadyRegistered !== "true") {
-      console.log("📡 Android - 최초 FCM 등록");
-      requestPermissionAndToken().then(() => {
-        localStorage.setItem("fcm-registered", "true");
-      });
+    if (isMobile) {
+      console.log("📱 모바일 디바이스에서 FCM 토큰 재등록 시도");
+      requestPermissionAndToken(); // ✅ 항상 재등록
     } else {
-      console.log("이미 등록된 FCM - 토큰 발급 넘어감");
-      getCurrentFCMToken().then((token) => {
-        if (token) {
-          console.log("📦 기존 기기 FCM 토큰:", token);
-        } else {
-          console.warn("⚠️ 토큰 없음 또는 실패");
-        }
-      });
+      console.log("💻 데스크탑 환경 - 토큰 등록 생략");
     }
 
     // ✅ iOS: 홈화면(PWA) + 알림 권한이 아직 없음
-    if (
-      isIOS &&
-      isStandalone &&
-      Notification.permission === "default" &&
-      alreadyRegistered !== "true"
-    ) {
-      console.log("ℹ️ iOS PWA - 알림 배너 표시");
+    if (isIOS && isStandalone && Notification.permission === "default") {
+      console.log("ℹ️ iOS PWA - 알림 권한 배너 표시");
       setShowPermissionBanner(true);
     }
 
     onForegroundMessage((payload) => {
       console.log("📩 알림 수신 (fcm handler):", payload);
 
-      //  1. 제목/본문 확보 (notification 또는 data에서)
       const title =
-        payload.notification?.title || payload.data?.title || "알림";
-      const body = payload.notification?.body || payload.data?.body || "";
+        payload.notification?.title ||
+        payload.data?.title ||
+        "📩 무비부키 알림";
+      const body =
+        payload.notification?.body ||
+        payload.data?.body ||
+        "새로운 알림이 도착했어요!";
 
       // ✅ 브라우저 알림 띄우기 (모바일/백그라운드 대응)
       if (Notification.permission === "granted") {

@@ -23,7 +23,7 @@ export const useFCM = () => {
 
       console.log("📬 발급된 FCM 토큰:", token);
       await registerFCMToken(token);
-      console.log("토큰 전송:", token);
+      console.log("🟢등록된 토큰:", token);
     } catch (err) {
       console.error("❌ FCM 초기화 실패:", err);
     }
