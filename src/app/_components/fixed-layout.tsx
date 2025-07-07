@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Header from "@/components/header";
 import { Button } from "@/components";
 import { cn } from "@/utils/cn";
@@ -18,6 +18,7 @@ type FixedLayoutProps = {
   isHeader?: boolean;
   state?: "default" | "detail" | "full" | "preview";
   showBottomButton?: boolean;
+  step?: number;
 };
 
 export default function FixedLayout({
@@ -33,8 +34,13 @@ export default function FixedLayout({
   isHeader = true,
   state = "default",
   showBottomButton = true,
+  step,
 }: FixedLayoutProps) {
   const [hasClicked, setHasClicked] = useState(false);
+  useEffect(() => {
+    setHasClicked(false);
+  }, [step]);
+
   const paddingStyle =
     state === "default"
       ? " pt-21.75 px-5"

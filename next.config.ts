@@ -11,6 +11,7 @@ const withSvgr = require("next-svgr");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
+  output: "standalone",
   images: {
     remotePatterns: [
       {

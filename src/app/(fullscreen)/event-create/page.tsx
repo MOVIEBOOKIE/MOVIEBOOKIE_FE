@@ -114,6 +114,7 @@ export default function EventCreatePage() {
   return (
     <FormProvider {...methods}>
       <FixedLayout
+        key={step}
         title="이벤트 생성"
         onButtonClick={onNext}
         isButtonDisabled={isButtonDisabled}

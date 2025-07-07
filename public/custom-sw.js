@@ -14,13 +14,14 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
   console.log("📩 Background message received:", payload);
 
-  if (!payload.notification) {
-    const { title, body } = payload.data;
-    self.registration.showNotification(title, {
-      body,
-      icon: "/images/favicon/96x96.png",
-    });
-  }
+  //  notification or data에서 title/body 추출
+  const title = payload.notification?.title || payload.data?.title || "알림";
+  const body = payload.notification?.body || payload.data?.body || "";
+
+  self.registration.showNotification(title, {
+    body,
+    icon: "/images/favicon/96x96.png",
+  });
 });
 
 // next-pwa의 워크박스 매니페스트
