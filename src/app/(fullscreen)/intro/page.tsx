@@ -9,15 +9,17 @@ export default function Intro() {
   const router = useRouter();
 
   useEffect(() => {
-    const hasSeen = sessionStorage.getItem("introShown");
-
+    const hasSeen =
+      typeof window !== "undefined" && sessionStorage.getItem("introShown");
     if (hasSeen) {
       router.replace("/");
       return;
     }
 
     const timer = setTimeout(() => {
-      sessionStorage.setItem("introShown", "true");
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("introShown", "true");
+      }
       router.replace("/");
     }, 2000);
 
