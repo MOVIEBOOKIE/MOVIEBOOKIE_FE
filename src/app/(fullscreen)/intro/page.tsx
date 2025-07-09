@@ -9,6 +9,7 @@ export default function Intro() {
   const router = useRouter();
 
   useEffect(() => {
+    router.prefetch("/");
     const hasSeen =
       typeof window !== "undefined" && sessionStorage.getItem("introShown");
     if (hasSeen) {
