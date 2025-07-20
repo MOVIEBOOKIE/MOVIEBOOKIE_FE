@@ -61,9 +61,7 @@ export default function MyPage() {
       </div>
       <ul className="body-3-medium pl-2 text-gray-100">
         {[
-          // { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
-          //TODO: pwa 노치확인 위한 라우터 변경
-          { label: "서비스이용약관", onClick: () => router.push("/intro") },
+          { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
 
           {
             label: "개인정보처리방침",
