@@ -3,6 +3,7 @@
 import { NotiCancelIcon, NotiCheckIcon, NotiConfirmIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import { getNotificationTargetUrl } from "./target-url";
+import { getStatusByTitle } from "./get-status-bytitle";
 
 export type NotificationStatus = "confirm" | "cancel" | "check";
 
@@ -11,26 +12,30 @@ interface NotificationItemProps {
   title: string;
   description: string;
   time: string;
-  status: NotificationStatus;
   eventId?: number;
   isRead?: boolean;
+  highlight?: boolean;
   onClick?: () => void;
 }
 
 export function NotificationItem({
   type,
+  title,
   description,
   time,
-  status,
   eventId,
   isRead = false,
+  highlight = false,
   onClick,
 }: NotificationItemProps) {
+  const status = getStatusByTitle(title);
+
   const statusIcon = {
     confirm: <NotiConfirmIcon />,
     cancel: <NotiCancelIcon />,
     check: <NotiCheckIcon />,
   }[status];
+
   const router = useRouter();
 
   return (
@@ -43,7 +48,7 @@ export function NotificationItem({
         }
       }}
       className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
-        isRead ? "bg-gray-black" : "bg-gray-950"
+        highlight ? "bg-gray-950" : isRead ? "bg-gray-black" : "bg-gray-950"
       }`}
     >
       <div>{statusIcon}</div>

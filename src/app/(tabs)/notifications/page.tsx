@@ -1,49 +1,41 @@
 "use client";
-import {
-  useNotificationStore,
-  useNotificationHydration,
-} from "app/_stores/use-noti";
+
+import { useEffect, useState } from "react";
 import { NotificationItem } from "./components/item";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { apiGet } from "app/_apis/methods";
+
+interface Notification {
+  id: string;
+  title: string;
+  body: string;
+  timeAgo: string;
+  isRead: boolean;
+  isNew?: boolean;
+}
 
 export default function NotificationPage() {
-  const hydrated = useNotificationHydration();
-  const { notifications, markAsRead } = useNotificationStore();
-  const searchParams = useSearchParams();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    if (hydrated) {
-      console.log("🔔 알림 목록 (zustand):", notifications);
-    }
-  }, [hydrated, notifications]);
+    const fetchNotifications = async () => {
+      try {
+        const res = await apiGet<{ result: any[] }>("/notifications");
+        const mapped = res.result.map((n, i) => ({
+          id: `${n.title}-${n.timeAgo}`,
+          title: n.title,
+          body: n.message,
+          timeAgo: n.timeAgo,
+          isRead: n.read,
+          isNew: false,
+        }));
+        setNotifications(mapped);
+      } catch (error) {
+        console.error("알림 요청 실패:", error);
+      }
+    };
 
-  useEffect(() => {
-    const clicked = searchParams.get("clicked");
-    const messageId = searchParams.get("id");
-
-    if (clicked === "1" && messageId && hydrated) {
-      markAsRead(messageId); // ✅ messageId로 읽음 처리
-    }
-  }, [hydrated, searchParams, markAsRead]);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
-    );
-    if (diffInHours < 1) return "방금 전";
-    if (diffInHours < 24) return `${diffInHours}시간 전`;
-    return `${Math.floor(diffInHours / 24)}일 전`;
-  };
-
-  //TODO: FCM 알림은 code 없음
-  const getNotificationStatus = (code: number) => {
-    if ([1, 4, 5, 10, 14, 16].includes(code)) return "confirm";
-    if ([2, 3, 6, 11, 12, 13, 15].includes(code)) return "cancel";
-    return "check";
-  };
+    fetchNotifications();
+  }, []);
 
   return (
     <div className="h-[calc(100vh-102px)] overflow-y-scroll text-white">
@@ -53,21 +45,19 @@ export default function NotificationPage() {
 
       {notifications.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16">
-          <div className="mb-4 text-6xl text-gray-400"></div>
           <p className="text-center text-gray-500">받은 알림이 없습니다</p>
         </div>
       ) : (
-        notifications.map((notification) => (
+        notifications.map((n) => (
           <NotificationItem
-            key={notification.id}
-            type={notification.title}
-            title={notification.title}
-            description={notification.body}
-            time={formatDate(notification.createdAt)}
-            status={getNotificationStatus(notification.code)}
-            eventId={notification.eventId}
-            isRead={notification.isRead}
-            onClick={() => markAsRead(notification.id)}
+            key={n.id}
+            type={n.title}
+            title={n.title}
+            description={n.body}
+            time={n.timeAgo}
+            isRead={n.isRead}
+            highlight={n.isNew}
+            onClick={() => console.log("알림 클릭됨", n.id)}
           />
         ))
       )}
