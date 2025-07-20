@@ -51,7 +51,7 @@ export function TicketCard({
 
       <div className="mt-4.75 mb-4.5 flex flex-col px-4">
         <h2 className="body-1-semibold text-white">{title}</h2>
-        <p className="caption-1-medium pt-0.5 text-gray-500">{placeAndDate}</p>
+        <p className="caption-1-medium pt-0.5 text-gray-400">{placeAndDate}</p>
 
         {description && (
           <p className="caption-1-regular mt-4.75 line-clamp-2 text-gray-600">
@@ -60,11 +60,11 @@ export function TicketCard({
         )}
 
         {(progressRate || estimatedPrice) && (
-          <div className="caption-1-regular mt-4.75 flex gap-3 text-gray-300">
+          <div className="caption-2-medium mt-4.75 flex gap-3 text-gray-500">
             {progressRate && (
               <span>
                 모집 달성율{" "}
-                <span className="body-3-semibold pl-1.25 text-gray-200">
+                <span className="caption-2-medium pl-1.25 text-gray-200">
                   {progressRate}
                 </span>
               </span>
@@ -72,7 +72,7 @@ export function TicketCard({
             {estimatedPrice !== undefined && (
               <span>
                 예상 가격{" "}
-                <span className="body-3-semibold pl-1.25 text-gray-200">
+                <span className="caption-2-medium pl-1.25 text-gray-200">
                   {estimatedPrice.toLocaleString()}원
                 </span>
               </span>
