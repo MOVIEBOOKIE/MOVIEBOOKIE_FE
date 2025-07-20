@@ -24,7 +24,6 @@ export default function TraitResult() {
   useEffect(() => {
     if (!user || !data?.title) return;
     if (user.userTypeTitle === data.title) return;
-
     const cleanedTitle = data.title.replace(/\n/g, " ");
     setUser({ ...user, userTypeTitle: cleanedTitle });
   }, [data?.title, user?.userTypeTitle, setUser]);
@@ -33,50 +32,60 @@ export default function TraitResult() {
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
   return (
-    <div className="pt-safe-top relative flex h-[100dvh] w-full items-center justify-center">
-      <Image
-        src={PATH_IMAGES.TRAIT.BACKGROUND}
-        alt="배경"
-        layout="responsive"
-        objectFit="cover"
-        priority
-        width={500}
-        height={1000}
-      />
+    <div className="relative flex min-h-[100dvh] w-full flex-col items-center bg-black text-white">
+      <div className="mt-17 flex items-center justify-center">
+        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+          무비부키 유형 테스트
+        </div>
+      </div>
+
       <div
-        className="absolute flex flex-col items-center"
-        style={{ top: "7%" }}
+        className="relative mt-14 h-[460px] w-[320px] overflow-hidden rounded-[20px] bg-cover bg-center shadow-lg"
+        style={{
+          backgroundImage: `url(${PATH_IMAGES.TRAIT.BACKGROUND})`,
+        }}
       >
-        <p className="body-3-semibold text-gray-100">{data?.username}님은</p>
-        <p className="body-1-semibold mt-2.25 text-center">
-          <LineBreak text={data?.label} />
-        </p>
-        <div className="card-shadow-blur mt-10 flex h-96.5 w-72.25 flex-col items-center rounded-[20px] bg-white/30 px-3.5 pt-8.75 pb-4">
+        <div className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.1)]" />
+        <div className="relative z-10 flex h-full flex-col items-center px-6 pt-11">
+          <p className="body-2-medium text-red-100">{data?.username}님은</p>
+          <p className="title-3-bold text mt-3 text-center whitespace-pre-line text-white">
+            <LineBreak text={data?.title} />
+          </p>
           {imageSrc && (
             <Image
               src={imageSrc}
-              width={120}
-              height={94}
-              alt="type-image"
-              priority
+              alt="유형 이미지"
+              width={100}
+              height={100}
+              className="mt-5 mb-9"
             />
           )}
-
-          <p className="title-3-bold text-gray-white mb-3 text-center">
-            <LineBreak text={data?.title} />
-          </p>
-          <div className="bg-gray-white mt-5.5 h-0.25 w-full opacity-14" />
-          <p className="body-3-regular mt-7.25 text-center text-gray-100">
-            <LineBreak text={data?.description} />
-          </p>
-          <LogoWhiteIcon
-            width={30}
-            height={30}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2"
+          <div
+            className="h-[3px] w-full"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(to right, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 8px, transparent 8px, transparent 18px)",
+            }}
           />
+          <div className="mt-6 w-full space-y-4 px-5 leading-relaxed text-gray-100">
+            <p className="flex items-start gap-2">
+              <span className="text-lg">🎬</span>
+              <span className="body-3-regular whitespace-pre-line">
+                <LineBreak text={data?.label} />
+              </span>
+            </p>
+            <p className="flex items-start gap-2">
+              <span className="text-lg">🔍</span>
+              <span className="body-3-regular whitespace-pre-line">
+                <LineBreak text={data?.description} />
+              </span>
+            </p>
+          </div>
+          <LogoWhiteIcon width={28} height={28} className="mt-auto mb-7" />
         </div>
       </div>
-      <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
+
+      <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12">
         <Button onClick={handleClick}>무비부키 시작하기</Button>
       </div>
     </div>
