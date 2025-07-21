@@ -2,33 +2,30 @@
 
 import { NotiCancelIcon, NotiCheckIcon, NotiConfirmIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
-import { getNotificationTargetUrl } from "./target-url";
+import { TargetUrl } from "./target-url";
 import { getStatusByTitle } from "./get-status-bytitle";
 
 export type NotificationStatus = "confirm" | "cancel" | "check";
-
 interface NotificationItemProps {
   type: string;
   title: string;
   description: string;
   time: string;
-  eventId?: number;
-  isRead?: boolean;
+  eventId?: string;
   highlight?: boolean;
   onClick?: () => void;
 }
-
 export function NotificationItem({
   type,
   title,
   description,
   time,
   eventId,
-  isRead = false,
   highlight = false,
   onClick,
 }: NotificationItemProps) {
   const status = getStatusByTitle(title);
+  const router = useRouter();
 
   const statusIcon = {
     confirm: <NotiConfirmIcon />,
@@ -36,19 +33,15 @@ export function NotificationItem({
     check: <NotiCheckIcon />,
   }[status];
 
-  const router = useRouter();
-
   return (
     <div
       onClick={() => {
-        if (onClick) onClick();
-        const targetUrl = getNotificationTargetUrl(type, eventId);
-        if (targetUrl) {
-          router.push(targetUrl);
-        }
+        onClick?.();
+        const targetUrl = TargetUrl(title, eventId?.toString());
+        if (targetUrl) router.push(targetUrl);
       }}
       className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
-        highlight ? "bg-gray-950" : isRead ? "bg-gray-black" : "bg-gray-950"
+        highlight ? "bg-gray-900" : "bg-gray-black"
       }`}
     >
       <div>{statusIcon}</div>
@@ -58,12 +51,7 @@ export function NotificationItem({
           {description}
         </p>
       </div>
-
-      <span
-        className={`caption-1-regular mt-1 whitespace-nowrap ${
-          isRead ? "text-gray-500" : "text-gray-100"
-        }`}
-      >
+      <span className="caption-1-regular mt-1 whitespace-nowrap text-gray-500">
         {time}
       </span>
     </div>
