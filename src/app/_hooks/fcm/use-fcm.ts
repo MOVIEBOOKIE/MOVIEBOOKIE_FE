@@ -2,6 +2,8 @@ import { getToken, onMessage } from "firebase/messaging";
 import { getFirebaseMessaging } from "app/_lib/firebase-config";
 import { registerFCMToken } from "app/_apis/register-fcm-token";
 
+const MAX_TOKEN_RETRY = 3;
+
 export const useFCM = () => {
   const requestPermissionAndToken = async () => {
     console.log("✅ requestPermissionAndToken 호출됨");
@@ -9,22 +11,44 @@ export const useFCM = () => {
     try {
       const permission = await Notification.requestPermission();
       console.log("🔐 권한 상태:", permission);
-      if (permission !== "granted") return;
+
+      if (permission !== "granted") {
+        alert("알림 권한이 필요합니다. 브라우저 설정에서 허용해주세요.");
+        return;
+      }
 
       const messaging = await getFirebaseMessaging();
-      console.log("🔥 messaging 객체:", messaging);
       const registration = await navigator.serviceWorker.ready;
 
-      const token = await getToken(messaging!, {
-        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
-        serviceWorkerRegistration: registration,
-      });
+      let token: string | null = null;
+      let attempt = 0;
 
-      console.log("📬 발급된 FCM 토큰:", token);
+      while (!token && attempt < MAX_TOKEN_RETRY) {
+        try {
+          token = await getToken(messaging!, {
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
+            serviceWorkerRegistration: registration,
+          });
+          console.log("📬 발급된 FCM 토큰:", token);
+        } catch (err) {
+          attempt++;
+          console.warn(
+            `🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`,
+            err,
+          );
+          await new Promise((res) => setTimeout(res, 1000 * attempt)); // 점진적 backoff
+        }
+      }
+
+      if (!token) {
+        console.error("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
+        return;
+      }
+
       await registerFCMToken(token);
-      console.log("🟢등록된 토큰:", token);
+      console.log("🟢 등록된 토큰:", token);
     } catch (err) {
-      console.error("❌ FCM 초기화 실패:", err);
+      console.error("❌ 전체 FCM 초기화 실패:", err);
     }
   };
 
@@ -32,10 +56,9 @@ export const useFCM = () => {
     getFirebaseMessaging().then((messaging) => {
       console.log("onForegroundMessage 등록");
       if (!messaging) {
-        console.warn(" messaging 객체 없음");
+        console.warn("⚠️ messaging 객체 없음");
         return;
       }
-      console.log("onMessage 리스너 등록");
       onMessage(messaging, callback);
     });
   };

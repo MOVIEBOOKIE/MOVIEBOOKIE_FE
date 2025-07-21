@@ -22,9 +22,9 @@ messaging.onBackgroundMessage((payload) => {
     data: {
       eventId: payload.data?.eventId,
     },
-    // data: {
-    //   url: `/detail/${payload.data?.eventId}`,
-    // },
+    data: {
+      url: `/detail/${payload.data?.eventId}`,
+    },
   });
 });
 
@@ -38,26 +38,14 @@ self.addEventListener("install", (event) => {
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
 
-  // eventId 전달받기 (tag 또는 data로부터)
-  const eventId = event.notification?.data?.eventId;
+  const data = event.notification.data || {};
+  const eventId = data.eventId;
 
-  const targetUrl = eventId ? `/detail/${eventId}` : "/"; // fallback
+  const url = new URL("/notifications", self.location.origin);
+  if (eventId) {
+    url.searchParams.set("clicked", "1");
+    url.searchParams.set("id", String(messageId)); // 알림 ID로 사용
+  }
 
-  event.waitUntil(
-    clients
-      .matchAll({ type: "window", includeUncontrolled: true })
-      .then((clientList) => {
-        for (const client of clientList) {
-          if (client.url.includes("/") && "focus" in client) {
-            client.navigate(targetUrl);
-            return client.focus();
-          }
-        }
-
-        // 창이 없으면 새로 열기
-        if (clients.openWindow) {
-          return clients.openWindow(targetUrl);
-        }
-      }),
-  );
+  event.waitUntil(clients.openWindow(url.toString()));
 });

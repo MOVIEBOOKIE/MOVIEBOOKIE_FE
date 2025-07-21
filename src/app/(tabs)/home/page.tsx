@@ -205,7 +205,7 @@ export default function Home() {
 
           {events.length === 5 && (
             <Button
-              className="mt-1 mb-5"
+              className="mt-5 mb-5"
               variant="secondary"
               onClick={() => {
                 const categorySlug = categoryMap[selected];

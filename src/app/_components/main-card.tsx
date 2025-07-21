@@ -52,7 +52,7 @@ function Card({
         <div>
           <p className="caption-1-medium text-gray-500">{category}</p>
           <h2 className="body-2-semibold line-clamp-1 text-white">{title}</h2>
-          <p className="caption-2-medium mt-0.5 text-gray-700">
+          <p className="caption-2-medium mt-0.5 text-gray-400">
             {placeAndDate}
           </p>
           {description && (
@@ -63,17 +63,17 @@ function Card({
         </div>
 
         {(progressRate || estimatedPrice) && (
-          <div className="caption-2-medium flex items-center justify-start gap-1.75 text-gray-700">
+          <div className="caption-2-medium flex items-center justify-start gap-1.75 text-gray-500">
             {progressRate && (
               <p>
                 모집 달성율
-                <span className="ml-0.75 text-gray-300">{progressRate}</span>
+                <span className="ml-0.75 text-gray-200">{progressRate}</span>
               </p>
             )}
             {estimatedPrice && (
               <p>
                 예상가격
-                <span className="ml-0.75 text-gray-300">
+                <span className="ml-0.75 text-gray-200">
                   {Number(estimatedPrice).toLocaleString()}원
                 </span>
               </p>
