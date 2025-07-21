@@ -34,13 +34,7 @@ export default function FixedLayout({
   isHeader = true,
   state = "default",
   showBottomButton = true,
-  step,
 }: FixedLayoutProps) {
-  const [hasClicked, setHasClicked] = useState(false);
-  useEffect(() => {
-    setHasClicked(false);
-  }, [step]);
-
   const paddingStyle =
     state === "default"
       ? " pt-21.75 px-5"
@@ -51,8 +45,7 @@ export default function FixedLayout({
           : "p-0";
 
   const handleClick = () => {
-    if (hasClicked || isButtonDisabled) return;
-    setHasClicked(true);
+    if (isButtonDisabled) return;
     onButtonClick?.();
   };
 
@@ -75,10 +68,10 @@ export default function FixedLayout({
       {showBottomButton && (
         <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
           <Button
-            disabled={isButtonDisabled || hasClicked}
+            disabled={isButtonDisabled}
             onClick={handleClick}
             className={cn(
-              isButtonDisabled || hasClicked
+              isButtonDisabled
                 ? "bg-gray-900 text-gray-700"
                 : "bg-red-main text-white",
             )}

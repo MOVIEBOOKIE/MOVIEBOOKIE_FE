@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { NotiCancelIcon, NotiCheckIcon, NotiConfirmIcon } from "@/icons/index";
 import { useRouter } from "next/navigation";
 import { TargetUrl } from "./target-url";
 import { getStatusByTitle } from "./get-status-bytitle";
 
 export type NotificationStatus = "confirm" | "cancel" | "check";
+
 interface NotificationItemProps {
   type: string;
   title: string;
@@ -15,6 +17,7 @@ interface NotificationItemProps {
   highlight?: boolean;
   onClick?: () => void;
 }
+
 export function NotificationItem({
   type,
   title,
@@ -26,6 +29,8 @@ export function NotificationItem({
 }: NotificationItemProps) {
   const status = getStatusByTitle(title);
   const router = useRouter();
+
+  const [isHighlighted] = useState(highlight);
 
   const statusIcon = {
     confirm: <NotiConfirmIcon />,
@@ -40,8 +45,8 @@ export function NotificationItem({
         const targetUrl = TargetUrl(title, eventId?.toString());
         if (targetUrl) router.push(targetUrl);
       }}
-      className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 transition ${
-        highlight ? "bg-gray-900" : "bg-gray-black"
+      className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 ${
+        isHighlighted ? "bg-gray-950" : "bg-gray-black"
       }`}
     >
       <div>{statusIcon}</div>
