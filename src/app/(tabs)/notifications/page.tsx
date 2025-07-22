@@ -25,16 +25,19 @@ export default function NotificationPage() {
         if (!Array.isArray(res)) {
           return;
         }
+        const isFirstVisit =
+          localStorage.getItem("hasSeenNotification") !== "true";
 
-        const lastSeenIds: string[] = JSON.parse(
-          localStorage.getItem("확인한 알림 ID") || "[]",
-        );
+        const lastSeenIds: string[] = isFirstVisit
+          ? res.map((n) => `${n.id}`)
+          : JSON.parse(localStorage.getItem("확인한 알림 ID") || "[]");
 
         const newNotificationIds = res.map((n) => `${n.id}`);
         localStorage.setItem(
           "확인한 알림 ID",
           JSON.stringify(newNotificationIds),
         );
+        localStorage.setItem("hasSeenNotification", "true");
 
         const mapped = res.map((n) => ({
           id: `${n.id}`,
@@ -74,7 +77,7 @@ export default function NotificationPage() {
             time={n.timeAgo}
             eventId={n.id}
             highlight={n.isNew}
-            onClick={() => console.log("알림 클릭됨", n.id)}
+            onClick={() => n.id}
           />
         ))
       )}
