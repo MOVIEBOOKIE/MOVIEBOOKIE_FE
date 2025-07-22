@@ -16,6 +16,7 @@ interface Notification {
 export default function NotificationPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
+  const hasUnread = useNotificationStore((state) => state.hasUnread);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -26,12 +27,12 @@ export default function NotificationPage() {
         }
 
         const lastSeenIds: string[] = JSON.parse(
-          localStorage.getItem("lastSeenNotificationIds") || "[]",
+          localStorage.getItem("확인한 알림 ID") || "[]",
         );
 
         const newNotificationIds = res.map((n) => `${n.id}`);
         localStorage.setItem(
-          "lastSeenNotificationIds",
+          "확인한 알림 ID",
           JSON.stringify(newNotificationIds),
         );
 
@@ -40,7 +41,7 @@ export default function NotificationPage() {
           title: n.title,
           body: n.message,
           timeAgo: n.timeAgo,
-          isNew: !lastSeenIds.includes(`${n.id}`),
+          isNew: hasUnread && !lastSeenIds.includes(`${n.id}`),
         }));
 
         setNotifications(mapped);
@@ -51,7 +52,7 @@ export default function NotificationPage() {
     };
 
     fetchNotifications();
-  }, [setHasUnread]);
+  }, [setHasUnread, hasUnread]);
 
   return (
     <div className="h-[calc(100vh-102px)] overflow-y-scroll text-white">
