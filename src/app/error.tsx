@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { FixedLayout } from "./_components";
 import { ErrorIcon } from "../icons";
 
-export default function Error() {
+export default function ErrorPage() {
   const router = useRouter();
   const handleButtonClick = () => {
     router.refresh();
