@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { apiGet } from "app/_apis/methods";
 import { useNotificationStore } from "app/_stores/use-noti";
-import { shallow } from "zustand/shallow";
 import {
   NOTIFICATION_POLLING_ACTIVE_INTERVAL,
   NOTIFICATION_POLLING_BACKGROUND_INTERVAL,
@@ -50,6 +49,7 @@ export function useSmartNotiPolling() {
   );
 
   const startPolling = useCallback(() => {
+    if (!isActiveRef.current) return; // 비활성 상태면 폴링 시작 안 함
     if (intervalRef.current) return;
     const interval = isActiveRef.current
       ? NOTIFICATION_POLLING_ACTIVE_INTERVAL
@@ -81,7 +81,6 @@ export function useSmartNotiPolling() {
       const wasActive = isActiveRef.current;
       isActiveRef.current = isVisible;
 
-      // 상태가 실제로 변경되었을 때만 처리
       if (wasActive !== isVisible) {
         if (isVisible) {
           console.log("앱 활성화 - 폴링 간격 30초");
