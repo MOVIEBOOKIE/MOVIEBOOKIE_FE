@@ -5,38 +5,17 @@ import Link from "next/link";
 import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
 import { useNotificationStore } from "app/_stores/use-noti";
-import { useEffect } from "react";
-import { apiGet } from "app/_apis/methods";
+import { useSmartNotiPolling } from "app/_hooks/use-smart-noti-polling";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
   const hasUnread = useNotificationStore((state) => state.hasUnread);
-  const setHasUnread = useNotificationStore((state) => state.setHasUnread);
+
+  useSmartNotiPolling();
 
   function isActive(tabPath: string) {
     return pathname === tabPath || pathname.startsWith(`${tabPath}/`);
   }
-
-  // 30초마다 읽지 않은 알림 여부 체크
-  useEffect(() => {
-    type UnreadResponse = boolean | { result?: boolean };
-
-    const checkUnread = async () => {
-      try {
-        const res: UnreadResponse = await apiGet("/notifications/unread");
-
-        const isUnread = typeof res === "boolean" ? res : res?.result;
-        console.log("새 알림 존재 여부:", isUnread);
-        setHasUnread(isUnread === true);
-      } catch (error) {
-        console.error("읽지 않은 알림 상태 조회 실패:", error);
-      }
-    };
-
-    checkUnread();
-    const interval = setInterval(checkUnread, 30000);
-    return () => clearInterval(interval);
-  }, [setHasUnread]);
 
   return (
     <nav
