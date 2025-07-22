@@ -21,11 +21,7 @@ export default function Home() {
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
-  const {
-    showPermissionBanner,
-    setShowPermissionBanner,
-    requestPermissionAndToken,
-  } = useFCMHandler();
+  const { requestPermissionAndToken } = useFCMHandler();
 
   useMyPage();
 
@@ -69,31 +65,22 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
+  useEffect(() => {
+    const isAlreadyAsked = localStorage.getItem("fcm-asked") === "true";
+    if (isAlreadyAsked || Notification.permission !== "default") return;
+
+    if (document.visibilityState === "visible") {
+      Notification.requestPermission().then(async (permission) => {
+        if (permission === "granted") {
+          await requestPermissionAndToken();
+          localStorage.setItem("fcm-asked", "true");
+        }
+      });
+    }
+  }, []);
 
   return (
     <>
-      {/* 알림 권한 요청 배너 (iOS PWA 대응) */}
-      {showPermissionBanner && (
-        <div className="fixed right-4 bottom-4 left-4 z-50 rounded-lg bg-gray-900 px-4 py-3 text-white shadow-md">
-          <p className="mb-2 text-sm">
-            알림을 허용하고 이벤트 소식을 받아보세요!
-          </p>
-          <Button
-            onClick={async () => {
-              const permission = await Notification.requestPermission();
-              if (permission === "granted") {
-                await requestPermissionAndToken();
-                localStorage.setItem("fcm-registered", "true");
-                setShowPermissionBanner(false);
-              } else {
-                alert("알림 권한이 거부되었습니다.");
-              }
-            }}
-          >
-            알림 허용하기
-          </Button>
-        </div>
-      )}
       <div
         ref={containerRef}
         className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"

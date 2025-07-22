@@ -2,8 +2,6 @@ import axios from "axios";
 
 export const registerFCMToken = async (token: string) => {
   try {
-    console.log("📡 registerFCMToken 실행됨:", token);
-
     const res = await axios.post(
       "/api/notifications/register-token",
       { token },
