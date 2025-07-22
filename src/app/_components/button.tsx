@@ -19,7 +19,7 @@ export default function Button({
   const buttonStyles = cn(
     "body-3-medium w-full rounded-xl py-4",
     variant === "primary"
-      ? "bg-red-main text-gray-white"
+      ? "bg-red-main text-gray-white hover:bg-red-700 active:bg-red-700"
       : "bg-gray-950 text-gray-300",
     isDisabled && "bg-gray-900 text-gray-700 cursor-not-allowed",
     className,

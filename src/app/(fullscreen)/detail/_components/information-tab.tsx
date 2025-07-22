@@ -23,7 +23,7 @@ export default function InformationTab({ ...props }) {
           <p className="caption-1-medium mt-0.5 text-gray-600">
             *최소 인원 기준 가격으로, 모집인원에 따라 변동가능
           </p>
-          <div className="mt-2.5 flex items-center gap-2">
+          <div className="mt-3 flex items-center gap-2">
             <p className="body-2-medium">
               {(props.estimatedPrice ?? "24,000").toLocaleString?.() ||
                 "24,000"}
@@ -34,7 +34,7 @@ export default function InformationTab({ ...props }) {
             </Badge>
           </div>
 
-          <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
+          <div className="my-5 h-0.25 w-full rounded-sm bg-gray-950" />
 
           <p className="body-2-medium text-gray-400">일정</p>
           <div className="mt-2 grid grid-cols-[auto_1fr] gap-x-3.25 gap-y-1">
@@ -48,7 +48,7 @@ export default function InformationTab({ ...props }) {
             </p>
           </div>
 
-          <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
+          <div className="my-5 h-0.25 w-full rounded-sm bg-gray-950" />
 
           <p className="body-2-medium mb-2 text-gray-400">위치</p>
           <MapThumbnail
@@ -58,7 +58,7 @@ export default function InformationTab({ ...props }) {
             address={props.address ?? "서울 강남구 삼성동 159"}
           />
 
-          <div className="mt-6 mb-5 h-0.25 w-full rounded-sm bg-gray-950" />
+          <div className="my-5 h-0.25 w-full rounded-sm bg-gray-950" />
 
           <p className="body-2-medium mb-2 text-gray-400">영화관 내부</p>
           <div className="relative w-full" style={{ aspectRatio: "335 / 192" }}>
@@ -74,7 +74,7 @@ export default function InformationTab({ ...props }) {
           </div>
         </div>
       ) : (
-        <div className="mt-5 pb-44">
+        <div className="mt-5 pb-34">
           <p className="body-2-medium mb-2 text-gray-400">모집 일정</p>
           <div className="flex gap-3">
             <p className="body-3-medium text-gray-400">모집 기간</p>
