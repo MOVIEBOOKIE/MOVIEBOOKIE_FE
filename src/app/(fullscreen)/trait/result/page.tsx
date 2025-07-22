@@ -8,10 +8,11 @@ import { useGetUserTypeResult } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { USER_TYPE_ICONS, UserTypeCode } from "@/constants/user-type-icon";
+import { useEffect, useState } from "react";
+import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 
 export default function TraitResult() {
+  const [isShortScreen, setIsShortScreen] = useState(false); // ← 초기값 false
   const router = useRouter();
 
   const handleClick = () => {
@@ -28,23 +29,29 @@ export default function TraitResult() {
     const cleanedTitle = data.title.replace(/\n/g, " ");
     setUser({ ...user, userTypeTitle: cleanedTitle });
   }, [data?.title, user?.userTypeTitle, setUser]);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerHeight < 700) {
+      setIsShortScreen(true);
+    }
+  }, []);
 
-  const iconSet = USER_TYPE_ICONS[data?.userTypeCode as UserTypeCode];
+  const iconSet =
+    USER_TYPE_ICONS[data?.userTypeCode as keyof typeof USER_TYPE_ICONS] ??
+    USER_TYPE_ICONS["MOVIE_DETAIL_COLLECTOR"];
+
   const imageSrc =
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="relative grid h-[100dvh] w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
+    <div className="relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
       <div
-        className="flex justify-center"
-        style={{ paddingTop: "clamp(1.5rem, 5vw, 3.5rem)" }}
+        className={`flex justify-center ${isShortScreen ? "mt-8" : "mt-20"}`}
       >
-        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+        <div className="rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
-
       <div className="flex items-start justify-center">
         <div
           className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] bg-cover bg-center shadow-lg"
