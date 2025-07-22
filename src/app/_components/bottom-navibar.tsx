@@ -5,13 +5,38 @@ import Link from "next/link";
 import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
 import { useNotificationStore } from "app/_stores/use-noti";
+import { useEffect } from "react";
+import { apiGet } from "app/_apis/methods";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
-  const unreadCount = useNotificationStore((state) => state.unreadCount);
+  const hasUnread = useNotificationStore((state) => state.hasUnread);
+  const setHasUnread = useNotificationStore((state) => state.setHasUnread);
+
   function isActive(tabPath: string) {
     return pathname === tabPath || pathname.startsWith(`${tabPath}/`);
   }
+
+  // 30초마다 읽지 않은 알림 여부 체크
+  useEffect(() => {
+    type UnreadResponse = boolean | { result?: boolean };
+
+    const checkUnread = async () => {
+      try {
+        const res: UnreadResponse = await apiGet("/notifications/unread");
+
+        const isUnread = typeof res === "boolean" ? res : res?.result;
+        console.log("새 알림 존재 여부:", isUnread);
+        setHasUnread(isUnread === true);
+      } catch (error) {
+        console.error("읽지 않은 알림 상태 조회 실패:", error);
+      }
+    };
+
+    checkUnread();
+    const interval = setInterval(checkUnread, 30000);
+    return () => clearInterval(interval);
+  }, [setHasUnread]);
 
   return (
     <nav
@@ -22,8 +47,6 @@ export default function BottomNavigation() {
       {NAVIGATION_TABS.map((tab) => {
         const active = isActive(tab.path);
         const IconComponent = tab.Icon;
-
-        const showBadge = tab.id === "notifications" && unreadCount > 0;
 
         return (
           <Link
@@ -38,10 +61,8 @@ export default function BottomNavigation() {
               <IconComponent
                 className={`h-full w-full ${active ? "text-red-main" : "text-gray-800"}`}
               />
-              {showBadge && (
-                <span className="bg-red-main absolute -top-2 -right-2 h-4 min-w-4 rounded-full px-1 text-center text-xs leading-4 text-white">
-                  {unreadCount > 9 ? "9+" : unreadCount}
-                </span>
+              {tab.id === "notifications" && hasUnread && (
+                <span className="bg-red-main border-gray-black absolute -top-1 -right-1 h-2 w-2 rounded-full border" />
               )}
             </div>
 

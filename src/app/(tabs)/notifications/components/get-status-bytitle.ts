@@ -5,8 +5,8 @@ export const getStatusByTitle = (title: string): NotificationStatus => {
     return "confirm";
   }
   if (
-    ["모집 취소", "대관 불가", "신청 취소", "대관 취소"].some((kw) =>
-      title.includes(kw),
+    ["모집 취소", "모집 마감", "대관 불가", "신청 취소", "대관 취소"].some(
+      (kw) => title.includes(kw),
     )
   ) {
     return "cancel";

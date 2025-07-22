@@ -5,7 +5,7 @@ import Step0 from "./_components/step0";
 import Step1 from "./_components/step1";
 import Step2 from "./_components/step2";
 import Step3 from "./_components/step3";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useWatch } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
 import { usePostUserType } from "app/_hooks/use-user-type";
@@ -45,9 +45,9 @@ export default function Trait() {
     });
   });
 
-  const mood = methods.watch("mood");
-  const criterion = methods.watch("criterion");
-  const content = methods.watch("content");
+  const mood = useWatch({ control: methods.control, name: "mood" });
+  const criterion = useWatch({ control: methods.control, name: "criterion" });
+  const content = useWatch({ control: methods.control, name: "content" });
 
   const isButtonDisabled =
     (step === 1 && !mood) ||

@@ -3,39 +3,55 @@
 import { useEffect, useState } from "react";
 import { NotificationItem } from "./components/item";
 import { apiGet } from "app/_apis/methods";
+import { useNotificationStore } from "app/_stores/use-noti";
 
 interface Notification {
   id: string;
   title: string;
   body: string;
   timeAgo: string;
-  isRead: boolean;
   isNew?: boolean;
 }
 
 export default function NotificationPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const setHasUnread = useNotificationStore((state) => state.setHasUnread);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await apiGet<{ result: any[] }>("/notifications");
-        const mapped = res.result.map((n, i) => ({
-          id: `${n.title}-${n.timeAgo}`,
+        const res = await apiGet<any[]>("/notifications");
+        if (!Array.isArray(res)) {
+          return;
+        }
+
+        const lastSeenIds: string[] = JSON.parse(
+          localStorage.getItem("lastSeenNotificationIds") || "[]",
+        );
+
+        const newNotificationIds = res.map((n) => `${n.id}`);
+        localStorage.setItem(
+          "lastSeenNotificationIds",
+          JSON.stringify(newNotificationIds),
+        );
+
+        const mapped = res.map((n) => ({
+          id: `${n.id}`,
           title: n.title,
           body: n.message,
           timeAgo: n.timeAgo,
-          isRead: n.read,
-          isNew: false,
+          isNew: !lastSeenIds.includes(`${n.id}`),
         }));
+
         setNotifications(mapped);
+        setHasUnread(false);
       } catch (error) {
         console.error("알림 요청 실패:", error);
       }
     };
 
     fetchNotifications();
-  }, []);
+  }, [setHasUnread]);
 
   return (
     <div className="h-[calc(100vh-102px)] overflow-y-scroll text-white">
@@ -55,7 +71,7 @@ export default function NotificationPage() {
             title={n.title}
             description={n.body}
             time={n.timeAgo}
-            isRead={n.isRead}
+            eventId={n.id}
             highlight={n.isNew}
             onClick={() => console.log("알림 클릭됨", n.id)}
           />

@@ -50,7 +50,7 @@ export default function MyPage() {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="mb-3 flex h-21.75 w-84 justify-around rounded-xl bg-gray-950 text-center">
+        <div className="mb-3 flex h-21.75 w-full justify-around rounded-xl bg-gray-950 text-center">
           <MyPageStat label="모집경험" value={user?.hostExperienceCount} />
           <MyPageStat
             label="참여경험"
@@ -59,7 +59,7 @@ export default function MyPage() {
           <MyPageStat label="티켓" value={user?.ticketCount} />
         </div>
       </div>
-      <ul className="body-3-medium pl-2 text-gray-100">
+      <ul className="body-3-medium px-2 text-gray-100">
         {[
           { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
 

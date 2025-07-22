@@ -52,7 +52,6 @@ export default function Detail() {
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
   const { showToast } = useToast();
-  const { addNotification } = useNotificationStore();
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
@@ -148,13 +147,6 @@ export default function Detail() {
           title: notification.title,
           body: notification.body,
           type: "success",
-        });
-
-        addNotification({
-          eventId,
-          code: notificationCode,
-          title: notification.title,
-          body: notification.body,
         });
       }
     } catch (error) {

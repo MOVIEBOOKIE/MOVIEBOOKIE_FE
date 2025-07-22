@@ -50,15 +50,6 @@ export const useFCMHandler = () => {
       const parsedEventId = Number(eventId);
 
       if (!title || !body || !eventId || isNaN(parsedEventId)) return;
-
-      useNotificationStore.getState().addNotification({
-        title,
-        body,
-        code: parsedCode,
-        eventId: parsedEventId,
-      });
-
-      console.log("✅ 알림 저장 완료:", title);
     });
   }, []);
 
