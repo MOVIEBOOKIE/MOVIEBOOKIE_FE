@@ -78,3 +78,5 @@ export { default as TalkIcon } from "../icons/trait/result/talk.svg";
 export { default as TalkingIcon } from "../icons/trait/result/talking.svg";
 export { default as WaterIcon } from "../icons/trait/result/water.svg";
 export { default as YellowWarnIcon } from "../icons/trait/result/yellow-warn.svg";
+
+export { default as ErrorIcon } from "./ui/error.svg";
