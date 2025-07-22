@@ -66,3 +66,15 @@ export { default as DangerIcon } from "./ui/danger.svg";
 export { default as CheckAlertIcon } from "./ui/check-alert.svg";
 export { default as ShareKakaoIcon } from "./ui/share-kakao.svg";
 export { default as ShareLinkIcon } from "./ui/share-link.svg";
+
+export { default as MovieIcon } from "../icons/trait/result/movie-camera.svg";
+export { default as GlassesIcon } from "../icons/trait/result/glasses.svg";
+export { default as AngryIcon } from "../icons/trait/result/angry.svg";
+export { default as HeartIcon } from "../icons/trait/result/heart.svg";
+export { default as Heart2Icon } from "../icons/trait/result/heart2.svg";
+export { default as PaperIcon } from "../icons/trait/result/paper.svg";
+export { default as Popcorn } from "../icons/trait/result/popcorn.svg";
+export { default as TalkIcon } from "../icons/trait/result/talk.svg";
+export { default as TalkingIcon } from "../icons/trait/result/talking.svg";
+export { default as WaterIcon } from "../icons/trait/result/water.svg";
+export { default as YellowWarnIcon } from "../icons/trait/result/yellow-warn.svg";

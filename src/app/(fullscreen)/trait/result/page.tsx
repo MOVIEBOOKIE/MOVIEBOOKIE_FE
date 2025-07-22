@@ -9,6 +9,7 @@ import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { USER_TYPE_ICONS, UserTypeCode } from "@/constants/user-type-icon";
 
 export default function TraitResult() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function TraitResult() {
     setUser({ ...user, userTypeTitle: cleanedTitle });
   }, [data?.title, user?.userTypeTitle, setUser]);
 
+  const iconSet = USER_TYPE_ICONS[data?.userTypeCode as UserTypeCode];
   const imageSrc =
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
@@ -74,13 +76,13 @@ export default function TraitResult() {
             />
             <div className="mt-6 w-full space-y-4 px-5 leading-relaxed text-gray-100">
               <p className="flex items-start gap-2">
-                <span className="text-lg">🎬</span>
+                <span className="text-lg">{iconSet.label}</span>
                 <span className="body-3-regular whitespace-pre-line">
                   <LineBreak text={data?.label} />
                 </span>
               </p>
               <p className="flex items-start gap-2">
-                <span className="text-lg">🔍</span>
+                <span className="text-lg">{iconSet.description}</span>
                 <span className="body-3-regular whitespace-pre-line">
                   <LineBreak text={data?.description} />
                 </span>
