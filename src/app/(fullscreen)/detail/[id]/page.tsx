@@ -20,7 +20,6 @@ import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
-import { useNotificationStore } from "app/_stores/use-noti";
 import { useToast } from "app/_context/toast-context";
 import { ParticipantNotificationType } from "app/_types/noti";
 
