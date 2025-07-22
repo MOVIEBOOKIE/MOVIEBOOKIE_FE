@@ -71,12 +71,27 @@ function VerifyNumberContent() {
       );
     }
   };
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace" && code[index] === "" && index > 0) {
+      const prevInput = document.getElementById(`code-${index - 1}`);
+      prevInput?.focus();
+
+      const updated = [...code];
+      updated[index - 1] = "";
+      setCode(updated);
+    }
+  };
+
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => setShowToast(false), 3000);
       return () => clearTimeout(timer);
     }
   }, [showToast]);
+
   const handleError = () => {
     setShowToast(true);
     setCode(Array(4).fill(""));
@@ -111,6 +126,7 @@ function VerifyNumberContent() {
             maxLength={1}
             value={char}
             onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
             className="title-1-semibold h-19.5 w-16.75 rounded-md bg-gray-900 text-center text-gray-100 focus:outline-none"
           />
         ))}

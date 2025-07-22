@@ -21,9 +21,20 @@ export default function PwaPromptModal() {
     useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
-    const osType = getMobile();
+    const osType = getMobile(); // ios | android | other
     setOs(osType);
 
+    const pathname = window.location.pathname;
+    const isLoginPage = pathname === "/login";
+
+    const isPWA = window.matchMedia("(display-mode: standalone)").matches;
+
+    if (osType === "ios" && isPWA && isLoginPage) {
+      setShowModal(true);
+      return;
+    }
+
+    // android
     const hasPrompted = localStorage.getItem("pwaPrompted");
     if (hasPrompted) return;
 
