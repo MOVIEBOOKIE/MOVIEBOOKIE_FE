@@ -29,9 +29,16 @@ export default function TraitResult() {
     const cleanedTitle = data.title.replace(/\n/g, " ");
     setUser({ ...user, userTypeTitle: cleanedTitle });
   }, [data?.title, user?.userTypeTitle, setUser]);
+
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerHeight < 700) {
-      setIsShortScreen(true);
+    const handleResize = () => {
+      setIsShortScreen(window.innerHeight < 700);
+    };
+
+    if (typeof window !== "undefined") {
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
 
