@@ -24,16 +24,19 @@ export default function NotificationPage() {
         if (!Array.isArray(res)) {
           return;
         }
+        const isFirstVisit =
+          localStorage.getItem("hasSeenNotification") !== "true";
 
-        const lastSeenIds: string[] = JSON.parse(
-          localStorage.getItem("lastSeenNotificationIds") || "[]",
-        );
+        const lastSeenIds: string[] = isFirstVisit
+          ? res.map((n) => `${n.id}`)
+          : JSON.parse(localStorage.getItem("lastSeenNotificationIds") || "[]");
 
         const newNotificationIds = res.map((n) => `${n.id}`);
         localStorage.setItem(
           "lastSeenNotificationIds",
           JSON.stringify(newNotificationIds),
         );
+        localStorage.setItem("hasSeenNotification", "true");
 
         const mapped = res.map((n) => ({
           id: `${n.id}`,
