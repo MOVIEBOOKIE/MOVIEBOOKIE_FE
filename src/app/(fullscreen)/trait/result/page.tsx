@@ -31,57 +31,63 @@ export default function TraitResult() {
   const imageSrc =
     data?.userTypeCode &&
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
+
   return (
-    <div className="relative flex min-h-[100dvh] w-full flex-col items-center bg-black text-white">
-      <div className="mt-17 flex items-center justify-center">
+    <div className="relative grid h-[100dvh] w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
+      <div
+        className="flex justify-center"
+        style={{ paddingTop: "clamp(1.5rem, 5vw, 3.5rem)" }}
+      >
         <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
 
-      <div
-        className="relative mt-14 h-[460px] w-[320px] overflow-hidden rounded-[20px] bg-cover bg-center shadow-lg"
-        style={{
-          backgroundImage: `url(${PATH_IMAGES.TRAIT.BACKGROUND})`,
-        }}
-      >
-        <div className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.1)]" />
-        <div className="relative z-10 flex h-full flex-col items-center px-6 pt-11">
-          <p className="body-2-medium text-red-100">{data?.username}님은</p>
-          <p className="title-3-bold text mt-3 text-center whitespace-pre-line text-white">
-            <LineBreak text={data?.title} />
-          </p>
-          {imageSrc && (
-            <Image
-              src={imageSrc}
-              alt="유형 이미지"
-              width={100}
-              height={100}
-              className="mt-5 mb-9"
+      <div className="flex items-start justify-center">
+        <div
+          className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] bg-cover bg-center shadow-lg"
+          style={{
+            backgroundImage: `url(${PATH_IMAGES.TRAIT.BACKGROUND})`,
+          }}
+        >
+          <div className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.1)]" />
+          <div className="relative z-10 flex h-full flex-col items-center px-6 pt-11">
+            <p className="body-2-medium text-red-100">{data?.username}님은</p>
+            <p className="title-3-bold text mt-3 text-center whitespace-pre-line text-white">
+              <LineBreak text={data?.title} />
+            </p>
+            {imageSrc && (
+              <Image
+                src={imageSrc}
+                alt="유형 이미지"
+                width={100}
+                height={100}
+                className="mt-5 mb-9"
+              />
+            )}
+            <div
+              className="h-[3px] w-full"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(to right, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 8px, transparent 8px, transparent 18px)",
+              }}
             />
-          )}
-          <div
-            className="h-[3px] w-full"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(to right, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 8px, transparent 8px, transparent 18px)",
-            }}
-          />
-          <div className="mt-6 w-full space-y-4 px-5 leading-relaxed text-gray-100">
-            <p className="flex items-start gap-2">
-              <span className="text-lg">🎬</span>
-              <span className="body-3-regular whitespace-pre-line">
-                <LineBreak text={data?.label} />
-              </span>
-            </p>
-            <p className="flex items-start gap-2">
-              <span className="text-lg">🔍</span>
-              <span className="body-3-regular whitespace-pre-line">
-                <LineBreak text={data?.description} />
-              </span>
-            </p>
+            <div className="mt-6 w-full space-y-4 px-5 leading-relaxed text-gray-100">
+              <p className="flex items-start gap-2">
+                <span className="text-lg">🎬</span>
+                <span className="body-3-regular whitespace-pre-line">
+                  <LineBreak text={data?.label} />
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="text-lg">🔍</span>
+                <span className="body-3-regular whitespace-pre-line">
+                  <LineBreak text={data?.description} />
+                </span>
+              </p>
+            </div>
+            <LogoWhiteIcon width={28} height={28} className="mt-auto mb-7" />
           </div>
-          <LogoWhiteIcon width={28} height={28} className="mt-auto mb-7" />
         </div>
       </div>
 
