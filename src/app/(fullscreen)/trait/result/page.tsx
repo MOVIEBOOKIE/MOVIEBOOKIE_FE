@@ -55,7 +55,7 @@ export default function TraitResult() {
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
+    <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
       {isFromMyPage && (
         <div className="absolute top-5 left-5 z-50">
           <button onClick={() => router.back()} className="text-white">
