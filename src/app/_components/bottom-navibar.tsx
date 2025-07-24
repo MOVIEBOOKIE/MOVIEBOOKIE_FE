@@ -41,7 +41,7 @@ export default function BottomNavigation() {
                 className={`h-full w-full ${active ? "text-red-main" : "text-gray-800"}`}
               />
               {tab.id === "notifications" && hasUnread && (
-                <span className="bg-red-main border-gray-black absolute -top-1 -right-1 h-1 w-1 rounded-full border" />
+                <span className="bg-red-main border-gray-black absolute -top-1 -right-1 h-2 w-2 rounded-full border" />
               )}
             </div>
 
