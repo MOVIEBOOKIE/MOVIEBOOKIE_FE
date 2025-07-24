@@ -4,8 +4,8 @@ import Modal from "@/components/modal";
 import { PATHS } from "@/constants";
 import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
 import { useLogout, useLogoutHandler } from "app/_hooks/auth/use-logout";
-import { useToastStore } from "app/_stores/use-toast-store";
 import { useUserStore } from "app/_stores/use-user-store";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 interface MyPageStatProps {
@@ -31,24 +31,36 @@ export default function MyPage() {
   return (
     <div className="h-[calc(100vh-102px)] overflow-y-scroll px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
-      <div className="mb-5 flex items-center gap-4">
-        <div className="border-red-main flex h-20 w-20 items-center justify-center rounded-full border-2">
-          {user?.profileImage ? (
-            <img
-              src={user.profileImage}
-              alt="프로필"
-              className="h-18 w-18 rounded-full"
-            />
-          ) : (
-            <DefaultProfileIcon className="h-18 w-18 rounded-full" />
-          )}
+      <div
+        className="mb-5 flex cursor-pointer items-center justify-between gap-4"
+        onClick={() => router.push(`${PATHS.TRAIT_RESULT}?from=mypage`)}
+        role="button"
+      >
+        <div className="flex items-center gap-4">
+          <div className="border-red-main flex h-20 w-20 items-center justify-center rounded-full border-2">
+            {user?.profileImage ? (
+              <Image
+                src={user.profileImage}
+                alt="프로필"
+                width={72}
+                height={72}
+                className="rounded-full"
+                priority
+              />
+            ) : (
+              <DefaultProfileIcon className="h-18 w-18 rounded-full" />
+            )}
+          </div>
+          <div>
+            <p className="text-lg font-semibold">{user?.nickname}</p>
+            <p className="body-3-medium text-gray-500">{user?.userTypeTitle}</p>
+            <p className="caption-1-medium text-gray-500">{user?.email}</p>
+          </div>
         </div>
-        <div>
-          <p className="text-lg font-semibold">{user?.nickname}</p>
-          <p className="body-3-medium text-gray-500">{user?.userTypeTitle}</p>
-          <p className="caption-1-medium text-gray-500">{user?.email}</p>
-        </div>
+
+        <ArrowRightIcon size={16} className="mr-2 text-gray-400" />
       </div>
+
       <div className="flex justify-center">
         <div className="mb-3 flex h-21.75 w-full justify-around rounded-xl bg-gray-950 text-center">
           <MyPageStat label="모집경험" value={user?.hostExperienceCount} />

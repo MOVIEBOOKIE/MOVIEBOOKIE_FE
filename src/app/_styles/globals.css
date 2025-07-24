@@ -233,3 +233,6 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(100, 100, 100, 0.8);
 }
+input:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff;
+}

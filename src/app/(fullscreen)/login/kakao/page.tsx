@@ -49,16 +49,19 @@ function KakaoLogin() {
           isLocal,
         });
 
-        const { success, message, data } = response;
-        console.log(data);
+        const { success, data: userData } = response.data;
+
+        console.log(response.data);
         if (success) {
-          if (!data?.userType) {
+          if (!userData?.userType) {
             router.push(PATHS.AGREEMENT);
           } else {
             router.push(PATHS.HOME);
           }
         } else {
-          router.push(`/login?error=${encodeURIComponent(message)}`);
+          router.push(
+            `/login?error=${encodeURIComponent(response.data?.message || "Unknown error")}`,
+          );
         }
       } catch (error: any) {
         router.push(`/login?error=${encodeURIComponent(error.message)}`);

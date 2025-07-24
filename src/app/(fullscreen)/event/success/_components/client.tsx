@@ -11,6 +11,7 @@ import { useCreateEvent } from "app/_hooks/use-create-event";
 import Complete from "@/components/complete";
 
 export default function Client() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [step, setStep] = useState(1);
   const router = useRouter();
   const { formData, resetFormData } = useEventFormStore();
@@ -20,13 +21,18 @@ export default function Client() {
     if (step === 1) {
       setStep(2);
     } else {
+      if (isSubmitting) return;
+
+      setIsSubmitting(true);
       mutate(formData, {
         onSuccess: () => {
           resetFormData();
           setStep(3);
+          setIsSubmitting(false);
         },
         onError: (error) => {
           console.error("이벤트 생성 실패", error);
+          setIsSubmitting(false);
         },
       });
     }
@@ -51,6 +57,7 @@ export default function Client() {
           onButtonClick={handleButtonClick}
           title="이벤트 미리보기"
           state="preview"
+          isButtonDisabled={isSubmitting}
         >
           {step === 1 && <Step1 />}
           {step === 2 && <Step2 />}

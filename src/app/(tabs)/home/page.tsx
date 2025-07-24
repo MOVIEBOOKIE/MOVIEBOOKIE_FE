@@ -21,7 +21,7 @@ export default function Home() {
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
-  const { requestPermissionAndToken } = useFCMHandler();
+  const { requestOnceIfNeeded } = useFCMHandler();
 
   useMyPage();
 
@@ -65,19 +65,12 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
-  useEffect(() => {
-    const isAlreadyAsked = localStorage.getItem("fcm-asked") === "true";
-    if (isAlreadyAsked || Notification.permission !== "default") return;
 
-    if (document.visibilityState === "visible") {
-      Notification.requestPermission().then(async (permission) => {
-        if (permission === "granted") {
-          await requestPermissionAndToken();
-          localStorage.setItem("fcm-asked", "true");
-        }
-      });
+  useEffect(() => {
+    if (user?.email) {
+      requestOnceIfNeeded();
     }
-  }, []);
+  }, [user?.email]);
 
   return (
     <>
@@ -150,12 +143,18 @@ export default function Home() {
               ))}
             </div>
           ) : events.length === 0 ? (
-            <div className="mb-78 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
+            <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
               <EmptyIcon />
-              <p className="body-3-medium mt-3.5 text-gray-800">
+              <p className="body-3-medium mt-3.5 mb-7 text-gray-800">
                 아직 모집 이벤트가 없어요 <br />
                 지금 바로 나만의 이벤트를 만들어보세요
               </p>
+              <button
+                onClick={() => router.push(PATHS.EVENT_CREATE)}
+                className="bg-red-main body-3-semibold w-75 rounded-xl px-6 py-4 text-white"
+              >
+                나만의 이벤트 만들러 가기
+              </button>
             </div>
           ) : (
             events.map((event) => (

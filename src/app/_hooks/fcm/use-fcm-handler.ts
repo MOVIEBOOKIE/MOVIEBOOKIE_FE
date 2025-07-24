@@ -1,14 +1,26 @@
 import { useEffect, useState } from "react";
 import { useFCM } from "./use-fcm";
-import { useNotificationStore } from "app/_stores/use-noti";
 
 export const useFCMHandler = () => {
   const [showPermissionBanner, setShowPermissionBanner] = useState(false);
   const { requestPermissionAndToken, onForegroundMessage } = useFCM();
 
+  // 🔔 조건 만족할 때 호출 (ex. 로그인 후 홈 진입 시)
+  const requestOnceIfNeeded = async () => {
+    const hasAsked = localStorage.getItem("fcm-asked") === "true";
+    const shouldRequest = Notification.permission === "default" && !hasAsked;
+
+    if (!shouldRequest) return;
+
+    const permission = await Notification.requestPermission();
+    localStorage.setItem("fcm-asked", "true");
+
+    if (permission === "granted") {
+      await requestPermissionAndToken();
+    }
+  };
   useEffect(() => {
     console.log("🌐 모든 환경에서 FCM 토큰 등록 시도");
-    requestPermissionAndToken();
 
     // iOS PWA 권한 배너 표시 조건
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -56,6 +68,6 @@ export const useFCMHandler = () => {
   return {
     showPermissionBanner,
     setShowPermissionBanner,
-    requestPermissionAndToken,
+    requestOnceIfNeeded,
   };
 };

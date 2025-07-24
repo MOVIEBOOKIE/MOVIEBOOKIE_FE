@@ -28,7 +28,7 @@ export default function EventPage() {
   }, [searchParams]);
 
   return (
-    <div className="relative h-[calc(100vh-102px)] overflow-y-scroll pb-32 text-white">
+    <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
       <h1 className="title-1-semibold px-5 pt-6 pb-5">이벤트</h1>
       <section className="relative mx-5 overflow-hidden rounded-3xl">
         <img

@@ -3,17 +3,21 @@
 import { Button } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
-import { LogoWhiteIcon } from "@/icons/index";
+import { BackIcon, LogoWhiteIcon } from "@/icons/index";
 import { useGetUserTypeResult } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function TraitResult() {
-  const [isShortScreen, setIsShortScreen] = useState(false); // ← 초기값 false
+  const [isShortScreen, setIsShortScreen] = useState(false);
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const from = searchParams.get("from");
+
+  const isFromMyPage = from === "mypage";
 
   const handleClick = () => {
     router.push(PATHS.HOME);
@@ -51,21 +55,42 @@ export default function TraitResult() {
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
+    <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
+      {isFromMyPage && (
+        <div className="absolute top-5 left-5 z-50">
+          <button onClick={() => router.back()} className="text-white">
+            ←
+          </button>
+          <button
+            className="absolute top-2.5 left-2.5"
+            onClick={() => router.back()}
+            aria-label="뒤로가기"
+            type="button"
+          >
+            <BackIcon className="h-full w-full" />
+          </button>
+        </div>
+      )}
+
       <div
-        className={`flex justify-center ${isShortScreen ? "mt-8" : "mt-20"}`}
+        className={`flex justify-center ${
+          isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
+        }`}
       >
-        <div className="rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
       <div className="flex items-start justify-center">
-        <div
-          className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] bg-cover bg-center shadow-lg"
-          style={{
-            backgroundImage: `url(${PATH_IMAGES.TRAIT.BACKGROUND})`,
-          }}
-        >
+        <div className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg">
+          <Image
+            src={PATH_IMAGES.TRAIT.BACKGROUND}
+            alt="배경 이미지"
+            fill
+            priority
+            className="object-cover"
+            sizes="320px"
+          />
           <div className="absolute inset-0 z-0 bg-[rgba(255,255,255,0.1)]" />
           <div className="relative z-10 flex h-full flex-col items-center px-6 pt-11">
             <p className="body-2-medium text-red-100">{data?.username}님은</p>
@@ -107,9 +132,11 @@ export default function TraitResult() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12">
-        <Button onClick={handleClick}>무비부키 시작하기</Button>
-      </div>
+      {!isFromMyPage && (
+        <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12">
+          <Button onClick={handleClick}>무비부키 시작하기</Button>
+        </div>
+      )}
     </div>
   );
 }

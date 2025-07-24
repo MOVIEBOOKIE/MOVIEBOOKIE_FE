@@ -56,7 +56,7 @@ export default function Step6() {
             className="mb-0"
           />
         </div>
-        <div className="flex-1 overflow-y-auto pb-32">
+        <div className="scrollbar-hide flex-1 overflow-y-auto pb-32">
           {isLoading ? (
             <Loading />
           ) : (
