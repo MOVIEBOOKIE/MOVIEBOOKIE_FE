@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import Header from "@/components/header";
 import { Button } from "@/components";
 import { cn } from "@/utils/cn";
