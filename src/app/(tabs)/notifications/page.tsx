@@ -58,7 +58,7 @@ export default function NotificationPage() {
   }, [setHasUnread, hasUnread]);
 
   return (
-    <div className="h-[calc(100vh-102px)] overflow-y-scroll text-white">
+    <div className="scrollbar-hide h-[calc(100vh-102px)] overflow-y-scroll text-white">
       <div className="flex items-center justify-between px-5 pt-6 pb-7.5">
         <h1 className="title-1-semibold">알림</h1>
       </div>
