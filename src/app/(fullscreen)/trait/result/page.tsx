@@ -12,7 +12,7 @@ import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function TraitResult() {
-  const [isShortScreen, setIsShortScreen] = useState(false); // ← 초기값 false
+  const [isShortScreen, setIsShortScreen] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const from = searchParams.get("from");
