@@ -77,7 +77,7 @@ export default function TraitResult() {
           isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
         }`}
       >
-        <div className="rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
