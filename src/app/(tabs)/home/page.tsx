@@ -21,7 +21,7 @@ export default function Home() {
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   const [selected, setSelected] =
     useState<(typeof CATEGORY_LABELS)[number]>("인기");
-  const { requestPermissionAndToken } = useFCMHandler();
+  const { requestOnceIfNeeded } = useFCMHandler();
 
   useMyPage();
 
@@ -65,19 +65,12 @@ export default function Home() {
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
   };
-  useEffect(() => {
-    const isAlreadyAsked = localStorage.getItem("fcm-asked") === "true";
-    if (isAlreadyAsked || Notification.permission !== "default") return;
 
-    if (document.visibilityState === "visible") {
-      Notification.requestPermission().then(async (permission) => {
-        if (permission === "granted") {
-          await requestPermissionAndToken();
-          localStorage.setItem("fcm-asked", "true");
-        }
-      });
+  useEffect(() => {
+    if (user?.email) {
+      requestOnceIfNeeded();
     }
-  }, []);
+  }, [user?.email]);
 
   return (
     <>

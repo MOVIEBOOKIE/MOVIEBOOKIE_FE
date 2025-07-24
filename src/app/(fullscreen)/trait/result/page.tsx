@@ -12,7 +12,7 @@ import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function TraitResult() {
-  const [isShortScreen, setIsShortScreen] = useState(false); // ← 초기값 false
+  const [isShortScreen, setIsShortScreen] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const from = searchParams.get("from");
@@ -55,7 +55,7 @@ export default function TraitResult() {
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden bg-black">
+    <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
       {isFromMyPage && (
         <div className="absolute top-5 left-5 z-50">
           <button onClick={() => router.back()} className="text-white">
@@ -77,7 +77,7 @@ export default function TraitResult() {
           isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
         }`}
       >
-        <div className="rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
