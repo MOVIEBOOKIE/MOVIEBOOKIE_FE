@@ -99,14 +99,10 @@ export default function Detail() {
         setModalType("recruitCancel");
         break;
       case "티켓으로 이동":
-        console.log("티켓으로 이동 케이스 진입");
         if (moveToTicket?.ticketId) {
-          console.log("티켓 ID 존재:", moveToTicket.ticketId);
           const ticketPath = `${PATHS.TICKET}/${moveToTicket.ticketId}`;
-          console.log("이동할 경로:", ticketPath);
           router.push(ticketPath);
         } else {
-          console.log("티켓 ID가 없음:", moveToTicket);
           if (eventId) {
             router.push(`${PATHS.TICKET}?eventId=${eventId}`);
           }
@@ -116,7 +112,7 @@ export default function Detail() {
         setModalType("venueApply");
         break;
       default:
-        console.log("매칭되지 않는 buttonState:", data?.buttonState);
+        setModalType("apply");
     }
   };
 
@@ -243,7 +239,8 @@ export default function Detail() {
               (data?.eventState === "모집 완료" &&
                 data?.userRole !== "주최자") ||
               data?.eventState === "대관 취소" ||
-              data?.buttonState === "대관 진행 중"
+              data?.buttonState === "대관 진행 중" ||
+              data?.buttonState === "신청 마감"
             }
           >
             {data?.buttonState ?? ""}
