@@ -1,12 +1,13 @@
 import { Header } from "@/components";
 import Client from "../_components/client";
 import Image from "next/image";
+import { PATH_IMAGES } from "@/constants";
 
 export default function Ticket() {
   return (
     <div className="relative h-screen w-full">
       <Image
-        src="/images/custom-bg.png"
+        src={PATH_IMAGES.CUSTOM_BG}
         alt="배경"
         fill
         className="object-cover"

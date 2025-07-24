@@ -6,7 +6,7 @@ export const PATH_IMAGES = {
     MOVIE: "/images/search/movie.webp",
   },
 
-  CUSTOM_BG: "/images/custom-bg.png",
+  CUSTOM_BG: "/images/custom-bg.webp",
   EVENT_BANNER: "/images/event-banner.png",
 
   FAVICON: "/images/favicon.png",
