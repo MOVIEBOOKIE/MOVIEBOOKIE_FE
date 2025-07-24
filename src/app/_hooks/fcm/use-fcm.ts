@@ -11,12 +11,12 @@ export const useFCM = () => {
     try {
       const permission = await Notification.requestPermission();
       console.log("🔐 권한 상태:", permission);
-      if (permission === "denied") {
-        alert(
-          "알림 권한이 차단되어 있어 권한 요청을 다시 띄울 수 없습니다.\n브라우저 설정에서 알림 권한을 허용해주세요.",
-        );
-        return;
-      }
+      // if (permission === "denied") {
+      //   alert(
+      //     "알림 권한이 차단되어 있어 권한 요청을 다시 띄울 수 없습니다.\n브라우저 설정에서 알림 권한을 허용해주세요.",
+      //   );
+      //   return;
+      // }
 
       const messaging = await getFirebaseMessaging();
       const registration = await navigator.serviceWorker.ready;

@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { FixedLayout } from "./_components";
 import { ErrorIcon } from "../icons";
 
-export default function ErrorPage() {
+export default function ErrorPage({ error }: { error: Error }) {
   const router = useRouter();
   const handleButtonClick = () => {
     router.refresh();
   };
+  console.error("🔥 error.tsx 진입! 에러 내용:", error);
   return (
     <FixedLayout
       showBackButton={false}
