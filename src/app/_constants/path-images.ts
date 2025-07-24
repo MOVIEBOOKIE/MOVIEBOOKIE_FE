@@ -1,8 +1,10 @@
 export const PATH_IMAGES = {
-  POPULAR: "/images/popular.png",
-  RECENT: "/images/recent.png",
-  DRAMA: "/images/drama.png",
-  MOVIE: "/images/movie.png",
+  SEARCH: {
+    POPULAR: "/images/search/popular.png",
+    RECENT: "/images/search/recent.png",
+    DRAMA: "/images/search/drama.png",
+    MOVIE: "/images/search/movie.png",
+  },
 
   CUSTOM_BG: "/images/custom-bg.png",
   EVENT_BANNER: "/images/event-banner.png",
