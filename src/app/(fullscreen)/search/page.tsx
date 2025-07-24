@@ -57,11 +57,11 @@ export default function Search() {
 
       {!data ? (
         <>
-          <p className="body-2-medium mt-6 ml-5.5 text-gray-300">
+          <p className="body-2-medium mt-6 mb-2.75 ml-5.5 text-gray-300">
             어떤 이벤트를 찾으시나요?
           </p>
 
-          <div className="gap mx-auto mt-4.5 grid w-fit grid-cols-2 justify-center gap-3.25">
+          <div className="gap mx-5 grid grid-cols-2 justify-center gap-3.25">
             {EVENT_CATEGORIES.map((category) => (
               <CategoryButton
                 key={category.path}

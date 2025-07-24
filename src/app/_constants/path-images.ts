@@ -1,9 +1,9 @@
 export const PATH_IMAGES = {
   SEARCH: {
-    POPULAR: "/images/search/popular.png",
-    RECENT: "/images/search/recent.png",
-    DRAMA: "/images/search/drama.png",
-    MOVIE: "/images/search/movie.png",
+    POPULAR: "/images/search/popular.webp",
+    RECENT: "/images/search/recent.webp",
+    DRAMA: "/images/search/drama.webp",
+    MOVIE: "/images/search/movie.webp",
   },
 
   CUSTOM_BG: "/images/custom-bg.png",
