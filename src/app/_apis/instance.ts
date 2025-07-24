@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from "axios";
+import { PATHS } from "@/constants";
+import axios, { AxiosInstance, AxiosError } from "axios";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: "/api",
@@ -7,11 +8,22 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // window.location.href = PATHS.LOGIN;
-      console.error("Unauthorized access - redirecting to login");
+  async (error: AxiosError & { config?: any }) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await axios.post("/api/auth/reissue", null, {
+          withCredentials: true,
+        });
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        window.location.href = PATHS.LOGIN;
+      }
     }
+
     return Promise.reject(error);
   },
 );
