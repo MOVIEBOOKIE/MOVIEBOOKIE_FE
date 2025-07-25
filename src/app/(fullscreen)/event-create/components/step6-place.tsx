@@ -66,11 +66,9 @@ export default function Step6() {
                     type="button"
                     key={cinema.locationId}
                     className={`w-full cursor-pointer ${isSelected ? "bg-gray-950 px-5" : "px-5"}`}
+                    onClick={() => handleSelectCinema(cinema.locationId)}
                   >
-                    <div
-                      className="relative flex gap-4 border-b border-gray-950 py-5"
-                      onClick={() => handleSelectCinema(cinema.locationId)}
-                    >
+                    <div className="relative flex gap-4 border-b border-gray-950 py-5">
                       {!isSelected && selectedLocationId !== null && (
                         <div className="bg-gray-black bg-opacity-70 absolute inset-0 z-10" />
                       )}
