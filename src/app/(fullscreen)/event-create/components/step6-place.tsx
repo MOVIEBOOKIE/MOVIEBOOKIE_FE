@@ -7,7 +7,6 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { LocationIcon } from "@/icons/index";
 import { formatPrice } from "@/utils/format-price";
 import { useSelectedCinemaStore } from "app/_stores/use-selected-cinema-store";
-import Loading from "@/components/loading";
 import CinemaSkeletonCard from "../_components/cinema-skeleton-card";
 export default function Step6() {
   const { setValue, control } = useFormContext();
@@ -67,9 +66,10 @@ export default function Step6() {
             : cinemas.map((cinema: any) => {
                 const isSelected = selectedLocationId === cinema.locationId;
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={cinema.locationId}
-                    className={`${isSelected ? "bg-gray-950 px-5" : "px-5"}`}
+                    className={`w-full cursor-pointer ${isSelected ? "bg-gray-950 px-5" : "px-5"}`}
                   >
                     <div
                       className="relative flex gap-4 border-b border-gray-950 py-5"
@@ -108,19 +108,19 @@ export default function Step6() {
                               </span>
                             ))}
                         </div>
-                        <div className="body-2-semibold text-gray-200">
+                        <p className="body-2-semibold text-start text-gray-200">
                           {cinema.locationName}
-                        </div>
+                        </p>
                         <div className="mt-2 mb-1 flex items-center gap-1">
                           <LocationIcon />
-                          <div className="caption-1-medium truncate overflow-hidden whitespace-nowrap text-gray-400">
+                          <p className="caption-1-medium truncate overflow-hidden whitespace-nowrap text-gray-400">
                             {cinema.address}
-                          </div>
+                          </p>
                         </div>
-                        <div className="caption-1-medium mb-1 text-gray-400">
+                        <p className="caption-1-medium mb-1 text-start text-gray-400">
                           좌석 {cinema.seatCount} | 시간당{" "}
                           {formatPrice(cinema.pricePerHour)}
-                        </div>
+                        </p>
                       </div>
                       <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
                         <Image
@@ -132,7 +132,7 @@ export default function Step6() {
                         />
                       </div>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
         </div>
