@@ -7,7 +7,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { LocationIcon } from "@/icons/index";
 import { formatPrice } from "@/utils/format-price";
 import { useSelectedCinemaStore } from "app/_stores/use-selected-cinema-store";
-import Loading from "@/components/loading";
+import CinemaSkeletonCard from "../_components/cinema-skeleton-card";
 export default function Step6() {
   const { setValue, control } = useFormContext();
   const selectedLocationId = useWatch({ control, name: "locationId" });
@@ -57,81 +57,78 @@ export default function Step6() {
           />
         </div>
         <div className="scrollbar-hide flex-1 overflow-y-auto pb-32">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            cinemas.map((cinema: any) => {
-              const isSelected = selectedLocationId === cinema.locationId;
-              return (
-                <div
-                  key={cinema.locationId}
-                  className={`${isSelected ? "bg-gray-950 px-5" : "px-5"}`}
-                >
-                  <div
-                    className="relative flex gap-4 border-b border-gray-950 py-5"
+          {isLoading
+            ? [...Array(4)].map((_, idx) => <CinemaSkeletonCard key={idx} />)
+            : cinemas.map((cinema: any) => {
+                const isSelected = selectedLocationId === cinema.locationId;
+                return (
+                  <button
+                    type="button"
+                    key={cinema.locationId}
+                    className={`w-full cursor-pointer ${isSelected ? "bg-gray-950 px-5" : "px-5"}`}
                     onClick={() => handleSelectCinema(cinema.locationId)}
                   >
-                    {!isSelected && selectedLocationId !== null && (
-                      <div className="bg-gray-black bg-opacity-70 absolute inset-0 z-10" />
-                    )}
-                    <div className="relative z-20 flex-1 gap-3">
-                      <div className="mb-2 flex flex-wrap gap-1">
-                        {[...cinema.locationKeywordList]
-                          .sort((a, b) => {
-                            const scaleKeywords = [
-                              "소규모",
-                              "중규모",
-                              "대규모",
-                            ];
-                            const aIndex = scaleKeywords.includes(a) ? 0 : 1;
-                            const bIndex = scaleKeywords.includes(b) ? 0 : 1;
-                            return aIndex - bIndex;
-                          })
-                          .map((tag: string, idx: number) => (
-                            <span
-                              key={idx}
-                              className={`caption-3-medium mt-0.5 rounded-[4px] px-1.5 py-1 ${
-                                tag === "소규모"
-                                  ? "bg-[#F19226] text-white"
-                                  : tag === "중규모"
-                                    ? "bg-[#ED5878] text-white"
-                                    : tag === "대규모"
-                                      ? "bg-[#1A70C7] text-white"
-                                      : "bg-gray-850 text-gray-300"
-                              }`}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                      </div>
-                      <div className="body-2-semibold text-gray-200">
-                        {cinema.locationName}
-                      </div>
-                      <div className="mt-2 mb-1 flex items-center gap-1">
-                        <LocationIcon />
-                        <div className="caption-1-medium truncate overflow-hidden whitespace-nowrap text-gray-400">
-                          {cinema.address}
+                    <div className="relative flex gap-4 border-b border-gray-950 py-5">
+                      {!isSelected && selectedLocationId !== null && (
+                        <div className="bg-gray-black bg-opacity-70 absolute inset-0 z-10" />
+                      )}
+                      <div className="relative z-20 flex-1 gap-3">
+                        <div className="mb-2 flex flex-wrap gap-1">
+                          {[...cinema.locationKeywordList]
+                            .sort((a, b) => {
+                              const scaleKeywords = [
+                                "소규모",
+                                "중규모",
+                                "대규모",
+                              ];
+                              const aIndex = scaleKeywords.includes(a) ? 0 : 1;
+                              const bIndex = scaleKeywords.includes(b) ? 0 : 1;
+                              return aIndex - bIndex;
+                            })
+                            .map((tag: string, idx: number) => (
+                              <span
+                                key={idx}
+                                className={`caption-3-medium mt-0.5 rounded-[4px] px-1.5 py-1 ${
+                                  tag === "소규모"
+                                    ? "bg-[#F19226] text-white"
+                                    : tag === "중규모"
+                                      ? "bg-[#ED5878] text-white"
+                                      : tag === "대규모"
+                                        ? "bg-[#1A70C7] text-white"
+                                        : "bg-gray-850 text-gray-300"
+                                }`}
+                              >
+                                {tag}
+                              </span>
+                            ))}
                         </div>
+                        <p className="body-2-semibold text-start text-gray-200">
+                          {cinema.locationName}
+                        </p>
+                        <div className="mt-2 mb-1 flex items-center gap-1">
+                          <LocationIcon />
+                          <p className="caption-1-medium truncate overflow-hidden whitespace-nowrap text-gray-400">
+                            {cinema.address}
+                          </p>
+                        </div>
+                        <p className="caption-1-medium mb-1 text-start text-gray-400">
+                          좌석 {cinema.seatCount} | 시간당{" "}
+                          {formatPrice(cinema.pricePerHour)}
+                        </p>
                       </div>
-                      <div className="caption-1-medium mb-1 text-gray-400">
-                        좌석 {cinema.seatCount} | 시간당{" "}
-                        {formatPrice(cinema.pricePerHour)}
+                      <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
+                        <Image
+                          src={cinema.locationImageUrl}
+                          alt={cinema.locationName}
+                          width={96}
+                          height={96}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                     </div>
-                    <div className="relative z-20 h-30 w-30 shrink-0 overflow-hidden rounded-xl">
-                      <Image
-                        src={cinema.locationImageUrl}
-                        alt={cinema.locationName}
-                        width={96}
-                        height={96}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          )}
+                  </button>
+                );
+              })}
         </div>
       </div>
     </div>
