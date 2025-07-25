@@ -43,7 +43,6 @@ const nextConfig = {
   },
   async rewrites() {
     const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
-    console.log("📦 Rewrite baseurl:", baseurl);
     return [
       {
         source: "/api/:path*",
