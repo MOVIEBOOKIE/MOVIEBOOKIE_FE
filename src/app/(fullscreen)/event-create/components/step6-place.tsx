@@ -58,11 +58,7 @@ export default function Step6() {
         </div>
         <div className="scrollbar-hide flex-1 overflow-y-auto pb-32">
           {isLoading
-            ? [...Array(4)].map((_, idx) => (
-                <div key={idx}>
-                  <CinemaSkeletonCard />
-                </div>
-              ))
+            ? [...Array(4)].map((_, idx) => <CinemaSkeletonCard key={idx} />)
             : cinemas.map((cinema: any) => {
                 const isSelected = selectedLocationId === cinema.locationId;
                 return (
