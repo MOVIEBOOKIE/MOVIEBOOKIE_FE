@@ -30,9 +30,6 @@ export default function TicketTab() {
                 progressRate={undefined}
                 estimatedPrice={undefined}
               />
-              <div>
-                <TicketSkeletonCard />
-              </div>
             </div>
           ))
         ) : (
