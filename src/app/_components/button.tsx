@@ -16,14 +16,15 @@ export default function Button({
   isLoading = false,
   ...props
 }: ButtonProps) {
-  const isDisabled = disabled;
+  const isActuallyDisabled = disabled;
 
   const buttonStyles = cn(
-    "body-3-medium w-full rounded-xl py-4",
-    variant === "primary"
-      ? cn("bg-red-main text-gray-white", !isLoading && "active:bg-red-700")
-      : "bg-gray-950 text-gray-300",
-    isDisabled &&
+    "body-3-medium w-full rounded-xl py-4 flex items-center justify-center",
+    variant === "primary" && "text-gray-white bg-red-main",
+    variant === "secondary" && "bg-gray-950 text-gray-300",
+    !isLoading && !disabled && variant === "primary" && "active:bg-red-700",
+    disabled &&
+      !isLoading &&
       "bg-gray-900 text-gray-700 cursor-not-allowed active:bg-gray-900",
     className,
   );
@@ -32,10 +33,14 @@ export default function Button({
     <button
       type="button"
       className={buttonStyles}
-      disabled={disabled}
+      disabled={isActuallyDisabled || isLoading}
       {...props}
     >
-      {children}
+      {isLoading ? (
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+      ) : (
+        children
+      )}
     </button>
   );
 }

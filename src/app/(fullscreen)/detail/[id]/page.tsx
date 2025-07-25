@@ -44,6 +44,7 @@ export default function Detail() {
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
   const [shouldPoll, setShouldPoll] = useState(true);
+  const [loadingType, setLoadingType] = useState<ModalType>(null);
 
   const params = useParams();
   const eventId = useMemo(() => Number(params?.id), [params?.id]);
@@ -150,31 +151,42 @@ export default function Detail() {
   };
 
   const handleApply = () => {
+    setLoadingType("apply");
     setIsComplete(true);
+
     mutate(eventId, {
       onSuccess: () => {
         showNotificationAndSave(ParticipantNotificationType.APPLY_COMPLETED);
+        setLoadingType(null);
       },
       onError: (error) => {
         console.error("이벤트 신청 실패:", error);
         setIsComplete(false);
+        setLoadingType(null);
       },
     });
   };
-
   const handleCancel = () => {
+    setLoadingType("cancel");
     applyCancel(eventId, {
       onSuccess: () => {
         showNotificationAndSave(ParticipantNotificationType.APPLY_CANCEL);
+        setLoadingType(null);
       },
       onError: (error) => {
         console.error("이벤트 신청 취소 실패:", error);
+        setLoadingType(null);
       },
     });
   };
 
   const handleRecruitCancel = () => {
-    recruitCancel(eventId);
+    setLoadingType("recruitCancel");
+    recruitCancel(eventId, {
+      onSettled: () => {
+        setLoadingType(null);
+      },
+    });
   };
 
   const handleComplete = () => {
@@ -182,7 +194,15 @@ export default function Detail() {
   };
 
   const handleVenueApply = (type: number) => {
-    postEventVenue({ eventId, type });
+    setLoadingType("venueApply");
+    postEventVenue(
+      { eventId, type },
+      {
+        onSettled: () => {
+          setLoadingType(null);
+        },
+      },
+    );
   };
 
   const handleModalClose = () => {
@@ -234,6 +254,14 @@ export default function Detail() {
           <Button
             variant="primary"
             onClick={handleClick}
+            isLoading={
+              (loadingType === "apply" && data?.buttonState === "신청하기") ||
+              (loadingType === "cancel" && data?.buttonState === "신청 취소") ||
+              (loadingType === "recruitCancel" &&
+                data?.buttonState === "모집 취소") ||
+              (loadingType === "venueApply" &&
+                data?.buttonState === "대관 신청하기")
+            }
             disabled={
               data?.eventState === "모집 취소" ||
               (data?.eventState === "모집 완료" &&

@@ -17,6 +17,8 @@ export default function Client() {
   const { formData, resetFormData } = useEventFormStore();
   const { mutate } = useCreateEvent();
 
+  const isLoading = step === 2 && isSubmitting;
+
   const handleButtonClick = () => {
     if (step === 1) {
       setStep(2);
@@ -53,12 +55,11 @@ export default function Client() {
         <FixedLayout
           step={step}
           buttonText={step === 1 ? "이벤트 미리보기" : "이벤트 게시하기"}
-          showCloseButton={true}
+          showCloseButton
           onButtonClick={handleButtonClick}
           title="이벤트 미리보기"
           state="preview"
-          isButtonDisabled={false}
-          isLoading={step === 2 && isSubmitting}
+          isLoading={isLoading}
         >
           {step === 1 && <Step1 />}
           {step === 2 && <Step2 />}
