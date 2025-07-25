@@ -9,6 +9,7 @@ type FixedLayoutProps = {
   title?: string;
   children: ReactNode;
   isButtonDisabled?: boolean;
+  isLoading?: boolean;
   buttonText?: string;
   onButtonClick?: () => void;
   showCloseButton?: boolean;
@@ -25,6 +26,7 @@ export default function FixedLayout({
   title,
   children,
   isButtonDisabled = false,
+  isLoading = false,
   buttonText = "다음",
   onButtonClick,
   showCloseButton = false,
@@ -45,7 +47,7 @@ export default function FixedLayout({
           : "p-0";
 
   const handleClick = () => {
-    if (isButtonDisabled) return;
+    if (isButtonDisabled || isLoading) return;
     onButtonClick?.();
   };
 
@@ -65,18 +67,24 @@ export default function FixedLayout({
       >
         <div className="flex-1 pb-30">{children}</div>
       </div>
+
       {showBottomButton && (
         <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
           <Button
             disabled={isButtonDisabled}
             onClick={handleClick}
+            isLoading={isLoading}
             className={cn(
               isButtonDisabled
                 ? "bg-gray-900 text-gray-700"
                 : "bg-red-main text-white",
             )}
           >
-            {buttonText}
+            {isLoading ? (
+              <div className="mx-auto h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            ) : (
+              buttonText
+            )}
           </Button>
         </div>
       )}

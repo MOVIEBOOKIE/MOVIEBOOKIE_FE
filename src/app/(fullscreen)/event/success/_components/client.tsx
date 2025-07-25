@@ -57,7 +57,8 @@ export default function Client() {
           onButtonClick={handleButtonClick}
           title="이벤트 미리보기"
           state="preview"
-          isButtonDisabled={isSubmitting}
+          isButtonDisabled={false}
+          isLoading={step === 2 && isSubmitting}
         >
           {step === 1 && <Step1 />}
           {step === 2 && <Step2 />}
