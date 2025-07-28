@@ -18,7 +18,8 @@ export default function Step5({ onValidityChange }: Step5Props) {
   const [toastMessage, setToastMessage] = useState("");
 
   const isRangeValid =
-    Number(min) > 0 && Number(max) > 0 && Number(min) < Number(max);
+    (Number(min) > 0 && Number(max) > 0 && Number(min) < Number(max)) ||
+    Number(min) == Number(max);
 
   const showToastWithMessage = (message: string) => {
     setToastMessage(message);
@@ -34,7 +35,7 @@ export default function Step5({ onValidityChange }: Step5Props) {
     if (value <= 0) {
       setMinError(true);
       showToastWithMessage("최소 인원은 1명부터 설정 가능해요");
-    } else if (parsedMax > 0 && value >= parsedMax) {
+    } else if (parsedMax > 0 && value > parsedMax) {
       setMinError(true);
       showToastWithMessage("최소인원은 최대인원보다 많을 수 없어요");
     } else {
@@ -48,7 +49,7 @@ export default function Step5({ onValidityChange }: Step5Props) {
     if (value > 320) {
       setMaxError(true);
       showToastWithMessage("최대 인원은 320명까지 설정 가능해요");
-    } else if (parsedMin > 0 && value <= parsedMin) {
+    } else if (parsedMin > 0 && value < parsedMin) {
       setMaxError(true);
       showToastWithMessage("최대인원은 최소인원보다 적을 수 없어요");
     } else {
