@@ -45,7 +45,7 @@ export default function Login() {
                     src={slide.gif}
                     alt={`slide ${index + 1} gif`}
                     className="h-[333px] object-contain"
-                    loading="lazy"
+                    loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
               </div>
