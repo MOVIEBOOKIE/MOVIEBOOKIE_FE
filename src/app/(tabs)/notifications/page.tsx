@@ -61,13 +61,16 @@ export default function NotificationPage() {
   }, [setHasUnread, hasUnread]);
 
   return (
-    <div className="scrollbar-hide h-[calc(100vh-102px)] overflow-y-scroll text-white">
+    <div className="h-[calc(100vh-102px)] text-white">
       <div className="flex items-center justify-between px-5 pt-6 pb-7.5">
         <h1 className="title-1-semibold">알림</h1>
       </div>
 
       {notifications.length === 0 ? (
-        <div className="mb-80 flex flex-col items-center justify-center pt-52 text-center text-gray-500">
+        <div
+          className="flex flex-col items-center justify-center text-center text-gray-500"
+          style={{ height: "calc(100vh - 102px - 88px)" }}
+        >
           <EmptyNotiIcon />
           <p className="body-3-medium mt-5 mb-7 text-gray-800">
             아직 알림이 없어요 <br />
@@ -81,18 +84,20 @@ export default function NotificationPage() {
           </button>
         </div>
       ) : (
-        notifications.map((n) => (
-          <NotificationItem
-            key={n.id}
-            type={n.title}
-            title={n.title}
-            description={n.body}
-            time={n.timeAgo}
-            eventId={n.id}
-            highlight={n.isNew}
-            onClick={() => n.id}
-          />
-        ))
+        <div className="scrollbar-hide h-[calc(100vh-102px-88px)] overflow-y-scroll">
+          {notifications.map((n) => (
+            <NotificationItem
+              key={n.id}
+              type={n.title}
+              title={n.title}
+              description={n.body}
+              time={n.timeAgo}
+              eventId={n.id}
+              highlight={n.isNew}
+              onClick={() => n.id}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
