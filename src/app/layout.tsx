@@ -1,4 +1,3 @@
-"use client";
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
@@ -13,6 +12,28 @@ import ServiceWorkerDebug from "./_components/FCM/ServiceWorkerDebug";
 import DebugLogger from "./_components/debug-logger";
 import { LoadingProvider } from "./_context/loading-context";
 
+export const metadata = {
+  title: "무비부키 | 영화관 모임의 시작",
+  description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
+  viewport: "width=device-width, initial-scale=1",
+  icons: {
+    icon: "/favicon.png",
+  },
+  openGraph: {
+    title: "무비부키 | 영화관 모임의 시작",
+    description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
+    url: "https://movie-bookie.shop",
+    images: [
+      {
+        url: "/images/thumbnail.png",
+        width: 1200,
+        height: 630,
+        alt: "MovieBookie",
+      },
+    ],
+    type: "website",
+  },
+};
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
@@ -36,7 +57,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ReactQueryProvider>
             <ServiceWorkerDebug />
             <LoadingProvider> {children}</LoadingProvider>
-
             <SpeedInsights />
             <Toast />
           </ReactQueryProvider>
