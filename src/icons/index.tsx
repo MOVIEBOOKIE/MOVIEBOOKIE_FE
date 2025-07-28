@@ -44,7 +44,7 @@ export { default as CheckboxIcon } from "./ui/checkbox.svg";
 export { default as PhoneIcon } from "./ui/phone.svg";
 export { default as EtcIcon } from "./ui/etc.svg";
 export { default as RotateIcon } from "./ui/rotate.svg";
-
+export { default as EmptyNotiIcon } from "./ui/empty-noti.svg";
 export { default as BellIcon } from "./ui/bell.svg";
 export { default as MailIcon } from "./ui/mail.svg";
 export { default as NotiCancelIcon } from "./ui/noti-cancel.svg";

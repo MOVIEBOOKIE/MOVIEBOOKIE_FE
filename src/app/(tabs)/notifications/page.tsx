@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { NotificationItem } from "./components/item";
 import { apiGet } from "app/_apis/methods";
 import { useNotificationStore } from "app/_stores/use-noti";
+import { EmptyNotiIcon } from "@/icons/index";
+import { PATHS } from "@/constants";
+import { useRouter } from "next/navigation";
 
 interface Notification {
   id: string;
@@ -17,7 +20,7 @@ export default function NotificationPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
   const hasUnread = useNotificationStore((state) => state.hasUnread);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
@@ -64,8 +67,18 @@ export default function NotificationPage() {
       </div>
 
       {notifications.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16">
-          <p className="text-center text-gray-500">받은 알림이 없습니다</p>
+        <div className="mb-80 flex flex-col items-center justify-center pt-52 text-center text-gray-500">
+          <EmptyNotiIcon />
+          <p className="body-3-medium mt-5 mb-7 text-gray-800">
+            아직 알림이 없어요 <br />
+            지금 바로 나만의 이벤트를 만들어보세요
+          </p>
+          <button
+            onClick={() => router.push(PATHS.EVENT_CREATE)}
+            className="bg-red-main body-3-semibold w-75 rounded-xl px-6 py-4 text-white"
+          >
+            나만의 이벤트 만들러 가기
+          </button>
         </div>
       ) : (
         notifications.map((n) => (

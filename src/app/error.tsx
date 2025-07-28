@@ -3,13 +3,23 @@
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "./_components";
 import { ErrorIcon } from "../icons";
+import { useEffect, useRef } from "react";
 
 export default function ErrorPage({ error }: { error: Error }) {
   const router = useRouter();
+  const consoleCount = useRef(0);
+
+  useEffect(() => {
+    if (consoleCount.current < 5) {
+      console.error("error.tsx 진입, 에러 내용:", error);
+      consoleCount.current += 1;
+    }
+  }, [error]);
+
   const handleButtonClick = () => {
     router.refresh();
   };
-  console.error("🔥 error.tsx 진입! 에러 내용:", error);
+
   return (
     <FixedLayout
       showBackButton={false}
