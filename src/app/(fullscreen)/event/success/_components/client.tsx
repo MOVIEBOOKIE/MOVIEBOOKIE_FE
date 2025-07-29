@@ -16,7 +16,7 @@ export default function Client() {
   const router = useRouter();
   const { formData, resetFormData } = useEventFormStore();
   const { mutate } = useCreateEvent();
-  const { setLoading } = useLoading();
+  const { setLoading, isLoading } = useLoading();
 
   const handleButtonClick = () => {
     if (step === 1) {
@@ -55,6 +55,7 @@ export default function Client() {
           buttonText={step === 1 ? "이벤트 미리보기" : "이벤트 게시하기"}
           showCloseButton
           onButtonClick={handleButtonClick}
+          isLoading={isLoading}
           title="이벤트 미리보기"
           state="preview"
         >

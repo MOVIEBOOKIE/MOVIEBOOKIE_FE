@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import Header from "@/components/header";
 import { Button } from "@/components";
 import { cn } from "@/utils/cn";
@@ -20,6 +20,8 @@ type FixedLayoutProps = {
   state?: "default" | "detail" | "full" | "preview";
   showBottomButton?: boolean;
   step?: number;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export default function FixedLayout({
@@ -36,10 +38,12 @@ export default function FixedLayout({
   isHeader = true,
   state = "default",
   showBottomButton = true,
+  className,
+  style,
 }: FixedLayoutProps) {
   const paddingStyle =
     state === "default"
-      ? " pt-21.75 px-5"
+      ? "pt-21.75 px-5"
       : state === "detail"
         ? "pt-15.5 px-5"
         : state === "preview"
@@ -63,7 +67,11 @@ export default function FixedLayout({
         />
       )}
       <div
-        className={`${paddingStyle} flex min-h-[calc(100vh-102px)] flex-col text-white`}
+        className={cn(
+          `${paddingStyle} flex min-h-[calc(100vh-102px)] flex-col text-white`,
+          className,
+        )}
+        style={style}
       >
         <div className="flex-1 pb-30">{children}</div>
       </div>
