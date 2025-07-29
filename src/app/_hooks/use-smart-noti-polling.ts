@@ -73,6 +73,10 @@ export function useSmartNotiPolling() {
   }, [stopPolling, startPolling]);
 
   useEffect(() => {
+    if (true) {
+      console.log("# 알림 폴링 일시 중지됨 (dev모드 개발 중)");
+      return;
+    }
     checkUnread(); // 최초 1회 요청
     startPolling(); // 폴링 시작
 
