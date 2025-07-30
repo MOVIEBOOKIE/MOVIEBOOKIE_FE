@@ -73,7 +73,7 @@ export function useSmartNotiPolling() {
   }, [stopPolling, startPolling]);
 
   useEffect(() => {
-    if (true) {
+    if (process.env.NODE_ENV === "development") {
       console.log("# 알림 폴링 일시 중지됨 (dev모드 개발 중)");
       return;
     }

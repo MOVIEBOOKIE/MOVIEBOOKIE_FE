@@ -63,27 +63,30 @@ export default function MyPage() {
 
       <div className="flex justify-center">
         <div className="mb-3 flex h-21.75 w-full justify-around rounded-xl bg-gray-950 text-center">
-          <div
+          <button
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}`)}
+            aria-label="참여경험 보기"
           >
             <MyPageStat
               label="참여경험"
               value={user?.participationExperienceCount}
             />
-          </div>
-          <div
+          </button>
+          <button
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}?tab=mine`)}
+            aria-label="주최경험 보기"
           >
             <MyPageStat label="주최경험" value={user?.hostExperienceCount} />
-          </div>
-          <div
+          </button>
+          <button
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}?tab=ticket`)}
+            aria-label="티켓 보기"
           >
             <MyPageStat label="티켓" value={user?.ticketCount} />
-          </div>
+          </button>
         </div>
       </div>
       <ul className="body-3-medium px-2 text-gray-100">
