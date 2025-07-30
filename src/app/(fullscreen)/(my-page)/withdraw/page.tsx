@@ -5,16 +5,37 @@ import { FixedLayout, StepHeader } from "@/components";
 import Modal from "@/components/modal";
 import { WITHDRAW_REASONS } from "@/constants/mypage/my-page";
 import { WithDrawCheckIcon } from "@/icons/index";
+import { useRouter } from "next/navigation";
+import { PATHS } from "@/constants";
+import { apiDelete } from "app/_apis/methods";
 
 export default function WithDraw() {
+  const router = useRouter();
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showBlockedModal, setShowBlockedModal] = useState(false);
   const toggleReason = (reason: string) => {
     setSelectedReasons((prev) =>
       prev.includes(reason)
         ? prev.filter((r) => r !== reason)
         : [...prev, reason],
     );
+  };
+
+  const handleWithdraw = async () => {
+    try {
+      await apiDelete<null>("/auth/delete");
+
+      alert("탈퇴가 완료되었습니다.");
+      router.push(PATHS.LOGIN);
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        setShowBlockedModal(true);
+      } else {
+        console.error("탈퇴 오류:", error);
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
+    }
   };
 
   return (
@@ -34,7 +55,7 @@ export default function WithDraw() {
           }
         />
 
-        <ul className="mt-8 mb-10 space-y-3">
+        <ul className="mt-8 mb-10">
           {WITHDRAW_REASONS.map((reason) => {
             const isSelected = selectedReasons.includes(reason);
             return (
@@ -68,8 +89,28 @@ export default function WithDraw() {
           cancelText="취소"
           onConfirm={() => {
             setShowConfirmModal(false);
+            handleWithdraw();
           }}
           onCancel={() => setShowConfirmModal(false)}
+        />
+      )}
+      {showBlockedModal && (
+        <Modal
+          iconType="alert"
+          title={`현재 진행 중인 이벤트가 있어\n탈퇴할 수 없어요`}
+          children={
+            <>
+              진행 중인 이벤트 목록을 <br />
+              모두 취소한 뒤 다시 시도해주세요
+            </>
+          }
+          confirmText="이벤트 목록 바로가기"
+          onConfirm={() => {
+            setShowBlockedModal(false);
+            router.push(PATHS.EVENT);
+          }}
+          onCancel={undefined}
+          confirmButtonClassName="bg-gray-800 active:bg-gray-850 text-gray-200 text-white "
         />
       )}
     </>
