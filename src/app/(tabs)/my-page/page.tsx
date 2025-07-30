@@ -64,6 +64,7 @@ export default function MyPage() {
       <div className="flex justify-center">
         <div className="mb-3 flex h-21.75 w-full justify-around rounded-xl bg-gray-950 text-center">
           <button
+            type="button"
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}`)}
             aria-label="참여경험 보기"
@@ -74,6 +75,7 @@ export default function MyPage() {
             />
           </button>
           <button
+            type="button"
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}?tab=mine`)}
             aria-label="주최경험 보기"
@@ -81,6 +83,7 @@ export default function MyPage() {
             <MyPageStat label="주최경험" value={user?.hostExperienceCount} />
           </button>
           <button
+            type="button"
             className="flex-1 cursor-pointer"
             onClick={() => router.push(`${PATHS.EVENT}?tab=ticket`)}
             aria-label="티켓 보기"
