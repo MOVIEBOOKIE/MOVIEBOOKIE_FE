@@ -27,10 +27,12 @@ export const LoadingProvider = ({
     </LoadingContext.Provider>
   );
 };
+const defaultLoadingContext = {
+  isLoading: false,
+  setLoading: (_: boolean) => {},
+};
 
 export const useLoading = () => {
   const context = useContext(LoadingContext);
-  // if (!context)
-  //   throw new Error("useLoading must be used within a LoadingProvider");
-  return context;
+  return context ?? defaultLoadingContext;
 };

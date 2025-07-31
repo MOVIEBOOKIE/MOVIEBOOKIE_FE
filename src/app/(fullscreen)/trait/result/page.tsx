@@ -58,11 +58,7 @@ export default function TraitResult() {
     <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
       {isFromMyPage && (
         <div className="absolute top-5 left-5 z-50">
-          <button onClick={() => router.back()} className="text-white">
-            ←
-          </button>
           <button
-            className="absolute top-2.5 left-2.5"
             onClick={() => router.back()}
             aria-label="뒤로가기"
             type="button"
@@ -77,7 +73,7 @@ export default function TraitResult() {
           isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
         }`}
       >
-        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-1.5 text-gray-200">
+        <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-2 text-center text-gray-200">
           무비부키 유형 테스트
         </div>
       </div>
