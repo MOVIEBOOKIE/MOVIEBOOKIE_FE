@@ -4,6 +4,7 @@ import { CSSProperties, ReactNode } from "react";
 import Header from "@/components/header";
 import { Button } from "@/components";
 import { cn } from "@/utils/cn";
+import { useRouter } from "next/navigation";
 
 type FixedLayoutProps = {
   title?: string;
@@ -22,6 +23,7 @@ type FixedLayoutProps = {
   step?: number;
   className?: string;
   style?: CSSProperties;
+  closeRedirectPath?: string;
 };
 
 export default function FixedLayout({
@@ -40,7 +42,10 @@ export default function FixedLayout({
   showBottomButton = true,
   className,
   style,
+  closeRedirectPath,
 }: FixedLayoutProps) {
+  const router = useRouter();
+
   const paddingStyle =
     state === "default"
       ? "pt-21.75 px-5"
@@ -53,6 +58,11 @@ export default function FixedLayout({
   const handleClick = () => {
     if (isButtonDisabled || isLoading) return;
     onButtonClick?.();
+  };
+  const handleClose = () => {
+    if (closeRedirectPath) {
+      router.push(closeRedirectPath);
+    }
   };
 
   return (
