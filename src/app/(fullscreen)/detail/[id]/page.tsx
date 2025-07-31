@@ -20,7 +20,6 @@ import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
-import { useToast } from "app/_context/toast-context";
 import { useLoading } from "app/_context/loading-context";
 
 type ModalType =
@@ -53,7 +52,6 @@ export default function Detail() {
 
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
-  const { showToast } = useToast();
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
