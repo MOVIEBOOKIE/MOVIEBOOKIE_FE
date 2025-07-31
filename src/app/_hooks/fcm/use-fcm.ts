@@ -8,25 +8,45 @@ export const useFCM = () => {
   const requestPermissionAndToken = async () => {
     console.log("✅ requestPermissionAndToken 호출됨");
 
+    if (typeof window === "undefined") return;
+
     try {
-      const permission = await Notification.requestPermission();
+      if (!("Notification" in window)) {
+        console.warn("🚫 이 브라우저는 Notification API를 지원하지 않습니다.");
+        return;
+      }
+
+      const permission =
+        Notification.permission === "default"
+          ? await Notification.requestPermission()
+          : Notification.permission;
+
       console.log("🔐 권한 상태:", permission);
-      if (permission === "denied") {
-        console.warn(
-          "알림 권한이 차단되어 있어 다시 요청할 수 없습니다. 브라우저 설정에서 수동으로 권한을 변경해야 합니다.",
-        );
+
+      if (permission !== "granted") {
+        console.warn("❌ 알림 권한이 허용되지 않았습니다.");
         return;
       }
 
       const messaging = await getFirebaseMessaging();
-      const registration = await navigator.serviceWorker.ready;
+      if (!messaging) {
+        console.error("❌ Firebase Messaging 초기화 실패");
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.ready.catch((err) => {
+        console.error("❌ Service Worker ready 실패:", err);
+        return null;
+      });
+
+      if (!registration) return;
 
       let token: string | null = null;
       let attempt = 0;
 
       while (!token && attempt < MAX_TOKEN_RETRY) {
         try {
-          token = await getToken(messaging!, {
+          token = await getToken(messaging, {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
             serviceWorkerRegistration: registration,
           });
@@ -37,7 +57,7 @@ export const useFCM = () => {
             `🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`,
             err,
           );
-          await new Promise((res) => setTimeout(res, 1000 * attempt)); // 점진적 backoff
+          await new Promise((res) => setTimeout(res, 1000 * attempt));
         }
       }
 
@@ -55,11 +75,11 @@ export const useFCM = () => {
 
   const onForegroundMessage = (callback: (payload: any) => void) => {
     getFirebaseMessaging().then((messaging) => {
-      console.log("onForegroundMessage 등록");
       if (!messaging) {
         console.warn("⚠️ messaging 객체 없음");
         return;
       }
+      console.log("📥 onForegroundMessage 등록");
       onMessage(messaging, callback);
     });
   };
