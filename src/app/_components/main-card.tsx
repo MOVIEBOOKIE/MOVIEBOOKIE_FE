@@ -16,13 +16,17 @@ function Card({
   statusBadge,
   progressRate,
   estimatedPrice,
+  query = {},
 }: CardProps) {
   const router = useRouter();
+
+  const handleClick = () => {
+    const queryParams = new URLSearchParams(query).toString();
+    router.push(`/detail/${id}${queryParams ? `?${queryParams}` : ""}`);
+  };
+
   return (
-    <div
-      className="relative flex h-30 w-full gap-3"
-      onClick={() => router.push(`/detail/${id}`)}
-    >
+    <div className="relative flex h-30 w-full gap-3" onClick={handleClick}>
       <div className="relative h-30 w-30 overflow-hidden rounded-md">
         <Image
           src={imageUrl || "/images/default-image.png"}

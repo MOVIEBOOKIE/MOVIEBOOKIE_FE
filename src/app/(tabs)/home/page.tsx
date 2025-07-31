@@ -177,6 +177,7 @@ export default function Home() {
                   statusBadge={event.eventStatus}
                   progressRate={`${event.rate}%`}
                   estimatedPrice={String(event.estimatedPrice)}
+                  query={{ from: "home" }}
                 />
                 <div className="my-4 h-0.25 w-full bg-gray-950" />
               </div>
