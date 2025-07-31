@@ -30,9 +30,13 @@ export default function TopBar({ event }: TopBarProps) {
       if (toggle) query.set("toggle", toggle);
       router.push(`/event?${query.toString()}`);
     } else if (from === "home") {
-      router.push("/?to=category");
-    } else {
-      router.back();
+      const query = new URLSearchParams();
+      query.set("to", "category");
+
+      const category = searchParams.get("category");
+      if (category) query.set("category", category);
+
+      router.push(`/?${query.toString()}`);
     }
   };
 
