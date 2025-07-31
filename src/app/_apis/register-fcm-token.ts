@@ -18,6 +18,6 @@ export const registerFCMToken = async (token: string) => {
   } catch (err: any) {
     console.error("❌ axios 요청 실패:", err.message);
 
-    throw err;
+    // throw err;
   }
 };
