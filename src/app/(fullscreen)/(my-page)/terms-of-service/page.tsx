@@ -1,17 +1,14 @@
 import { FixedLayout } from "@/components";
-import { PATHS } from "@/constants";
 import { TERMS_OF_SERVICE_SECTIONS } from "@/constants/mypage/terms";
 
 export default function TermOfServiceContent() {
   return (
     <FixedLayout
       title="서비스 이용약관"
-      showBackButton={false}
+      showBackButton
       isHeader
-      showCloseButton={true}
       showBottomButton={false}
       state="default"
-      closeRedirectPath={PATHS.MYPAGE}
     >
       <div className="text-gray-200">
         {TERMS_OF_SERVICE_SECTIONS.map((section, idx) => (

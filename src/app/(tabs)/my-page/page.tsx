@@ -43,7 +43,7 @@ export default function MyPage() {
                 alt="프로필"
                 width={72}
                 height={72}
-                className="rounded-full"
+                className="h-18 w-18 rounded-full object-cover"
                 priority
               />
             ) : (
