@@ -156,7 +156,7 @@ export default function Step5({ onValidityChange }: Step5Props) {
       {showToast && (
         <div
           className={`fixed ${
-            isInputFocused ? "bottom-[200px]" : "bottom-32"
+            isInputFocused ? "bottom-[320px]" : "bottom-32"
           } left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300`}
         >
           <Toast iconType="alert">{toastMessage}</Toast>

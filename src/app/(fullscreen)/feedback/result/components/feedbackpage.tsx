@@ -39,7 +39,7 @@ export default function FeedbackPage() {
       {
         onSuccess: () => {
           showToast("무비부키에게 소중한 의견 감사드려요!", "checkbox");
-          router.push(PATHS.NOTIFICATIONS);
+          router.push(PATHS.MYPAGE);
         },
         onError: (error) => {
           console.error("제출 실패", error);

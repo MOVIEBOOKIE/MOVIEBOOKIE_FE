@@ -6,6 +6,7 @@ import { EmptyIcon } from "@/icons/index";
 import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
 import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 import CardSkeleton from "@/components/card-skeleton";
+import { EventCard } from "app/_types/card";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -39,7 +40,8 @@ export default function EventTab({ type }: EventTabProps) {
     [isLoading, hasNextPage, isFetchingNextPage, fetchNextPage],
   );
 
-  const events = data?.pages.flatMap((page) => page) ?? [];
+  const events: EventCard[] =
+    data?.pages.flatMap((page) => (Array.isArray(page) ? page : [])) ?? [];
 
   return (
     <div className="mt-5">
@@ -49,7 +51,7 @@ export default function EventTab({ type }: EventTabProps) {
         onSelect={(selected) => setSelectedToggle(selected as ToggleType)}
       />
 
-      <div className="mt-6 flex flex-col">
+      <div className="overflow-anchor-none mt-6 flex flex-col">
         {isLoading ? (
           <div className="mt-2 flex flex-col gap-4">
             {Array.from({ length: 4 }).map((_, idx) => (
@@ -61,44 +63,32 @@ export default function EventTab({ type }: EventTabProps) {
           </div>
         ) : events.length > 0 ? (
           <>
-            {[...events]
-              .sort(
-                (a, b) =>
-                  new Date(b.eventDate).getTime() -
-                  new Date(a.eventDate).getTime(),
-              )
-              .map((event, index) => (
-                <div
-                  key={event.eventId}
-                  ref={index === events.length - 1 ? lastEventElementRef : null}
-                >
-                  <Card
-                    id={event.eventId}
-                    imageUrl={event.posterImageUrl}
-                    category={event.mediaType}
-                    title={event.mediaTitle}
-                    placeAndDate={`${event.locationName} · ${event.eventDate}`}
-                    description={event.description}
-                    ddayBadge={
-                      event.d_day !== null ? `D-${event.d_day}` : undefined
-                    }
-                    statusBadge={event.eventStatus}
-                    progressRate={
-                      event.rate !== undefined ? `${event.rate}%` : undefined
-                    }
-                    estimatedPrice={event.estimatedPrice}
-                  />
-                  {index < events.length - 1 && (
-                    <div className="my-4 h-px w-full bg-gray-950" />
-                  )}
-                </div>
-              ))}
-
-            {isFetchingNextPage && (
-              <div className="flex justify-center py-4">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
+            {events.map((event, index) => (
+              <div
+                key={event.eventId}
+                ref={index === events.length - 1 ? lastEventElementRef : null}
+              >
+                <Card
+                  id={event.eventId}
+                  imageUrl={event.posterImageUrl}
+                  category={event.mediaType}
+                  title={event.mediaTitle}
+                  placeAndDate={`${event.locationName} · ${event.eventDate}`}
+                  description={event.description}
+                  ddayBadge={
+                    event.d_day !== null ? `D-${event.d_day}` : undefined
+                  }
+                  statusBadge={event.eventStatus}
+                  progressRate={
+                    event.rate !== undefined ? `${event.rate}%` : undefined
+                  }
+                  estimatedPrice={event.estimatedPrice}
+                />
+                {index < events.length - 1 && (
+                  <div className="my-4 h-px w-full bg-gray-950" />
+                )}
               </div>
-            )}
+            ))}
           </>
         ) : (
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
