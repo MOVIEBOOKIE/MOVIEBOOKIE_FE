@@ -1,10 +1,12 @@
 export function TargetUrl(title: string, id?: string): string | null {
   if (!id) return null;
 
-  if (title.includes("신청 완료") || title.includes("생성 완료")) {
+  if (title.includes("신청 완료")) {
+    return `/event`;
+  }
+  if (title.includes("생성 완료")) {
     return `/event?tab=mine`;
   }
-
   if (title.includes("상영 완료")) {
     return `/event-completed/${id}`;
   }
