@@ -1,4 +1,3 @@
-// app/_components/toast.tsx
 "use client";
 
 import { useToast } from "app/_context/toast-context";
