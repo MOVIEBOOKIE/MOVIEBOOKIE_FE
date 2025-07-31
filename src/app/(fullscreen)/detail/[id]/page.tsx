@@ -21,7 +21,6 @@ import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useToast } from "app/_context/toast-context";
-import { ParticipantNotificationType } from "app/_types/noti";
 import { useLoading } from "app/_context/loading-context";
 
 type ModalType =
@@ -148,7 +147,6 @@ export default function Detail() {
 
     mutate(eventId, {
       onSuccess: () => {
-        showNotificationAndSave(ParticipantNotificationType.APPLY_COMPLETED);
         setLoading(false);
       },
       onError: (error) => {
@@ -163,7 +161,6 @@ export default function Detail() {
     setLoading(true);
     applyCancel(eventId, {
       onSuccess: () => {
-        showNotificationAndSave(ParticipantNotificationType.APPLY_CANCEL);
         setLoading(false);
       },
       onError: (error) => {

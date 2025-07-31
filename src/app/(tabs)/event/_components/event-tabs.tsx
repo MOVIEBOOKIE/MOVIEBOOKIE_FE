@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ToggleTab, Card } from "@/components";
 import { EmptyIcon } from "@/icons/index";
 import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
@@ -13,14 +14,24 @@ interface EventTabProps {
 }
 
 export default function EventTab({ type }: EventTabProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const toggleParam = searchParams.get("toggle");
+  const isConfirmed = toggleParam === "confirmed";
+
   const toggles =
     type === "신청 목록"
       ? EVENT_TOGGLES.APPLY.LABELS
       : EVENT_TOGGLES.MINE.LABELS;
 
   const [selectedToggle, setSelectedToggle] = useState<ToggleType>(
-    toggles[0] as ToggleType,
+    isConfirmed ? "확정 이벤트" : toggles[0],
   );
+
+  useEffect(() => {
+    setSelectedToggle(isConfirmed ? "확정 이벤트" : toggles[0]);
+  }, [type, toggleParam]);
 
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteEventTabQuery(type, selectedToggle);
@@ -43,12 +54,25 @@ export default function EventTab({ type }: EventTabProps) {
   const events: EventCard[] =
     data?.pages.flatMap((page) => (Array.isArray(page) ? page : [])) ?? [];
 
+  const handleToggleChange = (selected: string) => {
+    setSelectedToggle(selected as ToggleType);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (selected === "확정 이벤트") {
+      params.set("toggle", "confirmed");
+    } else {
+      params.delete("toggle");
+    }
+
+    router.replace(`?${params.toString()}`);
+  };
+
   return (
     <div className="mt-5">
       <ToggleTab
-        options={[...toggles]}
+        options={toggles}
         selected={selectedToggle}
-        onSelect={(selected) => setSelectedToggle(selected as ToggleType)}
+        onSelect={handleToggleChange}
       />
 
       <div className="overflow-anchor-none mt-6 flex flex-col">
@@ -94,8 +118,8 @@ export default function EventTab({ type }: EventTabProps) {
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
             <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
-              아직 {type} 이벤트가 없어요 <br />
-              지금 바로 나만의 이벤트를 만들어보세요
+              아직 {type} 이벤트가 없어요 <br /> 지금 바로 나만의 이벤트를
+              만들어보세요
             </p>
           </div>
         )}

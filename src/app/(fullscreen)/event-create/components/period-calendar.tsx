@@ -64,46 +64,72 @@ const DeadlineCalendar = ({
   }, [showToast]);
 
   useEffect(() => {
+    if (!selectedDeadline) {
+      setBarBlocks([]);
+      return;
+    }
+
     const deadline = dayjs(selectedDeadline);
-    const grid = [...fullGrid]; // 캐싱
+    const grid = [...fullGrid];
 
-    const timeout = setTimeout(() => {
-      const startIndex = grid.findIndex(
-        (d) => d && d.isSame(today, "day") && d.isSame(currentMonth, "month"),
-      );
-      const endIndex = grid.findIndex(
-        (d) =>
-          d && d.isSame(deadline, "day") && d.isSame(currentMonth, "month"),
-      );
+    const periodStart = today.startOf("day");
+    const periodEnd = deadline.endOf("day");
 
-      const firstIdxInMonth = grid.findIndex(
-        (d) => d && d.isSame(currentMonth.startOf("month"), "month"),
-      );
-      const lastIdxInMonth = grid.reduce((acc, d, i) => {
-        if (d && d.isSame(currentMonth, "month")) return i;
-        return acc;
-      }, -1);
+    const isVisibleRange =
+      currentMonth.endOf("month").isAfter(periodStart) &&
+      currentMonth.startOf("month").isBefore(periodEnd);
 
-      const newBarBlocks: { row: number; startIdx: number; endIdx: number }[] =
-        [];
+    if (!isVisibleRange) {
+      setBarBlocks([]);
+      return;
+    }
 
-      if (firstIdxInMonth !== -1 && lastIdxInMonth !== -1) {
-        const startIdx = Math.max(startIndex, firstIdxInMonth);
-        const endIdx = Math.min(endIndex, lastIdxInMonth);
-        const startRow = Math.floor(startIdx / 7);
-        const endRow = Math.floor(endIdx / 7);
+    const firstIdxInMonth = grid.findIndex(
+      (d) => d && d.isSame(currentMonth.startOf("month"), "month"),
+    );
+    const lastIdxInMonth = grid.reduce((acc, d, i) => {
+      if (d && d.isSame(currentMonth, "month")) return i;
+      return acc;
+    }, -1);
 
-        for (let row = startRow; row <= endRow; row++) {
-          const start = row === startRow ? startIdx : row * 7;
-          const end = row === endRow ? endIdx : row * 7 + 6;
-          newBarBlocks.push({ row, startIdx: start, endIdx: end });
-        }
-      }
+    if (firstIdxInMonth === -1 || lastIdxInMonth === -1) {
+      setBarBlocks([]);
+      return;
+    }
 
-      setBarBlocks(newBarBlocks);
-    }, 0);
+    const startIdx = grid.findIndex(
+      (d) =>
+        d &&
+        (d.isAfter(periodStart) || d.isSame(periodStart, "day")) &&
+        d.isSame(currentMonth, "month"),
+    );
 
-    return () => clearTimeout(timeout);
+    const endIdx = grid
+      .map((d, i) => ({ d, i }))
+      .reverse()
+      .find(
+        ({ d }) =>
+          d &&
+          (d.isBefore(periodEnd) || d.isSame(periodEnd, "day")) &&
+          d.isSame(currentMonth, "month"),
+      )?.i;
+    if (startIdx === -1 || endIdx === undefined) {
+      setBarBlocks([]);
+      return;
+    }
+
+    const startRow = Math.floor(startIdx / 7);
+    const endRow = Math.floor(endIdx / 7);
+    const newBarBlocks: { row: number; startIdx: number; endIdx: number }[] =
+      [];
+
+    for (let row = startRow; row <= endRow; row++) {
+      const start = row === startRow ? startIdx : row * 7;
+      const end = row === endRow ? endIdx : row * 7 + 6;
+      newBarBlocks.push({ row, startIdx: start, endIdx: end });
+    }
+
+    setBarBlocks(newBarBlocks);
   }, [selectedDeadline, currentMonth]);
 
   return (

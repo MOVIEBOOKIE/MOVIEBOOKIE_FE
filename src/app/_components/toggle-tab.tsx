@@ -1,5 +1,5 @@
 interface ToggleTabProps {
-  options: string[];
+  options: readonly string[];
   selected: string;
   onSelect: (selected: string) => void;
   withSuffix?: string;

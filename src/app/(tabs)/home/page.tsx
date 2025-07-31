@@ -20,8 +20,12 @@ export default function Home() {
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFirstScreen, setIsFirstScreen] = useState(true);
-  const [selected, setSelected] =
-    useState<(typeof CATEGORY_LABELS)[number]>("인기");
+  const category = searchParams.get("category");
+  const [selected, setSelected] = useState<(typeof CATEGORY_LABELS)[number]>(
+    () =>
+      CATEGORY_LABELS.find((label) => categoryMap[label] === category) ??
+      "인기",
+  );
   const { requestOnceIfNeeded } = useFCMHandler();
 
   useMyPage();
@@ -56,17 +60,6 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  //스크롤 내려진 페이지 "/?to=list"
-  useEffect(() => {
-    const el = containerRef.current;
-    const toList = searchParams.get("to") === "list";
-    if (el && toList) {
-      const screenHeight = window.innerHeight;
-      requestAnimationFrame(() => {
-        el.scrollTo({ top: screenHeight, behavior: "smooth" });
-      });
-    }
-  }, [searchParams]);
   const getCategoryParam = (label: CategoryLabel) => {
     if (label === "그 외") return "기타";
     return label;
@@ -188,6 +181,10 @@ export default function Home() {
                   statusBadge={event.eventStatus}
                   progressRate={`${event.rate}%`}
                   estimatedPrice={String(event.estimatedPrice)}
+                  query={{
+                    from: "home",
+                    category: categoryMap[selected],
+                  }}
                 />
                 <div className="my-4 h-0.25 w-full bg-gray-950" />
               </div>

@@ -3,7 +3,7 @@
 import Modal from "@/components/modal";
 import { PATHS } from "@/constants";
 import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
-import { useLogout, useLogoutHandler } from "app/_hooks/auth/use-logout";
+import { useLogoutHandler } from "app/_hooks/auth/use-logout";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,6 @@ function MyPageStat({ label, value }: MyPageStatProps) {
 export default function MyPage() {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
-  const { mutate: logout } = useLogout();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
@@ -66,7 +65,7 @@ export default function MyPage() {
           <button
             type="button"
             className="flex-1 cursor-pointer"
-            onClick={() => router.push(`${PATHS.EVENT}`)}
+            onClick={() => router.push(`${PATHS.EVENT}?toggle=confirmed`)}
             aria-label="참여경험 보기"
           >
             <MyPageStat
@@ -77,7 +76,9 @@ export default function MyPage() {
           <button
             type="button"
             className="flex-1 cursor-pointer"
-            onClick={() => router.push(`${PATHS.EVENT}?tab=mine`)}
+            onClick={() =>
+              router.push(`${PATHS.EVENT}?tab=mine&toggle=confirmed`)
+            }
             aria-label="주최경험 보기"
           >
             <MyPageStat label="주최경험" value={user?.hostExperienceCount} />

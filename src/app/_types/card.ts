@@ -22,4 +22,5 @@ export interface CardProps {
   statusBadge?: string;
   progressRate?: string;
   estimatedPrice?: number | string;
+  query?: Record<string, string>;
 }

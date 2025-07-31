@@ -9,20 +9,22 @@ import { EventCard } from "app/_types/card";
 export function useInfiniteEventTabQuery(
   type: "신청 목록" | "내 이벤트",
   selectedToggle: ToggleLabel,
+  toggleParam?: string,
 ) {
   const fetcher = type === "신청 목록" ? getRegisteredEvents : getHostedEvents;
+  const isConfirmed = toggleParam === "confirmed";
 
   return useInfiniteQuery<EventCard[], Error>({
-    queryKey: [type, selectedToggle, "infinite"],
+    queryKey: [type, selectedToggle, isConfirmed, "infinite"],
     queryFn: ({ pageParam = 0 }) =>
       fetcher({
         type: TOGGLE_TO_TYPE[selectedToggle],
         page: pageParam as number,
         size: 10,
+        ...(isConfirmed ? { confirmed: true } : {}),
       }),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length : undefined;
-    },
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length === 10 ? allPages.length : undefined,
     initialPageParam: 0,
   });
 }

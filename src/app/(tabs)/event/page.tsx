@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { PATHS } from "@/constants/index";
@@ -8,7 +7,6 @@ import { PlusIcon } from "lucide-react";
 import { PopcornIcon } from "@/icons/index";
 import Image from "next/image";
 
-// SSR은 유지한 채 동적 분할
 const EventTab = dynamic(() => import("./_components/event-tabs"));
 const TicketTab = dynamic(() => import("./_components/ticket-tab"));
 
@@ -16,20 +14,7 @@ export default function EventPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [topTab, setTopTab] = useState<"신청 목록" | "내 이벤트" | "내 티켓">(
-    "신청 목록",
-  );
-
-  useEffect(() => {
-    const tabParam = searchParams.get("tab");
-    if (tabParam === "mine") {
-      setTopTab("내 이벤트");
-    } else if (tabParam === "ticket") {
-      setTopTab("내 티켓");
-    } else {
-      setTopTab("신청 목록");
-    }
-  }, [searchParams]);
+  const tabParam = searchParams.get("tab") ?? "apply";
 
   return (
     <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
@@ -56,27 +41,39 @@ export default function EventPage() {
           </button>
         </div>
       </section>
+
       <nav className="body-2-medium px-5 pt-6">
-        {(["신청 목록", "내 이벤트", "내 티켓"] as const).map((tab) => (
+        {[
+          { label: "신청 목록", value: "apply" },
+          { label: "내 이벤트", value: "mine" },
+          { label: "내 티켓", value: "ticket" },
+        ].map((tab) => (
           <button
-            key={tab}
-            onClick={() => setTopTab(tab)}
+            key={tab.value}
+            onClick={() => {
+              const params = new URLSearchParams(searchParams);
+              params.set("tab", tab.value);
+              params.delete("toggle");
+              router.replace(`?${params.toString()}`);
+            }}
             className={`relative px-3 pb-2 transition-colors ${
-              topTab === tab ? "text-white" : "text-gray-700"
+              tabParam === tab.value ? "text-white" : "text-gray-700"
             }`}
           >
-            {tab}
-            {topTab === tab && (
+            {tab.label}
+            {tabParam === tab.value && (
               <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-white" />
             )}
           </button>
         ))}
       </nav>
+
       <div className="mx-5 border-b border-gray-900" />
+
       <div className="px-5">
-        {topTab === "신청 목록" && <EventTab type="신청 목록" />}
-        {topTab === "내 이벤트" && <EventTab type="내 이벤트" />}
-        {topTab === "내 티켓" && <TicketTab />}
+        {tabParam === "apply" && <EventTab type="신청 목록" />}
+        {tabParam === "mine" && <EventTab type="내 이벤트" />}
+        {tabParam === "ticket" && <TicketTab />}
       </div>
 
       <button
