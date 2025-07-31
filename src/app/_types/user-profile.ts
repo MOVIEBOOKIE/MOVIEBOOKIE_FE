@@ -1,5 +1,6 @@
 export interface UserProfile {
   email: string;
+  certificationEmail: string;
   nickname: string;
   profileImage: string;
   userTypeTitle: string;

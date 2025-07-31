@@ -120,27 +120,6 @@ export default function Detail() {
   const { mutate: recruitCancel } = useDeleteEventsRecruit();
   const { mutate: postEventVenue } = usePostEventsVenue();
 
-  const showNotificationAndSave = async (notificationCode: number) => {
-    const excludedCodes = [1, 2, 10, 11, 12];
-    if (excludedCodes.includes(notificationCode)) return;
-
-    try {
-      const response = await fetch(
-        `/api/notifications/notifications/preview/participant/${eventId}/${notificationCode}`,
-      );
-      if (response.ok) {
-        const notification = await response.json();
-        showToast({
-          title: notification.title,
-          body: notification.body,
-          type: "success",
-        });
-      }
-    } catch (error) {
-      console.error("알림 실패:", error);
-    }
-  };
-
   const handleApply = () => {
     setLoading(true);
     setIsComplete(true);

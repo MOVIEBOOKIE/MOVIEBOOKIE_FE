@@ -37,6 +37,8 @@ export default function TopBar({ event }: TopBarProps) {
       if (category) query.set("category", category);
 
       router.push(`/?${query.toString()}`);
+    } else {
+      router.back();
     }
   };
 

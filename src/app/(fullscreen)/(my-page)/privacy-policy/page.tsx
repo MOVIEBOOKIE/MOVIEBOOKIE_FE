@@ -1,16 +1,13 @@
 import { PRIVACY_POLICY_SECTIONS } from "@/constants/mypage/privacy";
-import { PATHS } from "@/constants";
 import { FixedLayout } from "@/components";
 
 export default function PrivacyPolicyPage() {
   return (
     <FixedLayout
       title="개인정보처리방침"
-      showBackButton={false}
+      showBackButton
       isHeader
-      showCloseButton={true}
       showBottomButton={false}
-      closeRedirectPath={PATHS.MYPAGE}
       state="default"
     >
       <div className="text-gray-200">
