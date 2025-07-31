@@ -60,11 +60,12 @@ export default function FixedLayout({
     onButtonClick?.();
   };
   const handleClose = () => {
-    if (closeRedirectPath) {
+    if (onClose) {
+      onClose();
+    } else if (closeRedirectPath) {
       router.push(closeRedirectPath);
     }
   };
-
   return (
     <>
       {isHeader && (
