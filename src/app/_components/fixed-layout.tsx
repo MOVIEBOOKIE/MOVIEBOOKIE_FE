@@ -72,7 +72,7 @@ export default function FixedLayout({
           title={title}
           showCloseButton={showCloseButton}
           showBackButton={showBackButton}
-          onClose={onClose}
+          onClose={handleClose}
           onBack={onBackClick}
         />
       )}
