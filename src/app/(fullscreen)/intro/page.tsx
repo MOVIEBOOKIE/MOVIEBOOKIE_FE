@@ -25,7 +25,13 @@ export default function Intro() {
   }, [router]);
 
   return (
-    <main className="pt-safe-top relative h-[100dvh] w-full bg-cover bg-center">
+    <main
+      className="relative w-full bg-cover bg-center"
+      style={{
+        height: "calc(100dvh + env(safe-area-inset-top))",
+        marginTop: "calc(-1 * env(safe-area-inset-top))",
+      }}
+    >
       <Image
         src="/images/custom-bg.webp"
         alt="Intro Background"

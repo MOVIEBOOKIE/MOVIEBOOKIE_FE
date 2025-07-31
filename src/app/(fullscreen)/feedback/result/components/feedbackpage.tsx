@@ -39,7 +39,7 @@ export default function FeedbackPage() {
       {
         onSuccess: () => {
           showToast("무비부키에게 소중한 의견 감사드려요!", "checkbox");
-          router.push(PATHS.NOTIFICATIONS);
+          router.push(PATHS.MYPAGE);
         },
         onError: (error) => {
           console.error("제출 실패", error);
@@ -74,9 +74,9 @@ export default function FeedbackPage() {
                 가장{" "}
                 {feedbackType === "good" ? "만족스러웠나요?" : "아쉬웠나요?"}
               </p>
-              {reasons.map((r) => (
+              {reasons.map((r, index) => (
                 <button
-                  key={r}
+                  key={`${index}-${r}`}
                   onClick={() => setSelectedReason(r)}
                   className={`body-3-regular mb-2 rounded-xl border px-5 py-4.5 text-left text-gray-100 transition ${
                     selectedReason === r

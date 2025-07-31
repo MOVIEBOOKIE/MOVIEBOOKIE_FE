@@ -38,7 +38,7 @@ export default function EventCreatePage() {
   });
 
   const formValues = useWatch({ control: methods.control });
-
+  const [isValidStep5, setIsValidStep5] = useState(true);
   const isButtonDisabled = (() => {
     const {
       mediaType,
@@ -55,7 +55,7 @@ export default function EventCreatePage() {
       thumbnail,
     } = formValues;
 
-    return (
+    const baseInvalid =
       (step === 0 && !mediaType) ||
       (step === 1 && !eventDate) ||
       (step === 2 && (!eventStartTime || !eventProgressTime)) ||
@@ -66,8 +66,10 @@ export default function EventCreatePage() {
           !maxParticipants ||
           Number(maxParticipants) > 320)) ||
       (step === 5 && !locationId) ||
-      (step === 6 && (!eventTitle || !mediaTitle || !description || !thumbnail))
-    );
+      (step === 6 &&
+        (!eventTitle || !mediaTitle || !description || !thumbnail));
+
+    return baseInvalid || (step === 4 && !isValidStep5);
   })();
 
   const onSubmit = (data: EventFormValues) => {
@@ -122,7 +124,9 @@ export default function EventCreatePage() {
         onBackClick={onBack}
         onClose={handleCloseClick}
       >
-        <CurrentStep />
+        <CurrentStep
+          onValidityChange={step === 4 ? setIsValidStep5 : undefined}
+        />
       </FixedLayout>
       {showExitConfirm && (
         <Modal

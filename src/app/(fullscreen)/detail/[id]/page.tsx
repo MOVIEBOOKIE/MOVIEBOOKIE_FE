@@ -22,6 +22,7 @@ import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useToast } from "app/_context/toast-context";
 import { ParticipantNotificationType } from "app/_types/noti";
+import { useLoading } from "app/_context/loading-context";
 
 type ModalType =
   | "apply"
@@ -45,9 +46,12 @@ export default function Detail() {
   const [isComplete, setIsComplete] = useState(false);
   const [shouldPoll, setShouldPoll] = useState(true);
 
+  const { setLoading } = useLoading();
+
   const params = useParams();
   const eventId = useMemo(() => Number(params?.id), [params?.id]);
   const isValidEventId = !isNaN(eventId) && eventId > 0;
+
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
   const { showToast } = useToast();
@@ -73,9 +77,10 @@ export default function Detail() {
     if (data?.buttonState?.trim() === "티켓으로 이동") {
       setShouldPoll(false);
     }
-  }, [data?.buttonState, showToast]);
+  }, [data?.buttonState]);
 
   const isPending = loggedIn ? isPendingWithAuth : isPendingAnonymous;
+
   const { data: moveToTicket } = useGetToTicket(eventId, {
     enabled: data?.buttonState === "티켓으로 이동",
   });
@@ -85,8 +90,6 @@ export default function Detail() {
       setModalType("loginRequired");
       return;
     }
-
-    console.log("버튼 클릭 - buttonState:", data?.buttonState);
 
     switch (data?.buttonState) {
       case "신청하기":
@@ -100,12 +103,9 @@ export default function Detail() {
         break;
       case "티켓으로 이동":
         if (moveToTicket?.ticketId) {
-          const ticketPath = `${PATHS.TICKET}/${moveToTicket.ticketId}`;
-          router.push(ticketPath);
-        } else {
-          if (eventId) {
-            router.push(`${PATHS.TICKET}?eventId=${eventId}`);
-          }
+          router.push(`${PATHS.TICKET}/${moveToTicket.ticketId}`);
+        } else if (eventId) {
+          router.push(`${PATHS.TICKET}?eventId=${eventId}`);
         }
         break;
       case "대관 신청하기":
@@ -115,11 +115,6 @@ export default function Detail() {
         setModalType("apply");
     }
   };
-
-  const currentModal =
-    modalType && modalType !== "loginRequired"
-      ? MODAL_CONTENT[modalType]
-      : null;
 
   const { mutate } = usePostEventRegister();
   const { mutate: applyCancel } = useDeleteEvent();
@@ -134,10 +129,8 @@ export default function Detail() {
       const response = await fetch(
         `/api/notifications/notifications/preview/participant/${eventId}/${notificationCode}`,
       );
-
       if (response.ok) {
         const notification = await response.json();
-
         showToast({
           title: notification.title,
           body: notification.body,
@@ -145,45 +138,70 @@ export default function Detail() {
         });
       }
     } catch (error) {
-      console.error("알림을 가져오는데 실패했습니다:", error);
+      console.error("알림 실패:", error);
     }
   };
 
   const handleApply = () => {
+    setLoading(true);
     setIsComplete(true);
+
     mutate(eventId, {
       onSuccess: () => {
         showNotificationAndSave(ParticipantNotificationType.APPLY_COMPLETED);
+        setLoading(false);
       },
       onError: (error) => {
         console.error("이벤트 신청 실패:", error);
         setIsComplete(false);
+        setLoading(false);
       },
     });
   };
 
   const handleCancel = () => {
+    setLoading(true);
     applyCancel(eventId, {
       onSuccess: () => {
         showNotificationAndSave(ParticipantNotificationType.APPLY_CANCEL);
+        setLoading(false);
       },
       onError: (error) => {
         console.error("이벤트 신청 취소 실패:", error);
+        setLoading(false);
       },
     });
   };
 
   const handleRecruitCancel = () => {
-    recruitCancel(eventId);
+    setLoading(true);
+    recruitCancel(eventId, {
+      onSettled: () => {
+        setLoading(false);
+      },
+    });
+  };
+
+  const handleVenueApply = (type: number) => {
+    setLoading(true);
+    postEventVenue(
+      { eventId, type },
+      {
+        onSettled: () => {
+          setLoading(false);
+        },
+      },
+    );
   };
 
   const handleComplete = () => {
     router.push(PATHS.EVENT);
   };
 
-  const handleVenueApply = (type: number) => {
-    postEventVenue({ eventId, type });
-  };
+  const currentModal =
+    modalType && modalType !== "loginRequired"
+      ? MODAL_CONTENT[modalType]
+      : null;
 
   const handleModalClose = () => {
     setModalType(null);
@@ -225,12 +243,11 @@ export default function Detail() {
             }`}
           >
             <p className="caption-1-medium text-gray-500">예상 가격</p>
-            {data && (
-              <p className="body-3-semibold whitespace-nowrap text-gray-300">
-                {data.estimatedPrice?.toLocaleString?.() ?? "-"}원
-              </p>
-            )}
+            <p className="body-3-semibold whitespace-nowrap text-gray-300">
+              {data?.estimatedPrice?.toLocaleString?.() ?? "-"}원
+            </p>
           </div>
+
           <Button
             variant="primary"
             onClick={handleClick}

@@ -21,8 +21,10 @@ export const useFCMHandler = () => {
   };
   useEffect(() => {
     console.log("🌐 모든 환경에서 FCM 토큰 등록 시도");
+    if (Notification.permission === "granted") {
+      requestPermissionAndToken();
+    }
 
-    // iOS PWA 권한 배너 표시 조건
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     const isStandalone =
       window.matchMedia("(display-mode: standalone)").matches ||

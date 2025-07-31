@@ -1,7 +1,7 @@
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
-  disable: false,
+  disable: process.env.NODE_ENV === "development",
   skipWaiting: true,
   swSrc: "public/custom-sw.js",
 });
@@ -43,7 +43,6 @@ const nextConfig = {
   },
   async rewrites() {
     const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
-    console.log("📦 Rewrite baseurl:", baseurl);
     return [
       {
         source: "/api/:path*",

@@ -36,7 +36,9 @@ function KakaoLogin() {
 
   useEffect(() => {
     if (!code) {
-      const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}`;
+      const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+        redirectUrl,
+      )}`;
       window.location.href = kakaoAuthUrl;
       return;
     }
@@ -49,22 +51,22 @@ function KakaoLogin() {
           isLocal,
         });
 
-        const { success, data: userData } = response.data;
+        const { success, data, message } = response;
+        const { data: userData } = data || {};
 
-        console.log(response.data);
-        if (success) {
-          if (!userData?.userType) {
-            router.push(PATHS.AGREEMENT);
-          } else {
-            router.push(PATHS.HOME);
-          }
+        if (
+          success &&
+          typeof userData?.userType === "string" &&
+          userData.userType.length > 0
+        ) {
+          router.push(PATHS.HOME);
         } else {
-          router.push(
-            `/login?error=${encodeURIComponent(response.data?.message || "Unknown error")}`,
-          );
+          router.push(PATHS.AGREEMENT);
         }
       } catch (error: any) {
-        router.push(`/login?error=${encodeURIComponent(error.message)}`);
+        router.push(
+          `/login?error=${encodeURIComponent(error.message || "Login failed")}`,
+        );
       }
     };
     handleLogin();

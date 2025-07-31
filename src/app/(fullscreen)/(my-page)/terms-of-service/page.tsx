@@ -1,12 +1,8 @@
-"use client";
-
 import { FixedLayout } from "@/components";
 import { PATHS } from "@/constants";
 import { TERMS_OF_SERVICE_SECTIONS } from "@/constants/mypage/terms";
-import { useRouter } from "next/navigation";
 
-export default function TermOfService() {
-  const router = useRouter();
+export default function TermOfServiceContent() {
   return (
     <FixedLayout
       title="서비스 이용약관"
@@ -14,8 +10,8 @@ export default function TermOfService() {
       isHeader
       showCloseButton={true}
       showBottomButton={false}
-      onClose={() => router.push(PATHS.MYPAGE)}
       state="default"
+      closeRedirectPath={PATHS.MYPAGE}
     >
       <div className="text-gray-200">
         {TERMS_OF_SERVICE_SECTIONS.map((section, idx) => (

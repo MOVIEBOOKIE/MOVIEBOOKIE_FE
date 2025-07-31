@@ -27,6 +27,7 @@ interface ModalProps {
   hideButtons?: boolean;
   children: ReactNode;
   onClose?: () => void;
+  confirmButtonClassName?: string;
 }
 
 export default function Modal({
@@ -41,6 +42,7 @@ export default function Modal({
   onClose,
   showCloseButton = false,
   hideButtons = false,
+  confirmButtonClassName,
 }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
@@ -57,8 +59,10 @@ export default function Modal({
         {iconType === "confirm" && <CheckIcon />}
         {iconType === "alert" && <AlertIcon />}
 
-        <h3 className="title-3-semibold mt-4.75">{title}</h3>
-        <div className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
+        <h3 className="title-3-semibold mt-4.75 text-center whitespace-pre-line">
+          {title}
+        </h3>
+        <div className="body-3-regular mt-2 mb-4.5 text-center whitespace-pre-line text-gray-500">
           {description ?? children}
         </div>
         {!hideButtons && (
@@ -67,12 +71,16 @@ export default function Modal({
               <Button
                 variant="secondary"
                 onClick={onCancel}
-                className="bg-gray-800 text-gray-200"
+                className="focus:bg-gray-850 bg-gray-800 text-gray-200"
               >
                 {cancelText}
               </Button>
             )}
-            {onConfirm && <Button onClick={onConfirm}>{confirmText}</Button>}
+            {onConfirm && (
+              <Button onClick={onConfirm} className={confirmButtonClassName}>
+                {confirmText}
+              </Button>
+            )}
           </div>
         )}
       </div>
