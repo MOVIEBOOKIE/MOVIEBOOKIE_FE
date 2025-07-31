@@ -29,11 +29,11 @@ export default function CategoryButton({
 
   return (
     <button
-      className="relative"
+      className="relative aspect-[161/135] w-full"
       onClick={handleNavigate}
       aria-label={`${label} 카테고리로 이동`}
     >
-      <Image width={161} height={135} src={src} alt={label} priority />
+      <Image fill src={src} alt={label} priority className="object-cover" />
       <p className="body-2-semibold absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>
