@@ -21,18 +21,21 @@ export const useFCMHandler = () => {
   };
   useEffect(() => {
     console.log("🌐 모든 환경에서 FCM 토큰 등록 시도");
-    if (Notification.permission === "granted") {
-      requestPermissionAndToken();
-    }
 
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isStandalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      (window.navigator as any).standalone === true;
+    if (typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "granted") {
+        requestPermissionAndToken();
+      }
 
-    if (isIOS && isStandalone && Notification.permission === "default") {
-      console.log("ℹ️ iOS PWA - 알림 권한 배너 표시");
-      setShowPermissionBanner(true);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isStandalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as any).standalone === true;
+
+      if (isIOS && isStandalone && Notification.permission === "default") {
+        console.log("ℹ️ iOS PWA - 알림 권한 배너 표시");
+        setShowPermissionBanner(true);
+      }
     }
 
     onForegroundMessage((payload) => {
@@ -47,16 +50,17 @@ export const useFCMHandler = () => {
         payload.data?.body ||
         "새로운 알림이 도착했어요!";
 
-      // foreground 알림
-      if (Notification.permission === "granted") {
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification(title, {
-            body,
-            icon: "/images/favicon/96x96.png",
-            tag: "foreground-noti",
-            renotify: true,
-          } as NotificationOptions);
-        });
+      if (typeof window !== "undefined" && "Notification" in window) {
+        if (Notification.permission === "granted") {
+          navigator.serviceWorker.ready.then((registration) => {
+            registration.showNotification(title, {
+              body,
+              icon: "/images/favicon/96x96.png",
+              tag: "foreground-noti",
+              renotify: true,
+            } as NotificationOptions);
+          });
+        }
       }
 
       const { code, eventId } = payload.data || {};
