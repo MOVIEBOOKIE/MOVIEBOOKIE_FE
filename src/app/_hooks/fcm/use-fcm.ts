@@ -8,7 +8,13 @@ export const useFCM = () => {
   const requestPermissionAndToken = async () => {
     console.log("✅ requestPermissionAndToken 호출됨");
 
-    if (typeof window === "undefined") return;
+    const isNotificationSupported =
+      typeof window !== "undefined" && "Notification" in window;
+
+    if (!isNotificationSupported) {
+      console.warn("🚫 Notification API를 사용할 수 없는 환경입니다.");
+      return;
+    }
 
     try {
       if (!("Notification" in window)) {
