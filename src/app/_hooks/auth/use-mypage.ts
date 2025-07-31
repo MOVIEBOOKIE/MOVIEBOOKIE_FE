@@ -12,7 +12,8 @@ export const useMyPage = () => {
       const res = await getMyPageInfo();
       if (res) {
         setUser({
-          email: res.certificationEmail,
+          email: res.email,
+          certificationEmail: res.certificationEmail,
           nickname: res.username,
           profileImage: res.profileImage,
           userTypeTitle: res.userTypeTitle,

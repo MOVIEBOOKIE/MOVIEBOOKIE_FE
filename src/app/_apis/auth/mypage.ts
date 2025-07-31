@@ -4,6 +4,7 @@ export interface MyPageResponse {
   profileImage: string;
   username: string;
   userTypeTitle: string;
+  email: string;
   certificationEmail: string;
   hostExperienceCount: number;
   participationExperienceCount: number;
