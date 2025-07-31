@@ -6,6 +6,7 @@ import { EmptyIcon } from "@/icons/index";
 import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
 import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 import CardSkeleton from "@/components/card-skeleton";
+import { EventCard } from "app/_types/card";
 
 interface EventTabProps {
   type: "신청 목록" | "내 이벤트";
@@ -39,7 +40,8 @@ export default function EventTab({ type }: EventTabProps) {
     [isLoading, hasNextPage, isFetchingNextPage, fetchNextPage],
   );
 
-  const events = data?.pages.flatMap((page) => page) ?? [];
+  const events: EventCard[] =
+    data?.pages.flatMap((page) => (Array.isArray(page) ? page : [])) ?? [];
 
   return (
     <div className="mt-5">
@@ -93,12 +95,6 @@ export default function EventTab({ type }: EventTabProps) {
                   )}
                 </div>
               ))}
-
-            {isFetchingNextPage && (
-              <div className="flex justify-center py-4">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
-              </div>
-            )}
           </>
         ) : (
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
