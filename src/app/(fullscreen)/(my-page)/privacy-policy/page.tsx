@@ -1,12 +1,8 @@
-"use client";
-
-import { FixedLayout } from "@/components";
-import { PATHS } from "@/constants";
 import { PRIVACY_POLICY_SECTIONS } from "@/constants/mypage/privacy";
-import { useRouter } from "next/navigation";
+import { PATHS } from "@/constants";
+import { FixedLayout } from "@/components";
 
-export default function PrivacyPolicy() {
-  const router = useRouter();
+export default function PrivacyPolicyPage() {
   return (
     <FixedLayout
       title="개인정보처리방침"
@@ -14,7 +10,7 @@ export default function PrivacyPolicy() {
       isHeader
       showCloseButton={true}
       showBottomButton={false}
-      onClose={() => router.push(PATHS.MYPAGE)}
+      closeRedirectPath={PATHS.MYPAGE}
       state="default"
     >
       <div className="text-gray-200">

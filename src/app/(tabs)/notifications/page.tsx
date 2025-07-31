@@ -17,17 +17,19 @@ interface Notification {
 }
 
 export default function NotificationPage() {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<Notification[] | null>(
+    null,
+  );
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
   const hasUnread = useNotificationStore((state) => state.hasUnread);
   const router = useRouter();
+
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const res = await apiGet<any[]>("/notifications");
-        if (!Array.isArray(res)) {
-          return;
-        }
+        if (!Array.isArray(res)) return;
+
         const isFirstVisit =
           localStorage.getItem("hasSeenNotification") !== "true";
 
@@ -66,7 +68,7 @@ export default function NotificationPage() {
         <h1 className="title-1-semibold">알림</h1>
       </div>
 
-      {notifications.length === 0 ? (
+      {notifications === null ? null : notifications.length === 0 ? (
         <div
           className="flex flex-col items-center justify-center text-center text-gray-500"
           style={{ height: "calc(100vh - 102px - 88px)" }}

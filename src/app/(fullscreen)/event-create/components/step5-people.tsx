@@ -16,6 +16,7 @@ export default function Step5({ onValidityChange }: Step5Props) {
   const [maxError, setMaxError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const isRangeValid =
     (Number(min) > 0 && Number(max) > 0 && Number(min) < Number(max)) ||
@@ -116,6 +117,8 @@ export default function Step5({ onValidityChange }: Step5Props) {
               placeholder="최소인원"
               className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
               style={{ fontSize: "16px" }}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
             />
             <span className="absolute right-4 text-sm text-white">명</span>
           </div>
@@ -142,6 +145,8 @@ export default function Step5({ onValidityChange }: Step5Props) {
               placeholder="최대인원"
               className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
               style={{ fontSize: "16px" }}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
             />
             <span className="absolute right-4 text-sm text-white">명</span>
           </div>
@@ -149,7 +154,11 @@ export default function Step5({ onValidityChange }: Step5Props) {
       </div>
 
       {showToast && (
-        <div className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2 transform">
+        <div
+          className={`fixed ${
+            isInputFocused ? "bottom-[200px]" : "bottom-32"
+          } left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300`}
+        >
           <Toast iconType="alert">{toastMessage}</Toast>
         </div>
       )}

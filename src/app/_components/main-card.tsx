@@ -30,6 +30,7 @@ function Card({
           fill
           loading="lazy"
           className="object-cover"
+          sizes="120px"
         />
 
         {(ddayBadge || statusBadge) && (

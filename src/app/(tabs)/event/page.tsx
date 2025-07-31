@@ -2,11 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import { PATHS } from "@/constants/index";
-import EventTab from "./_components/event-tabs";
-import TicketTab from "./_components/ticket-tab";
 import { PlusIcon } from "lucide-react";
 import { PopcornIcon } from "@/icons/index";
+import Image from "next/image";
+
+// SSR은 유지한 채 동적 분할
+const EventTab = dynamic(() => import("./_components/event-tabs"));
+const TicketTab = dynamic(() => import("./_components/ticket-tab"));
 
 export default function EventPage() {
   const router = useRouter();
@@ -31,10 +35,12 @@ export default function EventPage() {
     <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
       <h1 className="title-1-semibold px-5 pt-6 pb-5">이벤트</h1>
       <section className="relative mx-5 overflow-hidden rounded-3xl">
-        <img
-          src="/images/event-banner.png"
+        <Image
+          src="/images/event-banner.webp"
           alt="이벤트 배너"
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          priority
+          className="object-cover"
         />
 
         <div className="relative z-10 flex flex-col items-center px-5 py-8 text-center text-white">

@@ -12,6 +12,7 @@ import CardSkeleton from "@/components/card-skeleton";
 import { categoryMap } from "@/constants/category-map";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
+import { CategoryLabel } from "@/constants/categories";
 
 export default function Home() {
   const user = useUserStore((state) => state.user);
@@ -55,7 +56,13 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { data, isLoading } = useCategoryEvents(selected);
+  const getCategoryParam = (label: CategoryLabel) => {
+    if (label === "그 외") return "기타";
+    return label;
+  };
+
+  const categoryParam = getCategoryParam(selected);
+  const { data, isLoading } = useCategoryEvents(categoryParam);
   const events = data?.eventList ?? [];
 
   const handleSearch = () => {
