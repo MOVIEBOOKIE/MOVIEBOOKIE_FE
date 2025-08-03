@@ -12,6 +12,8 @@ const withSvgr = require("next-svgr");
 const nextConfig = {
   trailingSlash: true,
   output: "standalone",
+  productionBrowserSourceMaps: false,
+  swcMinify: true,
   images: {
     remotePatterns: [
       {
