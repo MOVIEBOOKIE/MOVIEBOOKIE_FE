@@ -1,0 +1,35 @@
+@layer utilities {
+  .font-pretendard {
+    font-family: var(--font-pretendard), sans-serif;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .card-shadow-blur {
+    box-shadow: 0px 0px 80px 1px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(22.5px);
+  }
+
+  .drop-shadow {
+    box-shadow: 0px 0px 16.3px 0px rgba(0, 0, 0, 0.6);
+  }
+
+  .drop-shadow-2 {
+    box-shadow: 0px -2px 12px 0px rgba(0, 0, 0, 0.14);
+  }
+}
+
