@@ -33,7 +33,14 @@ export default function CategoryButton({
       onClick={handleNavigate}
       aria-label={`${label} 카테고리로 이동`}
     >
-      <Image fill src={src} alt={label} priority className="object-cover" />
+      <Image
+        fill
+        src={src}
+        alt={label}
+        sizes="161px"
+        loading="lazy"
+        className="object-cover"
+      />
       <p className="body-2-semibold absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}
       </p>

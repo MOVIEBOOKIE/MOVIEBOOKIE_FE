@@ -5,7 +5,7 @@ import { BackIcon, EmptyIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
 import { EVENT_CATEGORIES } from "@/constants";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { useGetEventSearch } from "app/_hooks/events/use-events";
 import { useDebounce } from "use-debounce";
 import Pagination from "@/components/pagination";
@@ -38,10 +38,9 @@ export default function Search() {
     setContent(e.target.value);
     setCurrentPage(0);
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     inputRef.current?.focus();
   }, []);
-
   return (
     <div className="w-full">
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
