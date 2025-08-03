@@ -76,13 +76,17 @@ export default function EventPage() {
         {tabParam === "ticket" && <TicketTab />}
       </div>
 
-      <button
-        onClick={() => router.push(PATHS.EVENT_CREATE)}
-        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-1.5 rounded-full px-4 py-4 text-white shadow-xl focus:bg-red-700"
-      >
-        <PlusIcon size={18} />
-        이벤트 만들기
-      </button>
+      <div className="pointer-events-none fixed inset-0 z-50">
+        <div className="pointer-events-none relative mx-auto h-full max-w-md">
+          <button
+            onClick={() => router.push(PATHS.EVENT_CREATE)}
+            className="bg-red-main body-3-semibold pointer-events-auto absolute right-5 bottom-[calc(102px+24px)] flex items-center gap-1.5 rounded-full px-4 py-4 text-white focus:bg-red-700"
+          >
+            <PlusIcon size={18} />
+            이벤트 만들기
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
