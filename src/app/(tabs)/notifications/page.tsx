@@ -63,10 +63,8 @@ export default function NotificationPage() {
   }, [setHasUnread, hasUnread]);
 
   return (
-    <div className="h-[calc(100vh-102px)] text-white">
-      <div className="flex items-center justify-between px-5 pt-6 pb-7.5">
-        <h1 className="title-1-semibold">알림</h1>
-      </div>
+    <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
+      <h1 className="title-1-semibold px-5 pt-6 pb-5">알림</h1>
 
       {notifications === null ? null : notifications.length === 0 ? (
         <div
@@ -86,7 +84,7 @@ export default function NotificationPage() {
           </button>
         </div>
       ) : (
-        <div className="scrollbar-hide h-[calc(100vh-102px-88px)] overflow-y-scroll">
+        <div className="scrollbar-hide overflow-y-scroll">
           {notifications.map((n) => (
             <NotificationItem
               key={n.id}

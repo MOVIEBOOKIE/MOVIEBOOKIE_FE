@@ -60,13 +60,7 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getCategoryParam = (label: CategoryLabel) => {
-    if (label === "그 외") return "기타";
-    return label;
-  };
-
-  const categoryParam = getCategoryParam(selected);
-  const { data, isLoading } = useCategoryEvents(categoryParam);
+  const { data, isLoading } = useCategoryEvents(selected);
   const events = data?.eventList ?? [];
 
   const handleSearch = () => {
@@ -99,7 +93,7 @@ export default function Home() {
           <Carousel />
 
           <motion.div
-            className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+            className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-auto flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
             initial={{ opacity: 1 }}
             animate={{
               opacity: isFirstScreen ? 1 : 0,
@@ -107,7 +101,7 @@ export default function Home() {
             }}
             transition={{ duration: 0 }}
           >
-            <p className="caption-2-medium text-gray-white opacity-47">
+            <p className="caption-2-medium text-gray-white w-auto opacity-47">
               더 많은 이벤트를 찾으려면 아래로 스와이프
             </p>
             <SwipeDownIcon className="h-6 w-6" />

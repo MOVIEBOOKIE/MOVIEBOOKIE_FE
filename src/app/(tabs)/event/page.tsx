@@ -57,7 +57,7 @@ export default function EventPage() {
               router.replace(`?${params.toString()}`);
             }}
             className={`relative px-3 pb-2 transition-colors ${
-              tabParam === tab.value ? "text-white" : "text-gray-700"
+              tabParam === tab.value ? "text-white" : "text-gray-500"
             }`}
           >
             {tab.label}
@@ -68,7 +68,7 @@ export default function EventPage() {
         ))}
       </nav>
 
-      <div className="mx-5 border-b border-gray-900" />
+      <div className="mx-5 border-b border-gray-950" />
 
       <div className="px-5">
         {tabParam === "apply" && <EventTab type="신청 목록" />}
