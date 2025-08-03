@@ -45,6 +45,9 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #ffffff;
 }
 
+input {
+  caret-color: white; 
+}
 /* 스크롤바 스타일 */
 ::-webkit-scrollbar {
   width: 6px;
