@@ -57,7 +57,7 @@ export default function EventPage() {
               router.replace(`?${params.toString()}`);
             }}
             className={`relative px-3 pb-2 transition-colors ${
-              tabParam === tab.value ? "text-white" : "text-gray-700"
+              tabParam === tab.value ? "text-white" : "text-gray-500"
             }`}
           >
             {tab.label}
@@ -68,7 +68,7 @@ export default function EventPage() {
         ))}
       </nav>
 
-      <div className="mx-5 border-b border-gray-900" />
+      <div className="mx-5 border-b border-gray-950" />
 
       <div className="px-5">
         {tabParam === "apply" && <EventTab type="신청 목록" />}
@@ -76,13 +76,17 @@ export default function EventPage() {
         {tabParam === "ticket" && <TicketTab />}
       </div>
 
-      <button
-        onClick={() => router.push(PATHS.EVENT_CREATE)}
-        className="bg-red-main body-3-semibold fixed right-6 bottom-6 z-50 mb-25 flex items-center gap-1.5 rounded-full px-4 py-4 text-white shadow-xl focus:bg-red-700"
-      >
-        <PlusIcon size={18} />
-        이벤트 만들기
-      </button>
+      <div className="pointer-events-none fixed inset-0 z-50">
+        <div className="pointer-events-none relative mx-auto h-full max-w-md">
+          <button
+            onClick={() => router.push(PATHS.EVENT_CREATE)}
+            className="bg-red-main body-3-semibold pointer-events-auto absolute right-5 bottom-[calc(102px+24px)] flex items-center gap-1.5 rounded-full px-4 py-4 text-white focus:bg-red-700"
+          >
+            <PlusIcon size={18} />
+            이벤트 만들기
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

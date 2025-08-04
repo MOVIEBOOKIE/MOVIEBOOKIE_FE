@@ -6,7 +6,7 @@ export const CATEGORIES = {
   예능: "entertainment",
   스포츠: "sports",
   콘서트: "concert",
-  "그 외": "기타",
+  기타: "기타",
 } as const;
 
 export type CategoryLabel = keyof typeof CATEGORIES; // "인기" | "최신" | ...
@@ -26,5 +26,5 @@ export const CATEGORY_TYPE_TO_LABEL: Record<CategoryType, CategoryLabel> = {
   entertainment: "예능",
   sports: "스포츠",
   concert: "콘서트",
-  기타: "그 외",
+  기타: "기타",
 };

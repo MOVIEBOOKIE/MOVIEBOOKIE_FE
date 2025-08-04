@@ -1,22 +1,28 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
 import { useNotificationStore } from "app/_stores/use-noti";
 import { useSmartNotiPolling } from "app/_hooks/use-smart-noti-polling";
+import { useLoading } from "app/_context/loading-context";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
   const hasUnread = useNotificationStore((state) => state.hasUnread);
-
+  const router = useRouter();
+  const { setLoading } = useLoading();
   useSmartNotiPolling();
 
   function isActive(tabPath: string) {
     return pathname === tabPath || pathname.startsWith(`${tabPath}/`);
   }
-
+  const handleTabClick = (tabPath: string) => {
+    if (pathname === tabPath) return;
+    setLoading(true);
+    router.push(tabPath);
+  };
   return (
     <nav
       className="bg-gray-black fixed bottom-0 left-1/2 z-9999 flex h-25.5 w-full max-w-125 -translate-x-1/2 transform items-center justify-around px-5 pt-2.25 pb-4"
@@ -28,12 +34,10 @@ export default function BottomNavigation() {
         const IconComponent = tab.Icon;
 
         return (
-          <Link
+          <button
             key={tab.id}
-            href={tab.path}
+            onClick={() => handleTabClick(tab.path)}
             className="relative flex w-20 flex-col items-center gap-2"
-            aria-label={tab.label}
-            aria-current={active ? "page" : undefined}
           >
             {active && <LightEffect />}
             <div className="relative flex h-6 w-6 items-center justify-center">
@@ -50,7 +54,7 @@ export default function BottomNavigation() {
             >
               {tab.label}
             </p>
-          </Link>
+          </button>
         );
       })}
     </nav>

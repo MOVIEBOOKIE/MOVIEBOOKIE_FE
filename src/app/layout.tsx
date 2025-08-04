@@ -8,7 +8,7 @@ import Script from "next/script";
 import { ToastProvider } from "./_context/toast-context";
 import Toast from "./_components/noti-toast";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import ServiceWorkerDebug from "./_components/FCM/ServiceWorkerDebug";
+import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import DebugLogger from "./_components/debug-logger";
 import { LoadingProvider } from "./_context/loading-context";
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <ToastProvider>
-          <DebugLogger />
+          {/* <DebugLogger /> */}
           <Script
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"

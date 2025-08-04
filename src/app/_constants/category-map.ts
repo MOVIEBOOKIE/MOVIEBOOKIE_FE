@@ -6,5 +6,5 @@ export const categoryMap: Record<string, string> = {
   예능: "entertainment",
   스포츠: "sports",
   콘서트: "concert",
-  "그 외": "etc",
+  기타: "etc",
 };

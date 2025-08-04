@@ -29,7 +29,7 @@ export default function CategoryPageClient({ label }: { label: string }) {
     >
       <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
         {isLoading ? (
-          <div className="mt-6 flex flex-1 flex-col gap-4 px-5">
+          <div className="flex flex-1 flex-col gap-4">
             {Array.from({ length: 3 }).map((_, idx) => (
               <CardSkeleton key={idx} />
             ))}
