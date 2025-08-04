@@ -39,11 +39,15 @@ export default function TraitResult() {
       setIsShortScreen(window.innerHeight < 700);
     };
 
-    if (typeof window !== "undefined") {
-      handleResize();
+    handleResize();
+    const debounced = setTimeout(() => {
       window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
+    }, 100);
+
+    return () => {
+      clearTimeout(debounced);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const iconSet =

@@ -7,7 +7,6 @@ import ToastRenderer from "./_components/toast-renderer";
 import Script from "next/script";
 import { ToastProvider } from "./_context/toast-context";
 import Toast from "./_components/noti-toast";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import DebugLogger from "./_components/debug-logger";
 import { LoadingProvider } from "./_context/loading-context";
@@ -43,6 +42,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/images/favicon/48x48.png" />
+        <meta
+          name="naver-site-verification"
+          content="7dd8da1c8834169e1812e1266f327334c8462dc0"
+        />
       </head>
       <body>
         <ToastProvider>
@@ -56,7 +59,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ReactQueryProvider>
             <ServiceWorkerDebug />
             <LoadingProvider> {children}</LoadingProvider>
-            <SpeedInsights />
             <Toast />
           </ReactQueryProvider>
         </ToastProvider>
