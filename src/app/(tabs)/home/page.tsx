@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { PATHS, CATEGORY_LABELS } from "@/constants";
@@ -23,6 +23,7 @@ export default function Home() {
   const user = useUserStore((state) => state.user);
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   const category = searchParams.get("category");
   const defaultCategory =
@@ -101,20 +102,22 @@ export default function Home() {
         </div>
         <Carousel />
 
-        <motion.div
-          className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-auto flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
-          initial={{ opacity: 1 }}
-          animate={{
-            opacity: isFirstScreen ? 1 : 0,
-            display: isFirstScreen ? "flex" : "none",
-          }}
-          transition={{ duration: 0 }}
-        >
-          <p className="caption-2-medium text-gray-white w-auto opacity-47">
-            더 많은 이벤트를 찾으려면 아래로 스와이프
-          </p>
-          <SwipeDownIcon className="h-6 w-6" />
-        </motion.div>
+        {(pathname === "/" || pathname === "/home") && (
+          <motion.div
+            className="pointer-events-none fixed bottom-0 z-5 mb-20 flex w-auto flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+            initial={{ opacity: 1 }}
+            animate={{
+              opacity: isFirstScreen ? 1 : 0,
+              display: isFirstScreen ? "flex" : "none",
+            }}
+            transition={{ duration: 0 }}
+          >
+            <p className="caption-2-medium text-gray-white w-auto opacity-25">
+              더 많은 이벤트를 찾으려면 아래로 스와이프
+            </p>
+            <SwipeDownIcon className="h-6 w-6" />
+          </motion.div>
+        )}
       </section>
 
       <motion.section
@@ -125,7 +128,7 @@ export default function Home() {
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-1-medium text-gray-white opacity-25">
+          <p className="caption-2-medium text-gray-white opacity-25">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>

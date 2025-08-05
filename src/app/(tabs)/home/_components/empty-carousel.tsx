@@ -12,7 +12,7 @@ export default function EmptyCarousel() {
         <div className="h-full w-full rounded-xl bg-[#2A2A2A]" />
       </div>
 
-      <div className="relative z-10 -mx-3 h-101 w-70.5 scale-100 overflow-hidden rounded-xl text-center text-white opacity-100">
+      <div className="h-93.2 relative z-10 -mx-3 w-65 scale-100 overflow-hidden rounded-xl text-center text-white opacity-100">
         <Image
           src="/images/empty-home.png"
           alt="empty home"
