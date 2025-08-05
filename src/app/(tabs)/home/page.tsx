@@ -94,7 +94,7 @@ export default function Home() {
       className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
-        <div className="mb-7 flex flex-col items-center">
+        <div className="mb-5 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "회원"}님을 위한 추천
@@ -174,7 +174,7 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          events.map((event) => (
+          events.slice(0, 5).map((event) => (
             <div key={event.eventId}>
               <Card
                 id={String(event.eventId)}
@@ -207,7 +207,7 @@ export default function Home() {
           />
         )}
 
-        {events.length === 5 && (
+        {events.length > 5 && (
           <Button
             className="mt-5 mb-5"
             variant="secondary"
