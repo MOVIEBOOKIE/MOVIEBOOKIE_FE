@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"
           />
-          <InAppRedirect />
+          {/* <InAppRedirect /> */}
           <ToastRenderer />
           <ReactQueryProvider>
             <ServiceWorkerDebug />
