@@ -76,6 +76,7 @@ export default function FeedbackPage() {
               </p>
               {reasons.map((r, index) => (
                 <button
+                  type="button"
                   key={`${index}-${r}`}
                   onClick={() => setSelectedReason(r)}
                   className={`body-3-regular mb-2 rounded-xl border px-5 py-4.5 text-left text-gray-100 transition ${
@@ -120,6 +121,7 @@ export default function FeedbackPage() {
       {feedbackType && (
         <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
           <Button
+            type="button"
             onClick={() => {
               if (step === 1) {
                 setStep(2);

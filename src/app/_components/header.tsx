@@ -56,6 +56,7 @@ export default function Header({
 
       {showCloseButton && (
         <button
+          type="button"
           className="absolute top-2.5 right-2.5"
           onClick={handleClose}
           aria-label="닫기"

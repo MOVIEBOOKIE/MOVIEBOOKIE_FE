@@ -35,6 +35,7 @@ export default function EventPage() {
           { label: "내 티켓", value: "ticket" },
         ].map((tab) => (
           <button
+            type="button"
             key={tab.value}
             onClick={() => {
               const params = new URLSearchParams(searchParams);
@@ -65,6 +66,7 @@ export default function EventPage() {
       <div className="pointer-events-none fixed inset-0 z-50">
         <div className="pointer-events-none relative mx-auto h-full max-w-md">
           <button
+            type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
             className="bg-red-main body-3-semibold pointer-events-auto absolute right-5 bottom-[calc(102px+24px)] flex items-center gap-1.5 rounded-full px-4 py-4 text-white focus:bg-red-700"
           >

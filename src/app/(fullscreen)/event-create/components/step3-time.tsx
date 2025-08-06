@@ -28,6 +28,7 @@ export default function Step3() {
       <div className="grid grid-cols-4 gap-2">
         {EVENT_CREATE_TIME.START_TIME.map((time) => (
           <button
+            type="button"
             key={time}
             onClick={() => setValue("eventStartTime", time)}
             className={clsx(
@@ -46,6 +47,7 @@ export default function Step3() {
       <div className="grid grid-cols-4 gap-2">
         {EVENT_CREATE_TIME.PROGRESS_TIME.map(({ label, value }) => (
           <button
+            type="button"
             key={value}
             onClick={() => setValue("eventProgressTime", value)}
             className={clsx(

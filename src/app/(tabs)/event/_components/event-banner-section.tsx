@@ -23,6 +23,7 @@ export default function EventBannerSection() {
           지금, 같이 보고 싶은 <br /> 콘텐츠가 있다면?
         </p>
         <button
+          type="button"
           onClick={() => router.push(PATHS.EVENT_CREATE)}
           className="bg-red-main body-3-semibold mt-5 rounded-xl px-6 py-3 text-white focus:bg-red-700"
         >

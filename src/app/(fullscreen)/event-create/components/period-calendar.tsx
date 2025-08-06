@@ -143,6 +143,7 @@ const DeadlineCalendar = ({
       )}
       <div className="body-3-regular mb-8 flex items-center justify-center gap-5">
         <button
+          type="button"
           onClick={() => setCurrentMonth((prev) => prev.subtract(1, "month"))}
           disabled={isPrevDisabled}
           className={clsx(
@@ -158,6 +159,7 @@ const DeadlineCalendar = ({
           {currentMonth.format("YYYY. M")}
         </div>
         <button
+          type="button"
           onClick={() => setCurrentMonth((prev) => prev.add(1, "month"))}
           className="text-lg text-gray-200"
         >
@@ -220,6 +222,7 @@ const DeadlineCalendar = ({
                 <div className="bg-red-main absolute inset-0 z-10 rounded-full text-white" />
               )}
               <button
+                type="button"
                 onClick={() => handleSelect(current)}
                 className={clsx(
                   "body-3-regular absolute z-30 flex h-10 w-10 items-center justify-center",

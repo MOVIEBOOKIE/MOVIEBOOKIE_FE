@@ -37,6 +37,7 @@ export default function FeedbackStartPage() {
         </div>
         <div className="flex gap-5">
           <button
+            type="button"
             onClick={() => handleFeedback("bad")}
             className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100"
           >
@@ -46,6 +47,7 @@ export default function FeedbackStartPage() {
             <div className="body-3-regular whitespace-nowrap">아쉬워요</div>
           </button>
           <button
+            type="button"
             onClick={() => handleFeedback("good")}
             className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100"
           >

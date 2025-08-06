@@ -139,6 +139,7 @@ export default function Home() {
           {CATEGORY_LABELS.map((label) => (
             <div key={label} className="flex items-center">
               <button
+                type="button"
                 className={`body-2-semibold rounded-full px-3.5 py-2.25 ${
                   selected === label ? "text-red-main" : "text-gray-500"
                 }`}
@@ -167,6 +168,7 @@ export default function Home() {
               지금 바로 나만의 이벤트를 만들어보세요
             </p>
             <button
+              type="button"
               onClick={() => router.push(PATHS.EVENT_CREATE)}
               className="bg-red-main body-3-semibold w-75 rounded-xl px-6 py-4 text-white"
             >

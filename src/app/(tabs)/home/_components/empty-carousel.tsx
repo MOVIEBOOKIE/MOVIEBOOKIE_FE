@@ -34,6 +34,7 @@ export default function EmptyCarousel() {
           </div>
 
           <button
+            type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
             className="bg-red-main body-3-semibold mt-6 w-full rounded-xl py-3 text-white"
           >

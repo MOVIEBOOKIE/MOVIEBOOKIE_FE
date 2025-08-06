@@ -223,6 +223,7 @@ export default function Detail() {
           </div>
 
           <Button
+            type="button"
             variant="primary"
             onClick={handleClick}
             disabled={

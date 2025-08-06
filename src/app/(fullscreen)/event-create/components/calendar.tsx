@@ -63,6 +63,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
       )}
       <div className="mb-8 flex items-center justify-center gap-5">
         <button
+          type="button"
           onClick={handlePrevMonth}
           disabled={isPrevDisabled}
           className={clsx(
