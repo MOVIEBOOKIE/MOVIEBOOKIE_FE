@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { getEventsByCategory } from "app/_apis/events/category";
 
-export const useCategoryEvents = (category: string) => {
+export const useCategoryEvents = (
+  category: string,
+  options?: {
+    enabled?: boolean;
+  },
+) => {
   return useQuery({
     queryKey: ["category-events", category],
-    queryFn: () => getEventsByCategory(category, 0, 5),
-    staleTime: 1000 * 60 * 5,
-    enabled: !!category,
+    queryFn: () => getEventsByCategory(category),
+    staleTime: 1000 * 60, // optional
+    ...options, // enabled 등 외부 옵션 허용
   });
 };
 

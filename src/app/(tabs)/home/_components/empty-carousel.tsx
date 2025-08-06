@@ -20,7 +20,6 @@ export default function EmptyCarousel() {
           className="rounded-xl object-cover"
           priority
         />
-
         <div className="relative z-10 flex h-full flex-col justify-between px-6 py-10">
           <div className="mt-14 flex flex-col items-center">
             <PopcornIcon className="mb-3 h-11 w-11 rotate-[-15.59deg]" />
@@ -34,6 +33,7 @@ export default function EmptyCarousel() {
           </div>
 
           <button
+            type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
             className="bg-red-main body-3-semibold mt-6 w-full rounded-xl py-3 text-white"
           >

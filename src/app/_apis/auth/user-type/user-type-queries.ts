@@ -10,5 +10,6 @@ export const USER_TYPE_OPTION = {
     queryOptions({
       queryKey: USER_TYPE_KEY.RESULT(),
       queryFn: () => getUserTypeResult(),
+      staleTime: 1000 * 60 * 60 * 24,
     }),
 };

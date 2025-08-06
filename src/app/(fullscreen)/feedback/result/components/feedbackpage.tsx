@@ -76,6 +76,7 @@ export default function FeedbackPage() {
               </p>
               {reasons.map((r, index) => (
                 <button
+                  type="button"
                   key={`${index}-${r}`}
                   onClick={() => setSelectedReason(r)}
                   className={`body-3-regular mb-2 rounded-xl border px-5 py-4.5 text-left text-gray-100 transition ${

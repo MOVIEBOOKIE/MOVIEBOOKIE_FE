@@ -35,6 +35,7 @@ export default function BottomNavigation() {
 
         return (
           <button
+            type="button"
             key={tab.id}
             onClick={() => handleTabClick(tab.path)}
             className="relative flex w-20 flex-col items-center gap-2"

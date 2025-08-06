@@ -77,6 +77,7 @@ export default function NotificationPage() {
             지금 바로 나만의 이벤트를 만들어보세요
           </p>
           <button
+            type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
             className="bg-red-main body-3-semibold w-75 rounded-xl px-6 py-4 text-white"
           >

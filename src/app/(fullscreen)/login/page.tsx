@@ -56,6 +56,7 @@ export default function Login() {
         <div className="fixed bottom-[186px] left-1/2 z-20 flex -translate-x-1/2 gap-2">
           {slides.map((_, index) => (
             <button
+              type="button"
               key={index}
               className={`h-1.5 w-1.5 rounded-full ${
                 index === activeIndex ? "bg-gray-100" : "bg-gray-700"

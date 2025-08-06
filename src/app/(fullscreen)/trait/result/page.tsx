@@ -32,18 +32,22 @@ export default function TraitResult() {
     if (user.userTypeTitle === data.title) return;
     const cleanedTitle = data.title.replace(/\n/g, " ");
     setUser({ ...user, userTypeTitle: cleanedTitle });
-  }, [data?.title, user?.userTypeTitle, setUser]);
+  }, [data?.title, user, setUser]);
 
   useEffect(() => {
     const handleResize = () => {
       setIsShortScreen(window.innerHeight < 700);
     };
 
-    if (typeof window !== "undefined") {
-      handleResize();
+    handleResize();
+    const debounced = setTimeout(() => {
       window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
+    }, 100);
+
+    return () => {
+      clearTimeout(debounced);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const iconSet =

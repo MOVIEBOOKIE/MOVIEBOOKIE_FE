@@ -14,12 +14,9 @@ export default function InAppRedirect() {
     if (!isInApp) return;
 
     if (ua.includes("kakaotalk")) {
-      window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(
-        currentUrl,
-      )}`;
-      return;
+      const safariRedirectUrl = `${window.location.origin}/external-redirect?url=${encodeURIComponent(currentUrl)}`;
+      window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(safariRedirectUrl)}`;
     }
   }, []);
-
   return null;
 }

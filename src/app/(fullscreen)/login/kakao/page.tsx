@@ -70,7 +70,7 @@ function KakaoLogin() {
       }
     };
     handleLogin();
-  }, [code, redirectUrl, isLocal, router]);
+  }, [code, redirectUrl, isLocal, router, kakaoLogin]);
 
   return isPending ? <Loading /> : null;
 }

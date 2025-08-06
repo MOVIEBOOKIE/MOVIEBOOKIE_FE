@@ -29,6 +29,7 @@ export default function CategoryButton({
 
   return (
     <button
+      type="button"
       className="relative aspect-[161/135] w-full"
       onClick={handleNavigate}
       aria-label={`${label} 카테고리로 이동`}

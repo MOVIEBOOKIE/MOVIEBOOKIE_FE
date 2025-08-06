@@ -4,9 +4,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { PATHS } from "@/constants/index";
 import { PlusIcon } from "lucide-react";
-import { PopcornIcon } from "@/icons/index";
-import Image from "next/image";
+import { Suspense } from "react";
 
+const EventBannerSection = dynamic(
+  () => import("./_components/event-banner-section"),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+);
 const EventTab = dynamic(() => import("./_components/event-tabs"));
 const TicketTab = dynamic(() => import("./_components/ticket-tab"));
 
@@ -19,29 +25,9 @@ export default function EventPage() {
   return (
     <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
       <h1 className="title-1-semibold px-5 pt-6 pb-5">이벤트</h1>
-      <section className="relative mx-5 overflow-hidden rounded-3xl">
-        <Image
-          src="/images/event-banner.webp"
-          alt="이벤트 배너"
-          fill
-          priority
-          className="object-cover"
-        />
-
-        <div className="relative z-10 flex flex-col items-center px-5 py-8 text-center text-white">
-          <PopcornIcon className="mb-3 h-11 w-11 rotate-[-15.59deg]" />
-          <p className="title-3-semibold leading-snug">
-            지금, 같이 보고 싶은 <br /> 콘텐츠가 있다면?
-          </p>
-          <button
-            onClick={() => router.push(PATHS.EVENT_CREATE)}
-            className="bg-red-main body-3-semibold mt-5 rounded-xl px-6 py-3 text-white focus:bg-red-700"
-          >
-            나만의 이벤트 만들러 가기
-          </button>
-        </div>
-      </section>
-
+      <Suspense fallback={null}>
+        <EventBannerSection />
+      </Suspense>
       <nav className="body-2-medium px-5 pt-6">
         {[
           { label: "신청 목록", value: "apply" },
@@ -49,6 +35,7 @@ export default function EventPage() {
           { label: "내 티켓", value: "ticket" },
         ].map((tab) => (
           <button
+            type="button"
             key={tab.value}
             onClick={() => {
               const params = new URLSearchParams(searchParams);
@@ -79,6 +66,7 @@ export default function EventPage() {
       <div className="pointer-events-none fixed inset-0 z-50">
         <div className="pointer-events-none relative mx-auto h-full max-w-md">
           <button
+            type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
             className="bg-red-main body-3-semibold pointer-events-auto absolute right-5 bottom-[calc(102px+24px)] flex items-center gap-1.5 rounded-full px-4 py-4 text-white focus:bg-red-700"
           >

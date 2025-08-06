@@ -13,7 +13,7 @@ export default function LoadingPage() {
     if (isLoading) {
       setLoading(false);
     }
-  }, [pathname]);
+  }, [pathname, isLoading, setLoading]);
   if (!isLoading) return null;
 
   return (
