@@ -9,6 +9,7 @@ import Toast from "./_components/noti-toast";
 import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import { LoadingProvider } from "./_context/loading-context";
 import { metadata, viewport } from "@/constants/metadata";
+import InAppRedirect from "./_components/inapp-redirect";
 
 export { metadata, viewport };
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -29,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"
           />
-          {/* <InAppRedirect /> */}
+          <InAppRedirect />
           <ToastRenderer />
           <ReactQueryProvider>
             <ServiceWorkerDebug />
