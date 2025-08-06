@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFCM } from "./use-fcm";
 
 export const useFCMHandler = () => {
-  const [showPermissionBanner, setShowPermissionBanner] = useState(false);
   const { requestPermissionAndToken, onForegroundMessage } = useFCM();
 
-  // 🔔 조건 만족할 때 호출 (ex. 로그인 후 홈 진입 시)
-  const requestOnceIfNeeded = async () => {
+  // 조건 만족할 때 호출 (ex. 로그인 후 홈 진입 시)
+  const requestOnceIfNeeded = useCallback(async () => {
     const hasAsked = localStorage.getItem("fcm-asked") === "true";
     const shouldRequest = Notification.permission === "default" && !hasAsked;
 
@@ -18,7 +17,8 @@ export const useFCMHandler = () => {
     if (permission === "granted") {
       await requestPermissionAndToken();
     }
-  };
+  }, [requestPermissionAndToken]);
+
   useEffect(() => {
     console.log("🌐 모든 환경에서 FCM 토큰 등록 시도");
 
@@ -26,21 +26,9 @@ export const useFCMHandler = () => {
       if (Notification.permission === "granted") {
         requestPermissionAndToken();
       }
-
-      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const isStandalone =
-        window.matchMedia("(display-mode: standalone)").matches ||
-        (window.navigator as any).standalone === true;
-
-      if (isIOS && isStandalone && Notification.permission === "default") {
-        console.log("ℹ️ iOS PWA - 알림 권한 배너 표시");
-        setShowPermissionBanner(true);
-      }
     }
 
     onForegroundMessage((payload) => {
-      console.log("📩 알림 수신 (fcm handler):", payload);
-
       const title =
         payload.notification?.title ||
         payload.data?.title ||
@@ -63,8 +51,7 @@ export const useFCMHandler = () => {
         }
       }
 
-      const { code, eventId } = payload.data || {};
-      const parsedCode = code ? Number(code) : 99;
+      const { eventId } = payload.data || {};
       const parsedEventId = Number(eventId);
 
       if (!title || !body || !eventId || isNaN(parsedEventId)) return;
@@ -72,8 +59,6 @@ export const useFCMHandler = () => {
   }, [requestPermissionAndToken, onForegroundMessage]);
 
   return {
-    showPermissionBanner,
-    setShowPermissionBanner,
     requestOnceIfNeeded,
   };
 };

@@ -1,4 +1,7 @@
-export const metadata = {
+import type { Metadata } from "next";
+import type { Viewport } from "next";
+
+export const metadata: Metadata = {
   title: "무비부키 | 영화관 모임의 시작",
   description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
   icons: {
@@ -18,8 +21,9 @@ export const metadata = {
     ],
     type: "website",
   },
-};
-export const viewport = {
+} as const;
+
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
