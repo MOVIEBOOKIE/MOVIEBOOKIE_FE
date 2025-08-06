@@ -69,7 +69,7 @@ export const useFCMHandler = () => {
 
       if (!title || !body || !eventId || isNaN(parsedEventId)) return;
     });
-  }, []);
+  }, [requestPermissionAndToken, onForegroundMessage]);
 
   return {
     showPermissionBanner,

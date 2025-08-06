@@ -1,0 +1,25 @@
+export const metadata = {
+  title: "무비부키 | 영화관 모임의 시작",
+  description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
+  icons: {
+    icon: "/favicon.png",
+  },
+  openGraph: {
+    title: "무비부키 | 영화관 모임의 시작",
+    description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
+    url: "https://movie-bookie.shop",
+    images: [
+      {
+        url: "/images/thumbnail.png",
+        width: 1200,
+        height: 630,
+        alt: "MovieBookie",
+      },
+    ],
+    type: "website",
+  },
+};
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};

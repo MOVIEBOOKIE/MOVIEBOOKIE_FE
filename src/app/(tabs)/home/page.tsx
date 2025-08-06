@@ -82,7 +82,7 @@ export default function Home() {
     if (user?.email) {
       requestOnceIfNeeded();
     }
-  }, [user?.email]);
+  }, [user?.email, requestOnceIfNeeded]);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);

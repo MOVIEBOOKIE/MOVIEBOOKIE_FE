@@ -31,7 +31,7 @@ export default function EventTab({ type }: EventTabProps) {
 
   useEffect(() => {
     setSelectedToggle(isConfirmed ? "확정 이벤트" : toggles[0]);
-  }, [type, toggleParam]);
+  }, [type, toggleParam, isConfirmed, toggles]);
 
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteEventTabQuery(type, selectedToggle);

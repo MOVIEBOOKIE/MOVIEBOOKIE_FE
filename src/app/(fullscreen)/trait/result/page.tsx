@@ -32,7 +32,7 @@ export default function TraitResult() {
     if (user.userTypeTitle === data.title) return;
     const cleanedTitle = data.title.replace(/\n/g, " ");
     setUser({ ...user, userTypeTitle: cleanedTitle });
-  }, [data?.title, user?.userTypeTitle, setUser]);
+  }, [data?.title, user, setUser]);
 
   useEffect(() => {
     const handleResize = () => {
