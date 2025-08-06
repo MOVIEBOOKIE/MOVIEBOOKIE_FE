@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 import { NAVIGATION_TABS } from "app/_constants";
 import LightEffect from "./light-effect";
 import { useNotificationStore } from "app/_stores/use-noti";

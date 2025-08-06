@@ -17,38 +17,41 @@ export default function TraitResult() {
   const router = useRouter();
   const from = searchParams.get("from");
 
+  const { data } = useGetUserTypeResult();
+  const setUser = useUserStore((state) => state.setUser);
+  const user = useUserStore((state) => state.user);
+
   const isFromMyPage = from === "mypage";
 
   const handleClick = () => {
     router.push(PATHS.HOME);
   };
 
-  const { data } = useGetUserTypeResult();
-  const setUser = useUserStore((state) => state.setUser);
-  const user = useUserStore((state) => state.user);
-
   useEffect(() => {
     if (!user || !data?.title) return;
-    if (user.userTypeTitle === data.title) return;
-    const cleanedTitle = data.title.replace(/\n/g, " ");
-    setUser({ ...user, userTypeTitle: cleanedTitle });
-  }, [data?.title, user, setUser]);
 
+    const cleanedTitle = data.title.replace(/\n/g, " ");
+    if (user.userTypeTitle !== cleanedTitle) {
+      setTimeout(() => {
+        setUser({ ...user, userTypeTitle: cleanedTitle });
+      }, 0);
+    }
+  }, [data?.title]);
   useEffect(() => {
     const handleResize = () => {
       setIsShortScreen(window.innerHeight < 700);
     };
 
-    handleResize();
-    const debounced = setTimeout(() => {
+    if (typeof window !== "undefined") {
+      handleResize();
       window.addEventListener("resize", handleResize);
-    }, 100);
-
-    return () => {
-      clearTimeout(debounced);
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
+
+  if (!data) {
+    return null;
+  }
 
   const iconSet =
     USER_TYPE_ICONS[data?.userTypeCode as keyof typeof USER_TYPE_ICONS] ??
