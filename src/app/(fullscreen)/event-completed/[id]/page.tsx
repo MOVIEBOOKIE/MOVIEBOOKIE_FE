@@ -48,11 +48,7 @@ export default function EventCompletedPage() {
 
       <div className="bg-gray-black fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12.5">
         <div className="flex flex-col gap-3">
-          <Button
-            type="button"
-            className="bg-red-main text-white"
-            onClick={handleComplete}
-          >
+          <Button className="bg-red-main text-white" onClick={handleComplete}>
             네, 상영이 완료되었어요
           </Button>
           <Button className="bg-gray-800 text-white" onClick={handleCancel}>

@@ -104,7 +104,7 @@ export default function Home() {
 
         {(pathname === "/" || pathname === "/home") && (
           <motion.div
-            className="pointer-events-none fixed bottom-0 z-5 mb-20 flex w-auto flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+            className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
             initial={{ opacity: 1 }}
             animate={{
               opacity: isFirstScreen ? 1 : 0,

@@ -58,7 +58,7 @@ export default function Carousel() {
         {Array.isArray(events) && events.length > 0 ? (
           events.map((event) => (
             <SwiperSlide
-              style={{ width: "260px", height: "373px" }}
+              style={{ width: "282px", height: "404px" }}
               key={event.eventId}
               className="flex items-center rounded-[12px] transition-transform duration-300 ease-in-out"
               onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
@@ -66,8 +66,8 @@ export default function Carousel() {
               <div className="relative flex h-full w-full items-center justify-center rounded-[12px]">
                 <div className="relative h-full w-full rounded-xl">
                   <Image
-                    width={260}
-                    height={373}
+                    width={282}
+                    height={404}
                     src={event.posterImageUrl}
                     alt={event.title}
                     className="absolute h-full w-full rounded-[12px] object-cover"

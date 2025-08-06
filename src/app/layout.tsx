@@ -1,14 +1,12 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
-import InAppRedirect from "./_components/inapp-redirect";
 import { ReactQueryProvider } from "./providers/react-query-provider";
 import ToastRenderer from "./_components/toast-renderer";
 import Script from "next/script";
 import { ToastProvider } from "./_context/toast-context";
 import Toast from "./_components/noti-toast";
 import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
-import DebugLogger from "./_components/debug-logger";
 import { LoadingProvider } from "./_context/loading-context";
 
 export const metadata = {
