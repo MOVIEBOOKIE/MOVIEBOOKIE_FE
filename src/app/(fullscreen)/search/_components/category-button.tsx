@@ -7,12 +7,14 @@ interface CategoryButtonProps {
   label: string;
   src: string;
   path: string;
+  index: number;
 }
 
 export default function CategoryButton({
   label,
   src,
   path,
+  index,
 }: CategoryButtonProps) {
   const router = useRouter();
 
@@ -35,12 +37,13 @@ export default function CategoryButton({
       aria-label={`${label} 카테고리로 이동`}
     >
       <Image
-        fill
         src={src}
         alt={label}
+        fill
         sizes="161px"
-        loading="lazy"
         className="object-cover"
+        loading={index < 2 ? "eager" : "lazy"}
+        priority={index < 2}
       />
       <p className="body-2-semibold absolute top-4 left-4 text-start text-gray-100">
         {formattedLabel}

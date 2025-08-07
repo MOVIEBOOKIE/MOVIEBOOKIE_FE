@@ -61,12 +61,13 @@ export default function Search() {
           </p>
 
           <div className="gap mx-5 grid grid-cols-2 justify-center gap-3.25">
-            {EVENT_CATEGORIES.map((category) => (
+            {EVENT_CATEGORIES.map((category, idx) => (
               <CategoryButton
                 key={category.path}
                 label={category.label}
                 src={category.src}
                 path={category.path}
+                index={idx}
               />
             ))}
           </div>
