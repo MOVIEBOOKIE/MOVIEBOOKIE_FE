@@ -46,7 +46,7 @@ input:-webkit-autofill {
 }
 
 input {
-  caret-color: white; 
+  caret-color: white;
 }
 /* 스크롤바 스타일 */
 ::-webkit-scrollbar {
@@ -62,4 +62,11 @@ input {
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(100, 100, 100, 0.8);
+}
+
+@supports (padding: max(0px)) {
+  body {
+    padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
+    padding-top: env(safe-area-inset-top); /* iOS 11.2+ */
+  }
 }

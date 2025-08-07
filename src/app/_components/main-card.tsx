@@ -27,7 +27,7 @@ function Card({
 
   return (
     <div className="relative flex h-30 w-full gap-3" onClick={handleClick}>
-      <div className="relative h-30 w-30 overflow-hidden rounded-md">
+      <div className="relative h-30 w-30 overflow-hidden rounded-[8px]">
         <Image
           src={imageUrl || "/images/default-image.png"}
           alt={title}
