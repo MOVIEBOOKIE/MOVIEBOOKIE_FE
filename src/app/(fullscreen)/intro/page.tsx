@@ -26,10 +26,12 @@ export default function Intro() {
 
   return (
     <main
-      className="relative w-full bg-cover bg-center"
+      className="fixed inset-0 w-full bg-cover bg-center"
       style={{
-        height: "calc(100dvh + env(safe-area-inset-top))",
+        height: "100dvh",
+        paddingTop: "env(safe-area-inset-top)",
         marginTop: "calc(-1 * env(safe-area-inset-top))",
+        minHeight: "calc(100dvh + env(safe-area-inset-top))",
       }}
     >
       <Image
@@ -40,8 +42,17 @@ export default function Intro() {
         placeholder="blur"
         blurDataURL="/images/custom-bg.webp"
         className="z-0 object-cover"
+        style={{
+          top: "calc(-1 * env(safe-area-inset-top))",
+          height: "calc(100% + env(safe-area-inset-top))",
+        }}
       />
-      <div className="absolute top-[47.14%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+      <div
+        className="absolute left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center"
+        style={{
+          top: "calc(50% - env(safe-area-inset-top) / 2)",
+        }}
+      >
         <div className="flex flex-col items-center">
           <LogoWhiteIcon width={100} height={100} />
           <h1 className="body-2-medium -mt-2 text-white">
