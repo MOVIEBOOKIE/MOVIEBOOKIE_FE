@@ -155,7 +155,7 @@ export default function Home() {
         </div>
 
         {isLoading ? (
-          <div className="flex flex-col gap-4">
+          <div className="mb-26 flex flex-col gap-4">
             {Array.from({ length: 4 }).map((_, idx) => (
               <CardSkeleton key={idx} />
             ))}
