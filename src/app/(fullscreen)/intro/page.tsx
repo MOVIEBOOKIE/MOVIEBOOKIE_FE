@@ -34,19 +34,23 @@ export default function Intro() {
         minHeight: "calc(100dvh + env(safe-area-inset-top))",
       }}
     >
-      <Image
-        src="/images/custom-bg.webp"
-        alt="Intro Background"
-        fill
-        priority
-        placeholder="blur"
-        blurDataURL="/images/custom-bg.webp"
-        className="z-0 object-cover"
+      <div
+        className="absolute inset-0 z-0"
         style={{
           top: "calc(-1 * env(safe-area-inset-top))",
           height: "calc(100% + env(safe-area-inset-top))",
         }}
-      />
+      >
+        <Image
+          src="/images/custom-bg.webp"
+          alt="Intro Background"
+          fill
+          priority
+          placeholder="blur"
+          blurDataURL="/images/custom-bg.webp"
+          className="object-cover"
+        />
+      </div>
       <div
         className="absolute left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center"
         style={{
