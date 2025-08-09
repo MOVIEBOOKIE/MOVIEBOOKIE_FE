@@ -1,14 +1,25 @@
 import { EventCard } from "app/_types/card";
 import { apiGet } from "../methods";
 
-export const getRegisteredEvents = (params: {
-  type: 0 | 1;
-  page: number;
-  size: number;
-}) => apiGet<EventCard[]>("/participation/registered", params);
+type EventType = 0 | 1 | 2;
 
-export const getHostedEvents = (params: {
-  type: 0 | 1;
+type Params = {
+  type: EventType;
   page: number;
   size: number;
-}) => apiGet<EventCard[]>("/participation/hosted", params);
+};
+
+async function fetchList(path: string, params: Params): Promise<EventCard[]> {
+  try {
+    const res = await apiGet<unknown>(path, params);
+    return Array.isArray(res) ? (res as EventCard[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export const getRegisteredEvents = (params: Params) =>
+  fetchList("/participation/registered", params);
+
+export const getHostedEvents = (params: Params) =>
+  fetchList("/participation/hosted", params);
