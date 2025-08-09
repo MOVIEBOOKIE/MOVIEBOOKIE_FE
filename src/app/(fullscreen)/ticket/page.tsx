@@ -18,7 +18,7 @@ export default function Ticket() {
       state="default"
     >
       <div>
-        <div className="mt-6 flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
           {isLoading ? (
             [...Array(2)].map((_, idx) => (
               <div key={idx}>
@@ -30,18 +30,18 @@ export default function Ticket() {
               <div key={ticket.ticketId}>
                 <TicketCard
                   id={ticket.ticketId}
+                  category={ticket.category}
                   imageUrl={ticket.eventImageUrl}
                   title={ticket.title}
                   placeAndDate={`${ticket.location} · ${ticket.scheduledAt}`}
                   description={ticket.description}
                   ddayBadge={null}
-                  progressRate={undefined}
-                  estimatedPrice={undefined}
+                  estimatedPrice={ticket.estimatedPrice}
                 />
               </div>
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-500">
+            <div className="flex flex-col items-center justify-center pt-25 text-center text-gray-500">
               <EmptyTicketIcon />
               <p className="body-3-medium mt-3.5 text-gray-800">
                 아직 이벤트 티켓이 없어요 <br />

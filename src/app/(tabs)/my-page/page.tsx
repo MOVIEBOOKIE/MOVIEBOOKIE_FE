@@ -2,7 +2,13 @@
 
 import Modal from "@/components/modal";
 import { PATHS } from "@/constants";
-import { ArrowRightIcon, DefaultProfileIcon, MyKakaoIcon } from "@/icons/index";
+import {
+  ArrowRightIcon,
+  DefaultProfileIcon,
+  MyKakaoIcon,
+  MyPageFeedbackIcon,
+  MyPageTicketIcon,
+} from "@/icons/index";
 import { useLogoutHandler } from "app/_hooks/auth/use-logout";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
@@ -99,28 +105,29 @@ export default function MyPage() {
         <button
           type="button"
           onClick={() => router.push(`${PATHS.TICKETLIST}`)}
-          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 p-5 text-left"
+          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 text-left"
           aria-label="내 티켓"
         >
-          <div>
+          <div className="px-5 pt-5 pb-2.5">
             <p className="body-2-semibold">내 티켓</p>
             <p className="caption-1-medium mt-1 text-gray-500">
               나의 대관 티켓 모아보기
             </p>
           </div>
-          {/* 아이콘추가 */}
+          <MyPageTicketIcon className="mx-5" />
         </button>
 
         <button
           type="button"
-          onClick={() => router.push(PATHS.FEEDBACK)}
-          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 p-5 text-left"
+          onClick={() => router.push(`${PATHS.TICKETLIST}`)}
+          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 text-left"
           aria-label="평가 및 피드백"
         >
-          <div>
+          <div className="px-5 pt-5 pb-2.5">
             <p className="body-2-semibold">평가 및 피드백</p>
             <p className="caption-1-medium mt-1 text-gray-500">의견 남기기</p>
           </div>
+          <MyPageFeedbackIcon className="mx-5" />
         </button>
       </section>
 

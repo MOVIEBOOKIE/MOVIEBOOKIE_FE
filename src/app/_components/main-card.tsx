@@ -14,7 +14,6 @@ function Card({
   description,
   ddayBadge,
   statusBadge,
-  progressRate,
   estimatedPrice,
   query = {},
 }: CardProps) {
