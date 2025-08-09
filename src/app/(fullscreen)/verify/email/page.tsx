@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { useSendEmail } from "app/_hooks/onboarding/use-send-code";
 
-const EMAIL_DOMAINS = ["naver.com", "gmail.com"];
+const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
+type EmailDomain = (typeof EMAIL_DOMAINS)[number];
 
 export default function EmailStep() {
   const router = useRouter();
@@ -15,9 +16,10 @@ export default function EmailStep() {
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const isValidEmail = /^[a-zA-Z0-9._%+-]+$/.test(email);
   const fullEmail = `${email}@${emailDomain}`;
-  const otherDomain = EMAIL_DOMAINS.find((d) => d !== emailDomain)!;
+  const isValidEmail = /^[a-zA-Z0-9._%+-]+@(naver\.com|gmail\.com)$/.test(
+    fullEmail,
+  );
   const { mutate: sendEmailCode } = useSendEmail();
 
   const handleSendCode = () => {
@@ -69,25 +71,42 @@ export default function EmailStep() {
               type="button"
               onClick={() => setDropdownOpen((prev) => !prev)}
               className="flex w-full items-center justify-between border-b border-gray-700 bg-transparent pr-2 pb-1.5 text-left text-gray-100"
+              aria-haspopup="listbox"
+              aria-expanded={dropdownOpen}
             >
               @ {emailDomain}
-              <ArrowDownIcon className="h-1.7 text-gray-400" />
+              <ArrowDownIcon
+                className={`h-1.7 text-gray-400 ${
+                  dropdownOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {dropdownOpen && (
-              <ul className="absolute z-10 mt-1.5 w-full rounded-md bg-gray-900">
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEmailDomain(otherDomain);
-                      setDropdownOpen(false);
-                    }}
-                    className="w-full px-4 py-2 text-left text-gray-400"
-                  >
-                    @ {otherDomain}
-                  </button>
-                </li>
+              <ul
+                className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-md bg-gray-900"
+                role="listbox"
+                tabIndex={-1}
+              >
+                {EMAIL_DOMAINS.map((domain) => {
+                  const selected = domain === emailDomain;
+                  return (
+                    <li key={domain}>
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={selected}
+                        onClick={() => {
+                          setEmailDomain(domain as EmailDomain);
+                          setDropdownOpen(false);
+                        }}
+                        className={`flex w-full items-center justify-between px-4 py-2 text-left whitespace-nowrap ${selected ? "bg-gray-800 text-white" : "text-gray-400"}`}
+                      >
+                        <span>@ {domain}</span>
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
