@@ -11,6 +11,8 @@ import { useCreateEvent } from "app/_hooks/use-create-event";
 import Complete from "@/components/complete";
 import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
+import { useToastStore } from "app/_stores/use-toast-store";
+import { flushSync } from "react-dom";
 
 export default function Client() {
   const [step, setStep] = useState(1);
@@ -19,6 +21,7 @@ export default function Client() {
   const { mutate } = useCreateEvent();
   const { setLoading, isLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const showToast = useToastStore((state) => state.showToast);
 
   const handleButtonClick = () => {
     if (step === 1) {
@@ -31,8 +34,8 @@ export default function Client() {
           setStep(3);
           setLoading(false);
         },
-        onError: (error) => {
-          console.error("이벤트 생성 실패", error);
+        onError: () => {
+          showToast("이벤트 게시에 실패했어요");
           setLoading(false);
         },
       });
@@ -42,10 +45,13 @@ export default function Client() {
     setShowExitConfirm(true);
   };
   const handleConfirmExit = () => {
-    setShowExitConfirm(false);
-    useEventFormStore.getState().resetFormData();
+    flushSync(() => {
+      setShowExitConfirm(false);
+    });
+    resetFormData();
     router.push(PATHS.EVENT);
   };
+
   const handleCancelExit = () => {
     setShowExitConfirm(false);
   };
@@ -82,10 +88,10 @@ export default function Client() {
           iconType="alert"
           title="이벤트 생성을 취소할까요?"
           children="지금까지 작성한 내용은 저장되지 않아요"
-          confirmText="생성 취소하기"
-          cancelText="아니오"
-          onConfirm={handleConfirmExit}
-          onCancel={handleCancelExit}
+          confirmText="돌아가기"
+          cancelText="생성 취소"
+          onCancel={handleConfirmExit}
+          onConfirm={handleCancelExit}
         />
       )}
     </>

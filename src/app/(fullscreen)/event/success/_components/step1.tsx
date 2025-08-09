@@ -40,10 +40,10 @@ export default function Step1() {
           <br />
           이벤트를 확인해 보아요!
         </p>
-        <p className="caption-1-regular text-red-main text-center">
+        <p className="caption-1-medium text-center text-red-600">
           생성한 이벤트는 수정이 불가능해요
           <br />
-          <span className="text-gray-500">
+          <span className="text-red-600">
             지금 만든 이벤트를 다시 한번 점검해 주세요!
           </span>
         </p>

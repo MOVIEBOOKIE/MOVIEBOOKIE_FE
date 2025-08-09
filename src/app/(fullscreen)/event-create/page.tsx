@@ -15,6 +15,7 @@ import { EventFormValues } from "app/_types/event";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Modal from "@/components/modal";
 import { useState } from "react";
+import { flushSync } from "react-dom";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -64,7 +65,7 @@ export default function EventCreatePage() {
         (!minParticipants ||
           Number(minParticipants) <= 0 ||
           !maxParticipants ||
-          Number(maxParticipants) > 320)) ||
+          Number(maxParticipants) > 321)) ||
       (step === 5 && !locationId) ||
       (step === 6 &&
         (!eventTitle || !mediaTitle || !description || !thumbnail));
@@ -104,9 +105,11 @@ export default function EventCreatePage() {
   };
 
   const handleConfirmExit = () => {
-    setShowExitConfirm(false);
+    flushSync(() => {
+      setShowExitConfirm(false);
+    });
     useEventFormStore.getState().resetFormData();
-    router.push(PATHS.HOME);
+    router.push(PATHS.EVENT);
   };
 
   const handleCancelExit = () => {
@@ -117,7 +120,7 @@ export default function EventCreatePage() {
     <FormProvider {...methods}>
       <FixedLayout
         key={step}
-        title="이벤트 생성"
+        title="이벤트 만들기"
         onButtonClick={onNext}
         isButtonDisabled={isButtonDisabled}
         showCloseButton={true}
@@ -133,10 +136,10 @@ export default function EventCreatePage() {
           iconType="alert"
           title="이벤트 생성을 취소할까요?"
           children="지금까지 작성한 내용은 저장되지 않아요"
-          confirmText="생성 취소하기"
-          cancelText="아니오"
-          onConfirm={handleConfirmExit}
-          onCancel={handleCancelExit}
+          confirmText="돌아가기"
+          cancelText="생성 취소"
+          onCancel={handleConfirmExit}
+          onConfirm={handleCancelExit}
         />
       )}
     </FormProvider>

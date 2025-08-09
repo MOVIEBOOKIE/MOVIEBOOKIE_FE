@@ -47,9 +47,9 @@ export default function Step5({ onValidityChange }: Step5Props) {
   const validateMax = (value: number) => {
     const parsedMin = Number(min);
 
-    if (value > 320) {
+    if (value > 321) {
       setMaxError(true);
-      showToastWithMessage("최대 인원은 320명까지 설정 가능해요");
+      showToastWithMessage("최대 인원은 321명까지 설정 가능해요");
     } else if (parsedMin > 0 && value < parsedMin) {
       setMaxError(true);
       showToastWithMessage("최대인원은 최소인원보다 적을 수 없어요");
