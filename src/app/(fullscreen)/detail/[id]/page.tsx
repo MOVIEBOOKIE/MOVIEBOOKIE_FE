@@ -193,7 +193,7 @@ export default function Detail() {
 
   return (
     <>
-      {data && (
+      {loggedIn && data && (
         <TopBar
           event={{
             eventId: data.eventId,
@@ -217,7 +217,7 @@ export default function Detail() {
             }`}
           >
             <p className="caption-1-medium text-gray-500">예상 가격</p>
-            <p className="body-3-semibold whitespace-nowrap text-gray-300">
+            <p className="body-2-semibold whitespace-nowrap text-gray-200">
               {data?.estimatedPrice?.toLocaleString?.() ?? "-"}원
             </p>
           </div>

@@ -27,6 +27,7 @@ interface ModalProps {
   hideButtons?: boolean;
   children: ReactNode;
   onClose?: () => void;
+  ButtonClassName?: string;
 }
 
 export default function Modal({
@@ -41,6 +42,7 @@ export default function Modal({
   onClose,
   showCloseButton = false,
   hideButtons = false,
+  ButtonClassName,
 }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
@@ -77,7 +79,10 @@ export default function Modal({
               <Button
                 variant="secondary"
                 onClick={onCancel}
-                className="bg-red-main text-gray-200 active:bg-red-700"
+                className={
+                  ButtonClassName ||
+                  "bg-red-main text-gray-200 hover:bg-red-600 focus:bg-red-700 active:bg-red-700"
+                }
               >
                 {cancelText}
               </Button>

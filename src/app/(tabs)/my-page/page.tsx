@@ -31,7 +31,7 @@ export default function MyPage() {
     <div className="h-[calc(100vh-102px)] overflow-y-scroll px-5 text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
       <div
-        className="mb-5 flex cursor-pointer items-center justify-between gap-4"
+        className="mb-3 flex cursor-pointer items-center justify-between gap-4"
         onClick={() => router.push(`${PATHS.TRAIT_RESULT}?from=mypage`)}
         role="button"
       >
@@ -53,7 +53,7 @@ export default function MyPage() {
           <div>
             <p className="text-lg font-semibold">{user?.nickname}</p>
             <p className="body-3-medium text-gray-500">{user?.userTypeTitle}</p>
-            <p className="caption-1-medium text-gray-500">{user?.email}</p>
+            <p className="caption-1-medium pt-1 text-gray-500">{user?.email}</p>
           </div>
         </div>
 
@@ -61,11 +61,10 @@ export default function MyPage() {
       </div>
 
       <div className="flex justify-center">
-        <div className="mb-3 flex h-21.75 w-full justify-around rounded-xl bg-gray-950 text-center">
+        <div className="mb-3 flex h-21.75 w-full items-center justify-around text-center">
           <button
             type="button"
             className="flex-1 cursor-pointer"
-            onClick={() => router.push(`${PATHS.EVENT}?toggle=confirmed`)}
             aria-label="참여경험 보기"
           >
             <MyPageStat
@@ -73,26 +72,58 @@ export default function MyPage() {
               value={user?.participationExperienceCount}
             />
           </button>
+          <div className="h-12.5 w-px bg-gray-950" />
           <button
             type="button"
             className="flex-1 cursor-pointer"
-            onClick={() =>
-              router.push(`${PATHS.EVENT}?tab=mine&toggle=confirmed`)
-            }
             aria-label="주최경험 보기"
           >
             <MyPageStat label="주최경험" value={user?.hostExperienceCount} />
           </button>
+          <div className="h-12.5 w-px bg-gray-950" />
           <button
             type="button"
             className="flex-1 cursor-pointer"
-            onClick={() => router.push(`${PATHS.EVENT}?tab=ticket`)}
             aria-label="티켓 보기"
           >
             <MyPageStat label="티켓" value={user?.ticketCount} />
           </button>
         </div>
       </div>
+      <div
+        aria-hidden
+        className="-mx-5 h-1.5 w-[calc(100%+2.5rem)] bg-gray-950"
+      />
+
+      <section className="mt-5 mb-5 grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          onClick={() => router.push(`${PATHS.TICKETLIST}`)}
+          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 p-5 text-left"
+          aria-label="내 티켓"
+        >
+          <div>
+            <p className="body-2-semibold">내 티켓</p>
+            <p className="caption-1-medium mt-1 text-gray-500">
+              나의 대관 티켓 모아보기
+            </p>
+          </div>
+          {/* 아이콘추가 */}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => router.push(PATHS.FEEDBACK)}
+          className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 p-5 text-left"
+          aria-label="평가 및 피드백"
+        >
+          <div>
+            <p className="body-2-semibold">평가 및 피드백</p>
+            <p className="caption-1-medium mt-1 text-gray-500">의견 남기기</p>
+          </div>
+        </button>
+      </section>
+
       <ul className="body-3-medium px-2 text-gray-100">
         {[
           { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
@@ -100,10 +131,6 @@ export default function MyPage() {
           {
             label: "개인정보처리방침",
             onClick: () => router.push(PATHS.PRIVACY_POLICY),
-          },
-          {
-            label: "무비부키 평가 및 피드백",
-            onClick: () => router.push(PATHS.FEEDBACK),
           },
           { label: "로그아웃", onClick: () => setShowLogoutModal(true) },
           {
