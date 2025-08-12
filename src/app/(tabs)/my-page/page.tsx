@@ -119,7 +119,7 @@ export default function MyPage() {
 
         <button
           type="button"
-          onClick={() => router.push(`${PATHS.TICKETLIST}`)}
+          onClick={() => router.push(`${PATHS.FEEDBACK}`)}
           className="relative flex h-32 w-full flex-col justify-between overflow-hidden rounded-[12px] border-1 border-gray-900 bg-gray-950 text-left"
           aria-label="평가 및 피드백"
         >
