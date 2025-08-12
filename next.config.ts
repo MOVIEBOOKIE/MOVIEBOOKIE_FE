@@ -44,13 +44,25 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
-    return [
+    const rules = [
       {
-        source: "/api/:path*",
-        destination: `${baseurl}/api/:path*`,
+        source: "/events/:id/participants",
+        destination: "https://api.movie-bookie.shop/events/:id/participants",
+      },
+      {
+        source: "/events/:id/participants/",
+        destination: "https://api.movie-bookie.shop/events/:id/participants/",
       },
     ];
+
+    if (process.env.NODE_ENV === "development") {
+      rules.push({
+        source: "/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_DEV_URL}/api/:path*`,
+      });
+    }
+
+    return rules;
   },
 };
 
