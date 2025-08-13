@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge, ToggleTab } from "@/components";
-import { EventData } from "app/_types/event";
 import Image from "next/image";
 import { useState } from "react";
 import MapThumbnail from "./map-thumbnail";
