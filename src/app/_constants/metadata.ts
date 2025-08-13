@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "무비부키 | 영화관 모임의 시작",
+    description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
+    images: ["https://movie-bookie.shop/images/thumbnail.png"],
+  },
 } as const;
 
 export const viewport: Viewport = {

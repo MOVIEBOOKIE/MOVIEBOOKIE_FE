@@ -21,7 +21,6 @@ export default function Client() {
   const { mutate } = useCreateEvent();
   const { setLoading, isLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
-  const showToast = useToastStore((state) => state.showToast);
 
   const handleButtonClick = () => {
     if (step === 1) {
@@ -49,7 +48,7 @@ export default function Client() {
           } else {
             useToastStore
               .getState()
-              .showToast("문제가 발생했습니다. 다시 시도해주세요.", "alert");
+              .showToast("이벤트 게시에 실패했어요", "alert");
           }
         },
       });
