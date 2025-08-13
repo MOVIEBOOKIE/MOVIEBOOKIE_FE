@@ -239,51 +239,45 @@ export default function Detail() {
         </div>
       )}
 
-      {modalType && (
+      {modalType === "loginRequired" ? (
         <Modal
-          iconType={
-            modalType === "loginRequired"
-              ? "alert"
-              : (currentModal?.iconType as "confirm" | "alert" | "")
-          }
-          title={
-            modalType === "loginRequired"
-              ? LOGIN_REQUIRED_MODAL.title
-              : currentModal?.title || ""
-          }
-          confirmText={
-            modalType === "loginRequired"
-              ? LOGIN_REQUIRED_MODAL.confirmText
-              : currentModal?.confirmText || "확인"
-          }
-          cancelText={
-            modalType === "loginRequired"
-              ? LOGIN_REQUIRED_MODAL.cancelText
-              : currentModal?.cancelText || "취소"
-          }
+          iconType="alert"
+          title={`이벤트 신청은\n로그인 후에 가능해요`}
+          children="지금 바로 로그인하고 신청해보세요"
+          confirmText="로그인하기"
+          onCancel={undefined}
           onConfirm={() => {
-            if (modalType === "loginRequired") {
-              router.push(PATHS.LOGIN);
+            router.push(PATHS.LOGIN);
+            setModalType(null);
+          }}
+          onClose={() => {
+            setModalType(null);
+          }}
+        ></Modal>
+      ) : (
+        modalType && (
+          <Modal
+            iconType={currentModal?.iconType as "confirm" | "alert" | ""}
+            title={currentModal?.title || ""}
+            confirmText={currentModal?.confirmText || "확인"}
+            cancelText={currentModal?.cancelText || "취소"}
+            onConfirm={() => {
+              if (modalType === "apply") handleApply();
+              if (modalType === "cancel") handleCancel();
+              if (modalType === "recruitCancel") handleRecruitCancel();
+              if (modalType === "venueApply") handleVenueApply(0);
               setModalType(null);
-              return;
-            }
-            if (modalType === "apply") handleApply();
-            if (modalType === "cancel") handleCancel();
-            if (modalType === "recruitCancel") handleRecruitCancel();
-            if (modalType === "venueApply") handleVenueApply(0);
-            setModalType(null);
-          }}
-          onCancel={() => {
-            if (modalType === "venueApply") handleVenueApply(1);
-            setModalType(null);
-          }}
-          showCloseButton
-          onClose={handleModalClose}
-        >
-          {modalType === "loginRequired"
-            ? LOGIN_REQUIRED_MODAL.description
-            : currentModal?.description}
-        </Modal>
+            }}
+            onCancel={() => {
+              if (modalType === "venueApply") handleVenueApply(1);
+              setModalType(null);
+            }}
+            showCloseButton
+            onClose={handleModalClose}
+          >
+            {currentModal?.description}
+          </Modal>
+        )
       )}
     </>
   );
