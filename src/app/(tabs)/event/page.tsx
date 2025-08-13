@@ -35,8 +35,8 @@ export default function EventPage() {
 
       <nav className="body-2-medium flex px-5 pt-6">
         {[
-          { label: "신청 목록", value: "apply" },
-          { label: "주최 목록", value: "host" },
+          { label: TAB_TYPES.APPLY, value: "apply" },
+          { label: TAB_TYPES.HOST, value: "host" },
         ].map((tab) => (
           <button
             type="button"

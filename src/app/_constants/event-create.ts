@@ -19,3 +19,5 @@ export const EVENT_CREATE_TIME = {
     "19:00",
   ],
 };
+
+export const MAX_PARTICIPANTS = 321;

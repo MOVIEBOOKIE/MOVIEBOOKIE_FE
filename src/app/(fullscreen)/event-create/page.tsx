@@ -16,6 +16,7 @@ import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Modal from "@/components/modal";
 import { useState } from "react";
 import { flushSync } from "react-dom";
+import { MAX_PARTICIPANTS } from "@/constants/event-create";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -65,7 +66,7 @@ export default function EventCreatePage() {
         (!minParticipants ||
           Number(minParticipants) <= 0 ||
           !maxParticipants ||
-          Number(maxParticipants) > 321)) ||
+          Number(maxParticipants) > MAX_PARTICIPANTS)) ||
       (step === 5 && !locationId) ||
       (step === 6 &&
         (!eventTitle || !mediaTitle || !description || !thumbnail));
