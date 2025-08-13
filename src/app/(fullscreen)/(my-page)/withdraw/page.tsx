@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 import { apiDelete } from "app/_apis/methods";
 import { useToastStore } from "app/_stores/use-toast-store";
+
 export default function WithDraw() {
   const router = useRouter();
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
@@ -86,13 +87,13 @@ export default function WithDraw() {
           iconType="alert"
           title="정말 탈퇴하시겠어요?"
           children={`탈퇴 시 계정 및 이용 기록은 모두 삭제되며,\n삭제된 데이터는 복구가 불가능합니다.`}
-          confirmText="돌아가기"
-          cancelText="탈퇴하기"
-          onCancel={() => {
-            setShowConfirmModal(false);
+          confirmText="탈퇴하기"
+          cancelText="돌아가기"
+          onConfirm={() => {
             handleWithdraw();
+            setShowConfirmModal(false);
           }}
-          onConfirm={() => setShowConfirmModal(false)}
+          onCancel={() => setShowConfirmModal(false)}
         />
       )}
       {showBlockedModal && (
@@ -111,7 +112,7 @@ export default function WithDraw() {
             router.push(PATHS.EVENT);
           }}
           onCancel={undefined}
-          ButtonClassName="active:bg-gray-850 bg-gray-800 text-gray-200"
+          confirmButtonClassName="active:bg-gray-850 bg-gray-800 text-gray-200"
         />
       )}
     </>

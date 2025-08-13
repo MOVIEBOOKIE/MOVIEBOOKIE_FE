@@ -135,12 +135,13 @@ export default function EventCreatePage() {
         <Modal
           iconType="alert"
           title="이벤트 생성을 취소할까요?"
-          children="지금까지 작성한 내용은 저장되지 않아요"
-          confirmText="돌아가기"
-          cancelText="생성 취소"
-          onCancel={handleConfirmExit}
-          onConfirm={handleCancelExit}
-        />
+          confirmText="생성 취소"
+          cancelText="돌아가기"
+          onConfirm={handleConfirmExit}
+          onCancel={handleCancelExit}
+        >
+          지금까지 작성한 내용은 저장되지 않아요
+        </Modal>
       )}
     </FormProvider>
   );

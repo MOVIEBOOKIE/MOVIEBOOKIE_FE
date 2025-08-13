@@ -2,7 +2,7 @@
 
 import { CardProps } from "app/_types/card";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function TicketCard({
   id,
@@ -13,14 +13,9 @@ export function TicketCard({
   estimatedPrice,
   category,
 }: CardProps) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/event/ticket/${id}`);
-  };
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      href={`/event/ticket/${id}`}
       className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950"
     >
       <div className="relative h-41.75 w-full overflow-hidden">
@@ -53,6 +48,6 @@ export function TicketCard({
           </p>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

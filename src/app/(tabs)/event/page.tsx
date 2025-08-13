@@ -6,6 +6,11 @@ import { PATHS } from "@/constants/index";
 import { PlusIcon } from "lucide-react";
 import { Suspense } from "react";
 
+const TAB_TYPES = {
+  APPLY: "신청 목록",
+  HOST: "주최 목록",
+} as const;
+
 const EventBannerSection = dynamic(
   () => import("./_components/event-banner-section"),
   {
@@ -56,7 +61,9 @@ export default function EventPage() {
       <div className="mx-5 border-b border-gray-950" />
 
       <div className="px-5">
-        <EventTab type={tabParam === "apply" ? "신청 목록" : "주최 목록"} />
+        <EventTab
+          type={tabParam === "apply" ? TAB_TYPES.APPLY : TAB_TYPES.HOST}
+        />
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-50">

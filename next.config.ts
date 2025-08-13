@@ -36,11 +36,11 @@ const nextConfig = {
     const rules = [
       {
         source: "/events/:id/participants",
-        destination: "https://api.movie-bookie.shop/events/:id/participants",
+        destination: `${baseurl}/events/:id/participants`,
       },
       {
         source: "/events/:id/participants/",
-        destination: "https://api.movie-bookie.shop/events/:id/participants/",
+        destination: `${baseurl}/events/:id/participants/`,
       },
       {
         source: "/api/:path*",

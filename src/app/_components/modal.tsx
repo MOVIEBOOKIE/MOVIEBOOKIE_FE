@@ -27,7 +27,7 @@ interface ModalProps {
   hideButtons?: boolean;
   children: ReactNode;
   onClose?: () => void;
-  ButtonClassName?: string;
+  confirmButtonClassName?: string;
 }
 
 export default function Modal({
@@ -42,7 +42,7 @@ export default function Modal({
   onClose,
   showCloseButton = false,
   hideButtons = false,
-  ButtonClassName,
+  confirmButtonClassName,
 }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
@@ -67,24 +67,18 @@ export default function Modal({
         </div>
         {!hideButtons && (
           <div className="flex w-full gap-2.5">
-            {onConfirm && (
-              <Button
-                onClick={onConfirm}
-                className="active:bg-gray-850 bg-gray-800 text-gray-200"
-              >
-                {confirmText}
-              </Button>
-            )}
             {onCancel && (
               <Button
                 variant="secondary"
                 onClick={onCancel}
-                className={
-                  ButtonClassName ||
-                  "bg-red-main text-gray-200 hover:bg-red-600 focus:bg-red-700 active:bg-red-700"
-                }
+                className="focus:bg-gray-850 bg-gray-800 text-gray-200"
               >
                 {cancelText}
+              </Button>
+            )}
+            {onConfirm && (
+              <Button onClick={onConfirm} className={confirmButtonClassName}>
+                {confirmText}
               </Button>
             )}
           </div>

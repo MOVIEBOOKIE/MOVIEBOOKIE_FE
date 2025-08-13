@@ -171,8 +171,8 @@ export default function MyPage() {
           iconType="alert"
           title="로그아웃"
           children="정말 로그아웃 하시겠습니까?"
-          confirmText="확인"
-          cancelText="취소"
+          confirmText="로그아웃"
+          cancelText="돌아가기"
           onConfirm={handleLogout}
           onCancel={() => setShowLogoutModal(false)}
         />
