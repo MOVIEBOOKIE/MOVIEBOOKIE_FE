@@ -11,7 +11,6 @@ import { useCreateEvent } from "app/_hooks/use-create-event";
 import Complete from "@/components/complete";
 import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
-import { useToastStore } from "app/_stores/use-toast-store";
 import { flushSync } from "react-dom";
 
 export default function Client() {
@@ -21,7 +20,6 @@ export default function Client() {
   const { mutate } = useCreateEvent();
   const { setLoading, isLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
-  const showToast = useToastStore((state) => state.showToast);
 
   const handleButtonClick = () => {
     if (step === 1) {
@@ -35,8 +33,13 @@ export default function Client() {
           setLoading(false);
         },
         onError: () => {
-          showToast("이벤트 게시에 실패했어요");
           setLoading(false);
+          <Complete
+            status="fail"
+            action="이벤트 생성"
+            buttonText="이벤트 다시 만들기"
+            onButtonClick={() => router.push(PATHS.EVENT)}
+          />;
         },
       });
     }
@@ -64,7 +67,8 @@ export default function Client() {
     <>
       {step === 3 ? (
         <Complete
-          state="이벤트 생성"
+          status="success"
+          action="이벤트 생성"
           buttonText="모집목록 확인하기"
           onButtonClick={handleComplete}
         />
