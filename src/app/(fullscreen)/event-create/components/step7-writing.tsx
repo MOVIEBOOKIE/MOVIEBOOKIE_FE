@@ -118,7 +118,7 @@ export default function Step7() {
         </div>
         <div>
           <label className="body-3-medium mb-3 block text-gray-300">
-            콘텐츠 제목
+            콘텐츠 제목 (ex. 라라랜드,하트시그널)
           </label>
           <input
             {...register("mediaTitle")}

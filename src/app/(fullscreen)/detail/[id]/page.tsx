@@ -21,6 +21,7 @@ import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useLoading } from "app/_context/loading-context";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 type ModalType =
   | "apply"
@@ -43,6 +44,7 @@ export default function Detail() {
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
   const [shouldPoll, setShouldPoll] = useState(true);
+  const showToast = useToastStore((state) => state.showToast);
 
   const { setLoading } = useLoading();
 
@@ -184,8 +186,9 @@ export default function Detail() {
   if (isComplete) {
     return (
       <Complete
-        state="이벤트 신청"
-        buttonText="신청목록 확인하기"
+        status="success"
+        action="이벤트 신청"
+        buttonText="모집목록 확인하기"
         onButtonClick={handleComplete}
       />
     );
@@ -193,7 +196,7 @@ export default function Detail() {
 
   return (
     <>
-      {data && (
+      {loggedIn && data && (
         <TopBar
           event={{
             eventId: data.eventId,
@@ -217,7 +220,7 @@ export default function Detail() {
             }`}
           >
             <p className="caption-1-medium text-gray-500">예상 가격</p>
-            <p className="body-3-semibold whitespace-nowrap text-gray-300">
+            <p className="body-2-semibold whitespace-nowrap text-gray-200">
               {data?.estimatedPrice?.toLocaleString?.() ?? "-"}원
             </p>
           </div>

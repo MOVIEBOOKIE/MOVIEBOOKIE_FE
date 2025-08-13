@@ -14,7 +14,6 @@ function Card({
   description,
   ddayBadge,
   statusBadge,
-  progressRate,
   estimatedPrice,
   query = {},
 }: CardProps) {
@@ -67,23 +66,13 @@ function Card({
           )}
         </div>
 
-        {(progressRate || estimatedPrice) && (
-          <div className="caption-2-medium flex items-center justify-start gap-1.75 text-gray-500">
-            {progressRate && (
-              <p>
-                모집 달성율
-                <span className="ml-0.75 text-gray-200">{progressRate}</span>
-              </p>
-            )}
-            {estimatedPrice && (
-              <p>
-                예상가격
-                <span className="ml-0.75 text-gray-200">
-                  {Number(estimatedPrice).toLocaleString()}원
-                </span>
-              </p>
-            )}
-          </div>
+        {estimatedPrice && (
+          <p className="body-3-semibold gap-1">
+            예상가격
+            <span className="ml-0.75 text-gray-200">
+              {Number(estimatedPrice).toLocaleString()}원
+            </span>
+          </p>
         )}
       </div>
     </div>

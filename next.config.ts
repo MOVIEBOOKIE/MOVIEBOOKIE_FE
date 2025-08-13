@@ -21,36 +21,34 @@ const nextConfig = {
         hostname: "kr.object.ncloudstorage.com",
         pathname: "/**",
       },
-      {
-        protocol: "http",
-        hostname: "img1.kakaocdn.net",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "k.kakaocdn.net",
-        pathname: "/**",
-      },
+      { protocol: "http", hostname: "img1.kakaocdn.net", pathname: "/**" },
+      { protocol: "http", hostname: "k.kakaocdn.net", pathname: "/**" },
       {
         protocol: "https",
         hostname: "movie-bookie-storage.kr.object.ncloudstorage.com",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "maps.googleapis.com",
-        pathname: "/**",
-      },
+      { protocol: "https", hostname: "maps.googleapis.com", pathname: "/**" },
     ],
   },
   async rewrites() {
     const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
-    return [
+    const rules = [
+      {
+        source: "/events/:id/participants",
+        destination: `${baseurl}/events/:id/participants`,
+      },
+      {
+        source: "/events/:id/participants/",
+        destination: `${baseurl}/events/:id/participants/`,
+      },
       {
         source: "/api/:path*",
         destination: `${baseurl}/api/:path*`,
       },
     ];
+
+    return rules;
   },
 };
 

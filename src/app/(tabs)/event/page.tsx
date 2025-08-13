@@ -6,6 +6,11 @@ import { PATHS } from "@/constants/index";
 import { PlusIcon } from "lucide-react";
 import { Suspense } from "react";
 
+const TAB_TYPES = {
+  APPLY: "신청 목록",
+  HOST: "주최 목록",
+} as const;
+
 const EventBannerSection = dynamic(
   () => import("./_components/event-banner-section"),
   {
@@ -14,7 +19,6 @@ const EventBannerSection = dynamic(
   },
 );
 const EventTab = dynamic(() => import("./_components/event-tabs"));
-const TicketTab = dynamic(() => import("./_components/ticket-tab"));
 
 export default function EventPage() {
   const router = useRouter();
@@ -28,11 +32,11 @@ export default function EventPage() {
       <Suspense fallback={null}>
         <EventBannerSection />
       </Suspense>
-      <nav className="body-2-medium px-5 pt-6">
+
+      <nav className="body-2-medium flex px-5 pt-6">
         {[
           { label: "신청 목록", value: "apply" },
-          { label: "내 이벤트", value: "mine" },
-          { label: "내 티켓", value: "ticket" },
+          { label: "주최 목록", value: "host" },
         ].map((tab) => (
           <button
             type="button"
@@ -40,10 +44,10 @@ export default function EventPage() {
             onClick={() => {
               const params = new URLSearchParams(searchParams);
               params.set("tab", tab.value);
-              params.delete("toggle");
+              params.set("toggle", "0");
               router.replace(`?${params.toString()}`);
             }}
-            className={`relative px-3 pb-2 transition-colors ${
+            className={`relative flex-1 pb-2 text-center transition-colors ${
               tabParam === tab.value ? "text-white" : "text-gray-500"
             }`}
           >
@@ -54,13 +58,12 @@ export default function EventPage() {
           </button>
         ))}
       </nav>
-
       <div className="mx-5 border-b border-gray-950" />
 
       <div className="px-5">
-        {tabParam === "apply" && <EventTab type="신청 목록" />}
-        {tabParam === "mine" && <EventTab type="내 이벤트" />}
-        {tabParam === "ticket" && <TicketTab />}
+        <EventTab
+          type={tabParam === "apply" ? TAB_TYPES.APPLY : TAB_TYPES.HOST}
+        />
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-50">

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export const config = {
-  matcher: ["/", "/login"],
+  matcher: ["/", "/login", "/login/:path*"],
 };
 
 export function middleware(req: NextRequest) {
@@ -11,6 +11,9 @@ export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   if (!token && pathname === "/") {
     return NextResponse.redirect(new URL(PATHS.LOGIN, req.url));
+  }
+  if (token && pathname === PATHS.LOGIN) {
+    return NextResponse.redirect(new URL(PATHS.EVENT ?? "/", req.url));
   }
   return NextResponse.next();
 }

@@ -6,7 +6,6 @@ import CardFront from "./card-front";
 import CardBack from "./card-back";
 import { RotateIcon } from "@/icons/index";
 import { useState } from "react";
-import Loading from "app/loading";
 import { useTicketDetail } from "app/_hooks/events/use-ticket-detail";
 import CardFrontSkeleton from "./card-front-skeleton";
 
