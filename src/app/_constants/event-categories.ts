@@ -13,7 +13,7 @@ export const EVENT_CATEGORIES = [
     path: PATHS.CATEGORY.RECENT,
   },
   {
-    label: "드라마 최종회\n같이 보기",
+    label: "레전드 드라마\n같이 보기",
     src: PATH_IMAGES.SEARCH.DRAMA,
     path: PATHS.CATEGORY.DRAMA,
   },
