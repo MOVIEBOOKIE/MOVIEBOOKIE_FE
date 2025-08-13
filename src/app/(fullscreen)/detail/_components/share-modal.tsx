@@ -82,7 +82,14 @@ export default function ShareModal({
           <ShareKakaoIcon />
         </button>
         <button onClick={handleCopyLink}>
-          <ShareLinkIcon />
+          <ShareLinkIcon
+            style={{
+              shapeRendering: "crispEdges",
+              imageRendering: "pixelated",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden",
+            }}
+          />
         </button>
       </div>
     </Modal>
