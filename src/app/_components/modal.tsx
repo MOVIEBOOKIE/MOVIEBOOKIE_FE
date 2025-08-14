@@ -28,6 +28,7 @@ interface ModalProps {
   children: ReactNode;
   onClose?: () => void;
   confirmButtonClassName?: string;
+  isVerticalLayout?: boolean;
 }
 
 export default function Modal({
@@ -43,7 +44,32 @@ export default function Modal({
   showCloseButton = false,
   hideButtons = false,
   confirmButtonClassName,
+  isVerticalLayout = false,
 }: ModalProps) {
+  const buttons = [
+    onCancel && (
+      <Button
+        key="cancel"
+        variant="secondary"
+        onClick={onCancel}
+        className="focus:bg-gray-850 bg-gray-800 text-gray-200"
+      >
+        {cancelText}
+      </Button>
+    ),
+    onConfirm && (
+      <Button
+        key="confirm"
+        onClick={onConfirm}
+        className={confirmButtonClassName}
+      >
+        {confirmText}
+      </Button>
+    ),
+  ].filter(Boolean);
+
+  const orderedButtons = isVerticalLayout ? buttons.reverse() : buttons;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       <div className="drap-shadow relative flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
@@ -66,21 +92,12 @@ export default function Modal({
           {description ?? children}
         </div>
         {!hideButtons && (
-          <div className="flex w-full gap-2.5">
-            {onCancel && (
-              <Button
-                variant="secondary"
-                onClick={onCancel}
-                className="focus:bg-gray-850 bg-gray-800 text-gray-200"
-              >
-                {cancelText}
-              </Button>
-            )}
-            {onConfirm && (
-              <Button onClick={onConfirm} className={confirmButtonClassName}>
-                {confirmText}
-              </Button>
-            )}
+          <div
+            className={`flex w-full gap-2.5 ${
+              isVerticalLayout ? "flex-col" : "flex-row"
+            }`}
+          >
+            {orderedButtons}
           </div>
         )}
       </div>

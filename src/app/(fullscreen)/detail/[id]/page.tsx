@@ -275,8 +275,9 @@ export default function Detail() {
               if (modalType === "venueApply") handleVenueApply(1);
               setModalType(null);
             }}
-            showCloseButton
+            showCloseButton={currentModal?.showCloseButton}
             onClose={handleModalClose}
+            isVerticalLayout={currentModal?.isVerticalLayout}
           >
             {currentModal?.description}
           </Modal>
