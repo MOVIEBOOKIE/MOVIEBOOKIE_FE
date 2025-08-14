@@ -16,6 +16,7 @@ export const MODAL_CONTENT: Record<string, ModalContentItem> = {
     description: "이벤트 정보를 자세히 확인한 후 신청해주세요",
     confirmText: "신청하기",
     showCloseButton: "false",
+    cancelText: "돌아가기",
   },
   cancel: {
     iconType: "alert",
@@ -23,6 +24,7 @@ export const MODAL_CONTENT: Record<string, ModalContentItem> = {
     description: "지금 취소해도 다시 신청할 수 있어요",
     confirmText: "신청 취소",
     showCloseButton: "false",
+    cancelText: "돌아가기",
   },
   recruitCancel: {
     iconType: "alert",
@@ -30,6 +32,7 @@ export const MODAL_CONTENT: Record<string, ModalContentItem> = {
     description: "지금 취소하면 이벤트가 완전히 삭제돼요",
     confirmText: "모집 취소",
     showCloseButton: "false",
+    cancelText: "돌아가기",
   },
   venueApply: {
     iconType: "confirm",
@@ -45,6 +48,6 @@ export const MODAL_CONTENT: Record<string, ModalContentItem> = {
       </>
     ),
     confirmText: "대관 신청",
-    cancelText: "대관 취소",
+    cancelText: "돌아가기",
   },
 };
