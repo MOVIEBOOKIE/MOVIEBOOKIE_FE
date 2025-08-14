@@ -9,6 +9,7 @@ import { getStatusByTitle } from "./get-status-bytitle";
 export type NotificationStatus = "confirm" | "cancel" | "check";
 
 interface NotificationItemProps {
+  uid?: string;
   type: string;
   title: string;
   description: string;
@@ -19,6 +20,7 @@ interface NotificationItemProps {
 }
 
 export function NotificationItem({
+  uid,
   type,
   title,
   description,
@@ -48,6 +50,7 @@ export function NotificationItem({
       className={`relative flex cursor-pointer items-start gap-2 px-5 py-3.5 ${
         isHighlighted ? "bg-gray-950" : "bg-gray-black"
       }`}
+      data-uid={uid}
     >
       <div>{statusIcon}</div>
       <div className="flex-1 gap-2 text-gray-100">

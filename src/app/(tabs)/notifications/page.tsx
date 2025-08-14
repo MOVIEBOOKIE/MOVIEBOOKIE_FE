@@ -23,6 +23,7 @@ export default function NotificationPage() {
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
   const hasUnread = useNotificationStore((state) => state.hasUnread);
   const router = useRouter();
+  const occur = new Map<string, number>();
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -86,18 +87,24 @@ export default function NotificationPage() {
         </div>
       ) : (
         <div className="scrollbar-hide overflow-y-scroll">
-          {notifications.map((n) => (
-            <NotificationItem
-              key={n.id}
-              type={n.title}
-              title={n.title}
-              description={n.body}
-              time={n.timeAgo}
-              eventId={n.id}
-              highlight={n.isNew}
-              onClick={() => n.id}
-            />
-          ))}
+          {notifications.map((n) => {
+            const count = (occur.get(n.id) ?? 0) + 1;
+            occur.set(n.id, count);
+            const uid = `noti-${n.id}-${count}`;
+
+            return (
+              <NotificationItem
+                key={uid}
+                type={n.title}
+                title={n.title}
+                description={n.body}
+                time={n.timeAgo}
+                eventId={n.id}
+                highlight={n.isNew}
+                onClick={() => n.id}
+              />
+            );
+          })}
         </div>
       )}
     </div>
