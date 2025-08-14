@@ -277,6 +277,7 @@ export default function Detail() {
             }}
             showCloseButton={currentModal?.showCloseButton}
             onClose={handleModalClose}
+            isVerticalLayout={currentModal?.isVerticalLayout}
           >
             {currentModal?.description}
           </Modal>
