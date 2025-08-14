@@ -29,7 +29,7 @@ export default function Step1() {
         title={
           <>
             어떤 카테고리의 이벤트를 <br />
-            생성해 볼까요?
+            만들어 볼까요?
           </>
         }
       />

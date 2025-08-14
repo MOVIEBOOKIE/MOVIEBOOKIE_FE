@@ -12,9 +12,6 @@ body {
   background-color: var(--color-gray-black);
   color: var(--color-gray-white);
   min-height: 100vh;
-
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
 }
 input,
 textarea {

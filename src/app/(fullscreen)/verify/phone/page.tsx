@@ -44,7 +44,7 @@ export default function PhoneStep() {
         }
       />
 
-      <div className="mt-13">
+      <div className="mt-12.5">
         <label className="body-2-medium text-gray-400">전화번호</label>
         <input
           type="tel"

@@ -1,40 +1,32 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToggleTab, Card } from "@/components";
-import { EmptyIcon } from "@/icons/index";
-import { EVENT_TOGGLES, ToggleType } from "@/constants/event-tab";
-import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 import CardSkeleton from "@/components/card-skeleton";
+import { useInfiniteEventTabQuery } from "app/_hooks/events/use-event-tab-query";
 import { EventCard } from "app/_types/card";
+import { TOGGLE_LABELS } from "@/constants/event-tab";
 
 interface EventTabProps {
-  type: "신청 목록" | "내 이벤트";
+  type: "신청 목록" | "주최 목록";
 }
 
 export default function EventTab({ type }: EventTabProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const toggleParam = searchParams.get("toggle");
-  const isConfirmed = toggleParam === "confirmed";
-
-  const toggles =
-    type === "신청 목록"
-      ? EVENT_TOGGLES.APPLY.LABELS
-      : EVENT_TOGGLES.MINE.LABELS;
-
-  const [selectedToggle, setSelectedToggle] = useState<ToggleType>(
-    isConfirmed ? "확정 이벤트" : toggles[0],
-  );
-
-  useEffect(() => {
-    setSelectedToggle(isConfirmed ? "확정 이벤트" : toggles[0]);
-  }, [type, toggleParam]);
+  const toggleParam = Number(searchParams.get("toggle") ?? "0");
+  const selectedIdx: 0 | 1 | 2 = [0, 1, 2].includes(toggleParam as number)
+    ? (toggleParam as 0 | 1 | 2)
+    : 0;
 
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useInfiniteEventTabQuery(type, selectedToggle);
+    useInfiniteEventTabQuery({
+      tab: type === "신청 목록" ? "apply" : "host",
+      toggle: selectedIdx, // 0 모집 | 1 대관 | 2 취소
+      pageSize: 10,
+    });
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastEventElementRef = useCallback(
@@ -51,27 +43,19 @@ export default function EventTab({ type }: EventTabProps) {
     [isLoading, hasNextPage, isFetchingNextPage, fetchNextPage],
   );
 
-  const events: EventCard[] =
-    data?.pages.flatMap((page) => (Array.isArray(page) ? page : [])) ?? [];
-
-  const handleToggleChange = (selected: string) => {
-    setSelectedToggle(selected as ToggleType);
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (selected === "확정 이벤트") {
-      params.set("toggle", "confirmed");
-    } else {
-      params.delete("toggle");
-    }
-
+  const events: EventCard[] = data?.pages?.flatMap((page) => page) ?? [];
+  const handleToggleChange = (label: string) => {
+    const nextIdx = TOGGLE_LABELS.indexOf(label as any);
+    const params = new URLSearchParams(searchParams);
+    params.set("toggle", String(nextIdx < 0 ? 0 : nextIdx));
     router.replace(`?${params.toString()}`);
   };
 
   return (
     <div className="mt-5">
       <ToggleTab
-        options={toggles}
-        selected={selectedToggle}
+        options={TOGGLE_LABELS as unknown as string[]}
+        selected={TOGGLE_LABELS[selectedIdx]}
         onSelect={handleToggleChange}
       />
 
@@ -116,10 +100,8 @@ export default function EventTab({ type }: EventTabProps) {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center pt-11 text-center text-gray-900">
-            <EmptyIcon />
             <p className="body-3-medium mt-3.5 text-gray-800">
-              아직 {type} 이벤트가 없어요 <br /> 지금 바로 나만의 이벤트를
-              만들어보세요
+              {type}이 없습니다.
             </p>
           </div>
         )}

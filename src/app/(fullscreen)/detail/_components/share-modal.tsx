@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Modal from "../../../_components/modal";
 import { ShareKakaoIcon, ShareLinkIcon } from "@/icons/index";
 import { useToastStore } from "app/_stores/use-toast-store";
-import Image from "next/image";
 declare global {
   interface Window {
     Kakao: any;

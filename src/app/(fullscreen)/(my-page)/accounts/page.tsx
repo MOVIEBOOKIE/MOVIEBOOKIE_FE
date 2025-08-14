@@ -17,7 +17,7 @@ export default function PrivacyPolicy() {
       state="default"
     >
       <div>
-        <div className="flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-4">
+        <div className="flex items-center gap-2 rounded-xl bg-gray-950 px-5 py-4">
           <div className="flex h-6 w-6 items-center justify-center pb-5">
             <MyKakaoIcon />
           </div>

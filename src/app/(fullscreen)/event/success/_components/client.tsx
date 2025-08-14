@@ -11,6 +11,7 @@ import { useCreateEvent } from "app/_hooks/use-create-event";
 import Complete from "@/components/complete";
 import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
+import { flushSync } from "react-dom";
 
 export default function Client() {
   const [step, setStep] = useState(1);
@@ -31,9 +32,14 @@ export default function Client() {
           setStep(3);
           setLoading(false);
         },
-        onError: (error) => {
-          console.error("이벤트 생성 실패", error);
+        onError: () => {
           setLoading(false);
+          <Complete
+            status="fail"
+            action="이벤트 생성"
+            buttonText="이벤트 다시 만들기"
+            onButtonClick={() => router.push(PATHS.EVENT)}
+          />;
         },
       });
     }
@@ -42,10 +48,13 @@ export default function Client() {
     setShowExitConfirm(true);
   };
   const handleConfirmExit = () => {
-    setShowExitConfirm(false);
-    useEventFormStore.getState().resetFormData();
+    flushSync(() => {
+      setShowExitConfirm(false);
+    });
+    resetFormData();
     router.push(PATHS.EVENT);
   };
+
   const handleCancelExit = () => {
     setShowExitConfirm(false);
   };
@@ -58,7 +67,8 @@ export default function Client() {
     <>
       {step === 3 ? (
         <Complete
-          state="이벤트 생성"
+          status="success"
+          action="이벤트 생성"
           buttonText="모집목록 확인하기"
           onButtonClick={handleComplete}
         />
@@ -81,12 +91,13 @@ export default function Client() {
         <Modal
           iconType="alert"
           title="이벤트 생성을 취소할까요?"
-          children="지금까지 작성한 내용은 저장되지 않아요"
-          confirmText="생성 취소하기"
-          cancelText="아니오"
+          confirmText="생성 취소"
+          cancelText="돌아가기"
           onConfirm={handleConfirmExit}
           onCancel={handleCancelExit}
-        />
+        >
+          지금까지 작성한 내용은 저장되지 않아요
+        </Modal>
       )}
     </>
   );

@@ -62,7 +62,7 @@ export default function Modal({
         <h3 className="title-3-semibold mt-4.75 text-center whitespace-pre-line">
           {title}
         </h3>
-        <div className="body-3-regular mt-2 mb-4.5 text-center whitespace-pre-line text-gray-500">
+        <div className="body-3-regular mt-1 mb-4.5 text-center whitespace-pre-line text-gray-500">
           {description ?? children}
         </div>
         {!hideButtons && (

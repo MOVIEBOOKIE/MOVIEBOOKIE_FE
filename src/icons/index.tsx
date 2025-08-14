@@ -80,3 +80,5 @@ export { default as WaterIcon } from "./trait/result/water.svg";
 export { default as YellowWarnIcon } from "./trait/result/yellow-warn.svg";
 
 export { default as ErrorIcon } from "./ui/error.svg";
+export { default as MyPageTicketIcon } from "./ui/mypage-ticket.svg";
+export { default as MyPageFeedbackIcon } from "./ui/mypage-feedback.svg";
