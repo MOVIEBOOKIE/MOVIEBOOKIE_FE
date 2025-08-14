@@ -19,6 +19,7 @@ import { flushSync } from "react-dom";
 import { MAX_PARTICIPANTS } from "@/constants/event-create";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { apiGet } from "app/_apis/methods";
+import { checkRecruitable } from "app/_apis/events/participation";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -96,15 +97,8 @@ export default function EventCreatePage() {
       if (!date) return;
 
       try {
-        const params: Record<string, any> = { date };
-        const result = await apiGet<string>(
-          "/participation/recruitable",
-          params,
-        );
-        const ok = String(result).toUpperCase() === "TRUE";
-
+        const ok = await checkRecruitable(date);
         setIsDateRecruitable(ok);
-
         if (!ok) {
           showToast("해당 날짜에 이미 참여 중인 이벤트가 있어요");
           return;

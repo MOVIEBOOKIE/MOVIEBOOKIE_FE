@@ -23,7 +23,7 @@ export default function NotificationPage() {
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
   const hasUnread = useNotificationStore((state) => state.hasUnread);
   const router = useRouter();
-  const occur = useMemo(() => new Map<string, number>(), [notifications]);
+  const occur = new Map<string, number>();
 
   useEffect(() => {
     const fetchNotifications = async () => {

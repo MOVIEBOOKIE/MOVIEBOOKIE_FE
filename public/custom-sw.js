@@ -11,37 +11,52 @@ firebase.initializeApp(self.FIREBASE_CONFIG);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
+  const url = d.url || (d.eventId ? `/detail/${d.eventId}` : "/");
+
   self.registration.showNotification(title, {
     body,
-    icon: "/images/favicon/96x96.png",
-    tag: `event-${eventId}`,
-    // 같은 태그면 알림이 덮어씌워지므로 유사 알림 중복도 막을 수 있음
+    icon,
+    tag: d.eventId ? `event-${d.eventId}` : "moviebookie",
     data: {
-      eventId: payload.data?.eventId,
-    },
-    data: {
-      url: `/detail/${payload.data?.eventId}`,
+      url,
+      eventId: d.eventId || null,
     },
   });
 });
 
 self.__WB_MANIFEST;
 
-self.addEventListener("install", (event) => {
-  self.skipWaiting();
-});
+self.addEventListener("install", () => self.skipWaiting());
 
-self.addEventListener("notificationclick", function (event) {
+self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
-  const data = event.notification.data || {};
-  const eventId = data.eventId;
+  const clickedUrl =
+    (event.notification &&
+      event.notification.data &&
+      event.notification.data.url) ||
+    "/";
 
-  const url = new URL("/notifications", self.location.origin);
-  if (eventId) {
-    url.searchParams.set("clicked", "1");
-    url.searchParams.set("id", String(messageId));
-  }
+  const absoluteUrl = new URL(clickedUrl, self.location.origin).href;
 
-  event.waitUntil(clients.openWindow(url.toString()));
+  event.waitUntil(
+    (async () => {
+      const windowClients = await clients.matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      });
+
+      for (const client of windowClients) {
+        try {
+          if ("navigate" in client) {
+            await client.focus();
+            await client.navigate(absoluteUrl);
+            return;
+          }
+        } catch (e) {}
+      }
+
+      await clients.openWindow(absoluteUrl);
+    })(),
+  );
 });
