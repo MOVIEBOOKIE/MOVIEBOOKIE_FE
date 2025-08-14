@@ -15,7 +15,7 @@ export function TicketCard({
 }: CardProps) {
   return (
     <Link
-      href={`/event/ticket/${id}`}
+      href={`/ticket/${id}`}
       className="relative flex flex-col overflow-hidden rounded-xl bg-gray-950"
     >
       <div className="relative h-41.75 w-full overflow-hidden">

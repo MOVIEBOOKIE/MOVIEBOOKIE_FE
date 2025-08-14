@@ -1,7 +1,7 @@
 import { Header } from "@/components";
 import Image from "next/image";
 import { PATH_IMAGES } from "@/constants";
-import Client from "../../success/_components/client";
+import TicketPage from "../components/client";
 
 export default function Ticket() {
   return (
@@ -15,7 +15,7 @@ export default function Ticket() {
       />
       <div className="relative z-10 flex h-full w-full flex-col items-center">
         <Header className="bg-transparent" />
-        <Client />
+        <TicketPage />
       </div>
     </div>
   );
