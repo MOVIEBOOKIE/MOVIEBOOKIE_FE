@@ -8,6 +8,7 @@ import {
   NOTIFICATION_POLLING_BACKGROUND_INTERVAL,
   NOTIFICATION_MINIMUM_CHECK_INTERVAL,
 } from "app/_constants/time";
+import { devError, devLog } from "@/utils/dev-logger";
 
 export function useSmartNotiPolling() {
   const setHasUnread = useNotificationStore.getState().setHasUnread;
@@ -36,13 +37,13 @@ export function useSmartNotiPolling() {
           "/notifications/unread",
         );
         const isUnread = typeof res === "boolean" ? res : res?.result;
-        console.log(
+        devLog(
           `새 알림 존재 여부 (${isBackground ? "background" : "active"}):`,
           isUnread,
         );
         setHasUnread(isUnread === true);
       } catch (error) {
-        console.error("읽지 않은 알림 상태 조회 실패:", error);
+        devError("읽지 않은 알림 상태 조회 실패:", error);
       }
     },
     [setHasUnread],
@@ -74,7 +75,7 @@ export function useSmartNotiPolling() {
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
-      console.log("# 알림 폴링 일시 중지됨 (dev모드 개발 중)");
+      devLog("# 알림 폴링 일시 중지됨 (dev모드 개발 중)");
       return;
     }
     checkUnread(); // 최초 1회 요청
@@ -87,30 +88,30 @@ export function useSmartNotiPolling() {
 
       if (wasActive !== isVisible) {
         if (isVisible) {
-          console.log("앱 활성화 - 폴링 간격 30초");
+          devLog("앱 활성화 - 폴링 간격 30초");
           checkUnread();
           restartPolling();
         } else {
-          console.log("앱 비활성화 - 폴링 간격 2분");
+          devLog("앱 비활성화 - 폴링 간격 2분");
           restartPolling();
         }
       }
     };
 
     const handleOnline = () => {
-      console.log("네트워크 연결됨 - 즉시 알림 체크");
+      devLog("네트워크 연결됨 - 즉시 알림 체크");
       checkUnread();
       if (!intervalRef.current) startPolling();
     };
 
     const handleOffline = () => {
-      console.log("네트워크 끊어짐 - 폴링 중단");
+      devLog("네트워크 끊어짐 - 폴링 중단");
       stopPolling();
     };
 
     const handleFocus = () => {
       if (!document.hidden) {
-        console.log("페이지 포커스 - 즉시 알림 체크");
+        devLog("페이지 포커스 - 즉시 알림 체크");
         checkUnread();
       }
     };

@@ -14,8 +14,12 @@ import { PATHS } from "@/constants";
 import { EventFormValues } from "app/_types/event";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import Modal from "@/components/modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
+import { MAX_PARTICIPANTS } from "@/constants/event-create";
+import { useToastStore } from "app/_stores/use-toast-store";
+import { apiGet } from "app/_apis/methods";
+import { checkRecruitable } from "app/_apis/events/participation";
 
 const steps = [
   { title: "카테고리", component: Step1 },
@@ -33,6 +37,7 @@ export default function EventCreatePage() {
   const storedForm = useEventFormStore((state) => state.formData);
   const step = useEventFormStore((state) => state.step);
   const setStep = useEventFormStore((state) => state.setStep);
+  const showToast = useToastStore((state) => state.showToast);
 
   const methods = useForm({
     defaultValues: storedForm,
@@ -40,6 +45,12 @@ export default function EventCreatePage() {
 
   const formValues = useWatch({ control: methods.control });
   const [isValidStep5, setIsValidStep5] = useState(true);
+  const [isDateRecruitable, setIsDateRecruitable] = useState<boolean | null>(
+    null,
+  );
+  useEffect(() => {
+    if (step === 1) setIsDateRecruitable(null);
+  }, [formValues?.eventDate, step]);
   const isButtonDisabled = (() => {
     const {
       mediaType,
@@ -65,14 +76,13 @@ export default function EventCreatePage() {
         (!minParticipants ||
           Number(minParticipants) <= 0 ||
           !maxParticipants ||
-          Number(maxParticipants) > 321)) ||
+          Number(maxParticipants) > MAX_PARTICIPANTS)) ||
       (step === 5 && !locationId) ||
       (step === 6 &&
         (!eventTitle || !mediaTitle || !description || !thumbnail));
-
-    return baseInvalid || (step === 4 && !isValidStep5);
+    const dateBlocked = step === 1 && isDateRecruitable === false;
+    return baseInvalid || (step === 4 && !isValidStep5) || dateBlocked;
   })();
-
   const onSubmit = (data: EventFormValues) => {
     useEventFormStore.getState().setFormData(data);
     router.push(PATHS.EVENT_SUCCESS);
@@ -82,6 +92,22 @@ export default function EventCreatePage() {
     const isValid = await methods.trigger();
 
     if (!isValid) return;
+    if (step === 1) {
+      const date = formValues?.eventDate;
+      if (!date) return;
+
+      try {
+        const ok = await checkRecruitable(date);
+        setIsDateRecruitable(ok);
+        if (!ok) {
+          showToast("해당 날짜에 이미 참여 중인 이벤트가 있어요");
+          return;
+        }
+      } catch {
+        showToast("네트워크 오류가 발생했어요. 잠시 후 다시 시도해 주세요.");
+        return;
+      }
+    }
 
     if (step < steps.length - 1) {
       setStep(step + 1);
@@ -89,7 +115,6 @@ export default function EventCreatePage() {
       methods.handleSubmit(onSubmit)();
     }
   };
-
   const onBack = () => {
     if (step > 0) {
       setStep(step - 1);

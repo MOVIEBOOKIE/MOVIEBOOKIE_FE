@@ -128,8 +128,21 @@ export default function Detail() {
       onSuccess: () => {
         setLoading(false);
       },
-      onError: (error) => {
-        console.error("이벤트 신청 실패:", error);
+      onError: (err: any) => {
+        setLoading(false);
+
+        const code = err?.response?.data?.code;
+
+        if (code === "PARTICIPATION_404") {
+          useToastStore
+            .getState()
+            .showToast(
+              "해당 날짜에 이미 참여 중인 이벤트가 있어요",
+              "checkbox",
+            );
+        } else {
+          console.error("이벤트 신청 실패:", err);
+        }
         setIsComplete(false);
         setLoading(false);
       },

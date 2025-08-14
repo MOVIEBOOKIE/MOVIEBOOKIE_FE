@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FixedLayout } from "./_components";
 import { ErrorIcon } from "../icons";
 import { useEffect, useRef } from "react";
+import { devError } from "./_utils/dev-logger";
 
 export default function ErrorPage({ error }: { error: Error }) {
   const router = useRouter();
@@ -11,9 +12,9 @@ export default function ErrorPage({ error }: { error: Error }) {
 
   useEffect(() => {
     if (consoleCount.current < 5) {
-      console.error("🛑 error.tsx 진입");
-      console.error("🧨 에러 메시지:", error?.message);
-      console.error("🧵 에러 스택:", error?.stack);
+      devError("🛑 error.tsx 진입");
+      devError("🧨 에러 메시지:", error?.message);
+      devError("🧵 에러 스택:", error?.stack);
       consoleCount.current += 1;
     }
   }, [error]);

@@ -23,3 +23,8 @@ export const getRegisteredEvents = (params: Params) =>
 
 export const getHostedEvents = (params: Params) =>
   fetchList("/participation/hosted", params);
+
+export async function checkRecruitable(date: string): Promise<boolean> {
+  const res = await apiGet<string>("/participation/recruitable", { date });
+  return String(res).trim().toUpperCase() === "TRUE";
+}

@@ -15,5 +15,3 @@ const config = {
 const content = `self.FIREBASE_CONFIG = ${JSON.stringify(config, null, 2)};\n`;
 
 fs.writeFileSync(path.join(__dirname, "../public/firebase-config.js"), content);
-
-console.log("✅ firebase-config.js has been generated in /public");

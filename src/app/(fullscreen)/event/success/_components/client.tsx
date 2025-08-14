@@ -12,6 +12,7 @@ import Complete from "@/components/complete";
 import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
 import { flushSync } from "react-dom";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 export default function Client() {
   const [step, setStep] = useState(1);
@@ -32,14 +33,23 @@ export default function Client() {
           setStep(3);
           setLoading(false);
         },
-        onError: () => {
+        onError: (err: any) => {
           setLoading(false);
-          <Complete
-            status="fail"
-            action="이벤트 생성"
-            buttonText="이벤트 다시 만들기"
-            onButtonClick={() => router.push(PATHS.EVENT)}
-          />;
+
+          const code = err?.response?.data?.code;
+
+          if (code === "PARTICIPATION_404") {
+            <Complete
+              status="fail"
+              action="이벤트 생성"
+              buttonText="이벤트 다시 만들기"
+              onButtonClick={() => router.push(PATHS.EVENT)}
+            />;
+          } else {
+            useToastStore
+              .getState()
+              .showToast("이벤트 게시에 실패했어요", "alert");
+          }
         },
       });
     }

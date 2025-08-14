@@ -1,24 +1,53 @@
 import { getToken, onMessage } from "firebase/messaging";
 import { getFirebaseMessaging } from "app/_lib/firebase-config";
 import { registerFCMToken } from "app/_apis/register-fcm-token";
+import { useCallback, useRef } from "react";
+import { devError, devLog } from "@/utils/dev-logger";
 
 const MAX_TOKEN_RETRY = 3;
 
-export const useFCM = () => {
-  const requestPermissionAndToken = async () => {
-    console.log("✅ requestPermissionAndToken 호출됨");
+let isTokenRegistering = false;
+let registeredToken: string | null = null;
 
+export const useFCM = () => {
+  const initializationRef = useRef<Promise<void> | null>(null);
+
+  const requestPermissionAndToken = useCallback(async () => {
+    // 이미 등록 중이거나 등록된 토큰이 있으면 중복 실행 방지
+    if (isTokenRegistering || registeredToken) {
+      devLog("🔄 FCM 토큰 등록이 이미 진행 중이거나 완료됨");
+      return;
+    }
+
+    // 이미 초기화 중인 경우 기존 Promise 반환
+    if (initializationRef.current) {
+      devLog("⏳ 기존 FCM 초기화 대기 중...");
+      return initializationRef.current;
+    }
+
+    initializationRef.current = performTokenRegistration();
+
+    try {
+      await initializationRef.current;
+    } finally {
+      initializationRef.current = null;
+    }
+  }, []);
+
+  const performTokenRegistration = async (): Promise<void> => {
     const isNotificationSupported =
       typeof window !== "undefined" && "Notification" in window;
 
     if (!isNotificationSupported) {
-      console.warn("🚫 Notification API를 사용할 수 없는 환경입니다.");
+      devError("🚫 Notification API를 사용할 수 없는 환경입니다.");
       return;
     }
 
+    isTokenRegistering = true;
+
     try {
       if (!("Notification" in window)) {
-        console.warn("🚫 이 브라우저는 Notification API를 지원하지 않습니다.");
+        devError("🚫 이 브라우저는 Notification API를 지원하지 않습니다.");
         return;
       }
 
@@ -27,21 +56,21 @@ export const useFCM = () => {
           ? await Notification.requestPermission()
           : Notification.permission;
 
-      console.log("🔐 권한 상태:", permission);
+      devLog("🔐 권한 상태:", permission);
 
       if (permission !== "granted") {
-        console.warn("❌ 알림 권한이 허용되지 않았습니다.");
+        devError("❌ 알림 권한이 허용되지 않았습니다.");
         return;
       }
 
       const messaging = await getFirebaseMessaging();
       if (!messaging) {
-        console.error("❌ Firebase Messaging 초기화 실패");
+        devError("❌ Firebase Messaging 초기화 실패");
         return;
       }
 
       const registration = await navigator.serviceWorker.ready.catch((err) => {
-        console.error("❌ Service Worker ready 실패:", err);
+        devError("❌ Service Worker ready 실패:", err);
         return null;
       });
 
@@ -56,39 +85,53 @@ export const useFCM = () => {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
             serviceWorkerRegistration: registration,
           });
-          console.log("📬 발급된 FCM 토큰:", token);
         } catch (err) {
-          attempt++;
-          console.warn(
-            `🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`,
-            err,
-          );
+          attempt;
+          devLog(`🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`, err);
           await new Promise((res) => setTimeout(res, 1000 * attempt));
         }
       }
 
       if (!token) {
-        console.error("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
+        devError("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
+        return;
+      }
+
+      // 이미 등록된 토큰과 같으면 중복 등록 방지
+      if (registeredToken === token) {
+        devLog("🔄 동일한 토큰이 이미 등록되어 있음:", token);
         return;
       }
 
       await registerFCMToken(token);
-      console.log("🟢 등록된 토큰:", token);
+      registeredToken = token;
+      devLog("🟢 등록된 토큰:", token);
     } catch (err) {
-      console.error("❌ 전체 FCM 초기화 실패:", err);
+      devError("❌ 전체 FCM 초기화 실패:", err);
+    } finally {
+      isTokenRegistering = false;
     }
   };
 
-  const onForegroundMessage = (callback: (payload: any) => void) => {
-    getFirebaseMessaging().then((messaging) => {
-      if (!messaging) {
-        console.warn("⚠️ messaging 객체 없음");
-        return;
-      }
-      console.log("📥 onForegroundMessage 등록");
-      onMessage(messaging, callback);
-    });
-  };
+  const onForegroundMessage = useCallback(
+    (callback: (payload: any) => void) => {
+      let unsubscribe: (() => void) | undefined;
+      getFirebaseMessaging().then((messaging) => {
+        if (!messaging) {
+          devLog("⚠️ messaging 객체 없음");
+          return;
+        }
+        devLog("📥 onForegroundMessage 등록");
+        unsubscribe = onMessage(messaging, callback);
+      });
+      return () => {
+        try {
+          unsubscribe?.();
+        } catch {}
+      };
+    },
+    [],
+  );
 
   return { requestPermissionAndToken, onForegroundMessage };
 };

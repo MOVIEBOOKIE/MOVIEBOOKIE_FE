@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { StepHeader } from "@/components";
 import Toast from "@/components/toast";
+import { MAX_PARTICIPANTS } from "@/constants/event-create";
 
 interface Step5Props {
   onValidityChange?: (isValid: boolean) => void;
@@ -47,7 +48,7 @@ export default function Step5({ onValidityChange }: Step5Props) {
   const validateMax = (value: number) => {
     const parsedMin = Number(min);
 
-    if (value > 321) {
+    if (value > MAX_PARTICIPANTS) {
       setMaxError(true);
       showToastWithMessage("최대 인원은 321명까지 설정 가능해요");
     } else if (parsedMin > 0 && value < parsedMin) {
