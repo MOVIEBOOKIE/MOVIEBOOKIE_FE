@@ -86,7 +86,7 @@ export const useFCM = () => {
             serviceWorkerRegistration: registration,
           });
         } catch (err) {
-          attempt;
+          if (attempt === MAX_TOKEN_RETRY) break;
           devLog(`🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`, err);
           await new Promise((res) => setTimeout(res, 1000 * attempt));
         }

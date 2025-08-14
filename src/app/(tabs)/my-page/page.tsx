@@ -14,6 +14,8 @@ import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import EnableNotiButton from "@/components/enable-fcm-button";
+
 interface MyPageStatProps {
   label: string;
   value?: number | string;
@@ -134,16 +136,12 @@ export default function MyPage() {
       <ul className="body-3-medium px-2 text-gray-100">
         {[
           { label: "서비스이용약관", onClick: () => router.push(PATHS.TOS) },
-
           {
             label: "개인정보처리방침",
             onClick: () => router.push(PATHS.PRIVACY_POLICY),
           },
           { label: "로그아웃", onClick: () => setShowLogoutModal(true) },
-          {
-            label: "회원탈퇴",
-            onClick: () => router.push(PATHS.WITHDRAWAL),
-          },
+          { label: "회원탈퇴", onClick: () => router.push(PATHS.WITHDRAWAL) },
         ].map((item) => (
           <li
             key={item.label}
@@ -166,6 +164,10 @@ export default function MyPage() {
           <ArrowRightIcon size={16} className="text-gray-400" />
         </li>
       </ul>
+
+      <div className="w-full">
+        <EnableNotiButton />
+      </div>
       {showLogoutModal && (
         <Modal
           iconType="alert"
