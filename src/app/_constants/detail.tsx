@@ -37,17 +37,14 @@ export const MODAL_CONTENT: Record<string, ModalContentItem> = {
   venueApply: {
     iconType: "confirm",
     showCloseButton: "true",
-    title: "대관 신청 여부를 알려주세요",
+    title: "영화관 대관 신청을 진행할까요?",
     description: (
       <>
-        지금 취소하면
-        <span className="text-gray-300">다시 대관을 진행할 수 없으며</span>
-        <br />
-        확정 가능 여부는 <span className="text-gray-300">이메일을 통해</span>
+        진행 가능 여부는 <span className="text-red-main">이메일</span>을 통해
         알려드려요
       </>
     ),
-    confirmText: "대관 신청",
+    confirmText: "신청하기",
     cancelText: "돌아가기",
   },
 };
