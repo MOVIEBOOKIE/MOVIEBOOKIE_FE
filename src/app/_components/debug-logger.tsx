@@ -57,7 +57,7 @@ export default function DebugLogger() {
       {visible && (
         <div
           id="debug-log"
-          className="fixed bottom-12 left-0 z-[9999] max-h-[150px] w-full overflow-y-auto bg-black/80 p-2 font-mono text-xs whitespace-pre-wrap text-green-300"
+          className="fixed bottom-18 left-0 z-[9999] max-h-[150px] w-full overflow-y-auto bg-black/80 p-2 font-mono text-xs whitespace-pre-wrap text-green-300"
         >
           {logs.map((log, idx) => (
             <div

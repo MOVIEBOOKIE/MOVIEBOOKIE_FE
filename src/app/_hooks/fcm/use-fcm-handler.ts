@@ -3,9 +3,15 @@ import { useFCM } from "./use-fcm";
 import { devLog } from "@/utils/dev-logger";
 import {
   getNotificationPermission,
-  requestPermissionIfDefault,
+  requestPermissionWithOutcome,
 } from "@/utils/fcm-noti";
-type PermissionOutcome = "granted" | "denied" | "default" | "unsupported";
+
+export type PermissionOutcome =
+  | "granted"
+  | "denied"
+  | "default" // 현재 상태가 default(모달 안 뜸/못 뜸 등)
+  | "unsupported"
+  | "dismissed";
 
 export const useFCMHandler = () => {
   const { requestPermissionAndToken, onForegroundMessage } = useFCM();
@@ -19,43 +25,51 @@ export const useFCMHandler = () => {
     ) {
       requestPermissionAndToken();
     }
-
     onForegroundMessage((payload) => {
       devLog("📥 Foreground 알림 수신:", payload);
     });
   }, [requestPermissionAndToken, onForegroundMessage]);
 
-  // 2) 'default'일 때만 모달을 띄우는 버튼 핸들러
+  // 2) 버튼 클릭 시: outcome 기반으로 반환
   const requestPermissionViaButton =
     useCallback(async (): Promise<PermissionOutcome> => {
       const state = getNotificationPermission();
+
+      if (state === "unsupported") return "unsupported";
       if (state === "granted") {
         await requestPermissionAndToken();
         return "granted";
       }
-      if (state === "default") {
-        const ok = await requestPermissionIfDefault();
-        if (ok) {
-          await requestPermissionAndToken();
-          return "granted";
-        }
-        // 사용자가 모달에서 거절/닫음 → 다시 읽어서 돌려줌
-        return getNotificationPermission();
+
+      // state가 default 또는 denied일 때 모달/결과 얻기
+      const outcome = await requestPermissionWithOutcome(); // "granted" | "denied" | "default"/"dismissed" | "unsupported"
+
+      if (outcome === "granted") {
+        await requestPermissionAndToken();
       }
-      return state; // denied | unsupported
+      return outcome as PermissionOutcome;
     }, [requestPermissionAndToken]);
 
-  // 3) 첫 방문 등에서 'default'이고 아직 한 번도 안 물어봤으면 자동으로 물어볼 때(선택)
-  const requestOnceIfNeeded = useCallback(async () => {
-    const hasAsked = localStorage.getItem("fcm-asked") === "true";
-    const shouldAsk = Notification.permission === "default" && !hasAsked;
+  // 3) 홈 첫 방문 자동 요청: outcome을 반환해 토스트에 사용 가능
+  const requestOnceIfNeeded =
+    useCallback(async (): Promise<PermissionOutcome> => {
+      if (typeof window === "undefined") return "unsupported";
 
-    if (!shouldAsk) return;
+      const hasAsked = localStorage.getItem("fcm-asked") === "true";
+      const shouldAsk = Notification.permission === "default" && !hasAsked;
+      if (!shouldAsk) {
+        // 이미 물었거나 default가 아님 → 현재 상태를 그대로 반환
+        return (Notification.permission as PermissionOutcome) ?? "unsupported";
+      }
 
-    const ok = await requestPermissionIfDefault();
-    localStorage.setItem("fcm-asked", "true");
-    if (ok) await requestPermissionAndToken();
-  }, [requestPermissionAndToken]);
+      const outcome = await requestPermissionWithOutcome();
+      localStorage.setItem("fcm-asked", "true");
+
+      if (outcome === "granted") {
+        await requestPermissionAndToken();
+      }
+      return outcome as PermissionOutcome;
+    }, [requestPermissionAndToken]);
 
   return {
     requestPermissionViaButton,

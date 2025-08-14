@@ -11,9 +11,9 @@ export default function ErrorPage({ error }: { error: Error }) {
 
   useEffect(() => {
     if (consoleCount.current < 5) {
-      console.warn("🛑 error.tsx 진입");
-      console.warn("🧨 에러 메시지:", error?.message);
-      console.warn("🧵 에러 스택:", error?.stack);
+      console.log("🛑 error.tsx 진입");
+      console.log("🧨 에러 메시지:", error?.message);
+      console.log("🧵 에러 스택:", error?.stack);
       consoleCount.current += 1;
     }
   }, [error]);
