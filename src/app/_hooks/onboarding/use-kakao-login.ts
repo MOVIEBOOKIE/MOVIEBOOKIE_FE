@@ -1,3 +1,4 @@
+import { devLog } from "@/utils/dev-logger";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -15,7 +16,7 @@ const sendAuthCodeToServer = async ({
       params: { code, redirectUri, isLocal },
       withCredentials: true,
     });
-    console.log("로그인 성공 응답:", response.data);
+    devLog("로그인 성공 응답:", response.data);
 
     return {
       success: true,
