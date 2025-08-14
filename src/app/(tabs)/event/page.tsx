@@ -18,12 +18,13 @@ const EventTabsClient = dynamic(
   () => import("./_components/event-tabs-client"),
 );
 
-export default function EventPage({
+export default async function EventPage({
   searchParams,
 }: {
-  searchParams: { tab?: string };
+  searchParams: Promise<{ tab?: string }>;
 }) {
-  const tabParam = searchParams.tab ?? "apply";
+  const params = await searchParams;
+  const tabParam = params.tab ?? "apply";
 
   return (
     <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
