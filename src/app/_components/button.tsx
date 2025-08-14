@@ -21,7 +21,7 @@ export default function Button({
   const isActuallyDisabled = disabled || isLoading;
 
   const buttonStyles = cn(
-    "body-3-medium w-full rounded-xl py-4 flex items-center justify-center transition-colors",
+    "body-2-semibold w-full rounded-xl py-4 flex items-center justify-center transition-colors",
     variant === "primary" && "text-gray-white bg-red-main",
     variant === "secondary" && "bg-gray-950 text-gray-300",
     !isLoading && !disabled && variant === "primary" && "active:bg-red-700",
