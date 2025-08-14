@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NotificationItem } from "./components/item";
 import { apiGet } from "app/_apis/methods";
 import { useNotificationStore } from "app/_stores/use-noti";
@@ -23,7 +23,7 @@ export default function NotificationPage() {
   const setHasUnread = useNotificationStore((state) => state.setHasUnread);
   const hasUnread = useNotificationStore((state) => state.hasUnread);
   const router = useRouter();
-  const occur = new Map<string, number>();
+  const occur = useMemo(() => new Map<string, number>(), [notifications]);
 
   useEffect(() => {
     const fetchNotifications = async () => {

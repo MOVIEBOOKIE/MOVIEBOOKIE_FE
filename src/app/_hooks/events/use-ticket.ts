@@ -5,6 +5,5 @@ export const useTickets = (page = 0, size = 10) => {
   return useQuery({
     queryKey: ["tickets", page, size],
     queryFn: () => fetchTickets(page, size),
-    refetchOnMount: "always",
   });
 };

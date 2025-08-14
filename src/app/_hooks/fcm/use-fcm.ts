@@ -86,7 +86,7 @@ export const useFCM = () => {
             serviceWorkerRegistration: registration,
           });
         } catch (err) {
-          attempt++;
+          attempt;
           devLog(`🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`, err);
           await new Promise((res) => setTimeout(res, 1000 * attempt));
         }
@@ -115,14 +115,20 @@ export const useFCM = () => {
 
   const onForegroundMessage = useCallback(
     (callback: (payload: any) => void) => {
+      let unsubscribe: (() => void) | undefined;
       getFirebaseMessaging().then((messaging) => {
         if (!messaging) {
           devLog("⚠️ messaging 객체 없음");
           return;
         }
         devLog("📥 onForegroundMessage 등록");
-        onMessage(messaging, callback);
+        unsubscribe = onMessage(messaging, callback);
       });
+      return () => {
+        try {
+          unsubscribe?.();
+        } catch {}
+      };
     },
     [],
   );
