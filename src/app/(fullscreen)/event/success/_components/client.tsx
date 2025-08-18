@@ -1,9 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { FixedLayout } from "@/components";
 import Step1 from "./step1";
 import Step2 from "./step2";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import { PATHS } from "@/constants";
@@ -16,44 +16,49 @@ import { useToastStore } from "app/_stores/use-toast-store";
 
 export default function Client() {
   const [step, setStep] = useState(1);
+  const [btnLoading, setBtnLoading] = useState(false);
   const router = useRouter();
   const { formData, resetFormData } = useEventFormStore();
   const { mutate } = useCreateEvent();
-  const { setLoading, isLoading } = useLoading();
+  const { setLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   const handleButtonClick = () => {
     if (step === 1) {
       setStep(2);
-    } else {
-      setLoading(true);
-      mutate(formData, {
-        onSuccess: () => {
-          resetFormData();
-          setStep(3);
-          setLoading(false);
-        },
-        onError: (err: any) => {
-          setLoading(false);
-
-          const code = err?.response?.data?.code;
-
-          if (code === "PARTICIPATION_404") {
-            <Complete
-              status="fail"
-              action="이벤트 생성"
-              buttonText="이벤트 다시 만들기"
-              onButtonClick={() => router.push(PATHS.EVENT)}
-            />;
-          } else {
-            useToastStore
-              .getState()
-              .showToast("이벤트 게시에 실패했어요", "alert");
-          }
-        },
-      });
+      return;
     }
+    setBtnLoading(true);
+    mutate(formData, {
+      onSuccess: () => {
+        resetFormData();
+        setStep(3);
+        setBtnLoading(false);
+      },
+      onError: (err: any) => {
+        setBtnLoading(false);
+        const code = err?.response?.data?.code;
+
+        if (code === "PARTICIPATION_404") {
+          <Complete
+            status="fail"
+            action="이벤트 생성"
+            buttonText="이벤트 다시 만들기"
+            onButtonClick={() => router.push(PATHS.EVENT)}
+          />;
+        } else {
+          useToastStore
+            .getState()
+            .showToast("이벤트 게시에 실패했어요", "alert");
+        }
+      },
+    });
   };
+
   const handleCloseClick = () => {
     setShowExitConfirm(true);
   };
@@ -88,7 +93,7 @@ export default function Client() {
           buttonText={step === 1 ? "이벤트 미리보기" : "이벤트 게시하기"}
           showCloseButton
           onButtonClick={handleButtonClick}
-          isLoading={isLoading}
+          isLoading={btnLoading}
           title="이벤트 미리보기"
           onClose={handleCloseClick}
           state="preview"
