@@ -4,7 +4,8 @@ import DetailContent from "@/components/detail-content";
 import { useSelectedCinemaStore } from "app/_stores/use-selected-cinema-store";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import { useUserStore } from "app/_stores/use-user-store";
-import { formatDateWithDay } from "@/utils/date-util";
+import { formatDate } from "@/utils/format-date";
+import { formatTime } from "@/utils/format-time";
 
 export default function Step2() {
   const { formData } = useEventFormStore();
@@ -15,12 +16,15 @@ export default function Step2() {
 
   const formattedFormData = {
     ...formData,
-    eventDate: formData.eventDate ? formatDateWithDay(formData.eventDate) : "",
+    eventDate: formData.eventDate ? formatDate(formData.eventDate) : "",
     recruitmentStart: formData.recruitmentStart
-      ? formatDateWithDay(formData.recruitmentStart)
+      ? formatDate(formData.recruitmentStart)
       : "",
     recruitmentEnd: formData.recruitmentEnd
-      ? formatDateWithDay(formData.recruitmentEnd)
+      ? formatDate(formData.recruitmentEnd)
+      : "",
+    eventStartTime: formData.eventStartTime
+      ? formatTime(formData.eventStartTime)
       : "",
   };
   console.log(formattedFormData);
