@@ -27,6 +27,8 @@ export default function DetailContent({ ...props }) {
   const eventTime = props.eventStartTime
     ? props.eventStartTime
     : props.eventTime;
+
+  const userProfile = props.userImageUrl || props.profileImage;
   return (
     <>
       <div className="relative h-75 w-full">
@@ -62,16 +64,15 @@ export default function DetailContent({ ...props }) {
         >
           <div className="mt-5 rounded-xl bg-gray-950 p-5">
             <div className="flex gap-2">
-              {props.userImageUrl ||
-                (props.profileImage && (
-                  <Image
-                    src={props.userImageUrl || props.profileImage}
-                    alt="profile"
-                    width={34}
-                    height={34}
-                    className="h-8.5 w-8.5 rounded-full object-cover"
-                  />
-                ))}
+              {userProfile && (
+                <Image
+                  src={userProfile}
+                  alt="profile"
+                  width={34}
+                  height={34}
+                  className="h-8.5 w-8.5 rounded-full object-cover"
+                />
+              )}
 
               <div className="flex flex-col gap-0.5">
                 <p className="body-3-medium text-gray-200">
