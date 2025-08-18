@@ -14,8 +14,6 @@ export default function Step2() {
   );
   const user = useUserStore((state) => state.user);
 
-  console.log(user);
-
   const formattedFormData = {
     ...formData,
     eventDate: formData.eventDate ? formatDate(formData.eventDate) : "",
