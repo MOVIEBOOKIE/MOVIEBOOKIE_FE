@@ -3,10 +3,7 @@
 import { useCallback, useEffect } from "react";
 import { useFCM } from "./use-fcm";
 import { devLog } from "@/utils/dev-logger";
-import {
-  getNotificationPermission,
-  requestPermissionWithOutcome,
-} from "@/utils/fcm-noti";
+import { requestPermissionWithOutcome } from "@/utils/fcm-noti";
 
 export type PermissionOutcome =
   | "granted"
@@ -23,6 +20,7 @@ export const useFCMHandler = () => {
     devLog("🌐 FCM 토큰 등록 시도 (granted인 경우)");
     if (
       typeof window !== "undefined" &&
+      "Notification" in window &&
       Notification.permission === "granted"
     ) {
       requestPermissionAndToken();
@@ -39,14 +37,20 @@ export const useFCMHandler = () => {
 
       const hasAsked = localStorage.getItem("fcm-asked") === "true";
       const hasDenied = localStorage.getItem("fcm-denied") === "true";
-      const currentPermission = Notification.permission;
+      const currentPermission: PermissionOutcome =
+        "Notification" in window
+          ? (Notification.permission as PermissionOutcome)
+          : "unsupported";
+
+      if (currentPermission === "unsupported") {
+        return "unsupported";
+      }
 
       const shouldAsk =
         currentPermission === "default" && !hasAsked && !hasDenied;
 
       if (!shouldAsk) {
-        // 이미 물었거나 default가 아님 → 현재 상태를 그대로 반환
-        return (currentPermission as PermissionOutcome) ?? "unsupported";
+        return currentPermission ?? "unsupported";
       }
 
       const outcome = await requestPermissionWithOutcome();
@@ -65,23 +69,7 @@ export const useFCMHandler = () => {
       return outcome as PermissionOutcome;
     }, [requestPermissionAndToken]);
 
-  const checkAndShowFirstVisitToast = useCallback(async () => {
-    if (typeof window === "undefined") return;
-
-    const hasAsked = localStorage.getItem("fcm-asked") === "true";
-    const hasDenied = localStorage.getItem("fcm-denied") === "true";
-    const currentPermission = Notification.permission;
-
-    // 첫 방문이고 default 상태이며 명시적으로 거부하지 않은 경우에만 토스트 표시
-    if (currentPermission === "default" && !hasAsked && !hasDenied) {
-      return true;
-    }
-
-    return false;
-  }, []);
-
   return {
     requestOnceIfNeeded,
-    checkAndShowFirstVisitToast,
   };
 };

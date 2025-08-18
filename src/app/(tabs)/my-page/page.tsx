@@ -14,7 +14,6 @@ import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import EnableNotiButton from "@/components/enable-fcm-button";
 
 interface MyPageStatProps {
   label: string;
@@ -165,9 +164,6 @@ export default function MyPage() {
         </li>
       </ul>
 
-      <div className="w-full">
-        <EnableNotiButton />
-      </div>
       {showLogoutModal && (
         <Modal
           iconType="alert"
