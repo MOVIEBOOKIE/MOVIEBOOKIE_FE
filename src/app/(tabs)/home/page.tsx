@@ -11,6 +11,7 @@ import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 const Button = dynamic(() => import("@/components/button"));
 const Card = dynamic(() => import("@/components/main-card"));
@@ -24,6 +25,7 @@ export default function Home() {
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const showToast = useToastStore((s) => s.showToast);
 
   const category = searchParams.get("category");
   const defaultCategory =
@@ -79,10 +81,21 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (user?.email) {
-      requestOnceIfNeeded();
-    }
-  }, [user?.email, requestOnceIfNeeded]);
+    if (!user?.email) return;
+
+    (async () => {
+      const outcome = await requestOnceIfNeeded();
+      if (outcome === "granted") {
+        showToast("알림이 활성화됐어요 ");
+      } else if (outcome === "denied") {
+        showToast("알림 권한이 허용되지 않았습니다. 설정에서 허용해 주세요.");
+      } else if (outcome === "dismissed" || outcome === "default") {
+        showToast("알림 권한 요청이 취소되었어요.");
+      } else if (outcome === "unsupported") {
+        showToast("이 환경에서는 알림을 지원하지 않습니다.");
+      }
+    })();
+  }, [user?.email, requestOnceIfNeeded, showToast]);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);

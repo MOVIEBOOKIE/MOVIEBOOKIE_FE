@@ -10,6 +10,7 @@ import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import { LoadingProvider } from "./_context/loading-context";
 import { metadata, viewport } from "@/constants/metadata";
 import InAppRedirect from "./_components/inapp-redirect";
+import DebugLogger from "./_components/debug-logger";
 
 export { metadata, viewport };
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <ToastProvider>
-          {/* <DebugLogger /> */}
+          <DebugLogger />
           <Script
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"
