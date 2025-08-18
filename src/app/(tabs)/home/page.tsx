@@ -81,23 +81,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!user?.email) return;
-
-    (async () => {
-      const outcome = await requestOnceIfNeeded();
-      if (outcome === "granted") {
-        showToast("알림이 활성화됐어요 ");
-      } else if (outcome === "denied") {
-        showToast("알림 권한이 허용되지 않았습니다. 설정에서 허용해 주세요.");
-      } else if (outcome === "dismissed" || outcome === "default") {
-        showToast(
-          "알림 권한이 허용되지 않았습니다. 마이페이지에서 허용해주세요.",
-        );
-      } else if (outcome === "unsupported") {
-        showToast("이 환경에서는 알림을 지원하지 않습니다.");
-      }
-    })();
-  }, [user?.email, requestOnceIfNeeded, showToast]);
+    if (user?.email) {
+      requestOnceIfNeeded();
+    }
+  }, [user?.email, requestOnceIfNeeded]);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
