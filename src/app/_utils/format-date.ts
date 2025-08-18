@@ -1,4 +1,4 @@
-export const formatDateWithDay = (dateStr: string): string => {
+export const formatDate = (dateStr: string): string => {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
   const date = new Date(dateStr);
 
