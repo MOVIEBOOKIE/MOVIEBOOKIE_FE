@@ -4,12 +4,9 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Badge from "./badge";
 import InformationTab from "app/(fullscreen)/detail/_components/information-tab";
-import { useUserStore } from "app/_stores/use-user-store";
 import EventStatus from "app/(fullscreen)/detail/_components/event-status";
 
 export default function DetailContent({ ...props }) {
-  const user = useUserStore((state) => state.user);
-
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
 
   useEffect(() => {
@@ -30,6 +27,8 @@ export default function DetailContent({ ...props }) {
   const eventTime = props.eventStartTime
     ? props.eventStartTime
     : props.eventTime;
+
+  const userProfile = props.userImageUrl || props.profileImage;
   return (
     <>
       <div className="relative h-75 w-full">
@@ -65,9 +64,9 @@ export default function DetailContent({ ...props }) {
         >
           <div className="mt-5 rounded-xl bg-gray-950 p-5">
             <div className="flex gap-2">
-              {props.userImageUrl && (
+              {userProfile && (
                 <Image
-                  src={props.userImageUrl}
+                  src={userProfile}
                   alt="profile"
                   width={34}
                   height={34}
@@ -77,7 +76,7 @@ export default function DetailContent({ ...props }) {
 
               <div className="flex flex-col gap-0.5">
                 <p className="body-3-medium text-gray-200">
-                  {props.username || "회원"}
+                  {props.username || props.nickname || "회원"}
                 </p>
                 <p className="caption-1-regular text-gray-500">
                   단관 경험 {props.recruitment ?? "0"}회
