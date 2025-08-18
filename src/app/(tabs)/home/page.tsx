@@ -94,7 +94,7 @@ export default function Home() {
       className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
       <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
-        <div className="mb-5 flex flex-col items-center">
+        <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "회원"}님을 위한 추천
@@ -112,7 +112,7 @@ export default function Home() {
             }}
             transition={{ duration: 0 }}
           >
-            <p className="caption-2-medium text-gray-white w-auto opacity-25">
+            <p className="caption-1-medium text-gray-white w-auto opacity-25">
               더 많은 이벤트를 찾으려면 아래로 스와이프
             </p>
             <SwipeDownIcon className="h-6 w-6" />
@@ -128,7 +128,7 @@ export default function Home() {
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-2-medium text-gray-white opacity-25">
+          <p className="caption-1-medium text-gray-white opacity-25">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>

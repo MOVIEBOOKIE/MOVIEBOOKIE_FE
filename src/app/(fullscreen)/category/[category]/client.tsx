@@ -27,45 +27,49 @@ export default function CategoryPageClient({ label }: { label: string }) {
       showBottomButton={false}
       state="detail"
     >
-      <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-        {isLoading ? (
-          <div className="flex flex-1 flex-col gap-4">
-            {Array.from({ length: 3 }).map((_, idx) => (
-              <CardSkeleton key={idx} />
-            ))}
-          </div>
-        ) : (
-          cards.map((card, idx) => (
-            <div key={card.eventId}>
-              <Card
-                id={String(card.eventId)}
-                imageUrl={card.posterImageUrl}
-                category={card.mediaType}
-                title={card.mediaTitle}
-                placeAndDate={`${card.locationName} · ${card.eventDate}`}
-                description={card.description}
-                ddayBadge={`D-${card.d_day}`}
-                statusBadge={card.eventStatus}
-                progressRate={`${card.rate}%`}
-                estimatedPrice={card.estimatedPrice}
-              />
-              {idx < cards.length - 1 && (
-                <div className="my-4 h-px w-full bg-gray-950" />
-              )}
+      <div className="mt-6 flex min-h-[calc(100vh-120px)] flex-1 flex-col">
+        <div className="flex-1">
+          {isLoading ? (
+            <div className="flex flex-col gap-4">
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <CardSkeleton key={idx} />
+              ))}
             </div>
-          ))
+          ) : (
+            <div className="space-y-4">
+              {cards.map((card, idx) => (
+                <div key={card.eventId}>
+                  <Card
+                    id={String(card.eventId)}
+                    imageUrl={card.posterImageUrl}
+                    category={card.mediaType}
+                    title={card.mediaTitle}
+                    placeAndDate={`${card.locationName} · ${card.eventDate}`}
+                    description={card.description}
+                    ddayBadge={`D-${card.d_day}`}
+                    statusBadge={card.eventStatus}
+                    progressRate={`${card.rate}%`}
+                    estimatedPrice={card.estimatedPrice}
+                  />
+                  {idx < cards.length - 1 && (
+                    <div className="bg-border my-4 h-px w-full" />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {!isLoading && cards.length > 0 && (
+          <div className="px-4">
+            <Pagination
+              pageCount={totalPages}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          </div>
         )}
       </div>
-
-      {!isLoading && cards.length > 0 && (
-        <div className="w-full">
-          <Pagination
-            pageCount={totalPages}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </div>
-      )}
     </FixedLayout>
   );
 }
