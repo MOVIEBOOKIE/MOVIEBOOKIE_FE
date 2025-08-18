@@ -106,7 +106,7 @@ export default function Home() {
       ref={containerRef}
       className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
-      <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
+      <section className="flex min-h-full snap-start flex-col items-center overflow-x-hidden pt-15.75">
         <div className="mb-7 flex flex-col items-center">
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
@@ -236,6 +236,7 @@ export default function Home() {
         )}
 
         {events.length === 1 && <div className="h-105" />}
+        <div className="h-px shrink-0 snap-end" aria-hidden />
       </motion.section>
     </div>
   );
