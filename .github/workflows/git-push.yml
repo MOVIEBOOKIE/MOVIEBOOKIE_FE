@@ -32,7 +32,7 @@ jobs:
           fi
 
       - name: Push to another repository
-        uses: cpina/github-action-push-to-another-repository@v1.7.3
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
@@ -40,10 +40,8 @@ jobs:
           destination-github-username: anhyeryeon2
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
-          commit-message: >-
-            ${{ github.event.head_commit.message || 'chore: deploy artifacts' }}
-            [${{ github.ref_name }}]
+          commit-message: ${{ github.event.commits[0].message }} 
           target-branch: ${{ steps.target.outputs.TARGET_BRANCH }}
 
-      - name: Echo destination
+      - name: Echo destination (debug)
         run: echo "$DESTINATION_CLONED_DIRECTORY"
