@@ -18,6 +18,11 @@ const BASE_URL =
     ? "https://api.movie-bookie.shop"
     : "https://api.movie-bookie.shop/dev");
 
+console.log("🔧 Next.js config STAGE =", STAGE);
+console.log("🔧 Next.js config BASE_URL =", BASE_URL);
+console.log("🔧 process.env.NODE_ENV =", process.env.NODE_ENV);
+console.log("🔧 process.env.VERCEL_ENV =", process.env.VERCEL_ENV);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
