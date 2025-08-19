@@ -112,7 +112,7 @@ export default function Home() {
 
         {(pathname === "/" || pathname === "/home") && (
           <motion.div
-            className={`from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 ${isSmallScreen ? "mb-23.5" : "mb-32"} flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3`}
+            className={`from-gray-black/0 to-gray-black pointer-events-none fixed inset-x-0 bottom-0 z-50 ${isSmallScreen ? "mb-23.5" : "mb-32"} flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3`}
             initial={{ opacity: 1 }}
             animate={{
               opacity: isFirstScreen ? 1 : 0,
@@ -120,7 +120,7 @@ export default function Home() {
             }}
             transition={{ duration: 0 }}
           >
-            <p className="caption-1-medium text-gray-white w-auto opacity-25">
+            <p className="caption-1-medium text-gray-white opacity-25">
               더 많은 이벤트를 찾으려면 아래로 스와이프
             </p>
             <SwipeDownIcon className="h-6 w-6" />

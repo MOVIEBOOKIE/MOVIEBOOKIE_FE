@@ -75,7 +75,7 @@ export default function Client() {
   };
 
   const handleComplete = () => {
-    router.push(`${PATHS.EVENT}?tab=mine`);
+    router.push(`${PATHS.EVENT}?tab=host&toggle=0`);
   };
 
   return (

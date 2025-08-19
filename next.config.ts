@@ -8,6 +8,21 @@ const withPWA = require("next-pwa")({
 
 const withSvgr = require("next-svgr");
 
+const STAGE =
+  process.env.NEXT_PUBLIC_STAGE ??
+  (process.env.VERCEL_ENV === "production" ? "prod" : "dev");
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ??
+  (STAGE === "prod"
+    ? "https://api.movie-bookie.shop"
+    : "https://api.movie-bookie.shop/dev");
+
+console.log("🔧 Next.js config STAGE =", STAGE);
+console.log("🔧 Next.js config BASE_URL =", BASE_URL);
+console.log("🔧 process.env.NODE_ENV =", process.env.NODE_ENV);
+console.log("🔧 process.env.VERCEL_ENV =", process.env.VERCEL_ENV);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
@@ -32,19 +47,18 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
     const rules = [
       {
         source: "/events/:id/participants",
-        destination: `${baseurl}/events/:id/participants`,
+        destination: `${BASE_URL}/events/:id/participants`,
       },
       {
         source: "/events/:id/participants/",
-        destination: `${baseurl}/events/:id/participants/`,
+        destination: `${BASE_URL}/events/:id/participants/`,
       },
       {
         source: "/api/:path*",
-        destination: `${baseurl}/api/:path*`,
+        destination: `${BASE_URL}/api/:path*`,
       },
     ];
 

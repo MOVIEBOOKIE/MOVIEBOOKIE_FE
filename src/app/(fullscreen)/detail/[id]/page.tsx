@@ -201,7 +201,7 @@ export default function Detail() {
       <Complete
         status="success"
         action="이벤트 신청"
-        buttonText="모집목록 확인하기"
+        buttonText="신청목록 확인하기"
         onButtonClick={handleComplete}
       />
     );
