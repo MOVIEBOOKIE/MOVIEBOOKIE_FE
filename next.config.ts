@@ -1,7 +1,9 @@
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
-  disable: process.env.NODE_ENV === "development",
+  disable:
+    process.env.NODE_ENV === "development" ||
+    process.env.VERCEL_ENV !== "production",
   skipWaiting: true,
   swSrc: "public/custom-sw.js",
 });
@@ -15,7 +17,8 @@ const STAGE =
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ??
   (STAGE === "prod"
-    ? "https://api.movie-bookie.shop"
+    ? // ? "https://api.movie-bookie.shop"
+      "https://api.movie-bookie.shop/dev" //TODO: 카카오 리다이렉트 url변경 후 복구 필요
     : "https://api.movie-bookie.shop/dev");
 
 console.log("🔧 Next.js config STAGE =", STAGE);
