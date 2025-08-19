@@ -1,18 +1,13 @@
 import dynamic from "next/dynamic";
 import { PATHS } from "@/constants";
 import { PlusIcon } from "lucide-react";
-import { Suspense } from "react";
+import EventBannerSection from "./_components/event-banner-section";
 import Link from "next/link";
 
 const TAB_TYPES = {
   APPLY: "신청 목록",
   HOST: "주최 목록",
 } as const;
-
-const EventBannerSection = dynamic(
-  () => import("./_components/event-banner-section"),
-  { ssr: true, loading: () => null },
-);
 
 const EventTabsClient = dynamic(
   () => import("./_components/event-tabs-client"),
@@ -29,9 +24,7 @@ export default async function EventPage({
   return (
     <div className="scrollbar-hide relative h-[calc(100vh-102px)] overflow-y-scroll pb-25.5 text-white">
       <h1 className="title-1-semibold px-5 pt-6 pb-5">이벤트</h1>
-      <Suspense fallback={null}>
-        <EventBannerSection />
-      </Suspense>
+      <EventBannerSection />
 
       <nav className="body-2-medium flex px-5 pt-6">
         {[

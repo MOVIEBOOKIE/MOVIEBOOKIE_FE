@@ -11,7 +11,7 @@ import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
-import { useToastStore } from "app/_stores/use-toast-store";
+import { useSmallScreen } from "app/_hooks/use-small-screen";
 
 const Button = dynamic(() => import("@/components/button"));
 const Card = dynamic(() => import("@/components/main-card"));
@@ -25,7 +25,6 @@ export default function Home() {
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const showToast = useToastStore((s) => s.showToast);
 
   const category = searchParams.get("category");
   const defaultCategory =
@@ -37,7 +36,7 @@ export default function Home() {
   const [fetchedCategories, setFetchedCategories] = useState<
     (typeof CATEGORY_LABELS)[number][]
   >(["인기", "최신"]);
-
+  const isSmallScreen = useSmallScreen();
   const [isFirstScreen, setIsFirstScreen] = useState(true);
   const { requestOnceIfNeeded } = useFCMHandler();
   useMyPage();
@@ -81,21 +80,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!user?.email) return;
-
-    (async () => {
-      const outcome = await requestOnceIfNeeded();
-      if (outcome === "granted") {
-        showToast("알림이 활성화됐어요 ");
-      } else if (outcome === "denied") {
-        showToast("알림 권한이 허용되지 않았습니다. 설정에서 허용해 주세요.");
-      } else if (outcome === "dismissed" || outcome === "default") {
-        showToast("알림 권한 요청이 취소되었어요.");
-      } else if (outcome === "unsupported") {
-        showToast("이 환경에서는 알림을 지원하지 않습니다.");
-      }
-    })();
-  }, [user?.email, requestOnceIfNeeded, showToast]);
+    if (user?.email) {
+      requestOnceIfNeeded();
+    }
+  }, [user?.email, requestOnceIfNeeded]);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
@@ -106,18 +94,25 @@ export default function Home() {
       ref={containerRef}
       className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
-      <section className="flex h-screen snap-start flex-col items-center overflow-x-hidden pt-15.75">
-        <div className="mb-5 flex flex-col items-center">
+      <section className="relative flex h-screen snap-start flex-col overflow-x-hidden">
+        <div
+          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-14" : "top-26"}`}
+        >
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
             {user?.nickname || "회원"}님을 위한 추천
           </h2>
         </div>
-        <Carousel />
+
+        <div
+          className={`absolute ${isSmallScreen ? "top-[20%]" : "top-[23%]"} right-0 left-0 flex justify-center`}
+        >
+          <Carousel />
+        </div>
 
         {(pathname === "/" || pathname === "/home") && (
           <motion.div
-            className="from-gray-black/0 to-gray-black pointer-events-none fixed bottom-0 z-5 mb-25.5 flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3"
+            className={`from-gray-black/0 to-gray-black pointer-events-none fixed inset-x-0 bottom-0 z-50 ${isSmallScreen ? "mb-23.5" : "mb-32"} flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3`}
             initial={{ opacity: 1 }}
             animate={{
               opacity: isFirstScreen ? 1 : 0,
@@ -125,7 +120,7 @@ export default function Home() {
             }}
             transition={{ duration: 0 }}
           >
-            <p className="caption-2-medium text-gray-white w-auto opacity-25">
+            <p className="caption-1-medium text-gray-white opacity-25">
               더 많은 이벤트를 찾으려면 아래로 스와이프
             </p>
             <SwipeDownIcon className="h-6 w-6" />
@@ -141,7 +136,7 @@ export default function Home() {
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
-          <p className="caption-2-medium text-gray-white opacity-25">
+          <p className="caption-1-medium text-gray-white opacity-25">
             맞춤 이벤트 추천은 위로 스와이프
           </p>
         </div>
@@ -236,6 +231,7 @@ export default function Home() {
         )}
 
         {events.length === 1 && <div className="h-105" />}
+        <div className="h-px shrink-0 snap-end" aria-hidden />
       </motion.section>
     </div>
   );

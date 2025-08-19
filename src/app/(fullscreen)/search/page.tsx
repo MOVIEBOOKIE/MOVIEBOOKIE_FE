@@ -5,7 +5,8 @@ import { BackIcon, EmptyIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
 import { EVENT_CATEGORIES } from "@/constants";
 import { useRouter } from "next/navigation";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import type React from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useGetEventSearch } from "app/_hooks/events/use-events";
 import { useDebounce } from "use-debounce";
 import Pagination from "@/components/pagination";
@@ -42,7 +43,7 @@ export default function Search() {
     inputRef.current?.focus();
   }, []);
   return (
-    <div className="w-full">
+    <div className="flex min-h-screen w-full flex-col">
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
         <BackIcon onClick={handleClick} />
         <Input
@@ -55,7 +56,7 @@ export default function Search() {
       </div>
 
       {!data ? (
-        <>
+        <div className="flex-1">
           <p className="body-2-medium mt-6 mb-2.75 ml-5.5 text-gray-300">
             어떤 이벤트를 찾으시나요?
           </p>
@@ -71,10 +72,10 @@ export default function Search() {
               />
             ))}
           </div>
-        </>
+        </div>
       ) : (
         <>
-          <div className="mt-6 flex flex-col gap-8 px-5">
+          <div className="mt-6 flex flex-1 flex-col gap-8 px-5">
             {cards.length > 0 ? (
               cards.map((card) => (
                 <Card
@@ -103,7 +104,7 @@ export default function Search() {
           </div>
 
           {cards.length > 0 && (
-            <div className="mt-10 mb-20">
+            <div className="mt-auto mb-[34px]">
               <Pagination
                 pageCount={totalPages}
                 currentPage={currentPage}
