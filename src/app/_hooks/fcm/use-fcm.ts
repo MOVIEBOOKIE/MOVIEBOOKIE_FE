@@ -29,12 +29,96 @@ export const useFCM = () => {
       console.log("⏳ 기존 FCM 초기화 대기 중...");
       return initializationRef.current;
     }
+    initializationRef.current = performTokenRegistration();
+
     try {
       await initializationRef.current;
     } finally {
       initializationRef.current = null;
     }
   }, []);
+
+  const performTokenRegistration = async (): Promise<void> => {
+    const isNotificationSupported =
+      typeof window !== "undefined" && "Notification" in window;
+
+    if (!isNotificationSupported) {
+      devError("🚫 Notification API를 사용할 수 없는 환경입니다.");
+      return;
+    }
+
+    isTokenRegistering = true;
+
+    try {
+      if (!("Notification" in window)) {
+        devError("🚫 이 브라우저는 Notification API를 지원하지 않습니다.");
+        return;
+      }
+
+      const permission =
+        Notification.permission === "default"
+          ? await Notification.requestPermission()
+          : Notification.permission;
+
+      console.log("🔐 권한 상태:", permission);
+
+      if (permission !== "granted") {
+        console.log("❌ 알림 권한이 허용되지 않았습니다.");
+        return;
+      }
+
+      const messaging = await getFirebaseMessaging();
+      if (!messaging) {
+        console.log("❌ Firebase Messaging 초기화 실패");
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.ready.catch((err) => {
+        devError("❌ Service Worker ready 실패:", err);
+        return null;
+      });
+
+      if (!registration) return;
+
+      let token: string | null = null;
+      let attempt = 0;
+
+      while (!token && attempt < MAX_TOKEN_RETRY) {
+        try {
+          token = await getToken(messaging, {
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
+            serviceWorkerRegistration: registration,
+          });
+        } catch (err) {
+          if (attempt === MAX_TOKEN_RETRY) break;
+          console.log(
+            `🔁 FCM 토큰 재시도 (${attempt}/${MAX_TOKEN_RETRY})`,
+            err,
+          );
+          await new Promise((res) => setTimeout(res, 1000 * attempt));
+        }
+      }
+
+      if (!token) {
+        console.log("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
+        return;
+      }
+
+      // 이미 등록된 토큰과 같으면 중복 등록 방지
+      if (registeredToken === token) {
+        console.log("🔄 동일한 토큰이 이미 등록되어 있음:", token);
+        return;
+      }
+
+      await registerFCMToken(token);
+      registeredToken = token;
+      console.log("🟢 등록된 토큰:", token);
+    } catch (err) {
+      console.log("❌ 전체 FCM 초기화 실패:", err);
+    } finally {
+      isTokenRegistering = false;
+    }
+  };
 
   const onForegroundMessage = useCallback(
     (callback: (payload: any) => void) => {
