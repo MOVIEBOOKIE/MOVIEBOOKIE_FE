@@ -4,15 +4,44 @@
   }
 }
 
+html,
 body {
-  min-width: 375px;
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
   background-color: var(--color-gray-black);
   color: var(--color-gray-white);
-  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: 500px;
 }
+
+:root {
+  --app-max: 500px;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left: env(safe-area-inset-left);
+  --safe-right: env(safe-area-inset-right);
+  --side-gutter: max(
+    var(--safe-left),
+    calc((100vw - min(var(--app-max), 100vw)) / 2)
+  );
+}
+
+.app-shell {
+  width: min(100vw, var(--app-max));
+  min-width: 375px;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.fab {
+  position: fixed;
+  right: calc(var(--side-gutter) + 16px);
+  bottom: calc(var(--safe-bottom) + 16px);
+}
+
 input,
 textarea {
   font-size: 16px; /* iOS 확대 방지 */
@@ -61,9 +90,17 @@ input {
   background-color: rgba(100, 100, 100, 0.8);
 }
 
-@supports (padding: max(0px)) {
-  body {
-    padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
-    padding-top: env(safe-area-inset-top); /* iOS 11.2+ */
-  }
+.app-header {
+  padding-top: var(--safe-top);
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  background: #0e0e0e;
+}
+
+.app-footer {
+  padding-bottom: var(--safe-bottom);
+}
+
+.fixed-overlay-safe {
+  padding: var(--safe-top) var(--safe-right) var(--safe-left);
 }

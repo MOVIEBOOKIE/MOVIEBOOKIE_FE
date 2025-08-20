@@ -14,6 +14,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+
   if (!token && pathname === "/") {
     return NextResponse.redirect(new URL(PATHS.LOGIN, req.url));
   }
