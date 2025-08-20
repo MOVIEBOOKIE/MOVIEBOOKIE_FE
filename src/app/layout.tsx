@@ -20,6 +20,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/images/favicon/48x48.png" />
         <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="theme-color" content="#0E0E0E" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
           name="naver-site-verification"
           content="7dd8da1c8834169e1812e1266f327334c8462dc0"
         />
