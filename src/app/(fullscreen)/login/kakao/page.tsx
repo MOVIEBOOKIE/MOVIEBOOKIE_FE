@@ -35,6 +35,8 @@ function KakaoLogin() {
     });
 
     if (!code) {
+      const origin = window.location.origin;
+      const redirectUrl = `${origin}/login/kakao`;
       const kakaoAuthUrl =
         `https://kauth.kakao.com/oauth/authorize` +
         `?response_type=code` +
@@ -42,10 +44,10 @@ function KakaoLogin() {
         `&redirect_uri=${encodeURIComponent(redirectUrl)}`;
 
       console.log("🔗 카카오 로그인 이동 URL:", kakaoAuthUrl);
-      window.location.href = kakaoAuthUrl;
+
+      window.location.replace(kakaoAuthUrl);
       return;
     }
-
     const handleLogin = async () => {
       try {
         console.log("🚀 로그인 시도 시작", {
@@ -72,7 +74,7 @@ function KakaoLogin() {
           userType: response?.data?.data?.userType,
         });
 
-        router.push(ok ? PATHS.HOME : PATHS.AGREEMENT);
+        router.replace(ok ? PATHS.HOME : PATHS.AGREEMENT);
       } catch (error: any) {
         console.error("❌ 로그인 처리 중 에러:", error);
         router.push(
