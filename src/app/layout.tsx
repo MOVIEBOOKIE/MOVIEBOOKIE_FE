@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <ToastProvider>
-          <DebugLogger />
+          {/* <DebugLogger /> */}
           <Script
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"

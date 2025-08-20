@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 import { apiDelete } from "app/_apis/methods";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { devLog } from "@/utils/dev-logger";
 
 export default function WithDraw() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function WithDraw() {
       if (error.response?.status === 400) {
         setShowBlockedModal(true);
       } else {
-        console.error("탈퇴 오류:", error);
+        devLog("탈퇴 오류:", error);
         showToast("알 수 없는 오류가 발생했습니다.");
       }
     }
