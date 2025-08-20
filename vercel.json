@@ -14,7 +14,7 @@
     },
     {
       "source": "/api/:path*",
-      "destination": "https://api.movie-bookie.shop/dev/:path*"
+      "destination": "https://api.movie-bookie.shop/:path*"
     }
   ]
 }
