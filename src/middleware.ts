@@ -3,17 +3,24 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export const config = {
-  matcher: ["/", "/login", "/login/:path*"],
+  matcher: ["/", "/login"],
 };
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("accessToken")?.value;
   const pathname = req.nextUrl.pathname;
+
+  if (pathname.startsWith("/login/kakao")) {
+    return NextResponse.next();
+  }
+
+
   if (!token && pathname === "/") {
     return NextResponse.redirect(new URL(PATHS.LOGIN, req.url));
   }
   if (token && pathname === PATHS.LOGIN) {
     return NextResponse.redirect(new URL(PATHS.EVENT ?? "/", req.url));
   }
+
   return NextResponse.next();
 }
