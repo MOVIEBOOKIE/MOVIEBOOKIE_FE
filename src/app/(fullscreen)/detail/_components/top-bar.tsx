@@ -44,7 +44,7 @@ export default function TopBar({ event }: TopBarProps) {
 
   return (
     <>
-      <div className="fixed z-100 mx-auto w-full max-w-125">
+      <div className="fixed-overlay-safe fixed z-100 mx-auto w-full max-w-125">
         <button
           type="button"
           className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950"
