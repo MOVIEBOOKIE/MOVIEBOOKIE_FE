@@ -26,31 +26,55 @@ function KakaoLogin() {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const redirectUrl = `${origin}/login/kakao`;
 
+    console.log("📱 KakaoLogin 디버그", {
+      origin,
+      redirectUrl,
+      code,
+      userAgent: navigator.userAgent,
+      time: new Date().toISOString(),
+    });
+
     if (!code) {
       const kakaoAuthUrl =
         `https://kauth.kakao.com/oauth/authorize` +
         `?response_type=code` +
         `&client_id=${KAKAO_CLIENT_ID}` +
         `&redirect_uri=${encodeURIComponent(redirectUrl)}`;
+
+      console.log("🔗 카카오 로그인 이동 URL:", kakaoAuthUrl);
       window.location.href = kakaoAuthUrl;
       return;
     }
 
     const handleLogin = async () => {
       try {
+        console.log("🚀 로그인 시도 시작", {
+          code,
+          redirectUrl,
+          origin,
+        });
+
         const response = await kakaoLogin({
           code,
           redirectUri: redirectUrl,
           isLocal: origin.includes("localhost"),
         });
 
+        console.log("✅ 로그인 완료 응답:", response);
+
         const ok =
           response?.success &&
           typeof response?.data?.data?.userType === "string" &&
           response.data.data.userType.length > 0;
 
+        console.log("🔍 userType 체크:", {
+          ok,
+          userType: response?.data?.data?.userType,
+        });
+
         router.push(ok ? PATHS.HOME : PATHS.AGREEMENT);
       } catch (error: any) {
+        console.error("❌ 로그인 처리 중 에러:", error);
         router.push(
           `/login?error=${encodeURIComponent(error?.message || "Login failed")}`,
         );
@@ -59,6 +83,5 @@ function KakaoLogin() {
 
     handleLogin();
   }, [code, kakaoLogin, router]);
-
   return isPending ? <Loading /> : null;
 }
