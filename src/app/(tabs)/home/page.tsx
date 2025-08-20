@@ -96,7 +96,7 @@ export default function Home() {
     >
       <section className="relative flex h-screen snap-start flex-col overflow-x-hidden">
         <div
-          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-14" : "top-26"}`}
+          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-14" : "top-20"}`}
         >
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">

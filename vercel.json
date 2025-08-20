@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-deployment-type",
+          "value": "preview"
+        }
+      ],
+      "destination": "https://api.movie-bookie.shop/dev/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.movie-bookie.shop/dev/:path*"
+    }
+  ]
+}

@@ -9,6 +9,10 @@ export const useFCMHandler = () => {
 
   // 조건 만족할 때 호출 (ex. 로그인 후 홈 진입 시)
   const requestOnceIfNeeded = useCallback(async () => {
+    if (typeof Notification === "undefined") {
+      return;
+    }
+
     const hasAsked = localStorage.getItem("fcm-asked") === "true";
     const shouldRequest = Notification.permission === "default" && !hasAsked;
     if (!shouldRequest) return;
@@ -23,7 +27,7 @@ export const useFCMHandler = () => {
   useEffect(() => {
     devLog("🌐 모든 환경에서 FCM 토큰 등록 시도");
     if (
-      typeof window !== "undefined" &&
+      typeof Notification !== "undefined" &&
       Notification.permission === "granted"
     ) {
       requestPermissionAndToken();

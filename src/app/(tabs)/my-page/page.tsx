@@ -67,7 +67,7 @@ export default function MyPage() {
         <ArrowRightIcon size={16} className="mr-2 text-gray-400" />
       </div>
 
-      <div className="flex justify-center">
+      <div className="-mx-5 flex w-[calc(100%+2.5rem)] justify-center">
         <div className="mb-3 flex h-21.75 w-full items-center justify-around text-center">
           <button
             type="button"
