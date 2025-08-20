@@ -23,6 +23,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           name="naver-site-verification"
           content="7dd8da1c8834169e1812e1266f327334c8462dc0"
         />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
       </head>
       <body>
         <ToastProvider>
