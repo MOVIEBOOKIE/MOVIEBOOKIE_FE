@@ -1,5 +1,3 @@
-import { devLog } from "@/utils/dev-logger";
-
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
@@ -21,11 +19,6 @@ const BASE_URL =
   (STAGE === "prod"
     ? "https://api.movie-bookie.shop"
     : "https://api.movie-bookie.shop/dev");
-
-devLog("🔧 Next.js config STAGE =", STAGE);
-devLog("🔧 Next.js config BASE_URL =", BASE_URL);
-devLog("🔧 process.env.NODE_ENV =", process.env.NODE_ENV);
-devLog("🔧 process.env.VERCEL_ENV =", process.env.VERCEL_ENV);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
