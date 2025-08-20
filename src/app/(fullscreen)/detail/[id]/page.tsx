@@ -22,6 +22,7 @@ import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useLoading } from "app/_context/loading-context";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { devError } from "@/utils/dev-logger";
 
 type ModalType =
   | "apply"
@@ -141,7 +142,7 @@ export default function Detail() {
               "checkbox",
             );
         } else {
-          console.error("이벤트 신청 실패:", err);
+          devError("이벤트 신청 실패:", err);
         }
         setIsComplete(false);
         setLoading(false);
@@ -156,7 +157,7 @@ export default function Detail() {
         setLoading(false);
       },
       onError: (error) => {
-        console.error("이벤트 신청 취소 실패:", error);
+        devError("이벤트 신청 취소 실패:", error);
         setLoading(false);
       },
     });

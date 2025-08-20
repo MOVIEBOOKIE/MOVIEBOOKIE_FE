@@ -230,7 +230,7 @@ export default function Home() {
           </Button>
         )}
 
-        {events.length === 1 && <div className="h-105" />}
+        {/* {events.length === 1 && <div className="h-105" />} */}
         <div className="h-px shrink-0 snap-end" aria-hidden />
       </motion.section>
     </div>

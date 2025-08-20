@@ -7,6 +7,7 @@ import { useNotificationStore } from "app/_stores/use-noti";
 import { EmptyNotiIcon } from "@/icons/index";
 import { PATHS } from "@/constants";
 import { useRouter } from "next/navigation";
+import { devError } from "@/utils/dev-logger";
 
 interface Notification {
   id: string;
@@ -56,7 +57,7 @@ export default function NotificationPage() {
         setNotifications(mapped);
         setHasUnread(false);
       } catch (error) {
-        console.error("알림 요청 실패:", error);
+        devError("알림 요청 실패:", error);
       }
     };
 
