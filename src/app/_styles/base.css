@@ -100,3 +100,7 @@ input {
 .app-footer {
   padding-bottom: var(--safe-bottom);
 }
+
+.fixed-overlay-safe {
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
