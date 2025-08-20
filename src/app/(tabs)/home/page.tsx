@@ -94,9 +94,9 @@ export default function Home() {
       ref={containerRef}
       className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
-      <section className="relative flex h-screen snap-start flex-col overflow-x-hidden">
+      <section className="bg-gray-black relative flex h-screen snap-start flex-col overflow-x-hidden">
         <div
-          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-14" : "top-20"}`}
+          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-12" : "top-20"}`}
         >
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
@@ -105,14 +105,14 @@ export default function Home() {
         </div>
 
         <div
-          className={`absolute ${isSmallScreen ? "top-[20%]" : "top-[23%]"} right-0 left-0 flex justify-center`}
+          className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center`}
         >
           <Carousel />
         </div>
 
         {(pathname === "/" || pathname === "/home") && (
           <motion.div
-            className={`from-gray-black/0 to-gray-black pointer-events-none fixed inset-x-0 bottom-0 z-50 ${isSmallScreen ? "mb-23.5" : "mb-32"} flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3`}
+            className={`from-gray-black/0 to-gray-black pointer-events-none fixed inset-x-0 bottom-0 z-50 ${isSmallScreen ? "mb-25" : "mb-32"} flex w-full flex-col items-center gap-1.25 bg-gradient-to-b from-0% to-50% pt-14.25 pb-3`}
             initial={{ opacity: 1 }}
             animate={{
               opacity: isFirstScreen ? 1 : 0,
