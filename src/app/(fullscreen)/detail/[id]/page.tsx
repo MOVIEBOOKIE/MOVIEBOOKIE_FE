@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import DetailClient from "./detail-client";
 
+//절대 경로로 바꿔주는 함수
 function absolutize(src?: string) {
   if (!src) return undefined;
   try {
@@ -26,12 +27,14 @@ async function fetchEventMeta(id: string) {
   const data = (await res.json()) as { result: any };
   if (!data?.result) return null;
 
-  const r = data.result;
+  const eventdata = data.result;
   return {
-    id: r.eventId,
-    title: r.eventTitle || r.mediaTitle || "무비부키 이벤트",
-    description: r.description,
-    image: absolutize(r.posterImageUrl) ?? absolutize(r.locationImageUrl),
+    id: eventdata.eventId,
+    title: eventdata.eventTitle || eventdata.mediaTitle || "무비부키 이벤트",
+    description: eventdata.description,
+    image:
+      absolutize(eventdata.posterImageUrl) ??
+      absolutize(eventdata.locationImageUrl),
   };
 }
 
@@ -53,7 +56,7 @@ export async function generateMetadata({
       description,
       alternates: { canonical: url },
       openGraph: {
-        type: "article",
+        type: "website",
         url,
         title,
         description,
@@ -80,7 +83,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: url },
     openGraph: {
-      type: "article",
+      type: "website",
       url,
       title,
       description,

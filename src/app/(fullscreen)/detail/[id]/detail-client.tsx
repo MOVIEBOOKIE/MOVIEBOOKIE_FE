@@ -1,4 +1,3 @@
-// app/(fullscreen)/event/[id]/detail-client.tsx
 "use client";
 
 import { Button } from "@/components";
