@@ -51,7 +51,7 @@ export default function Carousel() {
         spaceBetween={-10}
         slidesPerView="auto"
         centeredSlides
-        loop
+        loop={events && events.length > 1}
         watchSlidesProgress
         onProgress={applySlideEffect}
       >
@@ -60,17 +60,17 @@ export default function Carousel() {
             <SwiperSlide
               style={{ width: "282px", height: "404px" }}
               key={event.eventId}
-              className="flex items-center overflow-hidden rounded-[12px] transition-transform duration-300 ease-in-out"
+              className="flex items-center rounded-[12px] transition-transform duration-300 ease-in-out"
               onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
             >
-              <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[12px]">
-                <div className="relative h-full w-full overflow-hidden rounded-[12px]">
+              <div className="relative flex h-full w-full items-center justify-center rounded-[12px]">
+                <div className="relative h-full w-full rounded-[12px]">
                   <Image
                     width={282}
                     height={404}
                     src={event.posterImageUrl}
                     alt={event.title}
-                    className="absolute h-full w-full object-cover"
+                    className="absolute h-full w-full rounded-[12px] object-cover"
                     style={{ borderRadius: "12px" }}
                   />
                   <Badge
@@ -82,7 +82,6 @@ export default function Carousel() {
                   <div className="absolute inset-0 rounded-[12px] bg-gradient-to-b from-black/16 to-black/64" />
                   <div className="absolute bottom-0 h-42 w-full rounded-[12px]">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/50 opacity-54" />
-                    <div className="absolute bottom-0 h-30 w-full bg-gradient-to-b opacity-54 backdrop-blur-[4px]" />
                   </div>
                   <div className="absolute bottom-8 left-5 flex flex-col gap-0.75">
                     <h2 className="body-3-medium text-gray-300">
