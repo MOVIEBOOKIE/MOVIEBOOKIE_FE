@@ -45,7 +45,6 @@ export default function Home() {
   >(["인기", "최신"]);
   const isSmallScreen = useSmallScreen();
   const [isFirstScreen, setIsFirstScreen] = useState(true);
-  const [carouselReady, setCarouselReady] = useState(false);
 
   const { requestOnceIfNeeded } = useFCMHandler();
   useMyPage();
@@ -128,7 +127,7 @@ export default function Home() {
         <div
           className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center`}
         >
-          <Carousel onReady={() => setCarouselReady(true)} />
+          <Carousel />
         </div>
 
         {(pathname === "/" || pathname === "/home") && (

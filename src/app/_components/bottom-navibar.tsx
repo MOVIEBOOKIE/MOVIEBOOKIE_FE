@@ -40,14 +40,14 @@ export default function BottomNavigation() {
             onClick={() => handleTabClick(tab.path)}
             className="relative flex w-20 flex-col items-center gap-2"
           >
-            <AnimatePresence>
+            <AnimatePresence initial={false} mode="wait">
               {active && (
                 <motion.div
                   className="pointer-events-none absolute inset-0"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
                 >
                   <LightEffect />
                 </motion.div>
@@ -71,6 +71,7 @@ export default function BottomNavigation() {
                   <motion.span
                     className="bg-red-main border-gray-black absolute -top-1 -right-1 h-2 w-2 rounded-full border"
                     initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.8, opacity: 0 }}
                     transition={{ duration: 0.15 }}
                     style={{ willChange: "transform, opacity" }}
@@ -79,12 +80,11 @@ export default function BottomNavigation() {
               </AnimatePresence>
             </motion.div>
 
-            <motion.p
+            <p
               className={`caption-3-medium ${active ? "text-red-main" : "text-gray-800"} transition-colors`}
-              transition={{ duration: 0.12 }}
             >
-              {tab.label}
-            </motion.p>
+              {tab.label}{" "}
+            </p>
           </button>
         );
       })}
