@@ -35,7 +35,7 @@ export default function EmptyCarousel() {
           <button
             type="button"
             onClick={() => router.push(PATHS.EVENT_CREATE)}
-            className="bg-red-main body-3-semibold mt-6 w-full rounded-xl py-3 text-white"
+            className="bg-red-main body-3-semibold mt-5 w-full rounded-xl px-6 py-3 text-white focus:bg-red-700"
           >
             나만의 이벤트 만들러 가기
           </button>

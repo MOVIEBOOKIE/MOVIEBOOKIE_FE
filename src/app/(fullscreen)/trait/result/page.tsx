@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components";
+import { Button, Header } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
 import { BackIcon, LogoWhiteIcon } from "@/icons/index";
@@ -54,22 +54,7 @@ export default function TraitResult() {
 
   return (
     <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
-      {isFromMyPage && (
-        <div
-          className={cn(
-            "pt-safe-top fixed top-0 left-0 z-50 w-full px-5",
-            isShortScreen ? "mt-5" : "mt-8",
-          )}
-        >
-          <button
-            onClick={() => router.back()}
-            aria-label="뒤로가기"
-            type="button"
-          >
-            <BackIcon className="h-full w-full" />
-          </button>
-        </div>
-      )}
+      {isFromMyPage && <Header className="bg-transparent" />}
 
       <div
         className={`flex justify-center ${

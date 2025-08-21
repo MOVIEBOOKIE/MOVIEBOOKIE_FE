@@ -47,7 +47,7 @@ export default function TopBar({ event }: TopBarProps) {
       <div className="fixed-overlay-safe fixed z-100 mx-auto mt-4 w-full max-w-125">
         <button
           type="button"
-          className="absolute top-2.5 left-3 h-9.5 w-9.5 rounded-full bg-gray-950"
+          className="absolute top-4 left-3 h-9.5 w-9.5 rounded-full bg-gray-950"
           onClick={handleBack}
         >
           <BackIcon />
@@ -55,7 +55,7 @@ export default function TopBar({ event }: TopBarProps) {
         <button
           type="button"
           onClick={() => setShowShareModal(true)}
-          className="absolute top-2.5 right-5 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-950"
+          className="absolute top-4 right-5 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-950"
         >
           <UploadIcon />
         </button>

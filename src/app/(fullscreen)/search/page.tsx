@@ -43,7 +43,7 @@ export default function Search() {
     inputRef.current?.focus();
   }, []);
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="mt-4 flex min-h-screen w-full flex-col">
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
         <BackIcon onClick={handleClick} />
         <Input

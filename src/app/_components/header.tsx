@@ -37,7 +37,7 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed top-0 z-50 flex h-[70px] w-full max-w-125 items-center justify-center pt-0 focus-within:border-white",
+        "bg-gray-black fixed top-4 z-50 flex h-[70px] w-full max-w-125 items-center justify-center pt-0 focus-within:border-white",
         className,
       )}
     >
