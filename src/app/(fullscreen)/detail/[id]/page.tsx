@@ -41,14 +41,15 @@ async function fetchEventMeta(id: string) {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const meta = await fetchEventMeta(params.id);
+  const { id } = await params;
+  const meta = await fetchEventMeta(id);
 
   if (!meta) {
     const title = "이벤트를 찾을 수 없어요 | 무비부키";
     const description = "해당 이벤트가 존재하지 않거나 만료되었습니다.";
-    const url = `/event/${params.id}`;
+    const url = `/detail/${id}`;
     const image = "/images/thumbnail.png";
 
     return {
@@ -56,7 +57,7 @@ export async function generateMetadata({
       description,
       alternates: { canonical: url },
       openGraph: {
-        type: "website",
+        type: "article",
         url,
         title,
         description,
@@ -75,7 +76,7 @@ export async function generateMetadata({
   const title = meta.title;
   const description =
     meta.description?.slice(0, 120) || "영화관 모임을 시작해보세요.";
-  const url = `/event/${meta.id}`;
+  const url = `/detail/${meta.id}`;
   const image = meta.image ?? "/images/thumbnail.png";
 
   return {
@@ -83,7 +84,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: url },
     openGraph: {
-      type: "website",
+      type: "article",
       url,
       title,
       description,
