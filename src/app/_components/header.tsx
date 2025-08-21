@@ -37,15 +37,13 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed top-0 z-50 flex h-[50px] w-full max-w-125 items-center justify-center focus-within:border-white",
-        "p-[env(safe-area-inset-top)_env(safe-area-inset-right)_0_env(safe-area-inset-left)]",
-        "fixed-overlay-safe w-full",
+        "bg-gray-black fixed top-0 z-50 flex h-[70px] w-full max-w-125 items-center justify-center pt-0 focus-within:border-white",
         className,
       )}
     >
       {showBackButton && (
         <button
-          className="absolute top-2.5 left-2.5"
+          className="absolute top-6 left-2.5"
           onClick={handleBack}
           aria-label="뒤로가기"
           type="button"
@@ -58,7 +56,7 @@ export default function Header({
       {showCloseButton && (
         <button
           type="button"
-          className="absolute top-2.5 right-2.5"
+          className="absolute top-6 right-2.5"
           onClick={handleClose}
           aria-label="닫기"
         >

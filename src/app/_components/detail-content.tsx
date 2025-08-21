@@ -117,7 +117,11 @@ export default function DetailContent({ ...props }) {
               </span>
             </div>
           </div>
-          <div className="mt-4 mb-6 h-1.5 w-full bg-gray-950" />
+          <div
+            aria-hidden
+            className="-mx-5 mt-4 mb-6 h-1.5 w-[calc(100%+2.5rem)] bg-gray-950"
+          />
+
           <InformationTab
             {...props}
             recruitmentDate={recruitmentDate}

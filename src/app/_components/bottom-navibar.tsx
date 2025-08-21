@@ -19,7 +19,10 @@ export default function BottomNavigation() {
     return pathname === tabPath || pathname.startsWith(`${tabPath}/`);
   }
   const handleTabClick = (tabPath: string) => {
-    if (pathname === tabPath) return;
+    if (pathname === tabPath) {
+      setLoading(true);
+      return;
+    }
     setLoading(true);
     router.push(tabPath);
   };
