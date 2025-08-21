@@ -9,27 +9,35 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
+import { cn } from "@/utils/cn";
+import { useSmallScreen } from "app/_hooks/use-small-screen";
 
 export default function Login() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
+  const isSmallScreen = useSmallScreen();
 
   const handleSlideChange = (swiper: any) => {
     setActiveIndex(swiper.activeIndex);
   };
 
   return (
-    <div className="bg-gray-black relative min-h-screen text-white">
+    <div className="bg-gray-black relative min-h-screen overflow-hidden text-white">
       <PwaPromptModal />
 
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <Swiper onSlideChange={handleSlideChange} className="h-full">
           {slides.map((slide, index) => (
             <SwiperSlide
               key={index}
               className="flex flex-col items-center justify-between pb-11"
             >
-              <div className="flex w-full flex-1 flex-col items-center justify-center">
+              <div
+                className={cn(
+                  isSmallScreen ? "mt-0" : "mt-10",
+                  "flex w-full flex-1 flex-col items-center justify-center",
+                )}
+              >
                 <div
                   className="px-4 pt-12 text-center"
                   style={{ whiteSpace: "pre-line" }}
@@ -39,7 +47,6 @@ export default function Login() {
                     {slide.description}
                   </p>
                 </div>
-
                 <div className="mt-5 flex w-full items-center justify-center">
                   <img
                     src={slide.gif}
@@ -53,7 +60,12 @@ export default function Login() {
           ))}
         </Swiper>
 
-        <div className="fixed bottom-[186px] left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        <div
+          className={cn(
+            "absolute left-1/2 z-20 flex -translate-x-1/2 gap-2",
+            isSmallScreen ? "bottom-[20px]" : "bottom-[0px]",
+          )}
+        >
           {slides.map((_, index) => (
             <button
               type="button"
