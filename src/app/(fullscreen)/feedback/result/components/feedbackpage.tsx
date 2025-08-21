@@ -61,7 +61,7 @@ export default function FeedbackPage() {
         showBottomButton={false}
         state="default"
       >
-        <div className="text-white">
+        <div className="mt-2 text-white">
           {feedbackType && step === 1 && (
             <div className="flex flex-col">
               <div className="mb-3">

@@ -15,6 +15,7 @@ body {
   color: var(--color-gray-white);
   min-height: 100dvh;
   max-width: 500px;
+  border: 1px solid var(--color-gray-800);
 }
 
 :root {

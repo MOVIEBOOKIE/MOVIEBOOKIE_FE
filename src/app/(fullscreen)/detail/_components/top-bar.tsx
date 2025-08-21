@@ -47,7 +47,7 @@ export default function TopBar({ event }: TopBarProps) {
       <div className="fixed-overlay-safe pt-safe-top fixed z-100 mx-auto w-full max-w-125">
         <button
           type="button"
-          className="absolute top-2.5 left-5 h-9.5 w-9.5 rounded-full bg-gray-950"
+          className="absolute top-2.5 left-3 h-9.5 w-9.5 rounded-full bg-gray-950"
           onClick={handleBack}
         >
           <BackIcon />

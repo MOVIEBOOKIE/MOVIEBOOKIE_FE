@@ -73,7 +73,7 @@ export default function TraitResult() {
 
       <div
         className={`flex justify-center ${
-          isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
+          isShortScreen ? "mt-15" : isFromMyPage ? "mt-32" : "mt-20"
         }`}
       >
         <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-2 text-center text-gray-200">
