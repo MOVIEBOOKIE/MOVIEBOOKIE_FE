@@ -74,15 +74,9 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { data, isFetched, isLoading } = useCategoryEvents(selected, {
+  const { data, isLoading } = useCategoryEvents(selected, {
     enabled: fetchedCategories.includes(selected),
-    keepPreviousData: true,
-    placeholderData: (prev: any) => prev,
-    staleTime: 60_000,
-    gcTime: 300_000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  } as any);
+  });
 
   const events = data?.eventList ?? [];
 
@@ -103,16 +97,10 @@ export default function Home() {
     router.push(PATHS.SEARCH);
   };
 
-  const showInitialLoading = isLoading && !isFetched;
-
-  if (showInitialLoading) {
-    return <LoadingPage />;
-  }
-
   return (
     <div
       ref={containerRef}
-      className="scrollbar-hide title-1-bold h-[calc(100vh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
+      className="scrollbar-hide title-1-bold h-[calc(100dvh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
       <section className="bg-gray-black relative flex h-screen snap-start flex-col overflow-x-hidden">
         <div
@@ -152,7 +140,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: isFirstScreen ? 0 : 1 }}
         transition={{ duration: 0.6 }}
-        className="flex snap-start flex-col px-5"
+        className="flex snap-start flex-col px-5 pb-[calc(102px+env(safe-area-inset-bottom)+8px)]"
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
@@ -182,7 +170,7 @@ export default function Home() {
           ))}
         </div>
 
-        {isFetched && events.length === 0 ? (
+        {isLoading ? (
           <div className="mb-26 flex flex-col gap-4">
             {Array.from({ length: 4 }).map((_, idx) => (
               <CardSkeleton key={idx} />
@@ -198,7 +186,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => router.push(PATHS.EVENT_CREATE)}
-              className="bg-red-main body-3-semibold w-75 rounded-xl px-6 py-4 text-white"
+              className="bg-red-main body-3-semibold w-[242px] rounded-xl px-6 py-4 text-white"
             >
               나만의 이벤트 만들러 가기
             </button>
