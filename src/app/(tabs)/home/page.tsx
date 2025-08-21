@@ -16,8 +16,15 @@ import { useSmallScreen } from "app/_hooks/use-small-screen";
 const Button = dynamic(() => import("@/components/button"));
 const Card = dynamic(() => import("@/components/main-card"));
 const Input = dynamic(() => import("@/components/input"));
-const Carousel = dynamic(() => import("./_components/carousel"));
+const Carousel = dynamic(() => import("./_components/carousel"), {
+  ssr: false,
+  loading: () => null,
+});
 const CardSkeleton = dynamic(() => import("@/components/card-skeleton"));
+const LoadingPage = dynamic(() => import("../../loading"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Home() {
   const router = useRouter();
@@ -38,6 +45,8 @@ export default function Home() {
   >(["인기", "최신"]);
   const isSmallScreen = useSmallScreen();
   const [isFirstScreen, setIsFirstScreen] = useState(true);
+  const [carouselReady, setCarouselReady] = useState(false);
+
   const { requestOnceIfNeeded } = useFCMHandler();
   useMyPage();
 
@@ -66,9 +75,15 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { data, isLoading } = useCategoryEvents(selected, {
+  const { data, isFetched, isLoading } = useCategoryEvents(selected, {
     enabled: fetchedCategories.includes(selected),
-  });
+    keepPreviousData: true,
+    placeholderData: (prev: any) => prev,
+    staleTime: 60_000,
+    gcTime: 300_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  } as any);
 
   const events = data?.eventList ?? [];
 
@@ -89,6 +104,12 @@ export default function Home() {
     router.push(PATHS.SEARCH);
   };
 
+  const showInitialLoading = isLoading && !isFetched;
+
+  if (showInitialLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <div
       ref={containerRef}
@@ -107,7 +128,7 @@ export default function Home() {
         <div
           className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center`}
         >
-          <Carousel />
+          <Carousel onReady={() => setCarouselReady(true)} />
         </div>
 
         {(pathname === "/" || pathname === "/home") && (
@@ -162,7 +183,7 @@ export default function Home() {
           ))}
         </div>
 
-        {isLoading ? (
+        {isFetched && events.length === 0 ? (
           <div className="mb-26 flex flex-col gap-4">
             {Array.from({ length: 4 }).map((_, idx) => (
               <CardSkeleton key={idx} />
@@ -230,7 +251,6 @@ export default function Home() {
           </Button>
         )}
 
-        {/* {events.length === 1 && <div className="h-105" />} */}
         <div className="h-px shrink-0 snap-end" aria-hidden />
       </motion.section>
     </div>
