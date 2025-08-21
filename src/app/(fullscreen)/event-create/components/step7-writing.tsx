@@ -123,7 +123,7 @@ export default function Step7() {
           <input
             {...register("mediaTitle")}
             type="text"
-            placeholder="콘텐츠의 제목을 입력해 주세요 (ex 타이타닉)"
+            placeholder="영화,드라마,예능 콘텐츠의 제목을 입력해 주세요"
             className="body-3-medium w-full rounded-xl border border-gray-900 p-5 text-gray-300 placeholder-gray-800 placeholder:text-[14px] focus:outline-none"
           />
         </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
+import type SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
@@ -12,13 +12,23 @@ import { useHomeEvents } from "app/_hooks/events/use-home-events";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 
-export default function Carousel() {
+type CarouselProps = {
+  onReady?: () => void;
+};
+
+export default function Carousel({ onReady }: CarouselProps) {
   const swiperRef = useRef<SwiperCore | null>(null);
-  const [isReady, setIsReady] = useState(false);
-  const { data: events } = useHomeEvents();
   const router = useRouter();
 
-  const applySlideEffect = () => {
+  const { data: events, isFetched } = useHomeEvents();
+
+  const slides = useMemo(() => (Array.isArray(events) ? events : []), [events]);
+  const totalImages = slides.length;
+
+  const [loadedImages, setLoadedImages] = useState(0);
+  const [ready, setReady] = useState(false);
+
+  const applySlideEffect = useCallback(() => {
     const swiper = swiperRef.current;
     if (!swiper?.slides?.length) return;
 
@@ -27,23 +37,39 @@ export default function Carousel() {
       const scale = Math.abs(progress) < 0.5 ? 1 : 0.8;
       const opacity = Math.abs(progress) < 0.5 ? 1 : 0.7;
 
-      slideEl.style.transform = `scale(${scale})`;
-      slideEl.style.opacity = `${opacity}`;
+      (slideEl as HTMLElement).style.transform = `scale(${scale})`;
+      (slideEl as HTMLElement).style.opacity = `${opacity}`;
     });
-  };
-
-  const slideRef = useCallback((node: HTMLDivElement | null) => {
-    if (node !== null) {
-      applySlideEffect();
-      setIsReady(true);
-    }
   }, []);
+
+  const handleImageLoaded = useCallback(() => {
+    setLoadedImages((c) => c + 1);
+  }, []);
+
+  useEffect(() => {
+    const isCarouselDataReady =
+      isFetched && (totalImages === 0 || loadedImages >= totalImages);
+    if (!ready && isCarouselDataReady) {
+      setReady(true);
+      requestAnimationFrame(() => {
+        applySlideEffect();
+      });
+      onReady?.();
+    }
+  }, [ready, isFetched, totalImages, loadedImages, applySlideEffect, onReady]);
+
+  if (!isFetched) {
+    return null;
+  }
+
+  if (totalImages === 0) {
+    return <EmptyCarousel />;
+  }
 
   return (
     <div
-      ref={slideRef}
       className={`relative transition-opacity duration-300 ${
-        isReady ? "opacity-100" : "opacity-0"
+        ready ? "opacity-100" : "opacity-0"
       }`}
     >
       <Swiper
@@ -51,9 +77,10 @@ export default function Carousel() {
         spaceBetween={-10}
         slidesPerView="auto"
         centeredSlides
-        loop={events && events.length > 1}
+        loop={totalImages > 1}
         watchSlidesProgress
         onProgress={applySlideEffect}
+        onSetTranslate={applySlideEffect}
       >
         {Array.isArray(events) && events.length > 0 ? (
           events.map((event) => (
@@ -72,6 +99,8 @@ export default function Carousel() {
                     alt={event.title}
                     className="absolute h-full w-full rounded-[12px] object-cover"
                     style={{ borderRadius: "12px" }}
+                    onLoadingComplete={handleImageLoaded}
+                    priority
                   />
                   <Badge
                     variant="secondary"

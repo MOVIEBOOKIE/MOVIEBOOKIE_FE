@@ -10,6 +10,7 @@ export function TargetUrl(title: string, id?: string): string | null {
     "생성 완료",
     "신청 취소",
     "모집 취소",
+    "취소 완료",
     "모집 마감",
     "모집 완료",
     "대관 취소",

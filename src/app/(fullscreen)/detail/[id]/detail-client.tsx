@@ -20,7 +20,6 @@ import { useGetToTicket } from "app/_hooks/ticket/use-ticket";
 import { useGetAnonymousEvent } from "app/_hooks/use-anonymous-events";
 import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
-import { useLoading } from "app/_context/loading-context";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { devError } from "@/utils/dev-logger";
 
@@ -37,8 +36,8 @@ export default function DetailClient() {
   const [modalType, setModalType] = useState<ModalType>(null);
   const [isComplete, setIsComplete] = useState(false);
   const [shouldPoll, setShouldPoll] = useState(true);
+  const [buttonLoading, setButtonLoading] = useState(false);
 
-  const { setLoading } = useLoading();
   const params = useParams();
   const eventId = useMemo(() => Number(params?.id), [params?.id]);
   const isValidEventId = !isNaN(eventId) && eventId > 0;
@@ -108,14 +107,14 @@ export default function DetailClient() {
   const { mutate: postEventVenue } = usePostEventsVenue();
 
   const handleApply = () => {
-    setLoading(true);
+    setButtonLoading(true);
     mutate(eventId, {
       onSuccess: () => {
-        setLoading(false);
+        setButtonLoading(false);
         setIsComplete(true);
       },
       onError: (err: any) => {
-        setLoading(false);
+        setButtonLoading(false);
         const code = err?.response?.data?.code;
         if (code === "PARTICIPATION_404") {
           useToastStore
@@ -133,24 +132,37 @@ export default function DetailClient() {
   };
 
   const handleCancel = () => {
-    setLoading(true);
+    setButtonLoading(true);
     applyCancel(eventId, {
-      onSuccess: () => setLoading(false),
+      onSuccess: () => {
+        setButtonLoading(false);
+      },
       onError: (error) => {
+        setButtonLoading(false);
         devError("이벤트 신청 취소 실패:", error);
-        setLoading(false);
       },
     });
   };
 
   const handleRecruitCancel = () => {
-    setLoading(true);
-    recruitCancel(eventId, { onSettled: () => setLoading(false) });
+    setButtonLoading(true);
+    recruitCancel(eventId, {
+      onSettled: () => {
+        setButtonLoading(false);
+      },
+    });
   };
 
   const handleVenueApply = (type: number) => {
-    setLoading(true);
-    postEventVenue({ eventId, type }, { onSettled: () => setLoading(false) });
+    setButtonLoading(true);
+    postEventVenue(
+      { eventId, type },
+      {
+        onSettled: () => {
+          setButtonLoading(false);
+        },
+      },
+    );
   };
 
   const handleComplete = () => router.push(PATHS.EVENT);
@@ -206,13 +218,15 @@ export default function DetailClient() {
           <Button
             variant="primary"
             onClick={handleClick}
+            isLoading={buttonLoading}
             disabled={
               data?.eventState === "모집 취소" ||
               (data?.eventState === "모집 완료" &&
                 data?.userRole !== "주최자") ||
               data?.eventState === "대관 취소" ||
               data?.buttonState === "대관 진행 중" ||
-              data?.buttonState === "신청 마감"
+              data?.buttonState === "신청 마감" ||
+              buttonLoading
             }
           >
             {data?.buttonState ?? ""}
