@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
@@ -25,7 +25,7 @@ const DeadlineCalendar = ({
   selectedDeadline,
   onSelectDeadline,
 }: DeadlineCalendarProps) => {
-  const today = dayjs().startOf("day");
+  const today = useMemo(() => dayjs().startOf("day"), []);
   const latestDeadline = getLatestDeadline(eventDate);
 
   const [currentMonth, setCurrentMonth] = useState(() =>
