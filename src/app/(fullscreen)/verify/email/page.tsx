@@ -10,7 +10,7 @@ import {
   dropdownVariants,
   arrowVariants,
   optionVariants,
-} from "../_components/motion-drop-down"; // ✅ 분리된 파일에서 variants를 가져옴
+} from "../_components/motion-drop-down";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
 type EmailDomain = (typeof EMAIL_DOMAINS)[number];
@@ -48,20 +48,19 @@ export default function EmailStep() {
         StepHeader="2/3"
         title={
           <>
-            자주 사용하는 이메일을 <br /> 입력해 주세요{" "}
+            자주 사용하는 이메일을 <br /> 입력해 주세요
           </>
         }
         description={
           <>
-            입력하신 이메일은 대관 관련 중요한 소식 안내에 사용되며, <br />{" "}
-            여러분의 소중한 정보는 안전하게 보호돼요{" "}
+            입력하신 이메일은 대관 관련 중요한 소식 안내에 사용되며, <br />
+            여러분의 소중한 정보는 안전하게 보호돼요
           </>
         }
-      />{" "}
+      />
       <div className="mt-13">
-        <label className="body-2-medium text-gray-400">이메일</label>{" "}
+        <label className="body-2-medium text-gray-400">이메일</label>
         <div className="flex gap-6 pt-4.25">
-          {" "}
           <input
             type="text"
             placeholder="ex) moviebookie"
@@ -69,9 +68,8 @@ export default function EmailStep() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
             className="w-43.25 border-b border-gray-700 bg-transparent pb-1.5 text-gray-100 placeholder-gray-600 focus:outline-none"
-          />{" "}
+          />
           <div className="relative w-35">
-            {" "}
             <button
               type="button"
               onClick={() => setDropdownOpen((prev) => !prev)}
@@ -79,18 +77,16 @@ export default function EmailStep() {
               aria-haspopup="listbox"
               aria-expanded={dropdownOpen}
             >
-              @ {emailDomain}{" "}
+              @ {emailDomain}
               <motion.div
                 variants={arrowVariants}
                 animate={dropdownOpen ? "open" : "closed"}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
               >
-                {" "}
-                <ArrowDownIcon className="h-1.7 text-gray-400" />{" "}
-              </motion.div>{" "}
-            </button>{" "}
+                <ArrowDownIcon className="h-1.7 text-gray-400" />
+              </motion.div>
+            </button>
             <AnimatePresence>
-              {" "}
               {dropdownOpen && (
                 <motion.ul
                   className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-md bg-gray-900"
@@ -101,7 +97,6 @@ export default function EmailStep() {
                   animate="visible"
                   exit="exit"
                 >
-                  {" "}
                   {EMAIL_DOMAINS.map((domain, index) => {
                     const selected = domain === emailDomain;
                     return (
@@ -112,7 +107,6 @@ export default function EmailStep() {
                         animate="visible"
                         custom={index}
                       >
-                        {" "}
                         <button
                           type="button"
                           role="option"
@@ -127,17 +121,17 @@ export default function EmailStep() {
                               : "text-gray-400"
                           }`}
                         >
-                          <span>@ {domain}</span>{" "}
-                        </button>{" "}
+                          <span>@ {domain}</span>
+                        </button>
                       </motion.li>
                     );
-                  })}{" "}
+                  })}
                 </motion.ul>
-              )}{" "}
-            </AnimatePresence>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>{" "}
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
     </FixedLayout>
   );
 }
