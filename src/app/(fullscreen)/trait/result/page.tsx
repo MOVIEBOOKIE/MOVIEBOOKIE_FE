@@ -7,12 +7,14 @@ import { BackIcon, LogoWhiteIcon } from "@/icons/index";
 import { useGetUserTypeResult } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 import { useSearchParams, useRouter } from "next/navigation";
+import { cn } from "@/utils/cn";
+import { useSmallScreen } from "app/_hooks/use-small-screen";
 
 export default function TraitResult() {
-  const [isShortScreen, setIsShortScreen] = useState(false);
+  const isShortScreen = useSmallScreen();
   const searchParams = useSearchParams();
   const router = useRouter();
   const from = searchParams.get("from");
@@ -37,17 +39,6 @@ export default function TraitResult() {
       }, 0);
     }
   }, [data?.title]);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsShortScreen(window.innerHeight < 700);
-    };
-
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
 
   if (!data) {
     return null;
@@ -64,7 +55,12 @@ export default function TraitResult() {
   return (
     <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
       {isFromMyPage && (
-        <div className="absolute top-5 left-5 z-50">
+        <div
+          className={cn(
+            "pt-safe-top fixed top-0 left-0 z-50 w-full px-5",
+            isShortScreen ? "mt-5" : "mt-8",
+          )}
+        >
           <button
             onClick={() => router.back()}
             aria-label="뒤로가기"
@@ -136,7 +132,7 @@ export default function TraitResult() {
       </div>
 
       {!isFromMyPage && (
-        <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12">
+        <div className="pb-safe-bottom fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5">
           <Button onClick={handleClick}>무비부키 시작하기</Button>
         </div>
       )}

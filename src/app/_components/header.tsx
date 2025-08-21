@@ -37,10 +37,12 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed-overlay-safe fixed top-0 z-50 flex h-[calc(50px+var(--safe-top))] w-full max-w-125 items-center justify-center focus-within:border-white",
-
+        "bg-gray-black fixed top-0 z-50 flex h-[50px] w-full max-w-125 items-center justify-center focus-within:border-white",
+        "p-[env(safe-area-inset-top)_env(safe-area-inset-right)_0_env(safe-area-inset-left)]",
+        "fixed-overlay-safe w-full",
         className,
       )}
+      style={{ paddingTop: `env(safe-area-inset-top)` }}
     >
       {showBackButton && (
         <button
