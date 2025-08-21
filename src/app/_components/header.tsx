@@ -37,13 +37,13 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed top-4 z-50 flex h-[70px] w-full max-w-125 items-center justify-center pt-0 focus-within:border-white",
+        "bg-gray-black fixed top-0 z-50 flex h-[70px] w-full max-w-125 items-center justify-center pt-4 focus-within:border-white",
         className,
       )}
     >
       {showBackButton && (
         <button
-          className="absolute top-6 left-2.5"
+          className="absolute top-7 left-2.5"
           onClick={handleBack}
           aria-label="뒤로가기"
           type="button"
@@ -56,7 +56,7 @@ export default function Header({
       {showCloseButton && (
         <button
           type="button"
-          className="absolute top-6 right-2.5"
+          className="absolute top-7 right-2.5"
           onClick={handleClose}
           aria-label="닫기"
         >
