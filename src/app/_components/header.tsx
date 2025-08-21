@@ -42,7 +42,6 @@ export default function Header({
         "fixed-overlay-safe w-full",
         className,
       )}
-      style={{ paddingTop: `env(safe-area-inset-top)` }}
     >
       {showBackButton && (
         <button

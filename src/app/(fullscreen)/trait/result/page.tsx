@@ -132,7 +132,7 @@ export default function TraitResult() {
       </div>
 
       {!isFromMyPage && (
-        <div className="pb-safe-bottom fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5">
+        <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5">
           <Button onClick={handleClick}>무비부키 시작하기</Button>
         </div>
       )}

@@ -109,9 +109,11 @@ export default function DetailClient() {
 
   const handleApply = () => {
     setLoading(true);
-    setIsComplete(true);
     mutate(eventId, {
-      onSuccess: () => setLoading(false),
+      onSuccess: () => {
+        setLoading(false);
+        setIsComplete(true);
+      },
       onError: (err: any) => {
         setLoading(false);
         const code = err?.response?.data?.code;
@@ -222,14 +224,15 @@ export default function DetailClient() {
         <Modal
           iconType="alert"
           title={`이벤트 신청은\n로그인 후에 가능해요`}
-          children="지금 바로 로그인하고 신청해보세요"
           confirmText="로그인하기"
           onConfirm={() => {
             router.push(PATHS.LOGIN);
             setModalType(null);
           }}
           onClose={() => setModalType(null)}
-        />
+        >
+          지금 바로 로그인하고 신청해보세요
+        </Modal>
       ) : (
         modalType && (
           <Modal
