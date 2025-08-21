@@ -21,10 +21,6 @@ const Carousel = dynamic(() => import("./_components/carousel"), {
   loading: () => null,
 });
 const CardSkeleton = dynamic(() => import("@/components/card-skeleton"));
-const LoadingPage = dynamic(() => import("../../loading"), {
-  ssr: false,
-  loading: () => null,
-});
 
 export default function Home() {
   const router = useRouter();
@@ -113,7 +109,7 @@ export default function Home() {
         </div>
 
         <div
-          className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center`}
+          className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center overflow-visible`}
         >
           <Carousel />
         </div>
