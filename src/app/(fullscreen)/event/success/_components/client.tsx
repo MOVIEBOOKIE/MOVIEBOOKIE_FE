@@ -13,6 +13,7 @@ import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
 import { flushSync } from "react-dom";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Client() {
   const [step, setStep] = useState(1);
@@ -22,6 +23,7 @@ export default function Client() {
   const { mutate } = useCreateEvent();
   const { setLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setLoading(false);
@@ -38,6 +40,7 @@ export default function Client() {
         resetFormData();
         setStep(3);
         setBtnLoading(false);
+        queryClient.invalidateQueries({ queryKey: ["home-events"] });
       },
       onError: (err: any) => {
         setBtnLoading(false);
