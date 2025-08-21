@@ -10,7 +10,7 @@
           "value": "preview"
         }
       ],
-      "destination": "https://api.movie-bookie.shop/dev/:path*"
+      "destination": "https://api.dev-movie-bookie.shop/:path*"
     },
     {
       "source": "/api/:path*",

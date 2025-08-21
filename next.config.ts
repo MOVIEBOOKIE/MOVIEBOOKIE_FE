@@ -18,7 +18,7 @@ const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ??
   (STAGE === "prod"
     ? "https://api.movie-bookie.shop"
-    : "https://api.movie-bookie.shop/dev");
+    : "https://api.dev-movie-bookie.shop");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
