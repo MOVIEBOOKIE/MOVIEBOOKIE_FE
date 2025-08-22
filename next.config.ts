@@ -41,6 +41,11 @@ const nextConfig = {
         pathname: "/**",
       },
       { protocol: "https", hostname: "maps.googleapis.com", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "naveropenapi.apigw.ntruss.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {
