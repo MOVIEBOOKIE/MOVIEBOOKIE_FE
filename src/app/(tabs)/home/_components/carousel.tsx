@@ -12,14 +12,27 @@ import { useHomeEvents } from "app/_hooks/events/use-home-events";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
 
-type CarouselProps = { onReady?: () => void };
+type CarouselProps = {
+  onReady?: () => void;
+  onHomeEnter?: () => void;
+};
 
-export default function Carousel({ onReady }: CarouselProps) {
+export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const router = useRouter();
-  const { data: events, isFetched } = useHomeEvents();
+  const { data: events, isFetched, refetch } = useHomeEvents();
 
-  const slides = useMemo(() => (Array.isArray(events) ? events : []), [events]);
+  function shuffleArray<T>(array: T[]): T[] {
+    return array
+      .map((item) => ({ item, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ item }) => item);
+  }
+
+  const slides = useMemo(() => {
+    if (!Array.isArray(events)) return [];
+    return shuffleArray(events);
+  }, [events]);
   const totalImages = slides.length;
 
   const [loadedImages, setLoadedImages] = useState(0);
@@ -51,17 +64,26 @@ export default function Carousel({ onReady }: CarouselProps) {
     }
   }, [ready, isFetched, totalImages, loadedImages, applySlideEffect, onReady]);
 
+  useEffect(() => {
+    if (onHomeEnter) {
+      onHomeEnter();
+    }
+  }, [onHomeEnter, refetch]);
+
   if (!isFetched) return null;
   if (totalImages === 0) return <EmptyCarousel />;
 
   return (
     <div
-      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"} overflow-visible`}
+      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"} mx-auto w-full max-w-sm px-4`}
+      style={{
+        overflow: "visible",
+      }}
     >
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={-10}
-        slidesPerView="auto"
+        slidesPerView={1.3}
         centeredSlides
         loop={totalImages > 1}
         watchSlidesProgress
@@ -72,11 +94,15 @@ export default function Carousel({ onReady }: CarouselProps) {
         {slides.map((event) => (
           <SwiperSlide
             key={event.eventId}
-            style={{ width: "282px", height: "404px" }}
-            className="flex transform-gpu items-center transition-transform duration-300 ease-in-out will-change-transform"
+            style={{
+              width: "282px",
+              height: "404px",
+              flexShrink: 0,
+            }}
+            className="flex transform-gpu items-center justify-center transition-all duration-300 ease-in-out will-change-transform"
             onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
           >
-            <div className="relative h-full w-full overflow-hidden rounded-[12px]">
+            <div className="relative h-full w-full overflow-hidden rounded-[12px] shadow-2xl">
               <Image
                 fill
                 sizes="282px"

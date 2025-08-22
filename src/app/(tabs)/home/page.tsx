@@ -45,6 +45,8 @@ export default function Home() {
   const { requestOnceIfNeeded } = useFCMHandler();
   useMyPage();
 
+  const [isHomeEntered, setIsHomeEntered] = useState(true);
+
   useEffect(() => {
     const scrollY = sessionStorage.getItem("homeScrollY");
     const fromSearch = searchParams.get("to") === "category";
@@ -70,6 +72,12 @@ export default function Home() {
     return () => el?.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (pathname === "/" || pathname === "/home") {
+      setIsHomeEntered(true);
+    }
+  }, [pathname]);
+
   const { data, isLoading } = useCategoryEvents(selected, {
     enabled: fetchedCategories.includes(selected),
   });
@@ -93,14 +101,23 @@ export default function Home() {
     router.push(PATHS.SEARCH);
   };
 
+  const handleCarouselHomeEnter = () => {
+    if (isHomeEntered) {
+      setIsHomeEntered(false);
+    }
+  };
+
   return (
     <div
       ref={containerRef}
       className="scrollbar-hide title-1-bold h-[calc(100dvh-102px)] snap-y snap-mandatory snap-start overflow-y-scroll scroll-smooth"
     >
-      <section className="bg-gray-black relative flex h-screen snap-start flex-col overflow-x-hidden">
+      <section
+        className="bg-gray-black relative flex h-screen snap-start flex-col"
+        style={{ overflow: "visible" }}
+      >
         <div
-          className={`absolute right-0 left-0 z-10 flex flex-col items-center ${isSmallScreen ? "top-12" : "top-20"}`}
+          className={`absolute right-0 left-0 z-20 flex flex-col items-center ${isSmallScreen ? "top-12" : "top-20"}`}
         >
           <p className="body-3-medium text-gray-300">{user?.userTypeTitle}</p>
           <h2 className="title-1-bold text-gray-white mt-0.75">
@@ -109,9 +126,12 @@ export default function Home() {
         </div>
 
         <div
-          className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} right-0 left-0 flex justify-center overflow-visible`}
+          className={`absolute ${isSmallScreen ? "top-[17%]" : "top-[20%]"} inset-x-0 z-10 flex justify-center`}
+          style={{ height: "404px" }}
         >
-          <Carousel />
+          <Carousel
+            onHomeEnter={isHomeEntered ? handleCarouselHomeEnter : undefined}
+          />
         </div>
 
         {(pathname === "/" || pathname === "/home") && (
@@ -136,7 +156,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: isFirstScreen ? 0 : 1 }}
         transition={{ duration: 0.6 }}
-        className="flex snap-start flex-col px-5 pb-[calc(102px+env(safe-area-inset-bottom)+8px)]"
+        className="flex snap-start flex-col overflow-x-hidden px-5 pb-[calc(102px+env(safe-area-inset-bottom)+8px)]" // 여기는 overflow-x-hidden 유지
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
