@@ -35,7 +35,7 @@ export default function MyPage() {
   const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
   return (
-    <div className="overflow-y-scroll px-5 text-white">
+    <div className="h-[100dvh] overflow-y-scroll px-5 pb-[calc(102px+env(safe-area-inset-bottom)+12px)] text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
       <div
         className="mb-3 flex cursor-pointer items-center justify-between gap-4"

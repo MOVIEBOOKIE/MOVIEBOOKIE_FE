@@ -104,3 +104,27 @@ input {
 .fixed-overlay-safe {
   padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
 }
+
+/* Safe area 변수 (현대 iOS: env, 구형 iOS: constant) */
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+@supports (padding: constant(safe-area-inset-top)) {
+  :root {
+    --safe-top: constant(safe-area-inset-top);
+    --safe-bottom: constant(safe-area-inset-bottom);
+  }
+}
+
+/* 최소 여백(브라우저용) + 노치일 땐 자동으로 더해짐 */
+.safe-pt {
+  /* 브라우저: max(12px, 0) → 12px, PWA 노치: max(12px, 44px) → 44px */
+  padding-top: max(12px, var(--safe-top));
+}
+
+/* 아이콘 같은 절대 positioned 요소들 상단 위치 보정용 */
+.safe-top-offset {
+  /* 브라우저: calc(0 + 8px) → 8px, PWA 노치: calc(44px + 8px) → 52px */
+  top: calc(var(--safe-top) + 16px);
+}

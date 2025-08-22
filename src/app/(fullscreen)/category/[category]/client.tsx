@@ -58,7 +58,7 @@ export default function CategoryPageClient({ label }: { label: string }) {
         </div>
 
         {!isLoading && cards.length > 0 && (
-          <div className="px-4 pb-9">
+          <div className="pb-safe-bottom px-4 pb-9">
             <Pagination
               pageCount={totalPages}
               currentPage={currentPage}
