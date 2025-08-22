@@ -43,10 +43,12 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
     if (!swiper?.slides?.length) return;
     swiper.slides.forEach((slideEl, index) => {
       const progress = (swiper.slides[index] as any).progress ?? 0;
-      const scale = Math.abs(progress) < 0.5 ? 1 : 0.8;
-      const opacity = Math.abs(progress) < 0.5 ? 1 : 0.7;
+      const scale = Math.abs(progress) < 0.5 ? 1 : 0.75;
+      const opacity = Math.abs(progress) < 0.5 ? 1 : 0.6;
       (slideEl as HTMLElement).style.transform = `scale(${scale})`;
       (slideEl as HTMLElement).style.opacity = `${opacity}`;
+      (slideEl as HTMLElement).style.zIndex =
+        Math.abs(progress) < 0.5 ? "10" : "1";
     });
   }, []);
 
@@ -75,21 +77,21 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
 
   return (
     <div
-      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"} mx-auto w-full max-w-sm px-4`}
+      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"} mx-auto w-full max-w-sm`}
       style={{
         overflow: "visible",
       }}
     >
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        spaceBetween={-10}
-        slidesPerView={1.3}
+        spaceBetween={-12}
+        slidesPerView={1.4}
         centeredSlides
         loop={totalImages > 1}
         watchSlidesProgress
         onProgress={applySlideEffect}
         onSetTranslate={applySlideEffect}
-        className="!overflow-visible"
+        wrapperClass="items-center"
       >
         {slides.map((event) => (
           <SwiperSlide
