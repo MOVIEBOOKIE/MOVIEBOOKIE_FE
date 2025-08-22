@@ -44,7 +44,7 @@ export default function Header({
     >
       {showBackButton && (
         <button
-          className={cn("absolute left-2.5", "safe-top-offset", "h-8 w-8")}
+          className={cn("absolute left-2.5", "safe-top-offset-icon", "h-8 w-8")}
           onClick={handleBack}
           aria-label="뒤로가기"
           type="button"
@@ -53,12 +53,16 @@ export default function Header({
         </button>
       )}
 
-      {title && <h1 className="body-2-semibold pt-1 text-white">{title}</h1>}
+      {title && (
+        <h1 className="body-2-semibold safe-title-offset text-white">
+          {title}
+        </h1>
+      )}
 
       {showCloseButton && (
         <button
           type="button"
-          className={cn("absolute right-4", "safe-top-offset", "h-8 w-8")}
+          className={cn("absolute right-4", "safe-top-offset-icon", "h-8 w-8")}
           onClick={handleClose}
           aria-label="닫기"
         >
