@@ -199,13 +199,6 @@ export default function Home() {
               아직 모집 이벤트가 없어요 <br />
               지금 바로 나만의 이벤트를 만들어보세요
             </p>
-            <button
-              type="button"
-              onClick={() => router.push(PATHS.EVENT_CREATE)}
-              className="bg-red-main body-3-semibold w-[242px] rounded-xl px-6 py-4 text-white"
-            >
-              나만의 이벤트 만들러 가기
-            </button>
           </div>
         ) : (
           events.slice(0, 5).map((event) => (
