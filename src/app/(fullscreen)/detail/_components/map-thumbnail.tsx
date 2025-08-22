@@ -30,7 +30,6 @@ const MapThumbnail = ({
       w: String(width),
       h: String(height),
       level: String(zoomLevel),
-      _cb: String(Math.floor(Date.now() / (1000 * 60))),
     });
     return `/api/naver-map?${qs.toString()}`;
   };
@@ -54,8 +53,6 @@ const MapThumbnail = ({
       }
       return await res.blob();
     },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: Number.isFinite(latitude) && Number.isFinite(longitude),
     retry: 1,
@@ -79,6 +76,7 @@ const MapThumbnail = ({
 
   const naverMapUrl =
     `https://map.naver.com/?lng=${longitude}&lat=${latitude}` +
+    `&level=${zoomLevel}` +
     `&title=${encodeURIComponent(locationName)}`;
 
   return (
