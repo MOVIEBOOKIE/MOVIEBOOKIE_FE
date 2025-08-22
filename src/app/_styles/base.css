@@ -126,5 +126,5 @@ input {
 /* 아이콘 같은 절대 positioned 요소들 상단 위치 보정용 */
 .safe-top-offset {
   /* 브라우저: calc(0 + 8px) → 8px, PWA 노치: calc(44px + 8px) → 52px */
-  top: calc(var(--safe-top) + 16px);
+  top: calc(var(--safe-top) + 8px);
 }
