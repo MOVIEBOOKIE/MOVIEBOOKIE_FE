@@ -13,7 +13,7 @@ import InAppRedirect from "./_components/inapp-redirect";
 export { metadata, viewport };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const GTM_ID = "GTM-TCF2K568";
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html lang="ko" className={pretendard.variable}>
