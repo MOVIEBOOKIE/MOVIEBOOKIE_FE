@@ -11,6 +11,7 @@ import {
   arrowVariants,
   optionVariants,
 } from "../_components/motion-drop-down";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
 type EmailDomain = (typeof EMAIL_DOMAINS)[number];
@@ -20,6 +21,8 @@ export default function EmailStep() {
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { showToast } = useToastStore();
 
   const fullEmail = `${email}@${emailDomain}`;
   const isValidEmail = /^[a-zA-Z0-9._%+-]+@(naver\.com|gmail\.com)$/.test(
@@ -28,21 +31,25 @@ export default function EmailStep() {
   const { mutate: sendEmailCode } = useSendEmail();
 
   const handleSendCode = () => {
+    if (!isValidEmail || submitting) return;
+    setSubmitting(true);
     sendEmailCode(fullEmail, {
       onSuccess: () => {
+        setTimeout(() => setSubmitting(false), 500);
         router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
       },
       onError: () => {
-        alert("이메일 인증번호 전송에 실패했어요. 다시 시도해 주세요.");
+        setSubmitting(false);
+        showToast("이메일 발송에 실패했어요. 다시 시도해 주세요", "alert");
       },
     });
   };
-
   return (
     <FixedLayout
       title="회원가입"
       isButtonDisabled={!isValidEmail}
       onButtonClick={handleSendCode}
+      isLoading={submitting}
     >
       <StepHeader
         StepHeader="2/3"

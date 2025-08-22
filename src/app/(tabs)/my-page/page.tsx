@@ -60,7 +60,9 @@ export default function MyPage() {
           <div>
             <p className="text-lg font-semibold">{user?.nickname}</p>
             <p className="body-3-medium text-gray-500">{user?.userTypeTitle}</p>
-            <p className="caption-1-medium pt-1 text-gray-500">{user?.email}</p>
+            <p className="caption-1-medium pt-1 text-gray-500">
+              {user?.certificationEmail}
+            </p>
           </div>
         </div>
 

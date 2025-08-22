@@ -123,8 +123,20 @@ input {
   padding-top: max(12px, var(--safe-top));
 }
 
-/* 아이콘 같은 절대 positioned 요소들 상단 위치 보정용 */
-.safe-top-offset {
-  /* 브라우저: calc(0 + 8px) → 8px, PWA 노치: calc(44px + 8px) → 52px */
-  top: calc(var(--safe-top) + 8px);
+/* 아이콘들의 상단 위치 보정용 - 노치 고려 */
+.safe-top-offset-icon {
+  /*
+   * 브라우저(노치 없음): calc(0 + 16px) → 16px (title과 정렬)
+   * PWA 노치: calc(44px + 16px) → 60px (title과 정렬)
+   */
+  top: calc(var(--safe-top) + 16px);
+}
+
+/* Title의 상단 마진 보정용 */
+.safe-title-offset {
+  /*
+   * 브라우저(노치 없음): 4px (더 위로 올라감)
+   * PWA 노치: calc(4px + 4px) = 8px (적절한 간격)
+   */
+  margin-top: calc(4px + min(var(--safe-top), 4px));
 }

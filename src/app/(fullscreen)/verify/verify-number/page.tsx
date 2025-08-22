@@ -24,8 +24,8 @@ function VerifyNumberContent() {
   const router = useRouter();
   const [code, setCode] = useState(Array(4).fill(""));
   const [showToast, setShowToast] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  // 자동 포커스
   useEffect(() => {
     const firstInput = document.getElementById(
       "code-0",
@@ -53,19 +53,28 @@ function VerifyNumberContent() {
 
   const handleComplete = () => {
     const certificationCode = fullCode;
+    if (submitting) return;
     if (type === "phone") {
+      setSubmitting(true);
       verifySmsCode(
         { phoneNum: target.replace(/-/g, ""), certificationCode },
         {
-          onSuccess: () => router.push(PATHS.VERIFY_EMAIL),
+          onSuccess: () => {
+            setTimeout(() => setSubmitting(false), 500);
+            router.push(PATHS.VERIFY_EMAIL);
+          },
           onError: handleError,
         },
       );
     } else {
+      setSubmitting(true);
       verifyEmailCode(
         { email: target, certificationCode },
         {
-          onSuccess: () => router.push(PATHS.SET_PROFILE),
+          onSuccess: () => {
+            setTimeout(() => setSubmitting(false), 500);
+            router.push(PATHS.SET_PROFILE);
+          },
           onError: handleError,
         },
       );
@@ -93,6 +102,7 @@ function VerifyNumberContent() {
   }, [showToast]);
 
   const handleError = () => {
+    setSubmitting(false);
     setShowToast(true);
     setCode(Array(4).fill(""));
     const firstInput = document.getElementById("code-0");
@@ -103,6 +113,7 @@ function VerifyNumberContent() {
       title="회원가입"
       isButtonDisabled={!isComplete}
       onButtonClick={handleComplete}
+      isLoading={submitting}
     >
       <StepHeader
         StepHeader={type === "phone" ? "1/3" : "2/3"}
