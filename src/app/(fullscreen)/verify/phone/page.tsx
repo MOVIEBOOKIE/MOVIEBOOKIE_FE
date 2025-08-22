@@ -5,20 +5,27 @@ import { useRouter } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
 import { useSendSms } from "app/_hooks/onboarding/use-send-code";
+import { useToastStore } from "app/_stores/use-toast-store";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
   const router = useRouter();
   const { mutate: sendSmsCode } = useSendSms();
+  const [submitting, setSubmitting] = useState(false);
+  const { showToast } = useToastStore();
 
   const handleSendCode = () => {
+    if (!isValidPhone || submitting) return;
+    setSubmitting(true);
     sendSmsCode(phone, {
       onSuccess: () => {
+        setTimeout(() => setSubmitting(false), 500);
         router.push(`/verify/verify-number?type=phone&target=${phone}`);
       },
       onError: () => {
-        alert("SMS 인증번호 발송에 실패했어요. 다시 시도해 주세요.");
+        setSubmitting(false),
+          showToast("SMS 발송에 실패했어요. 다시 시도해 주세요.", "alert");
       },
     });
   };
@@ -27,6 +34,7 @@ export default function PhoneStep() {
       title="회원가입"
       isButtonDisabled={!isValidPhone}
       onButtonClick={handleSendCode}
+      isLoading={submitting}
     >
       <StepHeader
         StepHeader="1/3"

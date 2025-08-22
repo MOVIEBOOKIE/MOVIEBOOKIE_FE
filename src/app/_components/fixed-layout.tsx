@@ -99,11 +99,7 @@ export default function FixedLayout({
                 : "bg-red-main text-white",
             )}
           >
-            {isLoading ? (
-              <div className="mx-auto h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            ) : (
-              buttonText
-            )}
+            {buttonText}
           </Button>
         </div>
       )}
