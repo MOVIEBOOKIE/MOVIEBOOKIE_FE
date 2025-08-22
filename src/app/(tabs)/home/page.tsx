@@ -156,7 +156,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: isFirstScreen ? 0 : 1 }}
         transition={{ duration: 0.6 }}
-        className="flex snap-start flex-col overflow-x-hidden px-5 pb-[calc(102px+env(safe-area-inset-bottom)+8px)]" // 여기는 overflow-x-hidden 유지
+        className="flex snap-start flex-col overflow-x-hidden px-5 pb-[calc(102px+env(safe-area-inset-bottom)+8px)]"
       >
         <div className="z-0 flex flex-col items-center gap-1.75 pt-6.5 pb-9.75">
           <SwipeDownIcon className="h-6 w-6 rotate-180" />
