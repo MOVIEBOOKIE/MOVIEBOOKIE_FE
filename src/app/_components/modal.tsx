@@ -1,19 +1,9 @@
+"use client";
+
 import { AlertIcon, CheckIcon, CloseIcon } from "@/icons/index";
 import Button from "./button";
-import { ReactNode } from "react";
-
-/**
- * 공통 모달 컴포넌트
- *
- * @param iconType - 아이콘 타입. `"alert"` 또는 `"confirm"` 중 하나를 선택.
- * @param title - 모달의 제목 텍스트
- * @param description - 모달의 설명 또는 본문. ReactNode이므로 텍스트 외 `<span>`, `<br />` 등 추가 가능.
- * @param confirmText - 확인 버튼에 표시될 텍스트.
- * @param cancelText - 취소 버튼에 표시될 텍스트. 기본값: `"아니요"`
- * @param onConfirm - 확인 버튼 클릭 시 실행할 콜백 함수.
- * @param onCancel - 취소 버튼 클릭 시 실행할 콜백 함수.
- * @param onClose - x 버튼 클릭 시 실행할 콜백 함수.
- */
+import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 interface ModalProps {
   iconType?: "alert" | "confirm" | "";
@@ -71,8 +61,23 @@ export default function Modal({
   const orderedButtons = isVerticalLayout ? buttons.reverse() : buttons;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="drap-shadow relative flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5">
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <motion.div
+        className="drap-shadow relative flex w-80 flex-col items-center rounded-2xl bg-gray-900 px-5 pt-6 pb-5"
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{
+          duration: 0.3,
+          ease: [0.4, 0.0, 0.2, 1],
+        }}
+      >
         {showCloseButton && (
           <button
             onClick={onClose}
@@ -93,14 +98,12 @@ export default function Modal({
         </div>
         {!hideButtons && (
           <div
-            className={`flex w-full gap-2.5 ${
-              isVerticalLayout ? "flex-col" : "flex-row"
-            }`}
+            className={`flex w-full gap-2.5 ${isVerticalLayout ? "flex-col" : "flex-row"}`}
           >
             {orderedButtons}
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
