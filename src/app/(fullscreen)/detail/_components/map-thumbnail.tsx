@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 
 interface MapThumbnailProps {
   latitude: number; // 위도
@@ -36,15 +37,8 @@ const MapThumbnail = ({
 
   const mapApiUrl = buildApiUrl();
 
-  const lastUrlRef = useRef<string | null>(null);
-  useEffect(() => {
-    return () => {
-      if (lastUrlRef.current) URL.revokeObjectURL(lastUrlRef.current);
-    };
-  }, []);
-
   const {
-    data: mapUrl,
+    data: blob,
     isLoading,
     isError,
   } = useQuery({
@@ -58,18 +52,30 @@ const MapThumbnail = ({
         } catch {}
         throw new Error(detail || "네이버 지도 API 호출 실패");
       }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      if (lastUrlRef.current) URL.revokeObjectURL(lastUrlRef.current);
-      lastUrlRef.current = url;
-      return url;
+      return await res.blob();
     },
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: Number.isFinite(latitude) && Number.isFinite(longitude),
     retry: 1,
   });
+
+  const [objectUrl, setObjectUrl] = useState<string | null>(null);
+  const currentUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    setObjectUrl(url);
+    currentUrlRef.current = url;
+    return () => {
+      if (currentUrlRef.current) {
+        URL.revokeObjectURL(currentUrlRef.current);
+        currentUrlRef.current = null;
+      }
+    };
+  }, [blob]);
 
   const naverMapUrl =
     `https://map.naver.com/?lng=${longitude}&lat=${latitude}` +
@@ -83,14 +89,13 @@ const MapThumbnail = ({
       className="block"
     >
       <div className="relative w-full" style={{ aspectRatio: "335 / 192" }}>
-        {mapUrl && !isLoading && !isError && (
-          <img
-            src={mapUrl}
+        {objectUrl && !isLoading && !isError && (
+          <Image
+            src={objectUrl}
             alt="map-thumbnail"
-            width={width}
-            height={height}
             className="rounded-[10px] object-cover"
             loading="lazy"
+            fill
           />
         )}
 
