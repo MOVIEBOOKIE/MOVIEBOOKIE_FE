@@ -3,15 +3,16 @@
 import { Button, Header } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
-import { BackIcon, LogoWhiteIcon } from "@/icons/index";
+import { LogoWhiteIcon } from "@/icons/index";
 import { useGetUserTypeResult } from "app/_hooks/use-user-type";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useEffect } from "react";
 import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 import { useSearchParams, useRouter } from "next/navigation";
-import { cn } from "@/utils/cn";
 import { useSmallScreen } from "app/_hooks/use-small-screen";
+import { motion } from "framer-motion";
+import { cardVariants, containerVariants } from "../_components/motion";
 
 export default function TraitResult() {
   const isShortScreen = useSmallScreen();
@@ -53,7 +54,12 @@ export default function TraitResult() {
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
+    <motion.div
+      className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {isFromMyPage && <Header className="bg-transparent" />}
 
       <div
@@ -66,7 +72,10 @@ export default function TraitResult() {
         </div>
       </div>
       <div className="flex items-start justify-center">
-        <div className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg">
+        <motion.div
+          className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg"
+          variants={cardVariants}
+        >
           <Image
             src={PATH_IMAGES.TRAIT.BACKGROUND}
             alt="배경 이미지"
@@ -113,14 +122,14 @@ export default function TraitResult() {
             </div>
             <LogoWhiteIcon width={28} height={28} className="mt-auto mb-7" />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {!isFromMyPage && (
-        <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5">
+        <div className="fixed bottom-0 z-50 w-full max-w-125 px-5 pt-5 pb-12">
           <Button onClick={handleClick}>무비부키 시작하기</Button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
