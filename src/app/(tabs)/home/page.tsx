@@ -12,6 +12,7 @@ import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
 import { useSmallScreen } from "app/_hooks/use-small-screen";
+import { ev } from "@/lib/gtm";
 
 const Button = dynamic(() => import("@/components/button"));
 const Card = dynamic(() => import("@/components/main-card"));
@@ -57,6 +58,14 @@ export default function Home() {
       });
     }
   }, [searchParams]);
+
+  const fired = useRef(false);
+
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+    ev.homeView();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

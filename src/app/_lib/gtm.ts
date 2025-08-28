@@ -16,8 +16,8 @@ export const dlPush = (event: string, params: Record<string, any> = {}) => {
 };
 
 // 페이지뷰(가상)
-export const pageView = (url: string) =>
-  dlPush("page_view", { page_location: url });
+export const pageView = (url: string, extra: Record<string, any> = {}) =>
+  dlPush("page_view", { page_location: url, ...extra });
 
 // 정의서 이벤트 래퍼
 export const ev = {
