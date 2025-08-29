@@ -7,5 +7,5 @@ export interface UserProfile {
   hostExperienceCount: number;
   participationExperienceCount: number;
   ticketCount: number;
-  phoneNumber: String;
+  phoneNumber: string;
 }
