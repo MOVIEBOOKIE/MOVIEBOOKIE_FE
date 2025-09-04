@@ -17,7 +17,6 @@ export { metadata, viewport };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
@@ -67,14 +66,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             src="https://developers.kakao.com/sdk/js/kakao.js"
             strategy="beforeInteractive"
           />
-          <GACommon userId={/* loggedInUserId */ undefined} siteType="core" />
-          {/* 세션 시작/체류시간/종료 이벤트 관리 */}
-          <SessionLifecycle />
-          {/* SPA 라우팅 때마다 page_view 전송 */}
-          <RouteTracker />
           <InAppRedirect />
           <ToastRenderer />
           <ReactQueryProvider>
+            <GACommon />
             <ServiceWorkerDebug />
             <LoadingProvider> {children}</LoadingProvider>
             <Toast />

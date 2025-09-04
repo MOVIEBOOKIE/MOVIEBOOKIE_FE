@@ -13,10 +13,16 @@ export const USER_TYPE_OPTION = {
       queryFn: () => getUserTypeResult(),
       staleTime: 1000 * 60 * 60 * 24,
     }),
-  USER: () =>
+  USER: (enabled = true) =>
     queryOptions({
       queryKey: USER_TYPE_KEY.USER(),
       queryFn: () => getUser(),
+      enabled,
       staleTime: 1000 * 60 * 60 * 24,
+      retry: false,
+      throwOnError: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
     }),
 };

@@ -19,6 +19,6 @@ export const useGetUserTypeResult = () => {
   return useQuery(USER_TYPE_OPTION.RESULT());
 };
 
-export const useGetUser = () => {
-  return useQuery(USER_TYPE_OPTION.USER());
-};
+export function useGetUser(options?: { enabled?: boolean }) {
+  return useQuery(USER_TYPE_OPTION.USER(options?.enabled ?? true));
+}

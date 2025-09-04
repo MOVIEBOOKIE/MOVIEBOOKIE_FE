@@ -4,7 +4,7 @@ import { Button, Header } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
 import { LogoWhiteIcon } from "@/icons/index";
-import { useGetUserTypeResult } from "app/_hooks/use-user-type";
+import { useGetUserTypeResult } from "app/_hooks/use-user";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useEffect } from "react";
