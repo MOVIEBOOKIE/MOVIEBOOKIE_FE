@@ -11,3 +11,10 @@ export interface UserTypeResponse {
   label: string;
   description: string;
 }
+
+export interface UserResponse {
+  id: number;
+  siteType: SiteType;
+}
+
+export type SiteType = "core" | "admin";

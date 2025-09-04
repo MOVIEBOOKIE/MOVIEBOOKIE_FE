@@ -10,23 +10,29 @@ import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import { LoadingProvider } from "./_context/loading-context";
 import { metadata, viewport } from "@/constants/metadata";
 import InAppRedirect from "./_components/inapp-redirect";
+import GACommon from "./_components/ga/ga-common";
+import RouteTracker from "./_components/ga/route-tracker";
+import SessionLifecycle from "./_components/ga/session-lifecycle";
 export { metadata, viewport };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-
   return (
     <html lang="ko" className={pretendard.variable}>
       <head>
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
+        {GTM_ID ? (
+          <>
+            <Script id="gtm" strategy="afterInteractive">
+              {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GTM_ID}');
           `}
-        </Script>
+            </Script>
+          </>
+        ) : null}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/images/favicon/48x48.png" />
         <meta
@@ -45,14 +51,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body>
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
+        {GTM_ID ? (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        ) : null}
         <ToastProvider>
           <Script
             src="https://developers.kakao.com/sdk/js/kakao.js"
@@ -61,6 +69,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <InAppRedirect />
           <ToastRenderer />
           <ReactQueryProvider>
+            <GACommon />
             <ServiceWorkerDebug />
             <LoadingProvider> {children}</LoadingProvider>
             <Toast />

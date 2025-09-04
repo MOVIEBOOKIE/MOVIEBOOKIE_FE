@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "typeRoots": [
-      "./src/types",
-      "./node_modules/@types"
-    ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -28,33 +21,16 @@
     ],
     "baseUrl": "src/",
     "paths": {
-      "@/styles/*": [
-        "app/_styles/*"
-      ],
-      "@/components": [
-        "app/_components/index"
-      ],
-      "@/components/*": [
-        "app/_components/*"
-      ],
-      "@/constants": [
-        "app/_constants/index"
-      ],
-      "@/constants/*": [
-        "app/_constants/*"
-      ],
-      "@/utils/*": [
-        "app/_utils/*"
-      ],
-      "@/mocks/*": [
-        "app/_mocks/*"
-      ],
-      "@/icons/*": [
-        "icons/*"
-      ],
-      "@/lotties/*": [
-        "lotties/*"
-      ]
+      "@/styles/*": ["app/_styles/*"],
+      "@/components": ["app/_components/index"],
+      "@/components/*": ["app/_components/*"],
+      "@/constants": ["app/_constants/index"],
+      "@/constants/*": ["app/_constants/*"],
+      "@/utils/*": ["app/_utils/*"],
+      "@/mocks/*": ["app/_mocks/*"],
+      "@/icons/*": ["icons/*"],
+      "@/lotties/*": ["lotties/*"],
+      "@/lib/*": ["app/_lib/*"]
     }
   },
   "include": [
@@ -62,9 +38,8 @@
     "**/*.tsx",
     "next-env.d.ts",
     "types.d.ts",
-    ".next/types/**/*.ts"
-, "public/firebase-config.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    ".next/types/**/*.ts",
+    "public/firebase-config.ts"
+  ],
+  "exclude": ["node_modules"]
 }

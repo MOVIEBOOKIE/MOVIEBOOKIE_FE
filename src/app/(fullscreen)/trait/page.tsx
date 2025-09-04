@@ -8,7 +8,7 @@ import Step3 from "./_components/step3";
 import { useForm, FormProvider, useWatch } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
-import { usePostUserType } from "app/_hooks/use-user-type";
+import { usePostUserType } from "app/_hooks/use-user";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useMyPage } from "app/_hooks/auth/use-mypage";
 

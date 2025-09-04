@@ -1,6 +1,6 @@
 import { UserProfile } from "app/_types/user-profile";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserState {
   user: UserProfile | null;
@@ -12,17 +12,12 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
-      setUser: (partialUser) =>
-        set((state) => ({
-          user: {
-            ...state.user,
-            ...partialUser,
-          },
-        })),
+      setUser: (user) => set({ user }),
       clearUser: () => set({ user: null }),
     }),
     {
       name: "userProfile",
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

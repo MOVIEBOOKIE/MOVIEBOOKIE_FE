@@ -1,5 +1,5 @@
 import { END_POINTS } from "@/constants/api";
-import { UserTypeData, UserTypeResponse } from "app/_types/user-type";
+import { UserResponse, UserTypeData, UserTypeResponse } from "app/_types/user";
 import { apiGet, apiPost } from "app/_apis/methods";
 
 export const postUserType = (body?: UserTypeData) => {
@@ -8,4 +8,8 @@ export const postUserType = (body?: UserTypeData) => {
 
 export const getUserTypeResult = () => {
   return apiGet<UserTypeResponse>(END_POINTS.GET_USER_TYPE_RESULT);
+};
+
+export const getUser = () => {
+  return apiGet<UserResponse>(END_POINTS.GET_USER);
 };
