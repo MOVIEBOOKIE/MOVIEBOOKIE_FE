@@ -1,17 +1,13 @@
-import dynamic from "next/dynamic";
 import { PATHS } from "@/constants";
 import { PlusIcon } from "lucide-react";
 import EventBannerSection from "./_components/event-banner-section";
 import Link from "next/link";
+import EventTab from "./_components/event-tabs";
 
 const TAB_TYPES = {
   APPLY: "신청 목록",
   HOST: "주최 목록",
 } as const;
-
-const EventTabsClient = dynamic(
-  () => import("./_components/event-tabs-client"),
-);
 
 export default async function EventPage({
   searchParams,
@@ -51,7 +47,7 @@ export default async function EventPage({
       <div className="mx-5 border-b border-gray-950" />
 
       <div className="px-5">
-        <EventTabsClient
+        <EventTab
           type={tabParam === "apply" ? TAB_TYPES.APPLY : TAB_TYPES.HOST}
         />
       </div>
