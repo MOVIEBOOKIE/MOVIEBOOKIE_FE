@@ -198,6 +198,7 @@ export default function Home() {
         </div>
 
         <SkeletonGate
+          key={selected}
           loading={isLoading}
           hasData={hasData}
           showAfterMs={150}
