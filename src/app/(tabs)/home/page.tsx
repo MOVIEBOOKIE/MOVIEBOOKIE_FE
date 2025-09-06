@@ -13,6 +13,7 @@ import { useCategoryEvents } from "app/_hooks/events/use-category-events";
 import { EmptyIcon, SwipeDownIcon } from "@/icons/index";
 import { useSmallScreen } from "app/_hooks/use-small-screen";
 import { ev } from "@/lib/gtm";
+import SkeletonGate from "@/components/skeleton-gate";
 
 const Button = dynamic(() => import("@/components/button"));
 const Card = dynamic(() => import("@/components/main-card"));
@@ -92,6 +93,7 @@ export default function Home() {
   });
 
   const events = data?.eventList ?? [];
+  const hasData = events.length > 0;
 
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
@@ -195,66 +197,63 @@ export default function Home() {
           ))}
         </div>
 
-        {isLoading ? (
-          <div className="mb-26 flex flex-col gap-4">
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <CardSkeleton key={idx} />
-            ))}
-          </div>
-        ) : events.length === 0 ? (
-          <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
-            <EmptyIcon />
-            <p className="body-3-medium mt-3.5 mb-7 text-gray-800">
-              아직 모집 이벤트가 없어요 <br />
-              지금 바로 나만의 이벤트를 만들어보세요
-            </p>
-          </div>
-        ) : (
-          events.slice(0, 5).map((event) => (
-            <div key={event.eventId}>
-              <Card
-                id={String(event.eventId)}
-                imageUrl={event.posterImageUrl}
-                category={event.mediaType}
-                title={event.mediaTitle}
-                placeAndDate={`${event.locationName} · ${event.eventDate}`}
-                description={event.description}
-                ddayBadge={`D-${event.d_day}`}
-                statusBadge={event.eventStatus}
-                progressRate={`${event.rate}%`}
-                estimatedPrice={String(event.estimatedPrice)}
-                query={{ from: "home", category: categoryMap[selected] }}
-              />
-              <div className="my-4 h-0.25 w-full bg-gray-950" />
+        <SkeletonGate
+          key={selected}
+          loading={isLoading}
+          hasData={hasData}
+          showAfterMs={150}
+          minVisibleMs={350}
+          fallback={
+            <div className="mb-26 flex flex-col gap-4">
+              {Array.from({ length: 4 }).map((_, idx) => (
+                <CardSkeleton key={idx} />
+              ))}
             </div>
-          ))
-        )}
+          }
+          empty={
+            <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
+              <EmptyIcon />
+              <p className="body-3-medium mt-3.5 mb-7 text-gray-800">
+                아직 모집 이벤트가 없어요 <br />
+                지금 바로 나만의 이벤트를 만들어보세요
+              </p>
+            </div>
+          }
+        >
+          <div className="min-h-[calc(100dvh-102px)]">
+            {events.slice(0, 5).map((event) => (
+              <div key={event.eventId}>
+                <Card
+                  id={String(event.eventId)}
+                  imageUrl={event.posterImageUrl}
+                  category={event.mediaType}
+                  title={event.mediaTitle}
+                  placeAndDate={`${event.locationName} · ${event.eventDate}`}
+                  description={event.description}
+                  ddayBadge={`D-${event.d_day}`}
+                  statusBadge={event.eventStatus}
+                  progressRate={`${event.rate}%`}
+                  estimatedPrice={String(event.estimatedPrice)}
+                  query={{ from: "home", category: categoryMap[selected] }}
+                />
+                <div className="my-4 h-0.25 w-full bg-gray-950" />
+              </div>
+            ))}
 
-        {events.length > 0 && events.length <= 4 && (
-          <div
-            className={
-              {
-                1: "h-105",
-                2: "h-72",
-                3: "h-56",
-                4: "h-40",
-              }[events.length]
-            }
-          />
-        )}
-
-        {events.length > 5 && (
-          <Button
-            className="mt-5 mb-5 active:bg-gray-900"
-            variant="secondary"
-            onClick={() => {
-              const categorySlug = categoryMap[selected];
-              router.push(`/category/${categorySlug}`);
-            }}
-          >
-            더보기
-          </Button>
-        )}
+            {events.length > 5 && (
+              <Button
+                className="mt-5 mb-5 active:bg-gray-900"
+                variant="secondary"
+                onClick={() => {
+                  const categorySlug = categoryMap[selected];
+                  router.push(`/category/${categorySlug}`);
+                }}
+              >
+                더보기
+              </Button>
+            )}
+          </div>
+        </SkeletonGate>
 
         <div className="h-px shrink-0 snap-end" aria-hidden />
       </motion.section>
