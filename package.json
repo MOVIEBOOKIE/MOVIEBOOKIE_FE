@@ -11,7 +11,11 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "generate:firebase-config": "node public/scripts/generate-firebase-config.js",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.72.2",
@@ -40,6 +44,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/eslintrc": "^3",
     "@next/eslint-plugin-next": "^15.3.0",
+    "@playwright/test": "^1.55.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.7.0",

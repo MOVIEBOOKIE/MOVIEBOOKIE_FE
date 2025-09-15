@@ -45,3 +45,10 @@ next-env.d.ts
 public/sw.js
 public/workbox-*.js
 public/firebase-config.js
+
+# Playwright output
+test-results/
+playwright-report/
+
+# Playwright authentication file
+src/tests/e2e/.auth/

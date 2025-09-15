@@ -115,6 +115,8 @@ export default function Step5({ onValidityChange }: Step5Props) {
               min={1}
               value={min}
               onChange={handleMinChange}
+              id="minParticipants"
+              aria-label="최소인원"
               placeholder="최소인원"
               className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
               style={{ fontSize: "16px" }}
@@ -144,6 +146,8 @@ export default function Step5({ onValidityChange }: Step5Props) {
               value={max}
               onChange={handleMaxChange}
               placeholder="최대인원"
+              id="maxParticipants"
+              aria-label="최대인원"
               className="main body-3-medium w-full bg-transparent pr-6 text-white placeholder-gray-800 outline-none placeholder:text-[14px]"
               style={{ fontSize: "16px" }}
               onFocus={() => setIsInputFocused(true)}

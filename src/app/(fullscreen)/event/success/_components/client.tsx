@@ -15,6 +15,13 @@ import { flushSync } from "react-dom";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { useQueryClient } from "@tanstack/react-query";
 
+interface ErrorDetails {
+  status: string;
+  buttonText: string;
+  action: string;
+  onButtonClick: () => void;
+}
+
 export default function Client() {
   const [step, setStep] = useState(1);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -24,6 +31,7 @@ export default function Client() {
   const { setLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const queryClient = useQueryClient();
+  const [errorDetails, setErrorDetails] = useState<ErrorDetails | null>(null);
 
   useEffect(() => {
     setLoading(false);
@@ -34,6 +42,7 @@ export default function Client() {
       setStep(2);
       return;
     }
+
     setBtnLoading(true);
     mutate(formData, {
       onSuccess: () => {
@@ -45,14 +54,14 @@ export default function Client() {
       onError: (err: any) => {
         setBtnLoading(false);
         const code = err?.response?.data?.code;
-
-        if (code === "PARTICIPATION_404") {
-          <Complete
-            status="fail"
-            action="이벤트 생성"
-            buttonText="이벤트 다시 만들기"
-            onButtonClick={() => router.push(PATHS.EVENT)}
-          />;
+        if (code === "PARTICIPATION_404" || code === "LOCATION_402") {
+          setErrorDetails({
+            status: "fail",
+            buttonText: "이벤트 다시 만들기",
+            action: "이벤트 생성",
+            onButtonClick: () => router.push(PATHS.EVENT),
+          });
+          setStep(3);
         } else {
           useToastStore
             .getState()
@@ -65,6 +74,7 @@ export default function Client() {
   const handleCloseClick = () => {
     setShowExitConfirm(true);
   };
+
   const handleConfirmExit = () => {
     flushSync(() => {
       setShowExitConfirm(false);
@@ -85,10 +95,14 @@ export default function Client() {
     <>
       {step === 3 ? (
         <Complete
-          status="success"
-          action="이벤트 생성"
-          buttonText="모집목록 확인하기"
-          onButtonClick={handleComplete}
+          status={errorDetails ? errorDetails.status : "success"}
+          action={errorDetails ? errorDetails.action : "이벤트 생성"}
+          buttonText={
+            errorDetails ? errorDetails.buttonText : "모집목록 확인하기"
+          }
+          onButtonClick={
+            errorDetails ? errorDetails.onButtonClick : handleComplete
+          }
         />
       ) : (
         <FixedLayout

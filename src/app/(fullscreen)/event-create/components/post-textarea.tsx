@@ -14,6 +14,7 @@ export default function PostTextArea() {
         <input
           {...register("eventTitle")}
           type="text"
+          aria-label="모집글 제목"
           placeholder="모집글의 제목을 입력해 주세요"
           className="body-2-medium w-full border-b border-gray-950 bg-transparent pb-3 text-gray-300 placeholder-gray-700 outline-none"
         />
@@ -21,6 +22,7 @@ export default function PostTextArea() {
         <textarea
           {...register("description")}
           rows={4}
+          aria-label="모집글 내용"
           placeholder={`모집 게시물에 올릴 홍보글을 작성해주세요`}
           className="body-3-regular w-full resize-none bg-transparent text-gray-300 placeholder-gray-700 outline-none placeholder:text-[14px]"
         />
