@@ -1,6 +1,6 @@
 import { FullConfig, chromium } from "@playwright/test";
-
-//TODO: npx playwright codegen http://localhost:3000 --save-storage=tests/e2e/.auth/user.json
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.test" });
 
 async function globalSetup(config: FullConfig) {
   const browser = await chromium.launch();
@@ -9,8 +9,7 @@ async function globalSetup(config: FullConfig) {
   await context.addCookies([
     {
       name: "accessToken",
-      value:
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaHIwMjA1MzJAZ21haWwuY29tIiwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJpYXQiOjE3NTc0MTczOTcsImV4cCI6MTc1ODAyMjE5N30.S5MPocMNhTPJr_qwCvvvmQp_Ut8NMgW3JkMljFho1C61_8yFmH72a_WSt6576HMftLDgbTatNG3OQJFcyF7WHw",
+      value: process.env.TEST_ACCESS_TOKEN!,
       domain: "localhost",
       path: "/",
       httpOnly: true,
