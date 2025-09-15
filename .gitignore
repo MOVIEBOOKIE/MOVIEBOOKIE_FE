@@ -51,4 +51,4 @@ test-results/
 playwright-report/
 
 # Playwright authentication file
-src/tests/e2e/.auth/
+src/tests/e2e/.auth/user.json
