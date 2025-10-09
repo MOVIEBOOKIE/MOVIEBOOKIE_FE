@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { textUp } from "@/utils/text-motion";
 
 interface CompleteProps {
-  status: "success" | "fail";
+  status: "success" | "fail" | string;
   action: string;
   buttonText: string;
   onButtonClick(): void;
@@ -54,6 +54,7 @@ export default function Complete({
           animate="show"
           exit="exit"
           className="flex h-[calc(100vh-126px)] flex-col items-center justify-center gap-3"
+          data-testid="complete-container"
         >
           <motion.div variants={iconVar} className="mb-2">
             {isSuccess ? (
@@ -63,13 +64,18 @@ export default function Complete({
             )}
           </motion.div>
 
-          <motion.p variants={textUp} className="title-1-bold text-gray-white">
+          <motion.p
+            variants={textUp}
+            className="title-1-bold text-gray-white"
+            data-testid="complete-message"
+          >
             {action}이 {isSuccess ? "완료됐어요!" : "실패했어요"}
           </motion.p>
 
           <motion.p
             variants={textUp}
             className="body-3-regular text-center text-gray-500"
+            data-testid="complete-description"
           >
             {isSuccess ? (
               <>
