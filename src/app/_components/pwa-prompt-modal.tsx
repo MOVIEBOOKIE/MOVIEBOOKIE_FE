@@ -27,9 +27,22 @@ export default function PwaPromptModal() {
     const pathname = window.location.pathname;
     const isLoginPage = pathname === "/login";
 
-    const isPWA = window.matchMedia("(display-mode: standalone)").matches;
+    // PWA 환경인지 체크
+    const isInstalledPWA =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (navigator as any).standalone === true;
 
-    if (osType === "ios" && isPWA && isLoginPage) {
+    if (isInstalledPWA) {
+      return;
+    }
+    // iOS Safari 체크
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isIosSafari =
+      osType === "ios" &&
+      userAgent.includes("safari") &&
+      !userAgent.includes("crios") && // iOS Chrome
+      !userAgent.includes("fxios"); // iOS Firefox
+    if (isIosSafari && isLoginPage) {
       setShowModal(true);
       return;
     }
