@@ -51,7 +51,7 @@ export default function Login() {
                   <img
                     src={slide.gif}
                     alt={`slide ${index + 1} gif`}
-                    className="h-[333px] object-contain"
+                    className="h-83.25 object-contain"
                     loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
@@ -63,7 +63,7 @@ export default function Login() {
         <div
           className={cn(
             "absolute left-1/2 z-20 flex -translate-x-1/2 gap-2",
-            isSmallScreen ? "bottom-[20px]" : "bottom-[0px]",
+            isSmallScreen ? "bottom-5" : "bottom-0",
           )}
         >
           {slides.map((_, index) => (

@@ -66,13 +66,15 @@ export default function DetailContent({ ...props }) {
         animate="show"
       >
         <motion.p
-          variants={textUp}
+          // variants={textUp}
           className="text-gray-white title-2-bold mt-1"
         >
           {props.mediaTitle || "작품 제목"}
         </motion.p>
 
-        <motion.div variants={textUp}>
+        <motion.div
+        // variants={textUp}
+        >
           <EventStatus
             eventState={props.eventState}
             recruitmentRate={props.recruitmentRate}
@@ -80,7 +82,7 @@ export default function DetailContent({ ...props }) {
         </motion.div>
 
         <motion.div
-          variants={textUp}
+          // variants={textUp}
           className={
             (props.eventState === "모집 취소" ||
             props.eventState === "대관 취소"
@@ -116,7 +118,7 @@ export default function DetailContent({ ...props }) {
           </p>
 
           <motion.div
-            variants={fade}
+            // variants={fade}
             className="my-4 h-0.5 rounded-sm bg-gray-900"
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
@@ -149,11 +151,13 @@ export default function DetailContent({ ...props }) {
         </motion.div>
 
         <motion.div
-          variants={textUp}
+          // variants={textUp}
           className="mt-4 mb-6 h-1.5 w-full bg-gray-950"
         />
 
-        <motion.div variants={textUp}>
+        <motion.div
+        // variants={textUp}
+        >
           <InformationTab
             {...props}
             recruitmentDate={recruitmentDate}

@@ -50,7 +50,7 @@ export default function Step1() {
         animate="show"
       >
         <motion.p
-          variants={textUp}
+          // variants={textUp}
           className="text-gray-white title-1-bold text-center"
         >
           미리보기를 통해
@@ -59,7 +59,7 @@ export default function Step1() {
         </motion.p>
 
         <motion.p
-          variants={textUp}
+          // variants={textUp}
           className="caption-1-medium text-center text-red-600"
         >
           생성한 이벤트는 수정이 불가능해요
