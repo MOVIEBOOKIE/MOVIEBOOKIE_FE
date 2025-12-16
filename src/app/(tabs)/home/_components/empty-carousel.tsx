@@ -11,11 +11,11 @@ export default function EmptyCarousel() {
       className="relative flex w-full items-center justify-center overflow-x-hidden"
       style={{ maxWidth: "100%" }}
     >
-      <div className="relative h-[320px] w-[60px] flex-shrink-0 overflow-hidden">
-        <div className="absolute top-0 right-[-6px] h-full w-[260px] scale-[0.88] rounded-xl bg-[#1E1E1E] opacity-50" />
+      <div className="relative h-80 w-15 shrink-0 overflow-hidden">
+        <div className="absolute top-0 -right-1.5 h-full w-65 scale-[0.88] rounded-xl bg-[#1E1E1E] opacity-50" />
       </div>
 
-      <div className="relative z-10 h-[404px] w-[282px] flex-shrink-0 overflow-hidden rounded-xl shadow-xl">
+      <div className="relative z-10 h-101 w-70.5 shrink-0 overflow-hidden rounded-xl shadow-xl">
         <Image
           src="/images/empty-home.png"
           alt="empty home"
@@ -46,8 +46,8 @@ export default function EmptyCarousel() {
         </div>
       </div>
 
-      <div className="relative h-[320px] w-[60px] flex-shrink-0 overflow-hidden">
-        <div className="absolute top-0 left-[-6px] h-full w-[260px] scale-[0.88] rounded-xl bg-[#1E1E1E] opacity-50" />
+      <div className="relative h-80 w-15 shrink-0 overflow-hidden">
+        <div className="absolute top-0 -left-1.5 h-full w-65 scale-[0.88] rounded-xl bg-[#1E1E1E] opacity-50" />
       </div>
     </div>
   );

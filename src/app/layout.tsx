@@ -8,12 +8,8 @@ import { ToastProvider } from "./_context/toast-context";
 import Toast from "./_components/noti-toast";
 import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import { LoadingProvider } from "./_context/loading-context";
-import { metadata, viewport } from "@/constants/metadata";
 import InAppRedirect from "./_components/inapp-redirect";
 import GACommon from "./_components/ga/ga-common";
-import RouteTracker from "./_components/ga/route-tracker";
-import SessionLifecycle from "./_components/ga/session-lifecycle";
-export { metadata, viewport };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;

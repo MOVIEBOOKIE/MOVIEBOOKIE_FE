@@ -22,10 +22,10 @@ const BASE_URL =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {},
   trailingSlash: true,
   output: "standalone",
   productionBrowserSourceMaps: false,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {

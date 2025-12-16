@@ -1,0 +1,31 @@
+name: Build Test
+
+on:
+  push:
+    branches: ["dev"]
+  pull_request:
+    branches: ["dev"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🧰 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install pnpm
+        run: |
+          npm install -g pnpm
+          echo "PNPM PATH: $(which pnpm)"
+          pnpm --version
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🛠 Run build
+        run: pnpm build

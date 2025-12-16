@@ -74,7 +74,7 @@ export default function TraitResult() {
       <div className="flex items-start justify-center">
         <motion.div
           className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg"
-          variants={cardVariants}
+          // variants={cardVariants}
         >
           <Image
             src={PATH_IMAGES.TRAIT.BACKGROUND}

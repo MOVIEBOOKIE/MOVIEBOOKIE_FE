@@ -49,14 +49,17 @@ export default function Complete({
       <AnimatePresence mode="wait">
         <motion.div
           key={`${status}-${action}`}
-          variants={container}
+          // variants={container}
           initial="hidden"
           animate="show"
           exit="exit"
           className="flex h-[calc(100vh-126px)] flex-col items-center justify-center gap-3"
           data-testid="complete-container"
         >
-          <motion.div variants={iconVar} className="mb-2">
+          <motion.div
+            // variants={iconVar}
+            className="mb-2"
+          >
             {isSuccess ? (
               <CheckboxIcon width={45} height={45} />
             ) : (
@@ -65,7 +68,7 @@ export default function Complete({
           </motion.div>
 
           <motion.p
-            variants={textUp}
+            // variants={textUp}
             className="title-1-bold text-gray-white"
             data-testid="complete-message"
           >
@@ -73,7 +76,7 @@ export default function Complete({
           </motion.p>
 
           <motion.p
-            variants={textUp}
+            // variants={textUp}
             className="body-3-regular text-center text-gray-500"
             data-testid="complete-description"
           >

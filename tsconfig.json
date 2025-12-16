@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "typeRoots": ["./src/types", "./node_modules/@types"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,7 +19,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -21,16 +28,36 @@
     ],
     "baseUrl": "src/",
     "paths": {
-      "@/styles/*": ["app/_styles/*"],
-      "@/components": ["app/_components/index"],
-      "@/components/*": ["app/_components/*"],
-      "@/constants": ["app/_constants/index"],
-      "@/constants/*": ["app/_constants/*"],
-      "@/utils/*": ["app/_utils/*"],
-      "@/mocks/*": ["app/_mocks/*"],
-      "@/icons/*": ["icons/*"],
-      "@/lotties/*": ["lotties/*"],
-      "@/lib/*": ["app/_lib/*"]
+      "@/styles/*": [
+        "app/_styles/*"
+      ],
+      "@/components": [
+        "app/_components/index"
+      ],
+      "@/components/*": [
+        "app/_components/*"
+      ],
+      "@/constants": [
+        "app/_constants/index"
+      ],
+      "@/constants/*": [
+        "app/_constants/*"
+      ],
+      "@/utils/*": [
+        "app/_utils/*"
+      ],
+      "@/mocks/*": [
+        "app/_mocks/*"
+      ],
+      "@/icons/*": [
+        "icons/*"
+      ],
+      "@/lotties/*": [
+        "lotties/*"
+      ],
+      "@/lib/*": [
+        "app/_lib/*"
+      ]
     }
   },
   "include": [
@@ -39,7 +66,10 @@
     "next-env.d.ts",
     "types.d.ts",
     ".next/types/**/*.ts",
-    "public/firebase-config.ts"
+    "public/firebase-config.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
