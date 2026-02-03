@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 export default function Recommend() {
   const router = useRouter();
   const user = useUserStore((state) => state.user);
-  const { data: events } = useHomeEvents();
+  const { data: events, isFetched, isLoading } = useHomeEvents();
 
   const handleTypeTest = () => {
     router.push(PATHS.TRAIT);
@@ -21,6 +21,8 @@ export default function Recommend() {
   const hasEvents = (events?.length ?? 0) > 0;
 
   const emptyType = !hasUserType ? "userType" : !hasEvents ? "event" : null;
+
+  if (!isFetched && isLoading) return null;
 
   return (
     <section>

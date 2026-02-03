@@ -13,8 +13,10 @@ type HomeUIState = {
   setActiveTab: (tab: HomeTab) => void;
   setSelectedCategory: (label: CategoryLabel) => void;
   ensureFetchedCategory: (label: CategoryLabel) => void;
-
   reset: () => void;
+
+  hasHydrated: boolean;
+  setHasHydrated: (v: boolean) => void;
 };
 
 const DEFAULT_CATEGORY: CategoryLabel = "인기";
@@ -45,6 +47,9 @@ export const useHomeUIStore = create<HomeUIState>()(
           selectedCategory: DEFAULT_CATEGORY,
           fetchedCategories: ["인기", "최신"],
         }),
+
+      hasHydrated: false,
+      setHasHydrated: (v) => set({ hasHydrated: v }),
     }),
     {
       name: "home-ui-store",
@@ -54,6 +59,10 @@ export const useHomeUIStore = create<HomeUIState>()(
         selectedCategory: state.selectedCategory,
         fetchedCategories: state.fetchedCategories,
       }),
+
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     },
   ),
 );

@@ -24,6 +24,7 @@ export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const user = useUserStore((state) => state.user);
+  const hasHydrated = useHomeUIStore((s) => s.hasHydrated);
   const activeTab = useHomeUIStore((s) => s.activeTab);
   const setActiveTab = useHomeUIStore((s) => s.setActiveTab);
 
@@ -47,6 +48,10 @@ export default function Home() {
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
   };
+
+  if (!hasHydrated) {
+    return null;
+  }
 
   return (
     <div ref={containerRef} className="h-[calc(100dvh-102px)] px-5">
