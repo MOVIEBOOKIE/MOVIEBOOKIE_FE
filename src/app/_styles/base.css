@@ -17,6 +17,10 @@ body {
   max-width: 500px;
 }
 
+button {
+  cursor: pointer;
+}
+
 :root {
   --app-max: 500px;
   --safe-top: env(safe-area-inset-top);
@@ -46,7 +50,6 @@ input,
 textarea {
   font-size: 16px; /* iOS 확대 방지 */
 }
-
 
 /* 자동입력 시 브라우저 css 배경색 제거 */
 input:-webkit-autofill,
