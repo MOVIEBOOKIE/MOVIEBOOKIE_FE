@@ -22,6 +22,12 @@ jobs:
       - name: Build outputs
         run: sh ./build.sh
 
+      - name: Debug output
+        run: |
+          ls -la
+          ls -la output || true
+          find output -maxdepth 2 -type f | head -n 50 || true
+
       - name: Decide target branch
         id: target
         run: |
@@ -41,8 +47,9 @@ jobs:
           destination-github-username: anhyeryeon2
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
+          commit-message: "${{ github.event.head_commit.message }} [skip ci]"
           target-branch: ${{ steps.target.outputs.TARGET_BRANCH }}
+          create-target-branch-if-needed: true
 
       - name: Echo destination (debug)
         run: echo "$DESTINATION_CLONED_DIRECTORY"
