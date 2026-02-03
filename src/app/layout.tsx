@@ -14,7 +14,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "무비부키",
-  description: "모집부터 상영까지, 영화관 대관 도움 서비스",
+  description: "지금 바로 영화관에서 당신만의 추억을 예약해보세요.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
