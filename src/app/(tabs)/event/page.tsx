@@ -38,7 +38,7 @@ export default async function EventPage({
           >
             {tab.label}
             {tabParam === tab.value && (
-              <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-white" />
+              <span className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-white" />
             )}
           </Link>
         ))}
