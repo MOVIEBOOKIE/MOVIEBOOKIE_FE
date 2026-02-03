@@ -1,7 +1,6 @@
 export { default as Badge } from "./badge";
 export { default as Button } from "./button";
 export { default as BottomNavigation } from "./bottom-navibar";
-export { default as Input } from "./input";
 export { default as LightEffect } from "./light-effect";
 export { default as Card } from "./main-card";
 export { default as Carousel } from "../(tabs)/home/_components/carousel";

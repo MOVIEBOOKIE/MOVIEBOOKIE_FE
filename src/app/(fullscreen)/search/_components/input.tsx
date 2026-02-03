@@ -3,15 +3,13 @@ import { SearchIcon } from "@/icons/index";
 import { forwardRef } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type: "BUTTON" | "INPUT";
   className?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type, className, ...props }, ref) => {
     const inputClass = cn(
-      "body-2-medium w-full h-full placeholder:text-gray-700 pl-4 text-gray-600 text-start focus:outline-none",
-      type === "INPUT" ? "text-gray-100" : "",
+      "body-2-medium w-full h-full placeholder:text-gray-700 pl-4 text-gray-600 text-start focus:outline-none text-gray-100",
       className,
     );
 
@@ -20,10 +18,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={inputClass}
-          type={type === "BUTTON" ? "button" : "text"}
-          {...(type === "BUTTON"
-            ? { value: "이벤트 검색하기" }
-            : { placeholder: "이벤트 검색하기" })}
+          type="text"
+          placeholder="이벤트 검색하기"
           {...props}
         />
         <SearchIcon width={24} height={24} />
