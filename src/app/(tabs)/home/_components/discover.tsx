@@ -42,7 +42,7 @@ export default function Discover() {
 
   return (
     <section className="flex flex-col overflow-x-hidden pb-[calc(102px+env(safe-area-inset-bottom)+8px)]">
-      <div className="scrollbar-hide mt-3 -mr-4 mb-4 flex overflow-x-auto whitespace-nowrap">
+      <div className="scrollbar-hide my-5 -mr-4 flex overflow-x-auto whitespace-nowrap">
         {CATEGORY_LABELS.map((label) => (
           <div key={label} className="flex items-center">
             <button
