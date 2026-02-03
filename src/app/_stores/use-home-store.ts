@@ -53,7 +53,10 @@ export const useHomeUIStore = create<HomeUIState>()(
     }),
     {
       name: "home-ui-store",
-      storage: createJSONStorage(() => sessionStorage),
+      storage:
+        typeof window !== "undefined"
+          ? createJSONStorage(() => sessionStorage)
+          : undefined,
       partialize: (state) => ({
         activeTab: state.activeTab,
         selectedCategory: state.selectedCategory,
