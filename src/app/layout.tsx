@@ -10,6 +10,12 @@ import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
 import { LoadingProvider } from "./_context/loading-context";
 import InAppRedirect from "./_components/inapp-redirect";
 import GACommon from "./_components/ga/ga-common";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "무비부키",
+  description: "모집부터 상영까지, 영화관 대관 도움 서비스",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
