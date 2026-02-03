@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { PATHS } from "@/constants";
@@ -10,8 +10,7 @@ import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
 import { ev } from "@/lib/gtm";
 import { SearchIcon } from "@/icons/index";
 import { EventCreateButton } from "@/components";
-
-type HomeTab = "discover" | "recommend";
+import { HomeTab, useHomeUIStore } from "app/_stores/use-home-store";
 
 const HOME_TABS: Array<{ key: HomeTab; label: string }> = [
   { key: "discover", label: "발견" },
@@ -24,8 +23,9 @@ const Recommend = dynamic(() => import("./_components/recommend"));
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<HomeTab>("discover");
   const user = useUserStore((state) => state.user);
+  const activeTab = useHomeUIStore((s) => s.activeTab);
+  const setActiveTab = useHomeUIStore((s) => s.setActiveTab);
 
   const { requestOnceIfNeeded } = useFCMHandler();
   useMyPage();
@@ -75,8 +75,12 @@ export default function Home() {
         </button>
       </div>
 
-      {activeTab === "discover" && <Discover />}
-      {activeTab === "recommend" && <Recommend />}
+      <div hidden={activeTab !== "discover"}>
+        <Discover />
+      </div>
+      <div hidden={activeTab !== "recommend"}>
+        <Recommend />
+      </div>
       <EventCreateButton />
     </div>
   );

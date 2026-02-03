@@ -7,37 +7,27 @@ import { CATEGORY_LABELS } from "@/constants";
 import { categoryMap } from "@/constants/category-map";
 import { EmptyIcon } from "@/icons/index";
 import { useCategoryEvents } from "app/_hooks/events/use-category-events";
-import { useSearchParams } from "next/navigation";
+import { useHomeUIStore } from "app/_stores/use-home-store";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function Discover() {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
-  const defaultCategory =
-    CATEGORY_LABELS.find((label) => categoryMap[label] === category) ?? "인기";
+  const selected = useHomeUIStore((s) => s.selectedCategory);
+  const fetchedCategories = useHomeUIStore((s) => s.fetchedCategories);
+  const setSelected = useHomeUIStore((s) => s.setSelectedCategory);
 
-  const [selected, setSelected] =
-    useState<(typeof CATEGORY_LABELS)[number]>(defaultCategory);
-
-  const [fetchedCategories, setFetchedCategories] = useState<
-    (typeof CATEGORY_LABELS)[number][]
-  >(["인기", "최신"]);
-
-  const { data, isLoading } = useCategoryEvents(selected, {
+  const { data, isLoading, isFetching } = useCategoryEvents(selected, {
     enabled: fetchedCategories.includes(selected),
   });
 
   const events = data?.eventList ?? [];
   const hasData = events.length > 0;
 
+  const loadingForGate = isLoading || isFetching;
+
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);
-    if (!fetchedCategories.includes(label)) {
-      setFetchedCategories((prev) => [...prev, label]);
-    }
   };
 
   return (
@@ -61,7 +51,7 @@ export default function Discover() {
 
       <SkeletonGate
         key={selected}
-        loading={isLoading}
+        loading={loadingForGate}
         hasData={hasData}
         showAfterMs={150}
         minVisibleMs={350}
@@ -96,7 +86,6 @@ export default function Discover() {
                 statusBadge={event.eventStatus}
                 progressRate={`${event.rate}%`}
                 estimatedPrice={String(event.estimatedPrice)}
-                query={{ from: "home", category: categoryMap[selected] }}
               />
               <div className="my-4 h-px w-full bg-gray-950" />
             </div>
