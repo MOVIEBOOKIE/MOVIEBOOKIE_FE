@@ -37,6 +37,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
           source-directory: output
+          target-directory: output
           destination-github-username: anhyeryeon2
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
