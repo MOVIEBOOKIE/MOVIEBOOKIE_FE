@@ -66,6 +66,7 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={18}
+        slidesPerView="auto"
         loop={totalImages > 1}
       >
         {slides.map((event) => (
