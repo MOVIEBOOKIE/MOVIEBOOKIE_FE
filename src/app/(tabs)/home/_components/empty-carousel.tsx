@@ -46,7 +46,7 @@ export default function EmptyCarousel({ type }: EmptyCarouselProps) {
   const content = CONTENT[type];
 
   return (
-    <div className="relative flex w-full items-center justify-center gap-3.75 overflow-x-hidden">
+    <div className="relative mt-15.75 flex w-full items-center justify-center gap-3.75 overflow-x-hidden">
       <div className="relative h-90 w-15 shrink-0 overflow-hidden rounded-xl bg-gray-950" />
 
       <div className="relative z-10 h-113.5 w-70.5 shrink-0 overflow-hidden rounded-xl bg-gray-900 shadow-xl">
