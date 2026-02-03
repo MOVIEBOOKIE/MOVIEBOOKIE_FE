@@ -10,3 +10,4 @@ export { default as FixedLayout } from "./fixed-layout";
 export { default as ToggleTab } from "./toggle-tab";
 export { default as TypeList } from "./type-list";
 export { default as Toast } from "./toast";
+export { default as EventCreateButton } from "./event-create-button";

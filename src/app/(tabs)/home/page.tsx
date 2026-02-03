@@ -9,6 +9,7 @@ import { useMyPage } from "app/_hooks/auth/use-mypage";
 import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
 import { ev } from "@/lib/gtm";
 import { SearchIcon } from "@/icons/index";
+import { EventCreateButton } from "@/components";
 
 type HomeTab = "discover" | "recommend";
 
@@ -76,6 +77,7 @@ export default function Home() {
 
       {activeTab === "discover" && <Discover />}
       {activeTab === "recommend" && <Recommend />}
+      <EventCreateButton />
     </div>
   );
 }

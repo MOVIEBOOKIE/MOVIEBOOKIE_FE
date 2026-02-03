@@ -1,8 +1,7 @@
-import { PATHS } from "@/constants";
-import { PlusIcon } from "lucide-react";
 import EventBannerSection from "./_components/event-banner-section";
 import Link from "next/link";
 import EventTab from "./_components/event-tabs";
+import { EventCreateButton } from "@/components";
 
 const TAB_TYPES = {
   APPLY: "신청 목록",
@@ -52,17 +51,7 @@ export default async function EventPage({
         />
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-50">
-        <div className="pointer-events-none relative mx-auto h-full max-w-md">
-          <Link
-            href={PATHS.EVENT_CREATE}
-            className="bg-red-main body-3-semibold pointer-events-auto absolute right-5 bottom-[calc(102px+24px)] flex items-center gap-1.5 rounded-full px-4 py-4 text-white focus:bg-red-700"
-          >
-            <PlusIcon size={18} />
-            이벤트 만들기
-          </Link>
-        </div>
-      </div>
+      <EventCreateButton />
     </div>
   );
 }
