@@ -18,9 +18,10 @@ export default function Recommend() {
       <button
         type="button"
         aria-label="유형 테스트 버튼"
+        onClick={handleTypeTest}
         className="mt-6 mb-5.5 flex w-full items-center justify-between rounded-xl border border-gray-900 bg-gray-950 text-start"
       >
-        <div onClick={handleTypeTest} className="flex flex-col gap-0.75 pl-6">
+        <div className="flex flex-col gap-0.75 pl-6">
           <p className="caption-1-medium text-gray-500">
             {user?.nickname ?? "회원"}님은{" "}
             {user?.userTypeTitle ?? "유형 테스트 정보가 없습니다."}
