@@ -93,7 +93,7 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
                 <Image
                   width={21}
                   height={21}
-                  src={event.posterImageUrl}
+                  src={event.hostProfile}
                   alt="주최자 프로필 이미지"
                   className="h-5.25 w-5.25 rounded-full object-cover"
                 />

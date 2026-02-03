@@ -7,4 +7,5 @@ export interface HomeEvent {
   eventDescription: string;
   mediaTitle: string;
   locationName: string;
+  hostProfile: string;
 }
