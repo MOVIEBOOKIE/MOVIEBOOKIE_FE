@@ -72,7 +72,8 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
         {slides.map((event) => (
           <SwiperSlide
             key={event.eventId}
-            className="flex w-77! transform-gpu flex-col items-center justify-center overflow-hidden rounded-xl transition-all duration-300 ease-in-out will-change-transform"
+            style={{ width: 308 }}
+            className="flex transform-gpu flex-col items-center justify-center overflow-hidden rounded-xl transition-all duration-300 ease-in-out will-change-transform"
             onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
           >
             <div className="relative h-48 w-77 overflow-hidden rounded-t-xl">
