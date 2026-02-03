@@ -7,69 +7,27 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
 import EmptyCarousel from "./empty-carousel";
-import { useHomeEvents } from "app/_hooks/events/use-home-events";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
+import { HomeEvent } from "app/_types/home-slides";
 
 type CarouselProps = {
-  onReady?: () => void;
-  onHomeEnter?: () => void;
+  events: HomeEvent[];
 };
 
-export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
+export default function Carousel({ events }: CarouselProps) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const router = useRouter();
-  const { data: events, isFetched, refetch } = useHomeEvents();
-
-  function shuffleArray<T>(array: T[]): T[] {
-    return array
-      .map((item) => ({ item, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ item }) => item);
-  }
-
-  const slides = useMemo(() => {
-    if (!Array.isArray(events)) return [];
-    return shuffleArray(events);
-  }, [events]);
-  const totalImages = slides.length;
-
-  const [loadedImages, setLoadedImages] = useState(0);
-  const [ready, setReady] = useState(false);
-
-  const handleImageLoaded = useCallback(() => {
-    setLoadedImages((c) => c + 1);
-  }, []);
-
-  useEffect(() => {
-    const isCarouselDataReady =
-      isFetched && (totalImages === 0 || loadedImages >= totalImages);
-    if (!ready && isCarouselDataReady) {
-      setReady(true);
-      onReady?.();
-    }
-  }, [ready, isFetched, totalImages, loadedImages, onReady]);
-
-  useEffect(() => {
-    if (onHomeEnter) {
-      onHomeEnter();
-    }
-  }, [onHomeEnter, refetch]);
-
-  if (!isFetched) return null;
-  if (totalImages === 0) return <EmptyCarousel />;
 
   return (
-    <div
-      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"}`}
-    >
+    <div className={`relative transition-opacity duration-300`}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={18}
         slidesPerView="auto"
-        loop={totalImages > 1}
+        loop={events.length > 1}
       >
-        {slides.map((event) => (
+        {events.map((event) => (
           <SwiperSlide
             key={event.eventId}
             style={{ width: 308 }}
@@ -83,7 +41,6 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
                 src={event.posterImageUrl}
                 alt={event.eventTitle}
                 className="object-cover"
-                onLoadingComplete={handleImageLoaded}
                 priority
               />
               <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/20 to-black/82" />
