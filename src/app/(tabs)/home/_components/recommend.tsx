@@ -22,9 +22,10 @@ export default function Recommend() {
       >
         <div onClick={handleTypeTest} className="flex flex-col gap-0.75 pl-6">
           <p className="caption-1-medium text-gray-500">
-            {user?.nickname ?? "회원"}님은 {user?.userTypeTitle}
+            {user?.nickname ?? "회원"}님은{" "}
+            {user?.userTypeTitle ?? "유형 테스트 정보가 없습니다."}
           </p>
-          <p className="body-2-semibold text-gray-100">유형테스트 다시하기</p>
+          <p className="body-2-semibold text-gray-100">유형 테스트 다시하기</p>
         </div>
         <Image src={PATH_IMAGES.TYPE_TEST} width={105} height={77} alt="" />
       </button>
