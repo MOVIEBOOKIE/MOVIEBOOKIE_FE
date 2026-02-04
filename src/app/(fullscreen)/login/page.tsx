@@ -5,7 +5,7 @@ import "swiper/css";
 import { Button } from "@/components";
 import { KakaoIcon } from "@/icons/index";
 import { slides } from "@/constants/login-slides";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { PATHS } from "@/constants";
 import PwaPromptModal from "@/components/pwa-prompt-modal";
@@ -14,6 +14,8 @@ import { useSmallScreen } from "app/_hooks/use-small-screen";
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
   const [activeIndex, setActiveIndex] = useState(0);
   const isSmallScreen = useSmallScreen();
 
@@ -82,7 +84,10 @@ export default function Login() {
         <Button
           className="text-gray-850 body-3-semibold relative flex h-12 w-full items-center justify-center bg-[#FEDC00] active:bg-[#FEDC00]"
           onClick={() => {
-            router.push(PATHS.KAKAO_LOGIN);
+            const nextQuery = nextParam
+              ? `?next=${encodeURIComponent(nextParam)}`
+              : "";
+            router.push(`${PATHS.KAKAO_LOGIN}${nextQuery}`);
           }}
         >
           <KakaoIcon className="absolute left-4 h-6 w-6 pt-1" />

@@ -21,11 +21,16 @@ function KakaoLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+  const state = searchParams.get("state");
+  const nextParam = searchParams.get("next");
   const { mutateAsync: kakaoLogin, isPending } = useKakaoLogin();
 
   useEffect(() => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const redirectUrl = `${origin}/login/kakao`;
+    const normalizeNext = (value: string | null) =>
+      value && value.startsWith("/") ? value : "";
+    const nextPath = normalizeNext(state) || normalizeNext(nextParam);
 
     if (!code) {
       const origin = window.location.origin;
@@ -34,7 +39,8 @@ function KakaoLogin() {
         `https://kauth.kakao.com/oauth/authorize` +
         `?response_type=code` +
         `&client_id=${KAKAO_CLIENT_ID}` +
-        `&redirect_uri=${encodeURIComponent(redirectUrl)}`;
+        `&redirect_uri=${encodeURIComponent(redirectUrl)}` +
+        (nextPath ? `&state=${encodeURIComponent(nextPath)}` : "");
 
       window.location.replace(kakaoAuthUrl);
       return;
@@ -59,7 +65,12 @@ function KakaoLogin() {
           userType: response?.data?.data?.userType,
         });
 
-        router.replace(ok ? PATHS.HOME : PATHS.AGREEMENT);
+        const agreementTarget = nextPath || PATHS.HOME;
+        router.replace(
+          ok
+            ? agreementTarget
+            : `${PATHS.AGREEMENT}?next=${encodeURIComponent(agreementTarget)}`,
+        );
       } catch (error: any) {
         devError("❌ 로그인 처리 중 에러:", error);
         router.push(

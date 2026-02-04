@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
 import { useSendSms } from "app/_hooks/onboarding/use-send-code";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");
   const isValidPhone = /^010-\d{4}-\d{4}$/.test(phone);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
+  const nextPath = getSafeNextPath(nextParam);
   const { mutate: sendSmsCode } = useSendSms();
   const [submitting, setSubmitting] = useState(false);
   const { showToast } = useToastStore();
@@ -21,11 +25,19 @@ export default function PhoneStep() {
     sendSmsCode(phone, {
       onSuccess: () => {
         setTimeout(() => setSubmitting(false), 500);
-        router.push(`/verify/verify-number?type=phone&target=${phone}`);
+        const nextUrl = appendNextQuery(
+          `/verify/verify-number?type=phone&target=${phone}`,
+          nextPath,
+        );
+        if (nextPath) {
+          router.replace(nextUrl);
+        } else {
+          router.push(nextUrl);
+        }
       },
       onError: () => {
-        setSubmitting(false),
-          showToast("SMS 발송에 실패했어요. 다시 시도해 주세요.", "alert");
+        (setSubmitting(false),
+          showToast("SMS 발송에 실패했어요. 다시 시도해 주세요.", "alert"));
       },
     });
   };
@@ -37,10 +49,10 @@ export default function PhoneStep() {
       isLoading={submitting}
     >
       <StepHeader
-        StepHeader="1/3"
+        StepHeader="1/2"
         title={
           <>
-            무비부키 시작을 위해 <br />
+            이벤트 신청을 위해 <br />
             전화번호를 입력해 주세요
           </>
         }

@@ -16,6 +16,11 @@ interface EventTabProps {
 export default function EventTab({ type }: EventTabProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const fromQuery = {
+    from: "event",
+    tab: searchParams.get("tab") ?? "apply",
+    toggle: searchParams.get("toggle") ?? "0",
+  };
 
   const toggleParam = Number(searchParams.get("toggle") ?? "0");
   const selectedIdx: 0 | 1 | 2 = [0, 1, 2].includes(toggleParam as number)
@@ -112,6 +117,7 @@ export default function EventTab({ type }: EventTabProps) {
                   event.rate !== undefined ? `${event.rate}%` : undefined
                 }
                 estimatedPrice={event.estimatedPrice}
+                query={fromQuery}
               />
               {index < events.length - 1 && (
                 <div className="my-4 h-px w-full bg-gray-950" />

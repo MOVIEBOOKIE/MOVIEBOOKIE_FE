@@ -4,16 +4,24 @@ import { CATEGORY_LABELS } from "@/constants";
 
 export type HomeTab = "discover" | "recommend";
 export type CategoryLabel = (typeof CATEGORY_LABELS)[number];
+export type HomeBackContext = {
+  source: "home";
+  path: string;
+  detailId: string;
+};
 
 type HomeUIState = {
   activeTab: HomeTab;
   selectedCategory: CategoryLabel;
   fetchedCategories: CategoryLabel[];
+  backContext: HomeBackContext | null;
 
   setActiveTab: (tab: HomeTab) => void;
   setSelectedCategory: (label: CategoryLabel) => void;
   ensureFetchedCategory: (label: CategoryLabel) => void;
   reset: () => void;
+  setBackContext: (context: HomeBackContext | null) => void;
+  clearBackContext: () => void;
 
   hasHydrated: boolean;
   setHasHydrated: (v: boolean) => void;
@@ -27,6 +35,7 @@ export const useHomeUIStore = create<HomeUIState>()(
       activeTab: "discover",
       selectedCategory: DEFAULT_CATEGORY,
       fetchedCategories: ["인기", "최신"],
+      backContext: null,
 
       setActiveTab: (tab) => set({ activeTab: tab }),
 
@@ -46,7 +55,11 @@ export const useHomeUIStore = create<HomeUIState>()(
           activeTab: "discover",
           selectedCategory: DEFAULT_CATEGORY,
           fetchedCategories: ["인기", "최신"],
+          backContext: null,
         }),
+
+      setBackContext: (context) => set({ backContext: context }),
+      clearBackContext: () => set({ backContext: null }),
 
       hasHydrated: false,
       setHasHydrated: (v) => set({ hasHydrated: v }),
@@ -61,6 +74,7 @@ export const useHomeUIStore = create<HomeUIState>()(
         activeTab: state.activeTab,
         selectedCategory: state.selectedCategory,
         fetchedCategories: state.fetchedCategories,
+        backContext: state.backContext,
       }),
 
       onRehydrateStorage: () => (state) => {

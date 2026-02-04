@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowDownIcon } from "@/icons/index";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { useSendEmail } from "app/_hooks/onboarding/use-send-code";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,12 +12,16 @@ import {
   optionVariants,
 } from "../_components/motion-drop-down";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
 type EmailDomain = (typeof EMAIL_DOMAINS)[number];
 
 export default function EmailStep() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
+  const nextPath = getSafeNextPath(nextParam);
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -36,7 +40,15 @@ export default function EmailStep() {
     sendEmailCode(fullEmail, {
       onSuccess: () => {
         setTimeout(() => setSubmitting(false), 500);
-        router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
+        const nextUrl = appendNextQuery(
+          `/verify/verify-number?type=email&target=${fullEmail}`,
+          nextPath,
+        );
+        if (nextPath) {
+          router.replace(nextUrl);
+        } else {
+          router.push(nextUrl);
+        }
       },
       onError: () => {
         setSubmitting(false);
@@ -52,7 +64,7 @@ export default function EmailStep() {
       isLoading={submitting}
     >
       <StepHeader
-        StepHeader="2/3"
+        StepHeader="2/2"
         title={
           <>
             자주 사용하는 이메일을 <br /> 입력해 주세요

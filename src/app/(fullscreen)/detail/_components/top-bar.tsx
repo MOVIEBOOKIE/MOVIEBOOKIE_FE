@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { BackIcon, UploadIcon } from "@/icons/index";
 import ShareModal from "./share-modal";
-import { useState, useMemo } from "react";
+import { useState } from "react";
+import { useHomeUIStore } from "app/_stores/use-home-store";
 
 interface TopBarProps {
   event: {
@@ -16,22 +17,21 @@ interface TopBarProps {
 
 export default function TopBar({ event }: TopBarProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [showShareModal, setShowShareModal] = useState(false);
-
-  const from = useMemo(() => searchParams.get("from"), [searchParams]);
-  const tab = useMemo(() => searchParams.get("tab"), [searchParams]);
-  const toggle = useMemo(() => searchParams.get("toggle"), [searchParams]);
+  const backContext = useHomeUIStore((s) => s.backContext);
+  const clearBackContext = useHomeUIStore((s) => s.clearBackContext);
 
   const handleBack = () => {
-    if (from === "event") {
-      const query = new URLSearchParams();
-      if (tab) query.set("tab", tab);
-      if (toggle) query.set("toggle", toggle);
-      router.push(`/event?${query.toString()}`);
-    } else {
-      router.back();
+    if (backContext?.source === "home") {
+      const isSameDetail = backContext.detailId === String(event.eventId);
+      if (isSameDetail) {
+        clearBackContext();
+        router.push(backContext.path);
+        return;
+      }
     }
+
+    router.back();
   };
 
   return (

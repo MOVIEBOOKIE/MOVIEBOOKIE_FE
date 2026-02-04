@@ -126,7 +126,7 @@ describe("MyPage", () => {
 
     // 모킹된 `mockPush` 함수가 올바른 경로와 함께 호출되었는지 검증합니다.
     // 이 검증을 통해 컴포넌트의 클릭 이벤트 핸들러가 의도대로 작동했음을 확인합니다.
-    expect(mockPush).toHaveBeenCalledWith("/trait-result?from=mypage");
+    expect(mockPush).toHaveBeenCalledWith("/trait-result");
   });
 
   it("참여경험/주최경험/티켓 수치를 보여준다", () => {

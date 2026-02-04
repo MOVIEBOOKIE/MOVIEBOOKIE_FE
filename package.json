@@ -7,7 +7,7 @@
     "build": "next build --webpack",
     "prebuild": "node scripts/generate-firebase-config.js",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --dir .",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "generate:firebase-config": "node public/scripts/generate-firebase-config.js",
