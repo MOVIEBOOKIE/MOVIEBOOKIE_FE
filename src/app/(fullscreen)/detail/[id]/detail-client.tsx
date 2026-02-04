@@ -3,7 +3,7 @@
 import { Button } from "@/components";
 import TopBar from "../_components/top-bar";
 import DetailContent from "@/components/detail-content";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   useDeleteEvent,
   useDeleteEventsRecruit,
@@ -41,9 +41,18 @@ export default function DetailClient() {
   const params = useParams();
   const eventId = useMemo(() => Number(params?.id), [params?.id]);
   const isValidEventId = !isNaN(eventId) && eventId > 0;
+  const searchParams = useSearchParams();
+  const currentQuery = searchParams.toString();
+  const detailPath = isValidEventId
+    ? `${PATHS.EVENT_DETAIL(eventId)}${currentQuery ? `?${currentQuery}` : ""}`
+    : PATHS.HOME;
+  const verifyPhonePath = `${PATHS.VERIFY_PHONE}?next=${encodeURIComponent(
+    detailPath,
+  )}`;
 
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
+  const needsPhoneVerification = loggedIn && !user?.phoneNumber;
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
@@ -72,10 +81,13 @@ export default function DetailClient() {
   const { data: moveToTicket } = useGetToTicket(eventId, {
     enabled: data?.buttonState === "티켓으로 이동",
   });
-
   const handleClick = () => {
     if (!loggedIn) {
       setModalType("loginRequired");
+      return;
+    }
+    if (needsPhoneVerification) {
+      router.replace(verifyPhonePath);
       return;
     }
     switch (data?.buttonState) {
@@ -240,7 +252,9 @@ export default function DetailClient() {
           title={`이벤트 신청은\n로그인 후에 가능해요`}
           confirmText="로그인하기"
           onConfirm={() => {
-            router.push(PATHS.LOGIN);
+            router.replace(
+              `${PATHS.LOGIN}?next=${encodeURIComponent(verifyPhonePath)}`,
+            );
             setModalType(null);
           }}
           onClose={() => setModalType(null)}

@@ -102,7 +102,9 @@ export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
               flexShrink: 0,
             }}
             className="flex transform-gpu items-center justify-center transition-all duration-300 ease-in-out will-change-transform"
-            onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
+            onClick={() =>
+              router.push(`${PATHS.EVENT_DETAIL(event.eventId)}?from=home`)
+            }
           >
             <div className="relative h-full w-full overflow-hidden rounded-[12px] shadow-2xl">
               <Image

@@ -9,6 +9,8 @@ import {
 } from "app/_hooks/onboarding/use-verify-code";
 import Loading from "app/loading";
 import { PATHS } from "@/constants";
+import { getMyPageInfo } from "app/_apis/auth/mypage";
+import { useUserStore } from "app/_stores/use-user-store";
 export default function VerifyNumberPage() {
   return (
     <Suspense fallback={<Loading />}>
@@ -21,7 +23,10 @@ function VerifyNumberContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "phone" | "email";
   const target = searchParams.get("target") || "";
+  const nextParam = searchParams.get("next");
+  const nextPath = nextParam && nextParam.startsWith("/") ? nextParam : "";
   const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const [code, setCode] = useState(Array(4).fill(""));
   const [showToast, setShowToast] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -51,6 +56,27 @@ function VerifyNumberContent() {
   const { mutate: verifySmsCode } = useVerifySms();
   const { mutate: verifyEmailCode } = useVerifyEmail();
 
+  const refreshUser = async () => {
+    try {
+      const res = await getMyPageInfo();
+      if (res) {
+        setUser({
+          email: res.email,
+          certificationEmail: res.certificationEmail,
+          nickname: res.username,
+          profileImage: res.profileImage,
+          userTypeTitle: res.userTypeTitle,
+          hostExperienceCount: res.hostExperienceCount,
+          participationExperienceCount: res.participationExperienceCount,
+          ticketCount: res.ticketCount,
+          phoneNumber: res.phoneNumber,
+        });
+      }
+    } catch {
+      // noop: fallback to existing store state
+    }
+  };
+
   const handleComplete = () => {
     const certificationCode = fullCode;
     if (submitting) return;
@@ -59,9 +85,18 @@ function VerifyNumberContent() {
       verifySmsCode(
         { phoneNum: target.replace(/-/g, ""), certificationCode },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             setTimeout(() => setSubmitting(false), 500);
-            router.push(PATHS.VERIFY_EMAIL);
+            await refreshUser();
+            const nextQuery = nextPath
+              ? `?next=${encodeURIComponent(nextPath)}`
+              : "";
+            const nextUrl = `${PATHS.VERIFY_EMAIL}${nextQuery}`;
+            if (nextPath) {
+              router.replace(nextUrl);
+            } else {
+              router.push(nextUrl);
+            }
           },
           onError: handleError,
         },
@@ -71,9 +106,14 @@ function VerifyNumberContent() {
       verifyEmailCode(
         { email: target, certificationCode },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             setTimeout(() => setSubmitting(false), 500);
-            router.push(PATHS.SET_PROFILE);
+            await refreshUser();
+            if (nextPath) {
+              router.replace(nextPath);
+            } else {
+              router.push(PATHS.HOME);
+            }
           },
           onError: handleError,
         },
@@ -116,7 +156,7 @@ function VerifyNumberContent() {
       isLoading={submitting}
     >
       <StepHeader
-        StepHeader={type === "phone" ? "1/3" : "2/3"}
+        StepHeader={type === "phone" ? "1/2" : "2/2"}
         title={
           <>
             {type === "phone" ? "문자" : "이메일"}로 전송된 <br />
