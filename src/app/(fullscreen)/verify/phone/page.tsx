@@ -52,7 +52,7 @@ export default function PhoneStep() {
         StepHeader="1/2"
         title={
           <>
-            무비부키 시작을 위해 <br />
+            이벤트 신청을 위해 <br />
             전화번호를 입력해 주세요
           </>
         }

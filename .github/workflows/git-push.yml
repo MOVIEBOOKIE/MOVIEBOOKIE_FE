@@ -2,7 +2,7 @@ name: Deploy Artifacts
 
 on:
   push:
-    branches: [dev, main]
+    branches: [main]
 
 permissions:
   contents: write
@@ -22,26 +22,17 @@ jobs:
       - name: Build outputs
         run: sh ./build.sh
 
-      - name: Decide target branch
-        id: target
-        run: |
-          if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "TARGET_BRANCH=main" >> $GITHUB_OUTPUT
-          else
-            echo "TARGET_BRANCH=dev" >> $GITHUB_OUTPUT
-          fi
-
       - name: Push to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
         with:
           source-directory: output
           destination-github-username: anhyeryeon2
           destination-repository-name: MOVIEBOOKIE_FE
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
-          target-branch: ${{ steps.target.outputs.TARGET_BRANCH }}
+          target-branch: main
 
       - name: Echo destination (debug)
         run: echo "$DESTINATION_CLONED_DIRECTORY"
