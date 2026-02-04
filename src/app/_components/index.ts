@@ -1,7 +1,6 @@
 export { default as Badge } from "./badge";
 export { default as Button } from "./button";
 export { default as BottomNavigation } from "./bottom-navibar";
-export { default as Input } from "./input";
 export { default as LightEffect } from "./light-effect";
 export { default as Card } from "./main-card";
 export { default as Carousel } from "../(tabs)/home/_components/carousel";
@@ -11,3 +10,4 @@ export { default as FixedLayout } from "./fixed-layout";
 export { default as ToggleTab } from "./toggle-tab";
 export { default as TypeList } from "./type-list";
 export { default as Toast } from "./toast";
+export { default as EventCreateButton } from "./event-create-button";
