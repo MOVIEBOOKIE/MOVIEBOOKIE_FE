@@ -12,6 +12,7 @@ import {
   optionVariants,
 } from "../_components/motion-drop-down";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
 type EmailDomain = (typeof EMAIL_DOMAINS)[number];
@@ -20,7 +21,7 @@ export default function EmailStep() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const nextParam = searchParams.get("next");
-  const nextPath = nextParam && nextParam.startsWith("/") ? nextParam : "";
+  const nextPath = getSafeNextPath(nextParam);
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -39,10 +40,10 @@ export default function EmailStep() {
     sendEmailCode(fullEmail, {
       onSuccess: () => {
         setTimeout(() => setSubmitting(false), 500);
-        const nextQuery = nextPath
-          ? `&next=${encodeURIComponent(nextPath)}`
-          : "";
-        const nextUrl = `/verify/verify-number?type=email&target=${fullEmail}${nextQuery}`;
+        const nextUrl = appendNextQuery(
+          `/verify/verify-number?type=email&target=${fullEmail}`,
+          nextPath,
+        );
         if (nextPath) {
           router.replace(nextUrl);
         } else {

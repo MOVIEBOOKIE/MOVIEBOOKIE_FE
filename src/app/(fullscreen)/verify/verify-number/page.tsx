@@ -11,6 +11,7 @@ import Loading from "app/loading";
 import { PATHS } from "@/constants";
 import { getMyPageInfo } from "app/_apis/auth/mypage";
 import { useUserStore } from "app/_stores/use-user-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 export default function VerifyNumberPage() {
   return (
     <Suspense fallback={<Loading />}>
@@ -24,7 +25,7 @@ function VerifyNumberContent() {
   const type = searchParams.get("type") as "phone" | "email";
   const target = searchParams.get("target") || "";
   const nextParam = searchParams.get("next");
-  const nextPath = nextParam && nextParam.startsWith("/") ? nextParam : "";
+  const nextPath = getSafeNextPath(nextParam);
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
   const [code, setCode] = useState(Array(4).fill(""));
@@ -88,10 +89,7 @@ function VerifyNumberContent() {
           onSuccess: async () => {
             setTimeout(() => setSubmitting(false), 500);
             await refreshUser();
-            const nextQuery = nextPath
-              ? `?next=${encodeURIComponent(nextPath)}`
-              : "";
-            const nextUrl = `${PATHS.VERIFY_EMAIL}${nextQuery}`;
+            const nextUrl = appendNextQuery(PATHS.VERIFY_EMAIL, nextPath);
             if (nextPath) {
               router.replace(nextUrl);
             } else {

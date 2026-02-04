@@ -6,6 +6,7 @@ import { FixedLayout, StepHeader } from "@/components";
 import { formatPhoneNumber } from "@/utils/format-phone";
 import { useSendSms } from "app/_hooks/onboarding/use-send-code";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 
 export default function PhoneStep() {
   const [phone, setPhone] = useState("");
@@ -13,7 +14,7 @@ export default function PhoneStep() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const nextParam = searchParams.get("next");
-  const nextPath = nextParam && nextParam.startsWith("/") ? nextParam : "";
+  const nextPath = getSafeNextPath(nextParam);
   const { mutate: sendSmsCode } = useSendSms();
   const [submitting, setSubmitting] = useState(false);
   const { showToast } = useToastStore();
@@ -24,10 +25,10 @@ export default function PhoneStep() {
     sendSmsCode(phone, {
       onSuccess: () => {
         setTimeout(() => setSubmitting(false), 500);
-        const nextQuery = nextPath
-          ? `&next=${encodeURIComponent(nextPath)}`
-          : "";
-        const nextUrl = `/verify/verify-number?type=phone&target=${phone}${nextQuery}`;
+        const nextUrl = appendNextQuery(
+          `/verify/verify-number?type=phone&target=${phone}`,
+          nextPath,
+        );
         if (nextPath) {
           router.replace(nextUrl);
         } else {
