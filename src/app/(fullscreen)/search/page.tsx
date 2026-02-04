@@ -1,15 +1,16 @@
 "use client";
 
-import { Card, Input } from "@/components";
+import { Card } from "@/components";
 import { BackIcon, EmptyIcon } from "@/icons/index";
 import CategoryButton from "./_components/category-button";
-import { EVENT_CATEGORIES } from "@/constants";
+import { EVENT_CATEGORIES, PATHS } from "@/constants";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useLayoutEffect, useRef, useState } from "react";
 import { useGetEventSearch } from "app/_hooks/events/use-events";
 import { useDebounce } from "use-debounce";
 import Pagination from "@/components/pagination";
+import Input from "app/(fullscreen)/search/_components/input";
 
 export default function Search() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function Search() {
   const totalPages = data?.totalPages ?? 0;
 
   const handleClick = () => {
-    router.push("/?to=category");
+    router.push(PATHS.HOME);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,6 @@ export default function Search() {
       <div className="mt-5.5 flex w-full items-center gap-2 pr-5 pl-2.5">
         <BackIcon onClick={handleClick} />
         <Input
-          type="INPUT"
           ref={inputRef}
           value={content}
           onChange={handleChange}
@@ -104,7 +104,7 @@ export default function Search() {
           </div>
 
           {cards.length > 0 && (
-            <div className="mt-auto mb-[34px]">
+            <div className="mt-auto mb-8.5">
               <Pagination
                 pageCount={totalPages}
                 currentPage={currentPage}

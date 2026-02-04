@@ -1,38 +1,45 @@
-name: Deploy Artifacts
+name: CI
 
 on:
   push:
-    branches: [main]
-
-permissions:
-  contents: write
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
 
 concurrency:
-  group: deploy-artifacts-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-push:
+  verify:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build outputs
-        run: sh ./build.sh
-
-      - name: Push to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          source-directory: output
-          destination-github-username: anhyeryeon2
-          destination-repository-name: MOVIEBOOKIE_FE
-          user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
-          target-branch: main
+          node-version: 20
+          cache: pnpm
 
-      - name: Echo destination (debug)
-        run: echo "$DESTINATION_CLONED_DIRECTORY"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint --if-present
+
+      - name: Typecheck
+        run: pnpm typecheck --if-present
+
+      - name: Test
+        run: pnpm test --if-present
+
+      - name: Build
+        run: pnpm build

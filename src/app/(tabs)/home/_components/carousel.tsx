@@ -6,135 +6,71 @@ import type SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
-import { Badge } from "@/components";
 import EmptyCarousel from "./empty-carousel";
-import { useHomeEvents } from "app/_hooks/events/use-home-events";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants";
+import { HomeEvent } from "app/_types/home-slides";
 
 type CarouselProps = {
-  onReady?: () => void;
-  onHomeEnter?: () => void;
+  events: HomeEvent[];
 };
 
-export default function Carousel({ onReady, onHomeEnter }: CarouselProps) {
+export default function Carousel({ events }: CarouselProps) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const router = useRouter();
-  const { data: events, isFetched, refetch } = useHomeEvents();
-
-  function shuffleArray<T>(array: T[]): T[] {
-    return array
-      .map((item) => ({ item, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ item }) => item);
-  }
-
-  const slides = useMemo(() => {
-    if (!Array.isArray(events)) return [];
-    return shuffleArray(events);
-  }, [events]);
-  const totalImages = slides.length;
-
-  const [loadedImages, setLoadedImages] = useState(0);
-  const [ready, setReady] = useState(false);
-
-  const applySlideEffect = useCallback(() => {
-    const swiper = swiperRef.current;
-    if (!swiper?.slides?.length) return;
-    swiper.slides.forEach((slideEl, index) => {
-      const progress = (swiper.slides[index] as any).progress ?? 0;
-      const scale = Math.abs(progress) < 0.5 ? 1 : 0.75;
-      const opacity = Math.abs(progress) < 0.5 ? 1 : 0.6;
-      (slideEl as HTMLElement).style.transform = `scale(${scale})`;
-      (slideEl as HTMLElement).style.opacity = `${opacity}`;
-      (slideEl as HTMLElement).style.zIndex =
-        Math.abs(progress) < 0.5 ? "10" : "1";
-    });
-  }, []);
-
-  const handleImageLoaded = useCallback(() => {
-    setLoadedImages((c) => c + 1);
-  }, []);
-
-  useEffect(() => {
-    const isCarouselDataReady =
-      isFetched && (totalImages === 0 || loadedImages >= totalImages);
-    if (!ready && isCarouselDataReady) {
-      setReady(true);
-      requestAnimationFrame(() => applySlideEffect());
-      onReady?.();
-    }
-  }, [ready, isFetched, totalImages, loadedImages, applySlideEffect, onReady]);
-
-  useEffect(() => {
-    if (onHomeEnter) {
-      onHomeEnter();
-    }
-  }, [onHomeEnter, refetch]);
-
-  if (!isFetched) return null;
-  if (totalImages === 0) return <EmptyCarousel />;
 
   return (
-    <div
-      className={`relative transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"} mx-auto w-full max-w-sm`}
-      style={{
-        overflow: "visible",
-      }}
-    >
+    <div className={`relative transition-opacity duration-300`}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        spaceBetween={-12}
-        slidesPerView={1.4}
-        centeredSlides
-        loop={totalImages > 1}
-        watchSlidesProgress
-        onProgress={applySlideEffect}
-        onSetTranslate={applySlideEffect}
-        wrapperClass="items-center"
+        spaceBetween={18}
+        slidesPerView="auto"
+        loop={events.length > 1}
       >
-        {slides.map((event) => (
+        {events.map((event) => (
           <SwiperSlide
             key={event.eventId}
-            style={{
-              width: "282px",
-              height: "404px",
-              flexShrink: 0,
-            }}
-            className="flex transform-gpu items-center justify-center transition-all duration-300 ease-in-out will-change-transform"
-            onClick={() =>
-              router.push(`${PATHS.EVENT_DETAIL(event.eventId)}?from=home`)
-            }
+            style={{ width: 308 }}
+            className="flex transform-gpu flex-col items-center justify-center overflow-hidden rounded-xl transition-all duration-300 ease-in-out will-change-transform"
+            onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
           >
-            <div className="relative h-full w-full overflow-hidden rounded-[12px] shadow-2xl">
+            <div className="relative h-48 w-77 overflow-hidden rounded-t-xl">
               <Image
                 fill
-                sizes="282px"
+                sizes="308px"
                 src={event.posterImageUrl}
-                alt={event.title}
+                alt={event.eventTitle}
                 className="object-cover"
-                onLoadingComplete={handleImageLoaded}
                 priority
               />
-              <Badge
-                variant="secondary"
-                className="pointer-events-none absolute top-4 left-4 z-10"
-              >
-                {event.eventStatus}
-              </Badge>
-
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/16 to-black/64" />
-              <div className="absolute bottom-0 h-42 w-full">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/50 opacity-54" />
-              </div>
-
-              <div className="pointer-events-none absolute bottom-8 left-5 flex flex-col gap-0.75">
-                <h2 className="body-3-medium text-gray-300">{event.type}</h2>
-                <h1 className="title-3-bold text-gray-white">{event.title}</h1>
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/20 to-black/82" />
+            </div>
+            <div className="flex flex-col bg-gray-950 px-4.5 py-6">
+              <div className="flex items-center gap-1.5">
+                <Image
+                  width={21}
+                  height={21}
+                  src={event.hostProfile}
+                  alt="주최자 프로필 이미지"
+                  className="h-5.25 w-5.25 rounded-full object-cover"
+                />
                 <p className="caption-1-medium text-gray-200">
-                  {event.locationName} · {event.eventDate}
+                  {event.hostName}
                 </p>
               </div>
+              <h2 className="title-3-bold text-gray-white mt-3">
+                {event.eventTitle}
+              </h2>
+              <p className="caption-1-medium mt-2 line-clamp-4 h-16 overflow-hidden text-gray-300">
+                {event.eventDescription}
+              </p>
+              <div className="my-6 h-px w-full bg-gray-900" />
+              <p className="body-3-semibold text-gray-100">
+                {event.mediaTitle}
+              </p>
+              <p className="caption-2-medium mt-1 text-gray-300">
+                {event.locationName} · {event.eventDate}
+              </p>
             </div>
           </SwiperSlide>
         ))}
