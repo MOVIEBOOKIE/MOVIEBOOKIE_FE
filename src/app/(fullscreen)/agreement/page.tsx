@@ -1,19 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { BellIcon, MailIcon, PhoneIcon } from "@/icons/index";
 import Item from "./components/item";
+import { PATHS } from "@/constants";
 
 export default function PhoneStep() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
+  const nextPath =
+    nextParam && nextParam.startsWith("/") ? nextParam : PATHS.HOME;
   return (
     <FixedLayout
       title="동의"
       buttonText="동의하고 계속하기"
       showBackButton={false}
       onButtonClick={() => {
-        router.push(`/verify/phone`);
+        router.replace(nextPath);
       }}
     >
       <StepHeader

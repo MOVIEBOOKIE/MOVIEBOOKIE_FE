@@ -8,9 +8,8 @@ import Step3 from "./_components/step3";
 import { useForm, FormProvider, useWatch } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "@/components";
-import { usePostUserType } from "app/_hooks/use-user-type";
+import { usePostUserType } from "app/_hooks/use-user";
 import { useUserStore } from "app/_stores/use-user-store";
-import { useMyPage } from "app/_hooks/auth/use-mypage";
 
 export default function Trait() {
   const router = useRouter();
@@ -18,7 +17,6 @@ export default function Trait() {
   const methods = useForm({
     defaultValues: { mood: "", criterion: "", content: "" },
   });
-  const { data: userInfo } = useMyPage();
   const nickname = useUserStore((state) => state.user?.nickname);
   const userName = nickname ?? "회원";
 
@@ -26,15 +24,6 @@ export default function Trait() {
   const handleClick = () => {
     setStep((prev) => prev + 1);
     window.scrollTo(0, 0);
-  };
-
-  const handleClickBack = () => {
-    if (step > 0) {
-      setStep((prev) => prev - 1);
-      window.scrollTo(0, 0);
-    } else {
-      router.back();
-    }
   };
 
   const onSubmit = methods.handleSubmit((data) => {
@@ -55,15 +44,15 @@ export default function Trait() {
     (step === 3 && !content);
 
   const isLastStep = step === 3;
-  const buttonText = isLastStep ? "제출하기" : "다음";
+  const buttonText = isLastStep ? "제출하기" : step === 0 ? "시작하기" : "다음";
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={onSubmit} className="relative flex flex-col">
         <FixedLayout
-          title="회원가입"
           buttonText={buttonText}
           isButtonDisabled={isButtonDisabled}
+          showBackButton={step > 0}
           onButtonClick={() => {
             if (isLastStep) {
               onSubmit();
@@ -71,8 +60,6 @@ export default function Trait() {
               handleClick();
             }
           }}
-          showBackButton
-          onBackClick={handleClickBack}
         >
           <div className="mb-28 w-full flex-grow overflow-y-auto">
             {step === 0 && <Step0 nickname={userName} />}

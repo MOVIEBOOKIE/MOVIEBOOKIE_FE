@@ -1,9 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { FixedLayout } from "@/components";
 import Step1 from "./step1";
 import Step2 from "./step2";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEventFormStore } from "app/_stores/use-event-create-form";
 import { PATHS } from "@/constants";
@@ -13,50 +13,68 @@ import { useLoading } from "app/_context/loading-context";
 import Modal from "@/components/modal";
 import { flushSync } from "react-dom";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { useQueryClient } from "@tanstack/react-query";
+
+interface ErrorDetails {
+  status: string;
+  buttonText: string;
+  action: string;
+  onButtonClick: () => void;
+}
 
 export default function Client() {
   const [step, setStep] = useState(1);
+  const [btnLoading, setBtnLoading] = useState(false);
   const router = useRouter();
   const { formData, resetFormData } = useEventFormStore();
   const { mutate } = useCreateEvent();
-  const { setLoading, isLoading } = useLoading();
+  const { setLoading } = useLoading();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const queryClient = useQueryClient();
+  const [errorDetails, setErrorDetails] = useState<ErrorDetails | null>(null);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   const handleButtonClick = () => {
     if (step === 1) {
       setStep(2);
-    } else {
-      setLoading(true);
-      mutate(formData, {
-        onSuccess: () => {
-          resetFormData();
-          setStep(3);
-          setLoading(false);
-        },
-        onError: (err: any) => {
-          setLoading(false);
-
-          const code = err?.response?.data?.code;
-
-          if (code === "PARTICIPATION_404") {
-            <Complete
-              status="fail"
-              action="이벤트 생성"
-              buttonText="이벤트 다시 만들기"
-              onButtonClick={() => router.push(PATHS.EVENT)}
-            />;
-          } else {
-            useToastStore
-              .getState()
-              .showToast("이벤트 게시에 실패했어요", "alert");
-          }
-        },
-      });
+      return;
     }
+
+    setBtnLoading(true);
+    mutate(formData, {
+      onSuccess: () => {
+        resetFormData();
+        setStep(3);
+        setBtnLoading(false);
+        queryClient.invalidateQueries({ queryKey: ["home-events"] });
+      },
+      onError: (err: any) => {
+        setBtnLoading(false);
+        const code = err?.response?.data?.code;
+        if (code === "PARTICIPATION_404" || code === "LOCATION_402") {
+          setErrorDetails({
+            status: "fail",
+            buttonText: "이벤트 다시 만들기",
+            action: "이벤트 생성",
+            onButtonClick: () => router.push(PATHS.EVENT),
+          });
+          setStep(3);
+        } else {
+          useToastStore
+            .getState()
+            .showToast("이벤트 게시에 실패했어요", "alert");
+        }
+      },
+    });
   };
+
   const handleCloseClick = () => {
     setShowExitConfirm(true);
   };
+
   const handleConfirmExit = () => {
     flushSync(() => {
       setShowExitConfirm(false);
@@ -77,10 +95,14 @@ export default function Client() {
     <>
       {step === 3 ? (
         <Complete
-          status="success"
-          action="이벤트 생성"
-          buttonText="모집목록 확인하기"
-          onButtonClick={handleComplete}
+          status={errorDetails ? errorDetails.status : "success"}
+          action={errorDetails ? errorDetails.action : "이벤트 생성"}
+          buttonText={
+            errorDetails ? errorDetails.buttonText : "모집목록 확인하기"
+          }
+          onButtonClick={
+            errorDetails ? errorDetails.onButtonClick : handleComplete
+          }
         />
       ) : (
         <FixedLayout
@@ -88,7 +110,7 @@ export default function Client() {
           buttonText={step === 1 ? "이벤트 미리보기" : "이벤트 게시하기"}
           showCloseButton
           onButtonClick={handleButtonClick}
-          isLoading={isLoading}
+          isLoading={btnLoading}
           title="이벤트 미리보기"
           onClose={handleCloseClick}
           state="preview"

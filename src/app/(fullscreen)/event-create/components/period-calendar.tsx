@@ -1,10 +1,16 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons/index";
 import Toast from "@/components/toast";
+
+import {
+  isSelectableDate,
+  getLatestDeadline,
+  computeRowBlocksForMonth,
+} from "@/utils/deadline-utils";
 
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -19,9 +25,8 @@ const DeadlineCalendar = ({
   selectedDeadline,
   onSelectDeadline,
 }: DeadlineCalendarProps) => {
-  const today = dayjs().startOf("day");
-  const event = dayjs(eventDate);
-  const latestDeadline = event.subtract(2, "week");
+  const today = useMemo(() => dayjs().startOf("day"), []);
+  const latestDeadline = getLatestDeadline(eventDate);
 
   const [currentMonth, setCurrentMonth] = useState(() =>
     selectedDeadline ? dayjs(selectedDeadline).startOf("month") : dayjs(),
@@ -42,10 +47,7 @@ const DeadlineCalendar = ({
   ];
 
   const handleSelect = (date: dayjs.Dayjs) => {
-    if (
-      date.isSame(today) ||
-      (date.isAfter(today) && date.isBefore(latestDeadline.add(1, "day")))
-    ) {
+    if (isSelectableDate(date, today, latestDeadline)) {
       onSelectDeadline(date.format("YYYY-MM-DD"));
     } else {
       setShowToast(true);
@@ -53,6 +55,7 @@ const DeadlineCalendar = ({
   };
 
   const isPrevDisabled = currentMonth.isSame(today, "month");
+
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => {
@@ -64,73 +67,13 @@ const DeadlineCalendar = ({
   }, [showToast]);
 
   useEffect(() => {
-    if (!selectedDeadline) {
-      setBarBlocks([]);
-      return;
-    }
-
-    const deadline = dayjs(selectedDeadline);
-    const grid = [...fullGrid];
-
-    const periodStart = today.startOf("day");
-    const periodEnd = deadline.endOf("day");
-
-    const isVisibleRange =
-      currentMonth.endOf("month").isAfter(periodStart) &&
-      currentMonth.startOf("month").isBefore(periodEnd);
-
-    if (!isVisibleRange) {
-      setBarBlocks([]);
-      return;
-    }
-
-    const firstIdxInMonth = grid.findIndex(
-      (d) => d && d.isSame(currentMonth.startOf("month"), "month"),
+    const newBarBlocks = computeRowBlocksForMonth(
+      currentMonth,
+      selectedDeadline,
+      today,
     );
-    const lastIdxInMonth = grid.reduce((acc, d, i) => {
-      if (d && d.isSame(currentMonth, "month")) return i;
-      return acc;
-    }, -1);
-
-    if (firstIdxInMonth === -1 || lastIdxInMonth === -1) {
-      setBarBlocks([]);
-      return;
-    }
-
-    const startIdx = grid.findIndex(
-      (d) =>
-        d &&
-        (d.isAfter(periodStart) || d.isSame(periodStart, "day")) &&
-        d.isSame(currentMonth, "month"),
-    );
-
-    const endIdx = grid
-      .map((d, i) => ({ d, i }))
-      .reverse()
-      .find(
-        ({ d }) =>
-          d &&
-          (d.isBefore(periodEnd) || d.isSame(periodEnd, "day")) &&
-          d.isSame(currentMonth, "month"),
-      )?.i;
-    if (startIdx === -1 || endIdx === undefined) {
-      setBarBlocks([]);
-      return;
-    }
-
-    const startRow = Math.floor(startIdx / 7);
-    const endRow = Math.floor(endIdx / 7);
-    const newBarBlocks: { row: number; startIdx: number; endIdx: number }[] =
-      [];
-
-    for (let row = startRow; row <= endRow; row++) {
-      const start = row === startRow ? startIdx : row * 7;
-      const end = row === endRow ? endIdx : row * 7 + 6;
-      newBarBlocks.push({ row, startIdx: start, endIdx: end });
-    }
-
     setBarBlocks(newBarBlocks);
-  }, [selectedDeadline, currentMonth]);
+  }, [selectedDeadline, currentMonth, today]);
 
   return (
     <div className="relative mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
@@ -199,10 +142,8 @@ const DeadlineCalendar = ({
           if (!day) return <div key={`empty-${index}`} className="h-10 w-10" />;
 
           const current = day;
-          const isSelectable =
-            current.isSame(today) ||
-            (current.isAfter(today) &&
-              current.isBefore(latestDeadline.add(1, "day")));
+          // 유틸 함수를 사용하여 선택 가능 여부 판단
+          const isSelectable = isSelectableDate(current, today, latestDeadline);
 
           const isDisabled = !isSelectable;
           const isSelected = selectedDeadline === current.format("YYYY-MM-DD");

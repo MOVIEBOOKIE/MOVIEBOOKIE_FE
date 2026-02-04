@@ -1,19 +1,31 @@
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
-  disable: process.env.NODE_ENV === "development",
+  disable:
+    process.env.NODE_ENV === "development" ||
+    process.env.VERCEL_ENV !== "production",
   skipWaiting: true,
   swSrc: "public/custom-sw.js",
 });
 
 const withSvgr = require("next-svgr");
 
+const STAGE =
+  process.env.NEXT_PUBLIC_STAGE ??
+  (process.env.VERCEL_ENV === "production" ? "prod" : "dev");
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ??
+  (STAGE === "prod"
+    ? "https://api.movie-bookie.shop"
+    : "https://api.dev-movie-bookie.shop");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {},
   trailingSlash: true,
   output: "standalone",
   productionBrowserSourceMaps: false,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -32,19 +44,18 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const baseurl = process.env.NEXT_PUBLIC_API_PROD_URL;
     const rules = [
       {
         source: "/events/:id/participants",
-        destination: `${baseurl}/events/:id/participants`,
+        destination: `${BASE_URL}/events/:id/participants`,
       },
       {
         source: "/events/:id/participants/",
-        destination: `${baseurl}/events/:id/participants/`,
+        destination: `${BASE_URL}/events/:id/participants/`,
       },
       {
         source: "/api/:path*",
-        destination: `${baseurl}/api/:path*`,
+        destination: `${BASE_URL}/api/:path*`,
       },
     ];
 

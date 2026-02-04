@@ -1,4 +1,4 @@
-import { devLog } from "@/utils/dev-logger";
+import { devError } from "@/utils/dev-logger";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -16,18 +16,17 @@ const sendAuthCodeToServer = async ({
       params: { code, redirectUri, isLocal },
       withCredentials: true,
     });
-    devLog("로그인 성공 응답:", response.data);
-
     return {
       success: true,
       data: response.data,
     };
   } catch (error: any) {
-    console.error(
-      " 로그인 에러:",
-      error.response?.status,
-      error.response?.data,
-    );
+    devError("❌ 서버 요청 에러 발생", {
+      status: error.response?.status,
+      data: error.response?.data,
+      headers: error.response?.headers,
+      message: error.message,
+    });
 
     return {
       success: false,

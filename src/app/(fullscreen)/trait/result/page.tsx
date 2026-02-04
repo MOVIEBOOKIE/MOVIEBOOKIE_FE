@@ -1,18 +1,21 @@
 "use client";
 
-import { Button } from "@/components";
+import { Button, Header } from "@/components";
 import { LineBreak } from "@/components/line-break";
 import { PATH_IMAGES, PATHS } from "@/constants/index";
-import { BackIcon, LogoWhiteIcon } from "@/icons/index";
-import { useGetUserTypeResult } from "app/_hooks/use-user-type";
+import { LogoWhiteIcon } from "@/icons/index";
+import { useGetUserTypeResult } from "app/_hooks/use-user";
 import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { USER_TYPE_ICONS } from "@/constants/user-type-icon";
 import { useSearchParams, useRouter } from "next/navigation";
+import { useSmallScreen } from "app/_hooks/use-small-screen";
+import { motion } from "framer-motion";
+import { cardVariants, containerVariants } from "../_components/motion";
 
 export default function TraitResult() {
-  const [isShortScreen, setIsShortScreen] = useState(false);
+  const isShortScreen = useSmallScreen();
   const searchParams = useSearchParams();
   const router = useRouter();
   const from = searchParams.get("from");
@@ -37,17 +40,6 @@ export default function TraitResult() {
       }, 0);
     }
   }, [data?.title]);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsShortScreen(window.innerHeight < 700);
-    };
-
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
 
   if (!data) {
     return null;
@@ -62,22 +54,17 @@ export default function TraitResult() {
     PATH_IMAGES.TRAIT[data.userTypeCode as keyof typeof PATH_IMAGES.TRAIT];
 
   return (
-    <div className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden">
-      {isFromMyPage && (
-        <div className="absolute top-5 left-5 z-50">
-          <button
-            onClick={() => router.back()}
-            aria-label="뒤로가기"
-            type="button"
-          >
-            <BackIcon className="h-full w-full" />
-          </button>
-        </div>
-      )}
+    <motion.div
+      className="bg-gray-black relative grid min-h-screen w-full grid-rows-[auto_1fr_auto] overflow-hidden"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {isFromMyPage && <Header className="bg-transparent" />}
 
       <div
         className={`flex justify-center ${
-          isShortScreen ? "mt-8" : isFromMyPage ? "mt-32" : "mt-20"
+          isShortScreen ? "mt-15" : isFromMyPage ? "mt-32" : "mt-20"
         }`}
       >
         <div className="body-3-semibold rounded-full bg-gray-900 px-5 py-2 text-center text-gray-200">
@@ -85,7 +72,10 @@ export default function TraitResult() {
         </div>
       </div>
       <div className="flex items-start justify-center">
-        <div className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg">
+        <motion.div
+          className="relative mt-8 h-[460px] w-[320px] overflow-hidden rounded-[20px] shadow-lg"
+          // variants={cardVariants}
+        >
           <Image
             src={PATH_IMAGES.TRAIT.BACKGROUND}
             alt="배경 이미지"
@@ -132,7 +122,7 @@ export default function TraitResult() {
             </div>
             <LogoWhiteIcon width={28} height={28} className="mt-auto mb-7" />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {!isFromMyPage && (
@@ -140,6 +130,6 @@ export default function TraitResult() {
           <Button onClick={handleClick}>무비부키 시작하기</Button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

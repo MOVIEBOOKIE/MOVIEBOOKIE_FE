@@ -1,6 +1,7 @@
 import { CATEGORY_TYPE_TO_LABEL } from "@/constants/categories";
 import { notFound } from "next/navigation";
 import CategoryPageClient from "./client";
+import { Header } from "@/components";
 
 type Props = {
   params: Promise<{ category: string }>;
@@ -14,5 +15,12 @@ export default async function CategoryPage({ params }: Props) {
 
   if (!label) return notFound();
 
-  return <CategoryPageClient label={label} />;
+  return (
+    <div className="bg-gray-black min-h-screen">
+      <Header title={label} showBackButton={true} showCloseButton={false} />
+      <div className="flex min-h-screen flex-col justify-between px-4 pt-12.5">
+        <CategoryPageClient label={label} />
+      </div>
+    </div>
+  );
 }

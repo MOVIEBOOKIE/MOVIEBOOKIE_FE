@@ -6,6 +6,7 @@ import { Button, FixedLayout } from "@/components";
 import { badReasons, goodReasons, PATHS } from "@/constants";
 import { useSubmitFeedback } from "app/_hooks/auth/use-submit-feedback";
 import { useToastStore } from "app/_stores/use-toast-store";
+import { devError } from "@/utils/dev-logger";
 
 export default function FeedbackPage() {
   const searchParams = useSearchParams();
@@ -42,7 +43,7 @@ export default function FeedbackPage() {
           router.push(PATHS.MYPAGE);
         },
         onError: (error) => {
-          console.error("제출 실패", error);
+          devError("제출 실패", error);
           showToast("피드백 제출에 실패했습니다. 다시 시도해주세요.", "alert");
         },
       },
@@ -60,7 +61,7 @@ export default function FeedbackPage() {
         showBottomButton={false}
         state="default"
       >
-        <div className="text-white">
+        <div className="mt-2 text-white">
           {feedbackType && step === 1 && (
             <div className="flex flex-col">
               <div className="mb-3">

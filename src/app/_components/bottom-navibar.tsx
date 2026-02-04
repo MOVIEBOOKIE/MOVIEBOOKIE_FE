@@ -6,6 +6,7 @@ import LightEffect from "./light-effect";
 import { useNotificationStore } from "app/_stores/use-noti";
 import { useSmartNotiPolling } from "app/_hooks/use-smart-noti-polling";
 import { useLoading } from "app/_context/loading-context";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
@@ -18,7 +19,10 @@ export default function BottomNavigation() {
     return pathname === tabPath || pathname.startsWith(`${tabPath}/`);
   }
   const handleTabClick = (tabPath: string) => {
-    if (pathname === tabPath) return;
+    if (pathname === tabPath) {
+      setLoading(true);
+      return;
+    }
     setLoading(true);
     router.push(tabPath);
   };
@@ -39,20 +43,50 @@ export default function BottomNavigation() {
             onClick={() => handleTabClick(tab.path)}
             className="relative flex w-20 flex-col items-center gap-2"
           >
-            {active && <LightEffect />}
-            <div className="relative flex h-6 w-6 items-center justify-center">
+            <AnimatePresence initial={false} mode="wait">
+              {active && (
+                <motion.div
+                  className="pointer-events-none absolute inset-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                >
+                  <LightEffect />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <motion.div
+              className="relative flex h-6 w-6 items-center justify-center"
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 30,
+                mass: 0.2,
+              }}
+              style={{ willChange: "transform, opacity" }}
+            >
               <IconComponent
                 className={`h-full w-full ${active ? "text-red-main" : "text-gray-800"}`}
               />
-              {tab.id === "notifications" && hasUnread && (
-                <span className="bg-red-main border-gray-black absolute -top-1 -right-1 h-2 w-2 rounded-full border" />
-              )}
-            </div>
+              <AnimatePresence>
+                {tab.id === "notifications" && hasUnread && (
+                  <motion.span
+                    className="bg-red-main border-gray-black absolute -top-1 -right-1 h-2 w-2 rounded-full border"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    style={{ willChange: "transform, opacity" }}
+                  />
+                )}
+              </AnimatePresence>
+            </motion.div>
 
             <p
-              className={`caption-3-medium ${active ? "text-red-main" : "text-gray-800"}`}
+              className={`caption-3-medium ${active ? "text-red-main" : "text-gray-800"} transition-colors`}
             >
-              {tab.label}
+              {tab.label}{" "}
             </p>
           </button>
         );

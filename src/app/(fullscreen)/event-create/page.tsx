@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { MAX_PARTICIPANTS } from "@/constants/event-create";
 import { useToastStore } from "app/_stores/use-toast-store";
-import { apiGet } from "app/_apis/methods";
 import { checkRecruitable } from "app/_apis/events/participation";
 
 const steps = [

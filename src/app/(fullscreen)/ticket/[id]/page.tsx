@@ -5,7 +5,7 @@ import TicketPage from "../components/client";
 
 export default function Ticket() {
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-full w-full">
       <Image
         src={PATH_IMAGES.CUSTOM_BG}
         alt="배경"

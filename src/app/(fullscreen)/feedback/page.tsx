@@ -39,7 +39,7 @@ export default function FeedbackStartPage() {
           <button
             type="button"
             onClick={() => handleFeedback("bad")}
-            className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100"
+            className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100 active:bg-gray-900"
           >
             <div className="mb-2 text-3xl">
               <ThinkingFaceIcon />
@@ -49,7 +49,7 @@ export default function FeedbackStartPage() {
           <button
             type="button"
             onClick={() => handleFeedback("good")}
-            className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100"
+            className="flex flex-col items-center justify-center rounded-xl border border-gray-900 bg-transparent px-14 py-8 text-gray-100 active:bg-gray-900"
           >
             <div className="mb-2 text-3xl">
               <KissingFaceIcon />

@@ -14,7 +14,6 @@ import { useUserStore } from "app/_stores/use-user-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import EnableNotiButton from "@/components/enable-fcm-button";
 
 interface MyPageStatProps {
   label: string;
@@ -36,11 +35,11 @@ export default function MyPage() {
   const { handleLogout } = useLogoutHandler(() => setShowLogoutModal(false));
 
   return (
-    <div className="h-[calc(100vh-102px)] overflow-y-scroll px-5 text-white">
+    <div className="h-[100dvh] overflow-y-scroll px-5 pb-[calc(102px+env(safe-area-inset-bottom)+12px)] text-white">
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
       <div
         className="mb-3 flex cursor-pointer items-center justify-between gap-4"
-        onClick={() => router.push(`${PATHS.TRAIT_RESULT}?from=mypage`)}
+        onClick={() => router.push(PATHS.TRAIT_RESULT)}
         role="button"
       >
         <div className="flex items-center gap-4">
@@ -61,14 +60,16 @@ export default function MyPage() {
           <div>
             <p className="text-lg font-semibold">{user?.nickname}</p>
             <p className="body-3-medium text-gray-500">{user?.userTypeTitle}</p>
-            <p className="caption-1-medium pt-1 text-gray-500">{user?.email}</p>
+            <p className="caption-1-medium pt-1 text-gray-500">
+              {user?.certificationEmail}
+            </p>
           </div>
         </div>
 
         <ArrowRightIcon size={16} className="mr-2 text-gray-400" />
       </div>
 
-      <div className="flex justify-center">
+      <div className="-mx-5 flex w-[calc(100%+2.5rem)] justify-center">
         <div className="mb-3 flex h-21.75 w-full items-center justify-around text-center">
           <button
             type="button"
@@ -165,9 +166,6 @@ export default function MyPage() {
         </li>
       </ul>
 
-      <div className="w-full">
-        <EnableNotiButton />
-      </div>
       {showLogoutModal && (
         <Modal
           iconType="alert"

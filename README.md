@@ -4,7 +4,7 @@
 
 <br />
 
-**🍿 모집부터 상영까지, 영화관 대관 도움 서비스, MOVIEBOOKIE**
+**모집부터 상영까지, 영화관 대관 도움 서비스, MOVIEBOOKIE**
 
 <br />
 
@@ -13,22 +13,15 @@
 
 <aside>
 
-> Where Every gets the Spotlight
+> 🌟 _Where Everyone Gets the Spotlight_
 
-누구나 손쉽게 자신만의 순간을 스크린에 담을 수 있는 세상, 그 중심에 무비부키
+<a href="https://www.instagram.com/moviebookie_/"><img src="https://img.shields.io/badge/Instagram-0E0E0E?style=flat-square&logo=Instagram&logoColor=white"/></a>
+<a href="https://www.instagram.com/"><img src="https://img.shields.io/badge/MOVIEBOOKIE-FF1F44?style=flat-square&logo=Mega&logoColor=white"/></a>
 
-###  [MOVIEBOOKIE 바로가기](https://www.movie-bookie.shop/)
-
-![alt text](/public/images/readme.png)
-
-![Slide 16_9 - 1081](https://github.com/user-attachments/assets/9f7dcddf-eb28-44b3-b77e-8137b4c9d91e)
-
-## 🧑🏻‍💻 프론트엔드
-
-### Tech Stack
-
-- `Next.js`
-- `Typescript`, `Tanstack-query`
-- `Tailwind CSS 4`
-- `Framer Motion `, `Zustand`, `React Hook Form`,
-- `Next PWA`, `pnpm`
+<img src="https://i.imgur.com/BpelmSa.png" alt="2" style="border: none;"/>
+<img src="https://i.imgur.com/QSKdVDf.png" alt="2" style="border: none;"/>
+<img src="https://i.imgur.com/NTF4Hr1.png" alt="3" style="border: none;"/>
+<img src="https://i.imgur.com/Xuu7lUE.png" alt="4" style="border: none;"/>
+<img src="https://i.imgur.com/g7Vpynv.png" alt="5" style="border: none;"/>
+<img src="https://i.imgur.com/3ycYsE7.png" alt="6" style="border: none;"/>
+<img src="https://i.imgur.com/RnX2nA6.png" alt="6" style="border: none;"/>

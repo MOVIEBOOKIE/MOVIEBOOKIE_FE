@@ -9,13 +9,17 @@ export default function EventBannerSection() {
   const router = useRouter();
 
   return (
-    <section className="relative mx-5 overflow-hidden rounded-3xl">
+    <section
+      className="relative mx-5 overflow-hidden rounded-3xl"
+      style={{ height: 254 }}
+    >
       <Image
         src="/images/event-banner.webp"
         alt="이벤트 배너"
         fill
         priority
         className="object-cover"
+        sizes="(max-width: 768px) 100vw, 600px"
       />
       <div className="relative z-10 flex flex-col items-center px-5 py-8 text-center text-white">
         <PopcornIcon className="mb-3 h-11 w-11 rotate-[-15.59deg]" />

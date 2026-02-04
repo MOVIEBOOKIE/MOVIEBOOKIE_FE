@@ -37,14 +37,14 @@ export default function Header({
   return (
     <header
       className={cn(
-        "bg-gray-black fixed top-0 z-50 flex h-12.5 w-full max-w-125 items-center justify-center focus-within:border-white",
-
+        "bg-gray-black safe-pt fixed top-0 z-50 flex w-full max-w-125 items-center justify-center px-3",
+        "min-h-[56px]",
         className,
       )}
     >
       {showBackButton && (
         <button
-          className="absolute top-2.5 left-2.5"
+          className={cn("absolute left-2.5", "safe-top-offset-icon", "h-8 w-8")}
           onClick={handleBack}
           aria-label="뒤로가기"
           type="button"
@@ -52,12 +52,17 @@ export default function Header({
           <BackIcon className="h-full w-full" />
         </button>
       )}
-      {title && <h1 className="body-2-semibold pt-3 text-white">{title}</h1>}
+
+      {title && (
+        <h1 className="body-2-semibold safe-title-offset text-white">
+          {title}
+        </h1>
+      )}
 
       {showCloseButton && (
         <button
           type="button"
-          className="absolute top-2.5 right-2.5"
+          className={cn("absolute right-4", "safe-top-offset-icon", "h-8 w-8")}
           onClick={handleClose}
           aria-label="닫기"
         >

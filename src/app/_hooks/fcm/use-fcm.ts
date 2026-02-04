@@ -13,6 +13,11 @@ export const useFCM = () => {
   const initializationRef = useRef<Promise<void> | null>(null);
 
   const requestPermissionAndToken = useCallback(async () => {
+    if (typeof Notification === "undefined") {
+      devError("🚫 Notification API를 사용할 수 없는 환경입니다.");
+      return;
+    }
+
     // 이미 등록 중이거나 등록된 토큰이 있으면 중복 실행 방지
     if (isTokenRegistering || registeredToken) {
       devLog("🔄 FCM 토큰 등록이 이미 진행 중이거나 완료됨");
@@ -24,7 +29,6 @@ export const useFCM = () => {
       devLog("⏳ 기존 FCM 초기화 대기 중...");
       return initializationRef.current;
     }
-
     initializationRef.current = performTokenRegistration();
 
     try {
@@ -59,13 +63,13 @@ export const useFCM = () => {
       devLog("🔐 권한 상태:", permission);
 
       if (permission !== "granted") {
-        devError("❌ 알림 권한이 허용되지 않았습니다.");
+        devLog("❌ 알림 권한이 허용되지 않았습니다.");
         return;
       }
 
       const messaging = await getFirebaseMessaging();
       if (!messaging) {
-        devError("❌ Firebase Messaging 초기화 실패");
+        devLog("❌ Firebase Messaging 초기화 실패");
         return;
       }
 
@@ -93,7 +97,7 @@ export const useFCM = () => {
       }
 
       if (!token) {
-        devError("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
+        devLog("❌ FCM 토큰 발급 실패 (최대 재시도 초과)");
         return;
       }
 
@@ -107,7 +111,7 @@ export const useFCM = () => {
       registeredToken = token;
       devLog("🟢 등록된 토큰:", token);
     } catch (err) {
-      devError("❌ 전체 FCM 초기화 실패:", err);
+      devLog("❌ 전체 FCM 초기화 실패:", err);
     } finally {
       isTokenRegistering = false;
     }
@@ -115,6 +119,11 @@ export const useFCM = () => {
 
   const onForegroundMessage = useCallback(
     (callback: (payload: any) => void) => {
+      if (typeof Notification === "undefined") {
+        devLog("⚠️ 알림을 지원하지 않는 환경입니다.");
+        return;
+      }
+
       let unsubscribe: (() => void) | undefined;
       getFirebaseMessaging().then((messaging) => {
         if (!messaging) {

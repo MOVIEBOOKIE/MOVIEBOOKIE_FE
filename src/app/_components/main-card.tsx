@@ -24,9 +24,14 @@ function Card({
     router.push(`/detail/${id}${queryParams ? `?${queryParams}` : ""}`);
   };
 
+  const formatDDay = (n?: string | null) => {
+    if (n === "D-0") return "D-DAY";
+    else return n;
+  };
+
   return (
     <div className="relative flex h-30 w-full gap-3" onClick={handleClick}>
-      <div className="relative h-30 w-30 overflow-hidden rounded-[8px]">
+      <div className="relative h-30 w-30 overflow-hidden rounded-lg">
         <Image
           src={imageUrl || "/images/default-image.png"}
           alt={title}
@@ -45,7 +50,7 @@ function Card({
             )}
             {ddayBadge && (
               <div className="caption-1-medium bg-red-main rounded-md px-1.5 py-1 text-white">
-                {ddayBadge}
+                {formatDDay(ddayBadge)}
               </div>
             )}
           </div>
@@ -67,7 +72,7 @@ function Card({
         </div>
 
         {estimatedPrice && (
-          <p className="body-3-semibold gap-1">
+          <p className="body-3-semibold gap-1 text-gray-200">
             예상가격
             <span className="ml-0.75 text-gray-200">
               {Number(estimatedPrice).toLocaleString()}원

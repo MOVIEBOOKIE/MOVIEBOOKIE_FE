@@ -11,6 +11,8 @@ export const PATH_IMAGES = {
 
   FAVICON: "/images/favicon.png",
 
+  TYPE_TEST: "/images/type-test.webp",
+
   TRAIT: {
     MOVIE_DETAIL_COLLECTOR: "/images/trait/movie1.png",
     MOVIE_SHARED_EMOTER: "/images/trait/movie2.png",

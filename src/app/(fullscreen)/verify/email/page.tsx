@@ -2,19 +2,31 @@
 
 import { useState } from "react";
 import { ArrowDownIcon } from "@/icons/index";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FixedLayout, StepHeader } from "@/components";
 import { useSendEmail } from "app/_hooks/onboarding/use-send-code";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  dropdownVariants,
+  arrowVariants,
+  optionVariants,
+} from "../_components/motion-drop-down";
+import { useToastStore } from "app/_stores/use-toast-store";
+import { appendNextQuery, getSafeNextPath } from "@/utils/next-path";
 
 const EMAIL_DOMAINS = ["naver.com", "gmail.com"] as const;
 type EmailDomain = (typeof EMAIL_DOMAINS)[number];
 
 export default function EmailStep() {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
+  const nextPath = getSafeNextPath(nextParam);
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { showToast } = useToastStore();
 
   const fullEmail = `${email}@${emailDomain}`;
   const isValidEmail = /^[a-zA-Z0-9._%+-]+@(naver\.com|gmail\.com)$/.test(
@@ -23,12 +35,24 @@ export default function EmailStep() {
   const { mutate: sendEmailCode } = useSendEmail();
 
   const handleSendCode = () => {
+    if (!isValidEmail || submitting) return;
+    setSubmitting(true);
     sendEmailCode(fullEmail, {
       onSuccess: () => {
-        router.push(`/verify/verify-number?type=email&target=${fullEmail}`);
+        setTimeout(() => setSubmitting(false), 500);
+        const nextUrl = appendNextQuery(
+          `/verify/verify-number?type=email&target=${fullEmail}`,
+          nextPath,
+        );
+        if (nextPath) {
+          router.replace(nextUrl);
+        } else {
+          router.push(nextUrl);
+        }
       },
       onError: () => {
-        alert("이메일 인증번호 전송에 실패했어요. 다시 시도해 주세요.");
+        setSubmitting(false);
+        showToast("이메일 발송에 실패했어요. 다시 시도해 주세요", "alert");
       },
     });
   };
@@ -37,13 +61,13 @@ export default function EmailStep() {
       title="회원가입"
       isButtonDisabled={!isValidEmail}
       onButtonClick={handleSendCode}
+      isLoading={submitting}
     >
       <StepHeader
-        StepHeader="2/3"
+        StepHeader="2/2"
         title={
           <>
-            자주 사용하는 이메일을 <br />
-            입력해 주세요
+            자주 사용하는 이메일을 <br /> 입력해 주세요
           </>
         }
         description={
@@ -53,7 +77,6 @@ export default function EmailStep() {
           </>
         }
       />
-
       <div className="mt-13">
         <label className="body-2-medium text-gray-400">이메일</label>
         <div className="flex gap-6 pt-4.25">
@@ -65,7 +88,6 @@ export default function EmailStep() {
             autoComplete="off"
             className="w-43.25 border-b border-gray-700 bg-transparent pb-1.5 text-gray-100 placeholder-gray-600 focus:outline-none"
           />
-
           <div className="relative w-35">
             <button
               type="button"
@@ -75,40 +97,57 @@ export default function EmailStep() {
               aria-expanded={dropdownOpen}
             >
               @ {emailDomain}
-              <ArrowDownIcon
-                className={`h-1.7 text-gray-400 ${
-                  dropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {dropdownOpen && (
-              <ul
-                className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-md bg-gray-900"
-                role="listbox"
-                tabIndex={-1}
+              <motion.div
+                variants={arrowVariants}
+                animate={dropdownOpen ? "open" : "closed"}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
               >
-                {EMAIL_DOMAINS.map((domain) => {
-                  const selected = domain === emailDomain;
-                  return (
-                    <li key={domain}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={selected}
-                        onClick={() => {
-                          setEmailDomain(domain as EmailDomain);
-                          setDropdownOpen(false);
-                        }}
-                        className={`flex w-full items-center justify-between px-4 py-2 text-left whitespace-nowrap ${selected ? "bg-gray-800 text-white" : "text-gray-400"}`}
+                <ArrowDownIcon className="h-1.7 text-gray-400" />
+              </motion.div>
+            </button>
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.ul
+                  className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-md bg-gray-900"
+                  role="listbox"
+                  tabIndex={-1}
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  {EMAIL_DOMAINS.map((domain, index) => {
+                    const selected = domain === emailDomain;
+                    return (
+                      <motion.li
+                        key={domain}
+                        variants={optionVariants}
+                        initial="hidden"
+                        animate="visible"
+                        custom={index}
                       >
-                        <span>@ {domain}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+                        <button
+                          type="button"
+                          role="option"
+                          aria-selected={selected}
+                          onClick={() => {
+                            setEmailDomain(domain as EmailDomain);
+                            setDropdownOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between px-4 py-2 text-left whitespace-nowrap transition-colors duration-150 hover:bg-gray-800 ${
+                            selected
+                              ? "bg-gray-800 text-white"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          <span>@ {domain}</span>
+                        </button>
+                      </motion.li>
+                    );
+                  })}
+                </motion.ul>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
