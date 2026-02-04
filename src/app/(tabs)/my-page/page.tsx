@@ -39,7 +39,7 @@ export default function MyPage() {
       <h1 className="title-1-semibold pt-6 pb-7.5">마이페이지</h1>
       <div
         className="mb-3 flex cursor-pointer items-center justify-between gap-4"
-        onClick={() => router.push(`${PATHS.TRAIT_RESULT}?from=mypage`)}
+        onClick={() => router.push(PATHS.TRAIT_RESULT)}
         role="button"
       >
         <div className="flex items-center gap-4">
