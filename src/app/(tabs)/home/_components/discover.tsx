@@ -21,7 +21,7 @@ export default function Discover() {
     enabled: fetchedCategories.includes(selected),
   });
 
-  const events = data?.eventList ?? [];
+  const events = [];
   const hasData = events.length > 0;
 
   const loadingForGate = isLoading || isFetching;
@@ -65,14 +65,22 @@ export default function Discover() {
         empty={
           <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
             <EmptyIcon />
-            <p className="body-3-medium mt-3.5 mb-7 text-gray-800">
+            <p className="body-3-medium mt-3.5 mb-7.5 text-gray-800">
               아직 모집 이벤트가 없어요 <br />
               지금 바로 나만의 이벤트를 만들어보세요
             </p>
+            <Button
+              className="w-60.5 active:bg-gray-900"
+              onClick={() => {
+                router.push(`/event-create`);
+              }}
+            >
+              나만의 이벤트 만들러 가기
+            </Button>
           </div>
         }
       >
-        <div className="min-h-[calc(100dvh-102px)]">
+        <>
           {events.slice(0, 5).map((event) => (
             <div key={event.eventId}>
               <Card
@@ -103,7 +111,7 @@ export default function Discover() {
               더보기
             </Button>
           )}
-        </div>
+        </>
       </SkeletonGate>
 
       <div className="h-px shrink-0 snap-end" aria-hidden />
