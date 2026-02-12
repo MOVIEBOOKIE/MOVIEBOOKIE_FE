@@ -54,8 +54,8 @@ export default function Home() {
   }
 
   return (
-    <div ref={containerRef} className="h-[calc(100dvh-102px)] px-5">
-      <div className="flex justify-between pt-5.75">
+    <div ref={containerRef} className="h-[calc(100dvh-102px)]">
+      <div className="flex justify-between px-5 pt-5.75">
         <nav aria-label="홈 탭" className="flex gap-3">
           {HOME_TABS.map((tab) => {
             const isActive = tab.key === activeTab;
