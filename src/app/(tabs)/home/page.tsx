@@ -80,10 +80,13 @@ export default function Home() {
         </button>
       </div>
 
-      <div hidden={activeTab !== "discover"}>
+      <div className="h-[calc(100dvh-161px)]" hidden={activeTab !== "discover"}>
         <Discover />
       </div>
-      <div hidden={activeTab !== "recommend"}>
+      <div
+        className="h-[calc(100dvh-161px)]"
+        hidden={activeTab !== "recommend"}
+      >
         <Recommend />
       </div>
       <EventCreateButton />
