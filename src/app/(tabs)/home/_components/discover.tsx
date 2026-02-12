@@ -31,7 +31,7 @@ export default function Discover() {
   };
 
   return (
-    <section className="flex flex-col overflow-x-hidden pb-[calc(102px+env(safe-area-inset-bottom)+8px)]">
+    <section className="flex flex-col overflow-x-hidden pb-[calc(env(safe-area-inset-bottom)+8px)]">
       <div className="scrollbar-hide my-5 -mr-4 flex overflow-x-auto whitespace-nowrap">
         {CATEGORY_LABELS.map((label) => (
           <div key={label} className="flex items-center">
