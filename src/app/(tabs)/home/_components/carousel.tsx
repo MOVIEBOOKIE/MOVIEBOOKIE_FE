@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type SwiperCore from "swiper";
 import "swiper/css";
@@ -20,17 +20,18 @@ export default function Carousel({ events }: CarouselProps) {
   const router = useRouter();
 
   return (
-    <div className={`relative transition-opacity duration-300`}>
+    <div className={`relative -mr-4.5 transition-opacity duration-300`}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={18}
         slidesPerView="auto"
-        loop={events.length > 1}
+        loop={events.length > 2}
+        slidesOffsetAfter={events.length <= 2 ? 20 : 0}
       >
         {events.map((event) => (
           <SwiperSlide
             key={event.eventId}
-            style={{ width: 308 }}
+            style={{ width: 308, height: 459 }}
             className="flex transform-gpu flex-col items-center justify-center overflow-hidden rounded-xl transition-all duration-300 ease-in-out will-change-transform"
             onClick={() => router.push(PATHS.EVENT_DETAIL(event.eventId))}
           >
