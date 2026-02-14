@@ -54,8 +54,8 @@ export default function Home() {
   }
 
   return (
-    <div ref={containerRef} className="h-[calc(100dvh-102px)] px-5">
-      <div className="flex justify-between pt-9">
+    <div ref={containerRef} className="h-[calc(100dvh-102px)]">
+      <div className="flex justify-between px-5 pt-5.75">
         <nav aria-label="홈 탭" className="flex gap-3">
           {HOME_TABS.map((tab) => {
             const isActive = tab.key === activeTab;
@@ -80,10 +80,13 @@ export default function Home() {
         </button>
       </div>
 
-      <div hidden={activeTab !== "discover"}>
+      <div className="h-[calc(100dvh-161px)]" hidden={activeTab !== "discover"}>
         <Discover />
       </div>
-      <div hidden={activeTab !== "recommend"}>
+      <div
+        className="h-[calc(100dvh-161px)]"
+        hidden={activeTab !== "recommend"}
+      >
         <Recommend />
       </div>
       <EventCreateButton />

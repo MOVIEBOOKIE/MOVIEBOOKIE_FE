@@ -29,7 +29,7 @@ export default function Recommend() {
       {emptyType ? (
         <EmptyCarousel type={emptyType} />
       ) : (
-        <>
+        <div className="px-5">
           <button
             type="button"
             aria-label="유형 테스트 버튼"
@@ -47,7 +47,7 @@ export default function Recommend() {
             <Image src={PATH_IMAGES.TYPE_TEST} width={105} height={77} alt="" />
           </button>
           <Carousel events={events ?? []} />
-        </>
+        </div>
       )}
     </section>
   );
