@@ -21,6 +21,14 @@ button {
   cursor: pointer;
 }
 
+* {
+  -ms-overflow-style: none; /* IE/Edge 레거시 */
+  scrollbar-width: none; /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 :root {
   --app-max: 500px;
   --safe-top: env(safe-area-inset-top);
