@@ -31,7 +31,7 @@ export default function Discover() {
   };
 
   return (
-    <section className="flex flex-col overflow-x-hidden pb-[calc(102px+env(safe-area-inset-bottom)+8px)]">
+    <section className="flex h-full flex-col overflow-x-hidden px-5 pb-[calc(env(safe-area-inset-bottom)+8px)]">
       <div className="scrollbar-hide my-5 -mr-4 flex overflow-x-auto whitespace-nowrap">
         {CATEGORY_LABELS.map((label) => (
           <div key={label} className="flex items-center">
@@ -63,16 +63,22 @@ export default function Discover() {
           </div>
         }
         empty={
-          <div className="mb-80 flex flex-col items-center justify-center pt-30 text-center text-gray-500">
+          <div className="flex flex-1 flex-col items-center justify-center text-center text-gray-500">
             <EmptyIcon />
-            <p className="body-3-medium mt-3.5 mb-7 text-gray-800">
+            <p className="body-3-medium mt-3.5 mb-7.5 text-gray-800">
               아직 모집 이벤트가 없어요 <br />
               지금 바로 나만의 이벤트를 만들어보세요
             </p>
+            <Button
+              className="w-60.5 active:bg-gray-900"
+              onClick={() => router.push(`/event-create`)}
+            >
+              나만의 이벤트 만들러 가기
+            </Button>
           </div>
         }
       >
-        <div className="min-h-[calc(100dvh-102px)]">
+        <>
           {events.slice(0, 5).map((event) => (
             <div key={event.eventId}>
               <Card
@@ -103,7 +109,7 @@ export default function Discover() {
               더보기
             </Button>
           )}
-        </div>
+        </>
       </SkeletonGate>
 
       <div className="h-px shrink-0 snap-end" aria-hidden />
