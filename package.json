@@ -45,6 +45,7 @@
     "@eslint/eslintrc": "^3",
     "@next/eslint-plugin-next": "^15.3.0",
     "@playwright/test": "^1.55.0",
+    "@svgr/cli": "^8.1.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.7.0",
