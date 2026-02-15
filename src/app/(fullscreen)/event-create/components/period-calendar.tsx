@@ -13,6 +13,7 @@ import {
 } from "@/utils/deadline-utils";
 
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
+//TODO: 테스트를 위한 기존코드 주석 처리
 
 interface DeadlineCalendarProps {
   eventDate: string; // YYYY-MM-DD
@@ -25,8 +26,10 @@ const DeadlineCalendar = ({
   selectedDeadline,
   onSelectDeadline,
 }: DeadlineCalendarProps) => {
-  const today = useMemo(() => dayjs().startOf("day"), []);
-  const latestDeadline = getLatestDeadline(eventDate);
+  const today = dayjs().startOf("day");
+  const event = dayjs(eventDate);
+  // FIX: const latestDeadline = event.subtract(2, "week");
+  const latestDeadline = event;
 
   const [currentMonth, setCurrentMonth] = useState(() =>
     selectedDeadline ? dayjs(selectedDeadline).startOf("month") : dayjs(),
