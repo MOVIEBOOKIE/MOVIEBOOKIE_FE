@@ -113,7 +113,7 @@ export default function DetailContent({ ...props }) {
           <p className="body-1-semibold mt-3 text-gray-200">
             {props.eventTitle || "이벤트 제목"}
           </p>
-          <p className="body-3-regular mt-2 text-gray-400">
+          <p className="body-3-regular mt-2 whitespace-pre-wrap text-gray-400">
             {props.description || "이벤트 설명"}
           </p>
 
