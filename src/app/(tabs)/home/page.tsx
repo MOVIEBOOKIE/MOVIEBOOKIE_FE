@@ -26,7 +26,6 @@ const HOME_TABS: Array<{ key: HomeTab; label: string }> = [
 
 export default function Home() {
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
   const user = useUserStore((state) => state.user);
 
   const hasHydrated = useHomeUIStore((s) => s.hasHydrated);
@@ -56,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <div ref={containerRef} className="h-[calc(100dvh-102px)]">
+    <div className="h-[calc(100dvh-102px)]">
       <div className="flex justify-between px-5 pt-5.75">
         <nav aria-label="홈 탭" className="flex gap-3">
           {HOME_TABS.map((tab) => {
