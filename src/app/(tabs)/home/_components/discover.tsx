@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Card } from "@/components";
 import CardSkeleton from "@/components/card-skeleton";
 import SkeletonGate from "@/components/skeleton-gate";
