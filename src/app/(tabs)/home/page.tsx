@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
 import { PATHS } from "@/constants";
-import { useUserStore } from "app/_stores/use-user-store";
-import { useMyPage } from "app/_hooks/auth/use-mypage";
-import { useFCMHandler } from "app/_hooks/fcm/use-fcm-handler";
-import { ev } from "@/lib/gtm";
 import { SearchIcon } from "@/icons/index";
 import { EventCreateButton } from "@/components";
 import { HomeTab, useHomeUIStore } from "app/_stores/use-home-store";
 
 import Discover from "./_components/discover";
+import { useHomeSideEffects } from "app/(tabs)/home/_hooks/use-side-effects";
 
 const Recommend = dynamic(() => import("./_components/recommend"), {
   loading: () => null,
@@ -26,29 +22,13 @@ const HOME_TABS: Array<{ key: HomeTab; label: string }> = [
 
 export default function Home() {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
+  useHomeSideEffects();
 
   const hasHydrated = useHomeUIStore((s) => s.hasHydrated);
   const activeTab = useHomeUIStore((s) => s.activeTab);
   const setActiveTab = useHomeUIStore((s) => s.setActiveTab);
 
   const currentTab = hasHydrated ? activeTab : "discover";
-  const { requestOnceIfNeeded } = useFCMHandler();
-  useMyPage();
-
-  useEffect(() => {
-    if (user?.email) {
-      requestOnceIfNeeded();
-    }
-  }, [user?.email, requestOnceIfNeeded]);
-
-  const fired = useRef(false);
-
-  useEffect(() => {
-    if (fired.current) return;
-    fired.current = true;
-    ev.homeView();
-  }, []);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
