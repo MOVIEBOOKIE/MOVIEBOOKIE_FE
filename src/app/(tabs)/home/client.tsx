@@ -6,10 +6,11 @@ import dynamic from "next/dynamic";
 import { PATHS } from "@/constants";
 import { SearchIcon } from "@/icons/index";
 import { EventCreateButton } from "@/components";
-import { HomeTab, useHomeUIStore } from "app/_stores/use-home-store";
+import { useHomeUIStore } from "app/_stores/use-home-store";
+import type { HomeTab } from "app/_stores/use-home-store";
 
 import Discover from "./_components/discover";
-import { useHomeSideEffects } from "app/(tabs)/home/_hooks/use-side-effects";
+import { useHomeSideEffects } from "./_hooks/use-side-effects";
 
 const Recommend = dynamic(() => import("./_components/recommend"), {
   loading: () => null,
