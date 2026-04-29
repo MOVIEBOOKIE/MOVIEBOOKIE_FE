@@ -1,6 +1,5 @@
+import BottomNavigation from "@/components/bottom-navibar";
 import { ReactNode } from "react";
-import "@/styles/globals.css";
-import { BottomNavigation } from "@/components";
 
 export default function TabsLayout({ children }: { children: ReactNode }) {
   return (
