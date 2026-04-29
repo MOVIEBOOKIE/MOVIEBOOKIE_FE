@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import Toast from "../_components/noti-toast";
 import InAppRedirect from "@/components/inapp-redirect";
-import ServiceWorkerDebug from "@/components/ServiceWorkerDebug";
 import ToastRenderer from "@/components/toast-renderer";
 import GACommon from "../_components/ga/ga-common";
 
@@ -23,9 +22,6 @@ export default function Provider({ children }: ProviderProps) {
 
         <ReactQueryProvider>
           <GACommon />
-          {process.env.NODE_ENV === "development" ? (
-            <ServiceWorkerDebug />
-          ) : null}
 
           <LoadingProvider>{children}</LoadingProvider>
           <Toast />
