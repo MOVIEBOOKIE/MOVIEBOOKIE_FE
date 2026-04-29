@@ -26,10 +26,9 @@ const DeadlineCalendar = ({
   selectedDeadline,
   onSelectDeadline,
 }: DeadlineCalendarProps) => {
-  const today = dayjs().startOf("day");
-  const event = dayjs(eventDate);
-  // FIX: const latestDeadline = event.subtract(2, "week");
-  const latestDeadline = event;
+  const today = useMemo(() => dayjs().startOf("day"), []);
+  const event = useMemo(() => dayjs(eventDate), [eventDate]);
+  const latestDeadline = event.subtract(2, "week");
 
   const [currentMonth, setCurrentMonth] = useState(() =>
     selectedDeadline ? dayjs(selectedDeadline).startOf("month") : dayjs(),
@@ -79,7 +78,7 @@ const DeadlineCalendar = ({
   }, [selectedDeadline, currentMonth, today]);
 
   return (
-    <div className="relative mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+    <div className="relative mx-auto w-83.75 rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
       {showToast && (
         <div className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2">
           <Toast iconType="alert">
