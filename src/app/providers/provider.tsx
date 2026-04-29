@@ -15,18 +15,16 @@ interface ProviderProps {
 
 export default function Provider({ children }: ProviderProps) {
   return (
-    <>
-      <ToastProvider>
-        <InAppRedirect />
-        <ToastRenderer />
+    <ToastProvider>
+      <InAppRedirect />
+      <ToastRenderer />
 
-        <ReactQueryProvider>
-          <GACommon />
+      <ReactQueryProvider>
+        <GACommon />
 
-          <LoadingProvider>{children}</LoadingProvider>
-          <Toast />
-        </ReactQueryProvider>
-      </ToastProvider>
-    </>
+        <LoadingProvider>{children}</LoadingProvider>
+        <Toast />
+      </ReactQueryProvider>
+    </ToastProvider>
   );
 }
