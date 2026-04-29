@@ -1,16 +1,9 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 import { pretendard } from "../app/fonts/pretendard";
-import { ReactQueryProvider } from "./providers/react-query-provider";
-import ToastRenderer from "./_components/toast-renderer";
 import Script from "next/script";
-import { ToastProvider } from "./_context/toast-context";
-import Toast from "./_components/noti-toast";
-import ServiceWorkerDebug from "./_components/ServiceWorkerDebug";
-import { LoadingProvider } from "./_context/loading-context";
-import InAppRedirect from "./_components/inapp-redirect";
-import GACommon from "./_components/ga/ga-common";
 import type { Metadata } from "next";
+import Provider from "app/providers/provider";
 
 export const metadata: Metadata = {
   title: "무비부키",
@@ -63,20 +56,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             />
           </noscript>
         ) : null}
-        <ToastProvider>
-          <Script
-            src="https://developers.kakao.com/sdk/js/kakao.js"
-            strategy="beforeInteractive"
-          />
-          <InAppRedirect />
-          <ToastRenderer />
-          <ReactQueryProvider>
-            <GACommon />
-            <ServiceWorkerDebug />
-            <LoadingProvider> {children}</LoadingProvider>
-            <Toast />
-          </ReactQueryProvider>
-        </ToastProvider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
