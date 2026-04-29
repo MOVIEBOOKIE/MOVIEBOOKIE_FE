@@ -14,17 +14,16 @@ export default function Discover() {
   const router = useRouter();
 
   const selected = useHomeUIStore((s) => s.selectedCategory);
-  const fetchedCategories = useHomeUIStore((s) => s.fetchedCategories);
   const setSelected = useHomeUIStore((s) => s.setSelectedCategory);
 
-  const { data, isLoading, isFetching } = useCategoryEvents(selected, {
-    enabled: fetchedCategories.includes(selected),
+  const { data, isLoading } = useCategoryEvents(selected, {
+    enabled: Boolean(selected),
   });
 
   const events = data?.eventList ?? [];
   const hasData = events.length > 0;
 
-  const loadingForGate = isLoading || isFetching;
+  const loadingForGate = isLoading && !data;
 
   const handleCategoryClick = (label: (typeof CATEGORY_LABELS)[number]) => {
     setSelected(label);

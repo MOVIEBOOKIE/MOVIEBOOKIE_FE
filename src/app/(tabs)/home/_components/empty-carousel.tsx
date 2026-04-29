@@ -55,6 +55,8 @@ export default function EmptyCarousel({ type }: EmptyCarouselProps) {
             src="/images/empty-home.png"
             alt=""
             fill
+            fetchPriority="high"
+            loading="eager"
             className="rounded-xl object-cover"
           />
         )}
