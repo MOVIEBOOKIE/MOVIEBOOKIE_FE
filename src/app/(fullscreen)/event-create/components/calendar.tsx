@@ -10,16 +10,15 @@ interface CalendarProps {
   selectedDate: string | null;
   onSelectDate: (date: string) => void;
 }
-//TODO: 테스트를 위한 기존코드 주석 처리
 
 const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   const today = dayjs().startOf("day");
-  // FIX: const fourWeeksLater = today.add(4, "week");
+  const fourWeeksLater = today.add(4, "week");
   const [showToast, setShowToast] = useState(false);
 
-  const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
-  // FIX: const [currentMonth, setCurrentMonth] = useState(
-  // FIX:   dayjs().add(4, "week").startOf("month"), );
+  const [currentMonth, setCurrentMonth] = useState(
+    dayjs().add(4, "week").startOf("month"),
+  );
 
   const startDay = currentMonth.startOf("month").day();
   const daysInMonth = currentMonth.daysInMonth();
@@ -28,8 +27,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   );
 
   const handleSelect = (date: dayjs.Dayjs) => {
-    if (date.isAfter(today.subtract(1, "day"))) {
-      //FIX:  if (date.isAfter(fourWeeksLater.subtract(1, "day"))) {
+    if (date.isAfter(fourWeeksLater.subtract(1, "day"))) {
       onSelectDate(date.format("YYYY-MM-DD"));
     } else {
       setShowToast(true);
@@ -55,7 +53,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
   const isPrevDisabled = currentMonth.isSame(today, "month");
 
   return (
-    <div className="relative mx-auto w-[335px] rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
+    <div className="relative mx-auto w-83.75 rounded-[10px] bg-gray-950 px-7.5 pt-5 pb-8 text-white">
       {showToast && (
         <div className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2">
           <Toast iconType="alert">오늘 이후 날짜만 선택 가능해요</Toast>
@@ -98,8 +96,7 @@ const Calendar = ({ selectedDate, onSelectDate }: CalendarProps) => {
 
         {dates.map((date) => {
           const isToday = date.isSame(today, "day");
-          // FIX: const isSelectable = date.isAfter(fourWeeksLater.subtract(1, "day"));
-          const isSelectable = date.isAfter(today.subtract(1, "day"));
+          const isSelectable = date.isAfter(fourWeeksLater.subtract(1, "day"));
           const isSelected = selectedDate === date.format("YYYY-MM-DD");
 
           return (
