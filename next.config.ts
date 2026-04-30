@@ -9,6 +9,7 @@ const withPWA = require("next-pwa")({
 });
 
 const withSvgr = require("next-svgr");
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const STAGE =
   process.env.NEXT_PUBLIC_STAGE ??
@@ -41,6 +42,16 @@ const nextConfig = {
         pathname: "/**",
       },
       { protocol: "https", hostname: "maps.googleapis.com", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "moviebookie-bucket.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {
@@ -63,4 +74,10 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(withSvgr(nextConfig));
+module.exports = withSentryConfig(withPWA(withSvgr(nextConfig)), {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: !process.env.CI,
+  disableLogger: true,
+});

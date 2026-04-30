@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import { FixedLayout } from "./_components";
 import { ErrorIcon } from "../icons";
@@ -11,6 +12,8 @@ export default function ErrorPage({ error }: { error: Error }) {
   const consoleCount = useRef(0);
 
   useEffect(() => {
+    Sentry.captureException(error);
+
     if (consoleCount.current < 5) {
       devLog("🛑 error.tsx 진입");
       devLog("🧨 에러 메시지:", error?.message);
