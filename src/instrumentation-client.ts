@@ -3,7 +3,13 @@ import { clientSentryOptions } from "@/lib/sentry-options";
 
 Sentry.init({
   ...clientSentryOptions,
-  integrations: [Sentry.replayIntegration()],
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: true,
+      blockAllMedia: true,
+      beforeAddRecordingEvent: (event) => event,
+    }),
+  ],
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
