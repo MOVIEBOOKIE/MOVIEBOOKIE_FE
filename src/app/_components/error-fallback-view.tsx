@@ -1,6 +1,6 @@
 "use client";
 
-import { FixedLayout } from ".";
+import FixedLayout from "@/components/fixed-layout";
 import { ErrorIcon } from "../../icons";
 
 type ErrorFallbackViewProps = {
