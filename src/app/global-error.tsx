@@ -1,13 +1,15 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
-import NextError from "next/error";
 import { useEffect } from "react";
+import ErrorFallbackView from "./_components/error-fallback-view";
 
 export default function GlobalError({
   error,
+  reset,
 }: {
   error: Error & { digest?: string };
+  reset: () => void;
 }) {
   useEffect(() => {
     Sentry.captureException(error);
@@ -16,7 +18,7 @@ export default function GlobalError({
   return (
     <html lang="ko">
       <body>
-        <NextError statusCode={0} />
+        <ErrorFallbackView onRetry={reset} />
       </body>
     </html>
   );
