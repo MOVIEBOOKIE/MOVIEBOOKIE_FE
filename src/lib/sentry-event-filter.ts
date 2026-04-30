@@ -62,7 +62,9 @@ function readHttpStatusFromEvent(event: ErrorEvent): number | undefined {
     return responseStatus;
   }
 
-  const statusTag = toNumber(event.tags?.["http.status_code"]);
+  const statusTag =
+    toNumber(event.tags?.["http.status_code"]) ??
+    toNumber(event.tags?.status_code);
   if (statusTag) {
     return statusTag;
   }
