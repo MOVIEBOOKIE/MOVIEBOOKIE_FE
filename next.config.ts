@@ -41,6 +41,16 @@ const nextConfig = {
         pathname: "/**",
       },
       { protocol: "https", hostname: "maps.googleapis.com", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "moviebookie-bucket.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {

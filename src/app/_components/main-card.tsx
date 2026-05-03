@@ -36,7 +36,7 @@ function Card({
           src={imageUrl || "/images/default-image.png"}
           alt={title}
           fill
-          loading="lazy"
+          loading="eager"
           className="object-cover"
           sizes="120px"
         />
