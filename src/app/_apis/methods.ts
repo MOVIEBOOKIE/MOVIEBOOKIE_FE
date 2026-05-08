@@ -5,8 +5,12 @@ import { ApiResponse } from "./type";
 export const apiGet = async <T, P = Record<string, any>>(
   url: string,
   params?: P,
+  config?: AxiosRequestConfig,
 ): Promise<T> => {
-  const response = await axiosInstance.get<ApiResponse<T>>(url, { params });
+  const response = await axiosInstance.get<ApiResponse<T>>(url, {
+    ...config,
+    params,
+  });
   return response.data.result;
 };
 

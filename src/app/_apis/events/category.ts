@@ -1,4 +1,5 @@
 import { EventCard } from "app/_types/card";
+import { AxiosRequestConfig } from "axios";
 import { apiGet } from "../methods";
 import { devError } from "@/utils/dev-logger";
 
@@ -10,13 +11,18 @@ export const getEventsByCategory = async (
   category: string,
   page = 0,
   size = 10,
+  config?: AxiosRequestConfig,
 ): Promise<CategoryEventsResult> => {
   try {
-    const res = await apiGet<CategoryEventsResult>("/events/category", {
-      category,
-      page,
-      size,
-    });
+    const res = await apiGet<CategoryEventsResult>(
+      "/events/category",
+      {
+        category,
+        page,
+        size,
+      },
+      config,
+    );
 
     return {
       totalPages: res.totalPages ?? 0,
