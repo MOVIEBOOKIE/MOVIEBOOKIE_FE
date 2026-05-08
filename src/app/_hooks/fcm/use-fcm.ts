@@ -1,5 +1,5 @@
 import { getToken, onMessage } from "firebase/messaging";
-import { getFirebaseMessaging } from "app/_lib/firebase-config";
+import { getFirebaseMessaging } from "@/lib/firebase-config";
 import { registerFCMToken } from "app/_apis/register-fcm-token";
 import { useCallback, useRef } from "react";
 import { devError, devLog } from "@/utils/dev-logger";

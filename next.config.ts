@@ -9,6 +9,7 @@ const withPWA = require("next-pwa")({
 });
 
 const withSvgr = require("next-svgr");
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const STAGE =
   process.env.NEXT_PUBLIC_STAGE ??
@@ -73,4 +74,10 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(withSvgr(nextConfig));
+module.exports = withSentryConfig(withPWA(withSvgr(nextConfig)), {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: !process.env.CI,
+  disableLogger: true,
+});
