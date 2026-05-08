@@ -23,5 +23,5 @@ export interface CardProps {
   progressRate?: string;
   estimatedPrice?: number | string;
   query?: Record<string, string>;
-  imagePriority: boolean;
+  imagePriority?: boolean;
 }
