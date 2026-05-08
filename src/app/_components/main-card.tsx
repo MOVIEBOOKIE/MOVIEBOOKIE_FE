@@ -15,6 +15,7 @@ function Card({
   ddayBadge,
   statusBadge,
   estimatedPrice,
+  imagePriority,
   query = {},
 }: CardProps) {
   const router = useRouter();
@@ -36,7 +37,8 @@ function Card({
           src={imageUrl || "/images/default-image.png"}
           alt={title}
           fill
-          loading="eager"
+          loading={imagePriority ? "eager" : "lazy"}
+          fetchPriority={imagePriority ? "high" : "auto"}
           className="object-cover"
           sizes="120px"
         />
