@@ -36,7 +36,7 @@ export default function Client() {
   };
 
   return (
-    <div className="h-[calc(100dvh-102px)]">
+    <>
       <div className="flex justify-between px-5 pt-5.75">
         <nav aria-label="홈 탭" className="flex gap-3">
           {HOME_TABS.map((tab) => {
@@ -71,6 +71,6 @@ export default function Client() {
       </div>
 
       <EventCreateButton />
-    </div>
+    </>
   );
 }

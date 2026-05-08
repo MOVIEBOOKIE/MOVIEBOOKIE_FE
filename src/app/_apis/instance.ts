@@ -10,8 +10,16 @@ import { toNormalizedEndpoint } from "@/lib/sentry-event-filter";
 type RetryableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 type CapturableError = AxiosError & { __sentryCaptured?: boolean };
 
+const STAGE =
+  process.env.NEXT_PUBLIC_STAGE ??
+  (process.env.VERCEL_ENV === "production" ? "prod" : "dev");
+
+const API_ORIGIN = process.env.NEXT_PUBLIC_BASE_URL;
+
+const isServer = typeof window === "undefined";
+
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: isServer ? `${API_ORIGIN}/api` : "/api",
   withCredentials: true,
 });
 
@@ -30,7 +38,8 @@ axiosInstance.interceptors.response.use(
     const normalizedPath = toNormalizedEndpoint(originalRequest?.url);
 
     if (
-      error.response?.status === 401 &&
+      typeof window !== "undefined" &&
+      status === 401 &&
       originalRequest &&
       !originalRequest._retry
     ) {
@@ -43,6 +52,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         window.location.href = PATHS.LOGIN;
+        return Promise.reject(refreshError);
       }
     }
 

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getEventsByCategory } from "app/_apis/events/category";
+import { queryOptions } from "@tanstack/react-query";
 
 export const useCategoryEvents = (
   category: string,
@@ -14,6 +15,13 @@ export const useCategoryEvents = (
     ...options, // enabled 등 외부 옵션 허용
   });
 };
+
+export const categoryEventsQueryOptions = (category: string) =>
+  queryOptions({
+    queryKey: ["category-events-home", category],
+    queryFn: () => getEventsByCategory(category),
+    staleTime: 1000 * 60,
+  });
 
 export const useCategoryPageEvents = (
   category: string,
