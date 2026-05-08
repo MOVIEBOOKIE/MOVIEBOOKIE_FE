@@ -57,6 +57,7 @@ export default function CategoryPageClient({ label }: { label: string }) {
                   statusBadge={card.eventStatus}
                   progressRate={`${card.rate}%`}
                   estimatedPrice={card.estimatedPrice}
+                  imagePriority={idx == 0}
                 />
                 {idx < cards.length - 1 && (
                   <div className="bg-border my-4 h-px w-full" />
