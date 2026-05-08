@@ -25,11 +25,9 @@ export default function Client() {
   const router = useRouter();
   useHomeSideEffects();
 
-  const hasHydrated = useHomeUIStore((s) => s.hasHydrated);
-  const activeTab = useHomeUIStore((s) => s.activeTab);
   const setActiveTab = useHomeUIStore((s) => s.setActiveTab);
 
-  const currentTab = hasHydrated ? activeTab : "discover";
+  const currentTab = useHomeUIStore((s) => s.activeTab);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
