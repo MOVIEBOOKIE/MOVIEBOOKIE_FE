@@ -14,7 +14,7 @@ const STAGE =
   process.env.NEXT_PUBLIC_STAGE ??
   (process.env.VERCEL_ENV === "production" ? "prod" : "dev");
 
-const API_ORIGIN = process.env.NEXT_PUBLIC_BASE_URL;
+const API_ORIGIN = process.env.NEXT_PUBLIC_VERCEL;
 
 const isServer = typeof window === "undefined";
 

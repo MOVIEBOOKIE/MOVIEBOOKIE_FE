@@ -9,9 +9,8 @@ export const prefetchHomeCategoryEvents = async (
   queryClient: QueryClient,
   category: string,
 ) => {
-  const cookieHeader = await getForwardedCookieHeader();
-
   try {
+    const cookieHeader = await getForwardedCookieHeader();
     await queryClient.prefetchQuery(
       categoryEventsQueryOptions(
         category,
@@ -25,6 +24,7 @@ export const prefetchHomeCategoryEvents = async (
       ),
     );
   } catch (error) {
-    console.error("홈 카테고리 이벤트 prefetch 실패:", error);
+    const message = error instanceof Error ? error.message : "unknown error";
+    console.error("홈 카테고리 이벤트 prefetch 실패", { category, message });
   }
 };
