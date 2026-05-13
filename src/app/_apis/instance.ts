@@ -10,13 +10,16 @@ import { toNormalizedEndpoint } from "@/lib/sentry-event-filter";
 type RetryableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 type CapturableError = AxiosError & { __sentryCaptured?: boolean };
 
-const STAGE =
-  process.env.NEXT_PUBLIC_STAGE ??
-  (process.env.VERCEL_ENV === "production" ? "prod" : "dev");
-
-const API_ORIGIN = process.env.NEXT_PUBLIC_VERCEL;
-
 const isServer = typeof window === "undefined";
+
+const API_ORIGIN =
+  process.env.API_BASE_URL ??
+  process.env.NEXT_PUBLIC_API_URL ??
+  process.env.NEXT_PUBLIC_BASE_URL;
+
+if (isServer && !API_ORIGIN) {
+  throw new Error("NEXT_PUBLIC_BASE_URL is required in server runtime");
+}
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: isServer ? new URL("/api", API_ORIGIN!).toString() : "/api",
