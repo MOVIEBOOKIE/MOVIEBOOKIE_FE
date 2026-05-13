@@ -18,8 +18,12 @@ const API_ORIGIN = process.env.NEXT_PUBLIC_BASE_URL;
 
 const isServer = typeof window === "undefined";
 
+if (isServer && !API_ORIGIN) {
+  throw new Error("NEXT_PUBLIC_BASE_URL is required in server runtime");
+}
+
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: isServer ? `${API_ORIGIN}/api` : "/api",
+  baseURL: isServer ? new URL("/api", API_ORIGIN!).toString() : "/api",
   withCredentials: true,
 });
 
