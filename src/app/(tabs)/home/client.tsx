@@ -25,18 +25,16 @@ export default function Client() {
   const router = useRouter();
   useHomeSideEffects();
 
-  const hasHydrated = useHomeUIStore((s) => s.hasHydrated);
-  const activeTab = useHomeUIStore((s) => s.activeTab);
   const setActiveTab = useHomeUIStore((s) => s.setActiveTab);
 
-  const currentTab = hasHydrated ? activeTab : "discover";
+  const currentTab = useHomeUIStore((s) => s.activeTab);
 
   const handleSearch = () => {
     router.push(PATHS.SEARCH);
   };
 
   return (
-    <div className="h-[calc(100dvh-102px)]">
+    <>
       <div className="flex justify-between px-5 pt-5.75">
         <nav aria-label="홈 탭" className="flex gap-3">
           {HOME_TABS.map((tab) => {
@@ -71,6 +69,6 @@ export default function Client() {
       </div>
 
       <EventCreateButton />
-    </div>
+    </>
   );
 }

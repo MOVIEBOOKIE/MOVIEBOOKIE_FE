@@ -10,8 +10,19 @@ import { toNormalizedEndpoint } from "@/lib/sentry-event-filter";
 type RetryableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 type CapturableError = AxiosError & { __sentryCaptured?: boolean };
 
+const isServer = typeof window === "undefined";
+
+const API_ORIGIN =
+  process.env.API_BASE_URL ??
+  process.env.NEXT_PUBLIC_API_URL ??
+  process.env.NEXT_PUBLIC_BASE_URL;
+
+if (isServer && !API_ORIGIN) {
+  throw new Error("NEXT_PUBLIC_BASE_URL is required in server runtime");
+}
+
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: isServer ? new URL("/api", API_ORIGIN!).toString() : "/api",
   withCredentials: true,
 });
 
@@ -30,7 +41,8 @@ axiosInstance.interceptors.response.use(
     const normalizedPath = toNormalizedEndpoint(originalRequest?.url);
 
     if (
-      error.response?.status === 401 &&
+      typeof window !== "undefined" &&
+      status === 401 &&
       originalRequest &&
       !originalRequest._retry
     ) {
@@ -43,6 +55,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         window.location.href = PATHS.LOGIN;
+        return Promise.reject(refreshError);
       }
     }
 

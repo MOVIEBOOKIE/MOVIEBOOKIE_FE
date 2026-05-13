@@ -78,7 +78,7 @@ export default function Discover() {
         }
       >
         <>
-          {events.slice(0, 5).map((event) => (
+          {events.slice(0, 5).map((event, index) => (
             <div key={event.eventId}>
               <Card
                 id={String(event.eventId)}
@@ -91,6 +91,7 @@ export default function Discover() {
                 statusBadge={event.eventStatus}
                 progressRate={`${event.rate}%`}
                 estimatedPrice={String(event.estimatedPrice)}
+                imagePriority={index === 0}
               />
               <div className="my-4 h-px w-full bg-gray-950" />
             </div>

@@ -77,7 +77,7 @@ export default function Search() {
         <>
           <div className="mt-6 flex flex-1 flex-col gap-8 px-5">
             {cards.length > 0 ? (
-              cards.map((card) => (
+              cards.map((card, index) => (
                 <Card
                   key={String(card.eventId)}
                   id={String(card.eventId)}
@@ -90,6 +90,7 @@ export default function Search() {
                   statusBadge={card.eventStatus}
                   progressRate={`${card.rate}%`}
                   estimatedPrice={card.estimatedPrice}
+                  imagePriority={index === 0}
                 />
               ))
             ) : (
