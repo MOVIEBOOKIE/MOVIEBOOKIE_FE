@@ -1,14 +1,26 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import type { AxiosRequestConfig } from "axios";
-import { getEventsByCategory } from "app/_apis/events/category";
+import {
+  fetchEventsByCategory,
+  getEventsByCategory,
+} from "app/_apis/events/category";
+
+export const categoryEventsQueryKey = (category: string) =>
+  ["category-events", category] as const;
 
 export const categoryEventsQueryOptions = (
   category: string,
   config?: AxiosRequestConfig,
+  options?: {
+    strict?: boolean;
+  },
 ) =>
   queryOptions({
-    queryKey: ["category-events", category],
-    queryFn: () => getEventsByCategory(category, 0, 10, config),
+    queryKey: categoryEventsQueryKey(category),
+    queryFn: () =>
+      options?.strict
+        ? fetchEventsByCategory(category, 0, 10, config)
+        : getEventsByCategory(category, 0, 10, config),
     staleTime: 1000 * 60,
   });
 
@@ -20,7 +32,7 @@ export const useCategoryEvents = (
 ) => {
   return useQuery({
     ...categoryEventsQueryOptions(category),
-    ...options, // enabled 등 외부 옵션 허용
+    enabled: Boolean(category) && (options?.enabled ?? true),
   });
 };
 
@@ -30,8 +42,9 @@ export const useCategoryPageEvents = (
   size: number = 10,
 ) => {
   return useQuery({
-    queryKey: ["category-page-events", category, page],
+    queryKey: ["category-page-events", category, page, size],
     queryFn: () => getEventsByCategory(category, page, size),
     staleTime: 1000 * 60 * 5,
+    enabled: Boolean(category),
   });
 };

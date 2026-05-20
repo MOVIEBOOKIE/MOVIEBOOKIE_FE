@@ -7,6 +7,33 @@ interface CategoryEventsResult {
   totalPages: number;
   eventList: EventCard[];
 }
+
+const normalizeCategoryEvents = (
+  res: Partial<CategoryEventsResult> | undefined,
+): CategoryEventsResult => ({
+  totalPages: res?.totalPages ?? 0,
+  eventList: res?.eventList ?? [],
+});
+
+export const fetchEventsByCategory = async (
+  category: string,
+  page = 0,
+  size = 10,
+  config?: AxiosRequestConfig,
+): Promise<CategoryEventsResult> => {
+  const res = await apiGet<CategoryEventsResult>(
+    "/events/category",
+    {
+      category,
+      page,
+      size,
+    },
+    config,
+  );
+
+  return normalizeCategoryEvents(res);
+};
+
 export const getEventsByCategory = async (
   category: string,
   page = 0,
@@ -14,20 +41,7 @@ export const getEventsByCategory = async (
   config?: AxiosRequestConfig,
 ): Promise<CategoryEventsResult> => {
   try {
-    const res = await apiGet<CategoryEventsResult>(
-      "/events/category",
-      {
-        category,
-        page,
-        size,
-      },
-      config,
-    );
-
-    return {
-      totalPages: res.totalPages ?? 0,
-      eventList: res.eventList ?? [],
-    };
+    return await fetchEventsByCategory(category, page, size, config);
   } catch (error) {
     devError("카테고리 이벤트 요청 실패:", error);
     return {
