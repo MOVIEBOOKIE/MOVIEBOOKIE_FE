@@ -22,6 +22,8 @@ export default function Discover() {
 
   const events = data?.eventList ?? [];
   const hasData = events.length > 0;
+  const previewEvents = events.slice(0, 5);
+  const shouldShowMoreButton = events.length > 5;
 
   const loadingForGate = isLoading && !data;
 
@@ -78,7 +80,7 @@ export default function Discover() {
         }
       >
         <>
-          {events.slice(0, 5).map((event, index) => (
+          {previewEvents.map((event, index) => (
             <div key={event.eventId}>
               <Card
                 id={String(event.eventId)}
@@ -97,7 +99,7 @@ export default function Discover() {
             </div>
           ))}
 
-          {events.length > 5 && (
+          {shouldShowMoreButton && (
             <Button
               className="mt-5 mb-5 active:bg-gray-900"
               variant="secondary"

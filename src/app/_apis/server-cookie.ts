@@ -4,10 +4,20 @@ import { cookies } from "next/headers";
 
 const DEFAULT_FORWARDED_COOKIE_NAMES = ["accessToken"] as const;
 
+type ForwardedCookieHeaderOptions = {
+  cookieNames?: readonly string[];
+  forwardAll?: boolean;
+};
+
 export const getForwardedCookieHeader = async (
-  cookieNames: readonly string[] = DEFAULT_FORWARDED_COOKIE_NAMES,
+  options?: ForwardedCookieHeaderOptions,
 ) => {
   const cookieStore = await cookies();
+  const cookieNames = options?.cookieNames ?? DEFAULT_FORWARDED_COOKIE_NAMES;
+
+  if (options?.forwardAll) {
+    return cookieStore.toString();
+  }
 
   return cookieNames
     .map((name) => {
@@ -17,4 +27,9 @@ export const getForwardedCookieHeader = async (
     })
     .filter((value): value is string => Boolean(value))
     .join("; ");
+};
+
+export const getRequestCookieNames = async () => {
+  const cookieStore = await cookies();
+  return cookieStore.getAll().map((cookie) => cookie.name);
 };
