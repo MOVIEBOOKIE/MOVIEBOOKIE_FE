@@ -35,11 +35,7 @@ export const prefetchHomeCategoryEvents = async (
       { strict: true },
     );
 
-    await queryClient.prefetchQuery(queryOption);
-
-    const prefetchedData = queryClient.getQueryData<CategoryEventsResponse>(
-      queryOption.queryKey,
-    );
+    const prefetchedData = await queryClient.fetchQuery(queryOption);
 
     console.log("홈 카테고리 prefetch 성공", {
       category,
