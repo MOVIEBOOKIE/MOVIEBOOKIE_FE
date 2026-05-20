@@ -39,6 +39,7 @@ export default function Discover() {
             <div key={label} className="flex items-center">
               <button
                 type="button"
+                aria-pressed={selected === label}
                 className={`body-3-medium px-2.5 py-3.5 ${
                   selected === label ? "text-red-main" : "text-gray-500"
                 }`}
