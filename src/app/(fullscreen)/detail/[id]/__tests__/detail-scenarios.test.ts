@@ -26,6 +26,12 @@ describe("상세 페이지 18개 상태 시나리오 정의", () => {
     });
   });
 
+  it("모든 시안의 하단 CTA에는 표시할 문구가 있다", () => {
+    DETAIL_SCENARIOS.forEach(({ api }) => {
+      expect(api.buttonState?.trim()).toBeTruthy();
+    });
+  });
+
   it("확인이 필요한 API 버튼 상태를 명시적으로 표시한다", () => {
     DETAIL_SCENARIOS.forEach(({ api }) => {
       if (api.buttonState === null) {

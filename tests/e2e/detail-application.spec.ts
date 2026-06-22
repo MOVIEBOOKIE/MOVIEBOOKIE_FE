@@ -125,103 +125,281 @@ const statusMessageByEventState = {
   "상영 취소": "상영이 취소된 이벤트입니다.",
 } as const;
 
-async function expectScenarioAction(page: Page, scenario: DetailScenario) {
+function getScenario(id: DetailScenario["id"]) {
+  const scenario = DETAIL_SCENARIOS.find((item) => item.id === id);
+
+  if (!scenario) {
+    throw new Error(`상세 시나리오를 찾을 수 없습니다: ${id}`);
+  }
+
+  return scenario;
+}
+
+async function setLoggedInUser(
+  page: Page,
+  user: typeof loggedInUser = loggedInUser,
+) {
+  await page.addInitScript((storedUser) => {
+    localStorage.setItem(
+      "userProfile",
+      JSON.stringify({ state: { user: storedUser }, version: 0 }),
+    );
+  }, user);
+}
+
+function successResponse(message: string) {
+  return {
+    httpStatus: "OK",
+    code: "SUCCESS",
+    message,
+    result: null,
+  };
+}
+
+async function expectScenarioPage(
+  page: Page,
+  scenarioId: DetailScenario["id"],
+) {
+  const scenario = getScenario(scenarioId);
   const cta = page.getByTestId("detail-bottom-cta");
 
-  if (scenario.action === "NONE") {
+  await expect(
+    page.getByText(eventResponse.result.mediaTitle, { exact: true }),
+  ).toBeVisible();
+
+  if (scenario.api.eventState === "모집 중") {
+    await expect(page.getByText("모집 달성률")).toBeVisible();
+    await expect(
+      page.getByText(`${eventResponse.result.recruitmentRate}%`),
+    ).toBeVisible();
+  } else {
+    await expect(
+      page.getByText(statusMessageByEventState[scenario.api.eventState]),
+    ).toBeVisible();
+  }
+
+  await expect(cta).toHaveText(scenario.api.buttonState ?? "");
+  if (scenario.expected.ctaDisabled) {
     await expect(cta).toBeDisabled();
-    return;
-  }
-
-  await expect(cta).toBeEnabled();
-
-  if (scenario.action === "MOVE_TO_TICKET") {
-    const ticketNavigation = page.waitForRequest((request) => {
-      const pathname = new URL(request.url()).pathname;
-      return (
-        pathname === `/ticket/${ticketId}` ||
-        pathname === `/ticket/${ticketId}/`
-      );
-    });
-
-    await cta.click();
-    await ticketNavigation;
-    return;
-  }
-
-  await cta.click();
-
-  switch (scenario.action) {
-    case "APPLY_EVENT":
-      await expect(
-        page.getByRole("heading", { name: "이벤트를 신청할까요?" }),
-      ).toBeVisible();
-      break;
-    case "CANCEL_APPLICATION":
-      await expect(
-        page.getByRole("heading", { name: "이벤트 신청을 취소할까요?" }),
-      ).toBeVisible();
-      break;
-    case "CANCEL_RECRUITMENT":
-      await expect(
-        page.getByRole("heading", {
-          name: "정말 이벤트 모집을 취소할까요?",
-        }),
-      ).toBeVisible();
-      break;
-    case "SELECT_VENUE":
-      await expect(
-        page.getByRole("heading", {
-          name: "대관 신청 여부를 선택해주세요",
-        }),
-      ).toBeVisible();
-      break;
+  } else {
+    await expect(cta).toBeEnabled();
   }
 }
 
-test.describe("상세 페이지 18개 상태", () => {
-  for (const scenario of DETAIL_SCENARIOS) {
-    test(`${scenario.id} · ${scenario.perspective}`, async ({ page }) => {
-      await page.addInitScript((user) => {
-        localStorage.setItem(
-          "userProfile",
-          JSON.stringify({ state: { user }, version: 0 }),
-        );
-      }, loggedInUser);
-      await mockDetailApis(page, loggedInUser, scenario);
+async function confirmModal(page: Page, title: string, buttonName: string) {
+  const modal = page.getByRole("heading", { name: title }).locator("..");
+  await expect(modal).toBeVisible();
+  await modal.getByRole("button", { name: buttonName }).click();
+}
 
-      await page.goto(`/detail/${eventId}`);
+async function expectTicketNavigation(page: Page) {
+  const ticketNavigation = page.waitForRequest((request) => {
+    const pathname = new URL(request.url()).pathname;
+    return (
+      pathname === `/ticket/${ticketId}` || pathname === `/ticket/${ticketId}/`
+    );
+  });
 
-      await expect(
-        page.getByText(eventResponse.result.mediaTitle, { exact: true }),
-      ).toBeVisible();
+  await page.getByTestId("detail-bottom-cta").click();
+  await ticketNavigation;
+}
 
-      if (scenario.api.eventState === "모집 중") {
-        await expect(page.getByText("모집 달성률")).toBeVisible();
-        await expect(
-          page.getByText(`${eventResponse.result.recruitmentRate}%`),
-        ).toBeVisible();
-      } else {
-        await expect(
-          page.getByText(statusMessageByEventState[scenario.api.eventState]),
-        ).toBeVisible();
+async function mockDetailJourney(
+  page: Page,
+  initialScenarioId: DetailScenario["id"],
+) {
+  let currentScenario = getScenario(initialScenarioId);
+
+  const detailResponse = () => ({
+    ...eventResponse,
+    result: {
+      ...eventResponse.result,
+      eventState: currentScenario.api.eventState,
+      buttonState: currentScenario.api.buttonState,
+      userRole: currentScenario.api.userRole,
+    },
+  });
+
+  await page.route(
+    new RegExp(`/api/events/anonymous/${eventId}/?$`),
+    async (route) => {
+      await route.fulfill({ json: detailResponse() });
+    },
+  );
+
+  await page.route(new RegExp(`/api/events/${eventId}/?$`), async (route) => {
+    await route.fulfill({ json: detailResponse() });
+  });
+
+  await page.route(
+    new RegExp(`/api/events/${eventId}/register/?$`),
+    async (route) => {
+      const method = route.request().method();
+
+      if (method === "POST") {
+        currentScenario = getScenario("0-C-PARTICIPANT");
+      } else if (method === "DELETE") {
+        currentScenario = getScenario("0-A-PARTICIPANT");
       }
 
-      const cta = page.getByTestId("detail-bottom-cta");
-      await expect(cta).toHaveText(scenario.api.buttonState ?? "");
+      await route.fulfill({
+        json: successResponse(
+          method === "POST" ? "신청 완료" : "신청 취소 완료",
+        ),
+      });
+    },
+  );
 
-      if (scenario.expected.ctaDisabled) {
-        await expect(cta).toBeDisabled();
-      } else {
-        await expect(cta).toBeEnabled();
-      }
+  await page.route(
+    new RegExp(`/api/events/${eventId}/recruit/?$`),
+    async (route) => {
+      currentScenario = getScenario("0-B-COMMON");
+      await route.fulfill({
+        json: successResponse("모집 취소 완료"),
+      });
+    },
+  );
 
-      await expectScenarioAction(page, scenario);
+  await page.route(
+    new RegExp(`/api/events/${eventId}/venue(?:\\?.*)?$`),
+    async (route) => {
+      const type = new URL(route.request().url()).searchParams.get("type");
+      currentScenario = getScenario(type === "0" ? "2-A-HOST" : "2-B-HOST");
+      await route.fulfill({
+        json: successResponse("대관 선택 완료"),
+      });
+    },
+  );
+
+  await page.route("**/api/naver-map?**", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "image/png",
+      body: Buffer.from(
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+        "base64",
+      ),
     });
-  }
+  });
+
+  await page.route(
+    new RegExp(`/api/tickets/${eventId}/to-ticket/?$`),
+    async (route) => {
+      await route.fulfill({
+        json: {
+          httpStatus: "OK",
+          code: "SUCCESS",
+          message: "성공",
+          result: { ticketId },
+        },
+      });
+    },
+  );
+
+  return {
+    async show(scenarioId: DetailScenario["id"]) {
+      currentScenario = getScenario(scenarioId);
+      await page.goto(`/detail/${eventId}`);
+      await expectScenarioPage(page, scenarioId);
+    },
+  };
+}
+
+test.describe("사진 기반 상세 페이지 상태 전이 여정", () => {
+  test.beforeEach(async ({ page }) => {
+    await setLoggedInUser(page);
+  });
+
+  test("참여자 신청 → 신청 완료 → 신청 취소", async ({ page }) => {
+    const journey = await mockDetailJourney(page, "0-A-PARTICIPANT");
+    await journey.show("0-A-PARTICIPANT");
+
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "이벤트를 신청할까요?", "신청하기");
+    await expect(page.getByText("이벤트 신청이 완료됐어요!")).toBeVisible();
+
+    await journey.show("0-C-PARTICIPANT");
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "이벤트 신청을 취소할까요?", "신청 취소");
+    await expect(page.getByText("이벤트 신청이 취소됐어요")).toBeVisible();
+    await expectScenarioPage(page, "0-A-PARTICIPANT");
+  });
+
+  test("주최자 모집 취소 → 공통 모집 취소 상태", async ({ page }) => {
+    const journey = await mockDetailJourney(page, "0-A-HOST");
+    await journey.show("0-A-HOST");
+
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "정말 이벤트 모집을 취소할까요?", "모집 취소");
+    await expect(page.getByText("이벤트 모집이 취소됐어요")).toBeVisible();
+    await expectScenarioPage(page, "0-B-COMMON");
+  });
+
+  test("참여자 모집 성공 → 대관 진행 → 대관 확정 → 상영 완료", async ({
+    page,
+  }) => {
+    const journey = await mockDetailJourney(page, "0-C-PARTICIPANT");
+    await journey.show("0-C-PARTICIPANT");
+    await journey.show("1-B-PARTICIPANT");
+    await journey.show("2-A-PARTICIPANT");
+    await journey.show("3-A-PARTICIPANT");
+    await expectTicketNavigation(page);
+    await journey.show("4-A-COMMON");
+  });
+
+  test("주최자 모집 성공 → 대관 신청 → 대관 확정 → 상영 완료", async ({
+    page,
+  }) => {
+    const journey = await mockDetailJourney(page, "0-A-HOST");
+    await journey.show("0-A-HOST");
+    await journey.show("0-C-HOST");
+    await journey.show("1-B-HOST");
+
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "대관 신청 여부를 선택해주세요", "대관 신청하기");
+    await expect(page.getByText("영화관 대관 신청이 완료됐어요")).toBeVisible();
+    await expectScenarioPage(page, "2-A-HOST");
+
+    await journey.show("3-A-HOST");
+    await expectTicketNavigation(page);
+    await journey.show("4-A-COMMON");
+  });
+
+  test("모집 인원 미달 → 참여자와 주최자 모집 취소 상태", async ({ page }) => {
+    const journey = await mockDetailJourney(page, "0-C-PARTICIPANT");
+    await journey.show("0-C-PARTICIPANT");
+    await journey.show("1-A-PARTICIPANT");
+    await journey.show("0-C-HOST");
+    await journey.show("1-A-HOST");
+  });
+
+  test("주최자 대관 거절 → 참여자와 주최자 대관 취소 상태", async ({
+    page,
+  }) => {
+    const journey = await mockDetailJourney(page, "1-B-HOST");
+    await journey.show("1-B-HOST");
+
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "대관 신청 여부를 선택해주세요", "대관 취소하기");
+    await expectScenarioPage(page, "2-B-HOST");
+    await journey.show("1-B-PARTICIPANT");
+    await journey.show("2-B-PARTICIPANT");
+  });
+
+  test("영화사 대관 불가 → 공통 대관 취소 상태", async ({ page }) => {
+    const journey = await mockDetailJourney(page, "2-A-HOST");
+    await journey.show("2-A-HOST");
+    await journey.show("3-B-COMMON");
+  });
+
+  test("대관 확정 후 상영 취소 → 공통 상영 취소 상태", async ({ page }) => {
+    const journey = await mockDetailJourney(page, "3-A-PARTICIPANT");
+    await journey.show("3-A-PARTICIPANT");
+    await journey.show("4-B-COMMON");
+  });
 });
 
-test.describe("상세 페이지 신청 플로우", () => {
+test.describe("상세 페이지 인증·오류 예외 흐름", () => {
   test("비로그인 사용자는 신청 시 로그인 안내를 받는다", async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.removeItem("userProfile");
@@ -248,25 +426,39 @@ test.describe("상세 페이지 신청 플로우", () => {
     });
   });
 
-  test("로그인 사용자는 이벤트 신청을 완료한다", async ({ page }) => {
-    await page.addInitScript((user) => {
-      localStorage.setItem(
-        "userProfile",
-        JSON.stringify({ state: { user }, version: 0 }),
-      );
-    }, loggedInUser);
-    await mockDetailApis(page, loggedInUser);
+  test("전화번호 미인증 사용자는 신청 시 인증 페이지로 이동한다", async ({
+    page,
+  }) => {
+    const unverifiedUser = { ...loggedInUser, phoneNumber: "" };
+    await setLoggedInUser(page, unverifiedUser);
+    await mockDetailApis(page, unverifiedUser, getScenario("0-A-PARTICIPANT"));
 
-    let registerRequestCount = 0;
+    await page.goto(`/detail/${eventId}`);
+    await page.getByTestId("detail-bottom-cta").click();
+
+    await expect(page).toHaveURL((url) => {
+      return (
+        ["/verify/phone", "/verify/phone/"].includes(url.pathname) &&
+        url.searchParams.get("next") === `/detail/${eventId}`
+      );
+    });
+  });
+
+  test("신청 API가 중복 참여 오류를 반환하면 안내 토스트를 보여준다", async ({
+    page,
+  }) => {
+    await setLoggedInUser(page);
+    await mockDetailApis(page, loggedInUser, getScenario("0-A-PARTICIPANT"));
+
     await page.route(
       new RegExp(`/api/events/${eventId}/register/?$`),
       async (route) => {
-        registerRequestCount += 1;
         await route.fulfill({
+          status: 409,
           json: {
-            httpStatus: "OK",
-            code: "SUCCESS",
-            message: "신청 완료",
+            httpStatus: "CONFLICT",
+            code: "PARTICIPATION_404",
+            message: "중복 참여",
             result: null,
           },
         });
@@ -274,19 +466,12 @@ test.describe("상세 페이지 신청 플로우", () => {
     );
 
     await page.goto(`/detail/${eventId}`);
-    await page.getByRole("button", { name: "신청하기" }).click();
+    await page.getByTestId("detail-bottom-cta").click();
+    await confirmModal(page, "이벤트를 신청할까요?", "신청하기");
 
-    const applyModal = page
-      .getByRole("heading", { name: "이벤트를 신청할까요?" })
-      .locator("..");
-
-    await expect(applyModal).toBeVisible();
-    await applyModal.getByRole("button", { name: "신청하기" }).click();
-
-    await expect(page.getByText("이벤트 신청이 완료됐어요!")).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "신청목록 확인하기" }),
+      page.getByText("해당 날짜에 이미 참여 중인 이벤트가 있어요"),
     ).toBeVisible();
-    expect(registerRequestCount).toBe(1);
+    await expect(page.getByText("이벤트 신청이 완료됐어요!")).not.toBeVisible();
   });
 });

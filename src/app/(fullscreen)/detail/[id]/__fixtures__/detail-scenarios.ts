@@ -123,9 +123,9 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     action: "NONE",
     api: {
       eventState: "모집 취소",
-      buttonState: null,
+      buttonState: "모집 취소",
       userRole: null,
-      needsConfirmation: true,
+      needsConfirmation: false,
     },
     expected: { ctaDisabled: true },
   },
