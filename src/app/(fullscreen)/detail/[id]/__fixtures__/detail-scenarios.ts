@@ -1,12 +1,16 @@
+import type { DetailCTAAction } from "../_utils/resolve-detail-cta";
+import type {
+  EventButtonState,
+  EventState,
+  EventUserRole,
+} from "app/_types/event-detail-state";
+
 export type DetailScenarioRole = "PARTICIPANT" | "HOST" | "COMMON";
 
-export type DetailScenarioAction =
-  | "APPLY_EVENT"
-  | "CANCEL_APPLICATION"
-  | "CANCEL_RECRUITMENT"
-  | "SELECT_VENUE"
-  | "ACKNOWLEDGE_NOTICE"
-  | "NONE";
+export type DetailScenarioAction = Exclude<
+  DetailCTAAction,
+  "LOGIN_REQUIRED" | "VERIFY_PHONE"
+>;
 
 export type DetailScenarioId =
   | "0-A-PARTICIPANT"
@@ -303,7 +307,7 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     transition: "영화사가 대관확정 통보",
     statusTag: "대관확정",
     perspective: "대관이 확정되어 신청을 취소할 수 없다.",
-    action: "NONE",
+    action: "MOVE_TO_TICKET",
     api: {
       eventState: "대관 확정",
       buttonState: "티켓으로 이동",
@@ -320,7 +324,7 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     transition: "영화사가 대관확정 통보",
     statusTag: "대관확정",
     perspective: "대관 확정 알림을 확인한다.",
-    action: "ACKNOWLEDGE_NOTICE",
+    action: "MOVE_TO_TICKET",
     api: {
       eventState: "대관 확정",
       buttonState: "티켓으로 이동",
@@ -337,7 +341,7 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     transition: "영화사가 대관불가 통보",
     statusTag: "대관취소",
     perspective: "영화사의 대관 불가 통보로 상영이 취소되었다.",
-    action: "ACKNOWLEDGE_NOTICE",
+    action: "NONE",
     api: {
       eventState: "대관 취소",
       buttonState: null,
@@ -361,7 +365,7 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
       userRole: null,
       needsConfirmation: true,
     },
-    expected: { ctaDisabled: false },
+    expected: { ctaDisabled: true },
   },
   {
     id: "4-B-COMMON",
@@ -381,8 +385,3 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     expected: { ctaDisabled: true },
   },
 ] as const;
-import type {
-  EventButtonState,
-  EventState,
-  EventUserRole,
-} from "app/_types/event-detail-state";

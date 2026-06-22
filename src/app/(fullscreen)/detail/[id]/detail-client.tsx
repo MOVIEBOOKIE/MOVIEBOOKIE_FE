@@ -22,6 +22,7 @@ import { EventData } from "app/_types/event";
 import { useUserStore } from "app/_stores/use-user-store";
 import { useToastStore } from "app/_stores/use-toast-store";
 import { devError } from "@/utils/dev-logger";
+import { resolveDetailCTA } from "./_utils/resolve-detail-cta";
 
 type ModalType =
   | "apply"
@@ -52,7 +53,6 @@ export default function DetailClient() {
 
   const user = useUserStore((state) => state.user);
   const loggedIn = !!user;
-  const needsPhoneVerification = loggedIn && !user?.phoneNumber;
 
   const { data: dataWithAuth, isPending: isPendingWithAuth } = useGetEvent(
     eventId,
@@ -81,35 +81,43 @@ export default function DetailClient() {
   const { data: moveToTicket } = useGetToTicket(eventId, {
     enabled: data?.buttonState === "티켓으로 이동",
   });
+
+  const cta = resolveDetailCTA({
+    eventState: data?.eventState,
+    buttonState: data?.buttonState,
+    userRole: data?.userRole,
+    loggedIn,
+    phoneVerified: !!user?.phoneNumber,
+    isLoading: buttonLoading,
+  });
+
   const handleClick = () => {
-    if (!loggedIn) {
-      setModalType("loginRequired");
-      return;
-    }
-    if (needsPhoneVerification) {
-      router.replace(verifyPhonePath);
-      return;
-    }
-    switch (data?.buttonState) {
-      case "신청하기":
+    switch (cta.action) {
+      case "LOGIN_REQUIRED":
+        setModalType("loginRequired");
+        break;
+      case "VERIFY_PHONE":
+        router.replace(verifyPhonePath);
+        break;
+      case "APPLY_EVENT":
         setModalType("apply");
         break;
-      case "신청 취소":
+      case "CANCEL_APPLICATION":
         setModalType("cancel");
         break;
-      case "모집 취소":
+      case "CANCEL_RECRUITMENT":
         setModalType("recruitCancel");
         break;
-      case "티켓으로 이동":
+      case "MOVE_TO_TICKET":
         if (moveToTicket?.ticketId)
           router.push(`${PATHS.TICKET}/${moveToTicket.ticketId}`);
         else if (eventId) router.push(`${PATHS.TICKET}?eventId=${eventId}`);
         break;
-      case "대관 신청하기":
+      case "SELECT_VENUE":
         setModalType("venueApply");
         break;
       default:
-        setModalType("apply");
+        break;
     }
   };
 
@@ -231,17 +239,9 @@ export default function DetailClient() {
             variant="primary"
             onClick={handleClick}
             isLoading={buttonLoading}
-            disabled={
-              data?.eventState === "모집 취소" ||
-              (data?.eventState === "모집 완료" &&
-                data?.userRole !== "주최자") ||
-              data?.eventState === "대관 취소" ||
-              data?.buttonState === "대관 진행 중" ||
-              data?.buttonState === "신청 마감" ||
-              buttonLoading
-            }
+            disabled={cta.disabled}
           >
-            {data?.buttonState ?? ""}
+            {cta.label}
           </Button>
         </div>
       )}
