@@ -2,7 +2,13 @@ import { defineConfig, devices } from "@playwright/test";
 
 const browserChannel =
   process.env.PLAYWRIGHT_BROWSER_CHANNEL === "chrome" ? "chrome" : undefined;
-const e2ePort = Number(process.env.PLAYWRIGHT_PORT ?? 3000);
+const rawE2ePort = process.env.PLAYWRIGHT_PORT ?? "3000";
+const e2ePort = Number(rawE2ePort);
+
+if (!Number.isInteger(e2ePort) || e2ePort < 1 || e2ePort > 65_535) {
+  throw new Error(`Invalid PLAYWRIGHT_PORT: ${rawE2ePort}`);
+}
+
 const baseURL = `http://localhost:${e2ePort}`;
 
 export default defineConfig({

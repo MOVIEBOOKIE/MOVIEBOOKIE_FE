@@ -1,5 +1,12 @@
-import type { EventState, EventUserRole } from "app/_types/event-detail-state";
-import { EVENT_STATES } from "app/_types/event-detail-state";
+import type {
+  EventButtonState,
+  EventState,
+  EventUserRole,
+} from "app/_types/event-detail-state";
+import {
+  EVENT_BUTTON_STATES,
+  EVENT_STATES,
+} from "app/_types/event-detail-state";
 
 export type DetailCTAAction =
   | "LOGIN_REQUIRED"
@@ -26,10 +33,9 @@ interface DetailCTA {
   action: DetailCTAAction;
 }
 
-const BUTTON_ACTIONS: Record<
-  string,
-  Exclude<DetailCTAAction, "LOGIN_REQUIRED" | "VERIFY_PHONE">
-> = {
+type ButtonAction = Exclude<DetailCTAAction, "LOGIN_REQUIRED" | "VERIFY_PHONE">;
+
+const BUTTON_ACTIONS: Partial<Record<EventButtonState, ButtonAction>> = {
   신청하기: "APPLY_EVENT",
   "신청 취소": "CANCEL_APPLICATION",
   "모집 취소": "CANCEL_RECRUITMENT",
@@ -38,6 +44,11 @@ const BUTTON_ACTIONS: Record<
 };
 
 const KNOWN_EVENT_STATES = new Set<string>(EVENT_STATES);
+const KNOWN_BUTTON_STATES = new Set<string>(EVENT_BUTTON_STATES);
+
+function isEventButtonState(value: string): value is EventButtonState {
+  return KNOWN_BUTTON_STATES.has(value);
+}
 
 export function resolveDetailCTA({
   eventState,
@@ -48,7 +59,10 @@ export function resolveDetailCTA({
   isLoading = false,
 }: ResolveDetailCTAParams): DetailCTA {
   const label = buttonState ?? "";
-  const buttonAction = buttonState ? BUTTON_ACTIONS[buttonState] : undefined;
+  const buttonAction =
+    buttonState && isEventButtonState(buttonState)
+      ? BUTTON_ACTIONS[buttonState]
+      : undefined;
   const isKnownEventState = eventState
     ? KNOWN_EVENT_STATES.has(eventState)
     : false;

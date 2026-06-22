@@ -63,7 +63,7 @@ export interface EventData {
   longitude: number;
   latitude: number;
   eventState: EventState;
-  userRole: EventUserRole;
+  userRole: EventUserRole | null;
 }
 
 export interface PostEventsVenueParams {

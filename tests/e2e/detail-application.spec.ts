@@ -139,6 +139,18 @@ async function setLoggedInUser(
   page: Page,
   user: typeof loggedInUser = loggedInUser,
 ) {
+  await page.context().addCookies([
+    {
+      name: "accessToken",
+      value: "e2e-access-token",
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      secure: false,
+      sameSite: "Lax",
+    },
+  ]);
+
   await page.addInitScript((storedUser) => {
     localStorage.setItem(
       "userProfile",
@@ -193,12 +205,9 @@ async function confirmModal(page: Page, title: string, buttonName: string) {
 }
 
 async function expectTicketNavigation(page: Page) {
-  const ticketNavigation = page.waitForRequest((request) => {
-    const pathname = new URL(request.url()).pathname;
-    return (
-      pathname === `/ticket/${ticketId}` || pathname === `/ticket/${ticketId}/`
-    );
-  });
+  const ticketNavigation = page.waitForURL((url) =>
+    [`/ticket/${ticketId}`, `/ticket/${ticketId}/`].includes(url.pathname),
+  );
 
   await page.getByTestId("detail-bottom-cta").click();
   await ticketNavigation;
@@ -229,6 +238,17 @@ async function mockDetailJourney(
 
   await page.route(new RegExp(`/api/events/${eventId}/?$`), async (route) => {
     await route.fulfill({ json: detailResponse() });
+  });
+
+  await page.route("**/api/auth/user**", async (route) => {
+    await route.fulfill({
+      json: {
+        httpStatus: "OK",
+        code: "SUCCESS",
+        message: "성공",
+        result: loggedInUser,
+      },
+    });
   });
 
   await page.route(
@@ -295,6 +315,29 @@ async function mockDetailJourney(
       });
     },
   );
+
+  await page.route(new RegExp(`/api/tickets/${ticketId}/?$`), async (route) => {
+    await route.fulfill({
+      json: {
+        httpStatus: "OK",
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          ticketId,
+          title: eventResponse.result.eventTitle,
+          type: eventResponse.result.mediaType,
+          location: eventResponse.result.locationName,
+          price: eventResponse.result.estimatedPrice,
+          hostName: eventResponse.result.username,
+          participants: eventResponse.result.currentParticipants,
+          time: eventResponse.result.eventTime,
+          scheduledAt: eventResponse.result.eventDate,
+          address: eventResponse.result.address,
+          eventImageUrl: eventResponse.result.posterImageUrl,
+        },
+      },
+    });
+  });
 
   return {
     async show(scenarioId: DetailScenario["id"]) {
