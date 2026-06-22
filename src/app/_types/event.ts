@@ -1,3 +1,9 @@
+import type {
+  EventButtonState,
+  EventState,
+  EventUserRole,
+} from "./event-detail-state";
+
 // 상태 저장용
 export interface EventFormValues {
   mediaType: string;
@@ -47,7 +53,7 @@ export interface EventData {
   currentParticipants: number;
   recruitmentRate: number;
   posterImageUrl: string;
-  buttonState: string;
+  buttonState: EventButtonState;
   username: string;
   recruitment: number;
   locationName: string;
@@ -56,8 +62,8 @@ export interface EventData {
   userImageUrl: string;
   longitude: number;
   latitude: number;
-  eventState: string;
-  userRole: string;
+  eventState: EventState;
+  userRole: EventUserRole;
 }
 
 export interface PostEventsVenueParams {

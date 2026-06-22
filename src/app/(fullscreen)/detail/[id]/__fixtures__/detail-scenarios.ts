@@ -56,13 +56,22 @@ export interface DetailScenario {
     | "상영취소";
   perspective: string;
   action: DetailScenarioAction;
+  api: {
+    eventState: EventState;
+    buttonState: EventButtonState | null;
+    userRole: EventUserRole | null;
+    needsConfirmation: boolean;
+  };
+  expected: {
+    ctaDisabled: boolean;
+  };
 }
 
 /**
  * 기획 상태표의 11개 단계를 역할별 18개 상세 페이지 시안으로 분리한 계약이다.
  *
- * 서버의 eventState/buttonState 매핑은 백엔드 응답 명세를 확인한 뒤
- * 별도 단계에서 이 시나리오와 연결한다.
+ * needsConfirmation이 true인 항목은 현재 프론트 코드만으로 buttonState를
+ * 확정할 수 없어 백엔드 응답 명세 확인이 필요하다.
  */
 export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
   {
@@ -74,6 +83,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집중",
     perspective: "모집중이며 신청할 수 있다.",
     action: "APPLY_EVENT",
+    api: {
+      eventState: "모집 중",
+      buttonState: "신청하기",
+      userRole: "참여자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "0-A-HOST",
@@ -84,6 +100,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집중",
     perspective: "모집중이며 모집을 취소할 수 있다.",
     action: "CANCEL_RECRUITMENT",
+    api: {
+      eventState: "모집 중",
+      buttonState: "모집 취소",
+      userRole: "주최자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "0-B-COMMON",
@@ -94,6 +117,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집취소",
     perspective: "모집이 취소되어 더 이상 진행할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "모집 취소",
+      buttonState: null,
+      userRole: null,
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "0-C-PARTICIPANT",
@@ -104,6 +134,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집중",
     perspective: "신청을 완료했으며 신청을 취소할 수 있다.",
     action: "CANCEL_APPLICATION",
+    api: {
+      eventState: "모집 중",
+      buttonState: "신청 취소",
+      userRole: "참여자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "0-C-HOST",
@@ -114,6 +151,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집중",
     perspective: "모집중이며 모집을 취소할 수 있다.",
     action: "CANCEL_RECRUITMENT",
+    api: {
+      eventState: "모집 중",
+      buttonState: "모집 취소",
+      userRole: "주최자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "1-A-PARTICIPANT",
@@ -124,6 +168,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집취소",
     perspective: "최소 인원 미달로 상영이 취소되었다.",
     action: "NONE",
+    api: {
+      eventState: "모집 취소",
+      buttonState: null,
+      userRole: "참여자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "1-A-HOST",
@@ -134,6 +185,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집취소",
     perspective: "최소 인원 미달로 상영을 진행할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "모집 취소",
+      buttonState: null,
+      userRole: "주최자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "1-B-PARTICIPANT",
@@ -144,6 +202,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집완료",
     perspective: "모집이 완료되어 신청을 취소할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "모집 완료",
+      buttonState: "신청 마감",
+      userRole: "참여자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "1-B-HOST",
@@ -154,6 +219,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "모집완료",
     perspective: "대관 진행 여부를 선택할 수 있다.",
     action: "SELECT_VENUE",
+    api: {
+      eventState: "모집 완료",
+      buttonState: "대관 신청하기",
+      userRole: "주최자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "2-A-PARTICIPANT",
@@ -164,6 +236,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관 진행중",
     perspective: "대관 신청이 진행 중이며 신청을 취소할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "모집 완료",
+      buttonState: "대관 진행 중",
+      userRole: "참여자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "2-A-HOST",
@@ -174,6 +253,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관 진행중",
     perspective: "영화사의 대관 결과를 기다린다.",
     action: "NONE",
+    api: {
+      eventState: "모집 완료",
+      buttonState: "대관 진행 중",
+      userRole: "주최자",
+      needsConfirmation: false,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "2-B-PARTICIPANT",
@@ -184,6 +270,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관취소",
     perspective: "주최자의 선택으로 상영이 취소되었다.",
     action: "NONE",
+    api: {
+      eventState: "대관 취소",
+      buttonState: null,
+      userRole: "참여자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "2-B-HOST",
@@ -194,6 +287,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관취소",
     perspective: "대관을 진행하지 않아 상영을 진행할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "대관 취소",
+      buttonState: null,
+      userRole: "주최자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "3-A-PARTICIPANT",
@@ -204,6 +304,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관확정",
     perspective: "대관이 확정되어 신청을 취소할 수 없다.",
     action: "NONE",
+    api: {
+      eventState: "대관 확정",
+      buttonState: "티켓으로 이동",
+      userRole: "참여자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "3-A-HOST",
@@ -214,6 +321,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관확정",
     perspective: "대관 확정 알림을 확인한다.",
     action: "ACKNOWLEDGE_NOTICE",
+    api: {
+      eventState: "대관 확정",
+      buttonState: "티켓으로 이동",
+      userRole: "주최자",
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "3-B-COMMON",
@@ -224,6 +338,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "대관취소",
     perspective: "영화사의 대관 불가 통보로 상영이 취소되었다.",
     action: "ACKNOWLEDGE_NOTICE",
+    api: {
+      eventState: "대관 취소",
+      buttonState: null,
+      userRole: null,
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
   {
     id: "4-A-COMMON",
@@ -234,6 +355,13 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "상영완료",
     perspective: "상영이 완료되어 후기 요청을 확인한다.",
     action: "NONE",
+    api: {
+      eventState: "상영 완료",
+      buttonState: null,
+      userRole: null,
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: false },
   },
   {
     id: "4-B-COMMON",
@@ -244,5 +372,17 @@ export const DETAIL_SCENARIOS: readonly DetailScenario[] = [
     statusTag: "상영취소",
     perspective: "취소된 상영 상태를 확인한다.",
     action: "NONE",
+    api: {
+      eventState: "상영 취소",
+      buttonState: null,
+      userRole: null,
+      needsConfirmation: true,
+    },
+    expected: { ctaDisabled: true },
   },
 ] as const;
+import type {
+  EventButtonState,
+  EventState,
+  EventUserRole,
+} from "app/_types/event-detail-state";

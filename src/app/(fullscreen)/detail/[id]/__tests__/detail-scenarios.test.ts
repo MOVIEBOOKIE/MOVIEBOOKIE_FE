@@ -1,4 +1,4 @@
-import { DETAIL_SCENARIOS } from "./fixtures/detail-scenarios";
+import { DETAIL_SCENARIOS } from "../__fixtures__/detail-scenarios";
 
 describe("상세 페이지 18개 상태 시나리오 정의", () => {
   it("11개 기획 단계를 역할별 18개 시안으로 정의한다", () => {
@@ -16,6 +16,21 @@ describe("상세 페이지 18개 상태 시나리오 정의", () => {
     DETAIL_SCENARIOS.forEach((scenario) => {
       expect(scenario.statusTag).toBeTruthy();
       expect(scenario.action).toBeTruthy();
+    });
+  });
+
+  it("모든 시안은 API 상태와 CTA 활성화 기대값을 갖는다", () => {
+    DETAIL_SCENARIOS.forEach(({ api, expected }) => {
+      expect(api.eventState).toBeTruthy();
+      expect(typeof expected.ctaDisabled).toBe("boolean");
+    });
+  });
+
+  it("확인이 필요한 API 버튼 상태를 명시적으로 표시한다", () => {
+    DETAIL_SCENARIOS.forEach(({ api }) => {
+      if (api.buttonState === null) {
+        expect(api.needsConfirmation).toBe(true);
+      }
     });
   });
 });
