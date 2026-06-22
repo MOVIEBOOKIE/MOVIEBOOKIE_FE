@@ -18,6 +18,9 @@ export const EVENT_BUTTON_STATES = [
   "대관 진행 중",
   "티켓으로 이동",
   "신청 마감",
+  "대관 취소",
+  "상영 완료",
+  "상영 취소",
 ] as const;
 
 export type EventButtonState = (typeof EVENT_BUTTON_STATES)[number];

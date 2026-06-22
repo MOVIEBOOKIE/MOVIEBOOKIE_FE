@@ -236,6 +236,7 @@ export default function DetailClient() {
           </div>
 
           <Button
+            data-testid="detail-bottom-cta"
             variant="primary"
             onClick={handleClick}
             isLoading={buttonLoading}
