@@ -4,7 +4,7 @@ const createJestConfig = nextJest({ dir: "./" });
 const customJestConfig = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  testPathIgnorePatterns: ["/node_modules/", "/.next/"],
+  testPathIgnorePatterns: ["/node_modules/", "/.next/", "<rootDir>/tests/e2e/"],
 
   // tsconfig.json의 paths를 Jest에 그대로 1:1 반영 (순서 중요: 정확 매칭을 위에)
   moduleNameMapper: {

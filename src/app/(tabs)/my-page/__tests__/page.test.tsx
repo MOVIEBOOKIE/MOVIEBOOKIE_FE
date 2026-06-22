@@ -42,6 +42,7 @@ const mockUser = {
   nickname: "혜련",
   userTypeTitle: "영화덕후",
   email: "hyeryeon@example.com",
+  certificationEmail: "hyeryeon@example.com",
   participationExperienceCount: 3,
   hostExperienceCount: 1,
   ticketCount: 5,
